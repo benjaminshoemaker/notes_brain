@@ -6,3 +6,4 @@ dist
 google-services.json
 GoogleService-Info.plist
 supabase/.temp
+supabase/.branches
