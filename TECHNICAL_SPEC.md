@@ -9,7 +9,7 @@
 | **Backend** | Supabase | Auth, Postgres, Storage, Edge Functions, Realtime - all-in-one |
 | **Database** | PostgreSQL (via Supabase) | Built-in full-text search, RLS, triggers |
 | **Transcription** | OpenAI Whisper API | Excellent accuracy, simple API, fast server-side processing |
-| **Classification** | Claude Haiku API | Cost-optimized, reliable JSON output |
+| **Classification** | OpenAI Chat Completions API | Cost-optimized, reliable JSON output |
 | **Push Notifications** | Firebase Cloud Messaging (FCM) | Industry standard, HTTP v1 API |
 | **Background Jobs** | Supabase Edge Functions + pg_cron | Native integration, no external workers |
 | **State Management** | React Query (TanStack Query) | Server state caching, background refetch, optimistic updates |
@@ -112,10 +112,11 @@ notes-brain/
 ┌─────────────────────────────────────────────────────────────────┐
 │                     EXTERNAL SERVICES                            │
 ├─────────────────────────────────────────────────────────────────┤
-│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐              │
-│  │   OpenAI    │  │  Anthropic  │  │     FCM     │              │
-│  │ Whisper API │  │ Claude API  │  │  HTTP v1    │              │
-│  └─────────────┘  └─────────────┘  └─────────────┘              │
+│  ┌─────────────┐  ┌─────────────┐                               │
+│  │   OpenAI    │  │     FCM     │                               │
+│  │ Whisper +   │  │  HTTP v1    │                               │
+│  │ Chat APIs   │  └─────────────┘                               │
+│  └─────────────┘                                                │
 └─────────────────────────────────────────────────────────────────┘
 ```
 
@@ -539,7 +540,7 @@ Called by pg_cron every 5 minutes (acts as a scheduler for both summary generati
 // 2. For each user, compute local time (timezone-aware)
 // 3. If local time is ~07:55 and today's summary is missing:
 //    a. Fetch notes from last 48 hours
-//    b. Generate summary via Claude
+//    b. Generate summary via OpenAI Chat Completions API
 //    c. Save to daily_summaries table
 // 4. If local time is ~08:00 and today's summary exists and sent_at is null:
 //    a. Call send-push function
@@ -904,7 +905,7 @@ async function classifyWithRetry(content: string, maxRetries = 3): Promise<Class
 
   for (let attempt = 0; attempt < maxRetries; attempt++) {
     try {
-      const result = await callClaudeAPI(content);
+      const result = await callOpenAIClassificationAPI(content);
       return result;
     } catch (error) {
       lastError = error as Error;
@@ -946,7 +947,6 @@ EXPO_PUBLIC_SUPABASE_ANON_KEY=eyJ...
 ### Supabase Edge Functions (secrets)
 ```
 OPENAI_API_KEY=sk-...
-ANTHROPIC_API_KEY=sk-ant-...
 FCM_PROJECT_ID=notes-brain-xxx
 FCM_SERVICE_ACCOUNT_KEY={"type":"service_account",...}
 ```

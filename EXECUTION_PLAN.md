@@ -415,7 +415,6 @@ Human must complete before agents begin:
 Human must complete before agents begin:
 
 - [ ] Add `OPENAI_API_KEY` to Supabase Edge Function secrets
-- [ ] Add `ANTHROPIC_API_KEY` to Supabase Edge Function secrets
 - [ ] Verify Supabase project has Edge Functions enabled
 
 ---
@@ -424,20 +423,20 @@ Human must complete before agents begin:
 
 #### Task 3.1.A: Create classify-note Edge Function
 
-**What:** Build the Edge Function that classifies notes using Claude Haiku API.
+**What:** Build the Edge Function that classifies notes using OpenAI Chat Completions API.
 
 **Acceptance Criteria:**
-- [ ] Function accepts both direct call `{note_id}` and webhook payload formats
-- [ ] Function fetches note content using service role key
-- [ ] Function skips classification if `type = 'file'` or `classification_status != 'pending'` or `content` is empty
-- [ ] Claude API called with exact prompt from TECHNICAL_SPEC.md
-- [ ] Response parsed as JSON with `category` and `confidence`
-- [ ] Note updated with category, confidence, `classification_status: 'completed'`
+- [x] Function accepts both direct call `{note_id}` and webhook payload formats
+- [x] Function fetches note content using service role key
+- [x] Function skips classification if `type = 'file'` or `classification_status != 'pending'` or `content` is empty
+- [x] OpenAI API called with exact prompt from TECHNICAL_SPEC.md
+- [x] Response parsed as JSON with `category` and `confidence`
+- [x] Note updated with category, confidence, `classification_status: 'completed'`
 
 **Files:**
 - Create: `supabase/functions/classify-note/index.ts` — main handler
 - Create: `supabase/functions/_shared/supabase.ts` — service client helper
-- Create: `supabase/functions/_shared/anthropic.ts` — Claude API helper
+- Create: `supabase/functions/_shared/openai.ts` — OpenAI API helper
 
 **Depends On:** 1.3.A
 
@@ -758,19 +757,19 @@ Human must complete before agents begin:
 
 #### Task 5.1.A: Create generate-summary Edge Function
 
-**What:** Build the Edge Function that generates daily summaries using Claude.
+**What:** Build the Edge Function that generates daily summaries using OpenAI Chat Completions API.
 
 **Acceptance Criteria:**
 - [ ] Function runs on cron trigger `{trigger: 'cron'}`
 - [ ] Function finds users where local time is ~07:55 (±5 min window)
 - [ ] For each eligible user, fetches notes from last 48 hours
-- [ ] Claude API called with summary prompt from TECHNICAL_SPEC.md
+- [ ] OpenAI API called with summary prompt from TECHNICAL_SPEC.md
 - [ ] Response parsed as `DailySummaryContent` (top_actions, avoiding, small_win)
 - [ ] Summary saved to `daily_summaries` table with JSONB content
 
 **Files:**
 - Create: `supabase/functions/generate-summary/index.ts` — main handler
-- Modify: `supabase/functions/_shared/anthropic.ts` — add summary prompt
+- Modify: `supabase/functions/_shared/openai.ts` — add summary prompt
 
 **Depends On:** 3.1.B
 
