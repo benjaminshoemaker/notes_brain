@@ -163,10 +163,10 @@ Human must complete before agents begin:
 ### Phase 1 Checkpoint
 
 **Automated:**
-- [ ] `npm install` succeeds at monorepo root
-- [ ] `npm run build` succeeds (builds shared package)
-- [ ] TypeScript compilation has no errors
-- [ ] Supabase migrations apply successfully
+- [x] `npm install` succeeds at monorepo root
+- [x] `npm run build` succeeds (builds shared package)
+- [x] TypeScript compilation has no errors
+- [x] Supabase migrations apply successfully
 
 **Manual Verification:**
 - [ ] Supabase dashboard shows all tables: users, notes, attachments, daily_summaries, devices
