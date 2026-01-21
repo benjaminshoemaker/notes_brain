@@ -11,6 +11,13 @@ type UploadInput = {
   category?: Category;
 };
 
+function getSafeFileExtension(filename: string) {
+  const parts = filename.trim().split(".");
+  if (parts.length < 2) return "";
+  const ext = parts.at(-1) ?? "";
+  return ext.replace(/[^a-z0-9]/gi, "").toLowerCase();
+}
+
 export async function uploadAttachmentFile({
   userId,
   file,
@@ -38,13 +45,18 @@ export async function uploadAttachmentFile({
   }
 
   const noteRow = note as unknown as NotesRow;
-  const uploadPath = `${userId}/attachments/${noteRow.id}/${file.name}`;
+  const safeExt = getSafeFileExtension(file.name);
+  const storageFilename = safeExt ? `${noteRow.id}.${safeExt}` : noteRow.id;
+  const uploadPath = `${userId}/attachments/${noteRow.id}/${storageFilename}`;
 
   const { data: uploadData, error: uploadError } = await supabase.storage
     .from("attachments")
-    .upload(uploadPath, file);
+    .upload(uploadPath, file, {
+      contentType: file.type || "application/octet-stream"
+    });
 
   if (uploadError) {
+    await supabase.from("notes").delete().eq("id", noteRow.id);
     throw uploadError;
   }
 
@@ -65,6 +77,8 @@ export async function uploadAttachmentFile({
     .single();
 
   if (attachmentError) {
+    await supabase.storage.from("attachments").remove([uploadData.path]);
+    await supabase.from("notes").delete().eq("id", noteRow.id);
     throw attachmentError;
   }
 

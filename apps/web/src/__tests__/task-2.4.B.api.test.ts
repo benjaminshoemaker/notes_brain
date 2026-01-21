@@ -5,12 +5,26 @@ const storageFromMock = vi.hoisted(() => vi.fn());
 const fromMock = vi.hoisted(() => vi.fn());
 const notesInsertMock = vi.hoisted(() => vi.fn());
 const attachmentsInsertMock = vi.hoisted(() => vi.fn());
+const notesDeleteMock = vi.hoisted(() => vi.fn());
+const notesDeleteEqMock = vi.hoisted(() => vi.fn());
+const removeMock = vi.hoisted(() => vi.fn());
 
 vi.mock("../lib/supabaseClient", () => {
+  const notesDeleteChain = {
+    eq: (...args: unknown[]) => {
+      notesDeleteEqMock(...args);
+      return Promise.resolve({ data: null, error: null });
+    }
+  };
+
   const notesChain = {
     insert: (...args: unknown[]) => {
       notesInsertMock(...args);
       return notesChain;
+    },
+    delete: () => {
+      notesDeleteMock();
+      return notesDeleteChain;
     },
     select: () => notesChain,
     single: () =>
@@ -44,7 +58,7 @@ vi.mock("../lib/supabaseClient", () => {
           note_id: "note_1",
           filename: "test.pdf",
           mime_type: "application/pdf",
-          storage_path: "user_1/attachments/note_1/test.pdf",
+          storage_path: "user_1/attachments/note_1/note_1.pdf",
           size_bytes: 5,
           created_at: "2026-01-01T00:00:00.000Z"
         },
@@ -59,12 +73,15 @@ vi.mock("../lib/supabaseClient", () => {
   });
 
   uploadMock.mockResolvedValue({
-    data: { path: "user_1/attachments/note_1/test.pdf" },
+    data: { path: "user_1/attachments/note_1/note_1.pdf" },
     error: null
   });
 
+  removeMock.mockResolvedValue({ data: null, error: null });
+
   storageFromMock.mockReturnValue({
-    upload: uploadMock
+    upload: uploadMock,
+    remove: removeMock
   });
 
   return {
@@ -99,7 +116,18 @@ describe("Task 2.4.B (API)", () => {
     await uploadAttachmentFile({ userId: "user_1", file });
 
     expect(storageFromMock).toHaveBeenCalledWith("attachments");
-    expect(uploadMock).toHaveBeenCalledWith("user_1/attachments/note_1/test.pdf", file);
+    expect(uploadMock).toHaveBeenCalledWith("user_1/attachments/note_1/note_1.pdf", file, {
+      contentType: "application/pdf"
+    });
+  });
+
+  it("should delete the created note when upload fails", async () => {
+    uploadMock.mockResolvedValueOnce({ data: null, error: new Error("upload failed") });
+
+    const file = new File(["hello"], "test.pdf", { type: "application/pdf" });
+    await expect(uploadAttachmentFile({ userId: "user_1", file })).rejects.toThrow("upload failed");
+
+    expect(notesDeleteMock).toHaveBeenCalled();
+    expect(notesDeleteEqMock).toHaveBeenCalledWith("id", "note_1");
   });
 });
-
