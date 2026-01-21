@@ -248,12 +248,12 @@ Human must complete before agents begin:
 **What:** Create the main note list view with reverse-chronological display and category filters.
 
 **Acceptance Criteria:**
-- [ ] Notes display in reverse chronological order (newest first)
-- [ ] Each note shows: content preview (truncated), category badge, timestamp
-- [ ] Category filter buttons allow filtering by single category
-- [ ] "All" filter shows all notes
-- [ ] Empty state displays when no notes exist
-- [ ] React Query handles caching and background refetch
+- [x] Notes display in reverse chronological order (newest first)
+- [x] Each note shows: content preview (truncated), category badge, timestamp
+- [x] Category filter buttons allow filtering by single category
+- [x] "All" filter shows all notes
+- [x] Empty state displays when no notes exist
+- [x] React Query handles caching and background refetch
 
 **Files:**
 - Create: `apps/web/src/pages/Notes.tsx` — main notes page
