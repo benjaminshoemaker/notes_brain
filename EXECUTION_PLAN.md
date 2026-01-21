@@ -34,11 +34,11 @@ Phase 6: Polish & Integration
 
 Human must complete before agents begin:
 
-- [ ] Create Supabase project at https://supabase.com/dashboard
-- [ ] Note the project URL and anon key from Settings > API
-- [ ] Create Firebase project at https://console.firebase.google.com (for FCM)
-- [ ] Download `google-services.json` from Firebase (Android app)
-- [ ] Create `.env` file with `SUPABASE_URL` and `SUPABASE_ANON_KEY`
+- [x] Create Supabase project at https://supabase.com/dashboard
+- [x] Note the project URL and anon key from Settings > API
+- [x] Create Firebase project at https://console.firebase.google.com (for FCM)
+- [x] Download `google-services.json` from Firebase (Android app)
+- [x] Create `.env` file with `SUPABASE_URL` and `SUPABASE_ANON_KEY`
 
 ---
 
@@ -169,9 +169,9 @@ Human must complete before agents begin:
 - [x] Supabase migrations apply successfully
 
 **Manual Verification:**
-- [ ] Supabase dashboard shows all tables: users, notes, attachments, daily_summaries, devices
-- [ ] Storage bucket `attachments` exists and is private
-- [ ] RLS policies are visible in Supabase dashboard
+- [x] Supabase dashboard shows all tables: users, notes, attachments, daily_summaries, devices
+- [x] Storage bucket `attachments` exists and is private
+- [x] RLS policies are visible in Supabase dashboard
 
 ---
 
@@ -183,7 +183,7 @@ Human must complete before agents begin:
 
 Human must complete before agents begin:
 
-- [ ] Ensure `.env` has `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY`
+- [x] Ensure `.env` has `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY`
 
 ---
 
