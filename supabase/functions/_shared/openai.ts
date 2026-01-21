@@ -5,6 +5,14 @@ export type OpenAIChatJsonRequest = {
   prompt: string;
 };
 
+export type OpenAIWhisperTranscriptionRequest = {
+  fetchFn: typeof fetch;
+  apiKey: string;
+  audio: Blob;
+  filename: string;
+  model?: string;
+};
+
 export type ClassificationResult = {
   category: string;
   confidence: number;
@@ -100,3 +108,35 @@ export async function callOpenAIChatJson({
   return parseClassificationResult(content);
 }
 
+export async function callOpenAIWhisperTranscription({
+  fetchFn,
+  apiKey,
+  audio,
+  filename,
+  model = "whisper-1"
+}: OpenAIWhisperTranscriptionRequest): Promise<string> {
+  const formData = new FormData();
+  formData.append("file", audio, filename);
+  formData.append("model", model);
+
+  const response = await fetchFn("https://api.openai.com/v1/audio/transcriptions", {
+    method: "POST",
+    headers: {
+      authorization: `Bearer ${apiKey}`
+    },
+    body: formData
+  });
+
+  if (!response.ok) {
+    const text = await response.text().catch(() => "");
+    throw new Error(`OpenAI request failed: ${response.status} ${text}`.trim());
+  }
+
+  const data = (await response.json()) as { text?: string | null };
+  const transcript = data.text ?? "";
+  if (!transcript) {
+    throw new Error("OpenAI transcription missing text");
+  }
+
+  return transcript;
+}

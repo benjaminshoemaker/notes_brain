@@ -472,12 +472,12 @@ Human must complete before agents begin:
 **What:** Build the Edge Function that transcribes voice notes using Whisper API.
 
 **Acceptance Criteria:**
-- [ ] Function triggered by webhook on voice note insert
-- [ ] Function downloads audio file from Supabase Storage
-- [ ] Whisper API called with audio file
-- [ ] Note `content` field updated with transcript
-- [ ] Function triggers classification after transcription succeeds
-- [ ] Errors logged and note marked appropriately on failure
+- [x] Function triggered by webhook on voice note insert
+- [x] Function downloads audio file from Supabase Storage
+- [x] Whisper API called with audio file
+- [x] Note `content` field updated with transcript
+- [x] Function triggers classification after transcription succeeds
+- [x] Errors logged and note marked appropriately on failure
 
 **Files:**
 - Create: `supabase/functions/transcribe-voice/index.ts` — main handler
