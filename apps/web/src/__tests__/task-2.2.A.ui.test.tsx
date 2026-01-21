@@ -19,6 +19,16 @@ vi.mock("../lib/authApi", () => ({
   signOutUser: signOutUserMock
 }));
 
+const fetchNotesMock = vi.hoisted(() => vi.fn().mockResolvedValue([]));
+const searchNotesMock = vi.hoisted(() => vi.fn().mockResolvedValue([]));
+const createTextNoteMock = vi.hoisted(() => vi.fn());
+
+vi.mock("../lib/notesApi", () => ({
+  fetchNotes: fetchNotesMock,
+  searchNotes: searchNotesMock,
+  createTextNote: createTextNoteMock
+}));
+
 async function renderAppAt(pathname: string) {
   const { AppProviders } = await import("../AppProviders");
   const App = (await import("../App")).default;

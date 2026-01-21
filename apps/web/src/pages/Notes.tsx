@@ -4,6 +4,7 @@ import type { Category, NoteWithAttachments } from "@notesbrain/shared";
 import { useNavigate } from "react-router-dom";
 
 import { CategoryFilter } from "../components/CategoryFilter";
+import { NoteInput } from "../components/NoteInput";
 import { NoteList } from "../components/NoteList";
 import { SearchInput } from "../components/SearchInput";
 import { useNotes } from "../hooks/useNotes";
@@ -59,6 +60,8 @@ export default function NotesPage() {
           </button>
         </div>
       </header>
+
+      <NoteInput />
 
       <CategoryFilter selectedCategory={selectedCategory} onSelectCategory={setSelectedCategory} />
 

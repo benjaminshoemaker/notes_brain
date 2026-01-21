@@ -5,9 +5,21 @@ import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router-dom";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
+import { ToastProvider } from "../components/ToastProvider";
+
 const fetchNotesMock = vi.hoisted(() => vi.fn());
 vi.mock("../lib/notesApi", () => ({
-  fetchNotes: fetchNotesMock
+  fetchNotes: fetchNotesMock,
+  searchNotes: vi.fn(),
+  createTextNote: vi.fn()
+}));
+
+vi.mock("../hooks/useAuth", () => ({
+  useAuth: () => ({
+    user: { id: "user_1", email: "me@example.com" },
+    session: { user: { id: "user_1", email: "me@example.com" } },
+    isLoading: false
+  })
 }));
 
 import NotesPage from "../pages/Notes";
@@ -24,9 +36,11 @@ function renderNotes() {
 
   const view = render(
     <QueryClientProvider client={queryClient}>
-      <MemoryRouter>
-        <NotesPage />
-      </MemoryRouter>
+      <ToastProvider>
+        <MemoryRouter>
+          <NotesPage />
+        </MemoryRouter>
+      </ToastProvider>
     </QueryClientProvider>
   );
 
@@ -217,9 +231,11 @@ describe("Task 2.3.A", () => {
 
     const view = render(
       <QueryClientProvider client={queryClient}>
-        <MemoryRouter>
-          <NotesPage />
-        </MemoryRouter>
+        <ToastProvider>
+          <MemoryRouter>
+            <NotesPage />
+          </MemoryRouter>
+        </ToastProvider>
       </QueryClientProvider>
     );
 
@@ -228,9 +244,11 @@ describe("Task 2.3.A", () => {
 
     const view2 = render(
       <QueryClientProvider client={queryClient}>
-        <MemoryRouter>
-          <NotesPage />
-        </MemoryRouter>
+        <ToastProvider>
+          <MemoryRouter>
+            <NotesPage />
+          </MemoryRouter>
+        </ToastProvider>
       </QueryClientProvider>
     );
 

@@ -298,12 +298,12 @@ Human must complete before agents begin:
 **What:** Add text note creation with immediate save and pending classification status.
 
 **Acceptance Criteria:**
-- [ ] Text input area is visible and focused by default
-- [ ] Pressing Enter (or button) creates note with `type: 'text'`, `classification_status: 'pending'`
-- [ ] New note appears immediately in list (optimistic update)
-- [ ] Note saves to database with `category: 'uncategorized'` initially
-- [ ] Input clears after successful creation
-- [ ] Error toast displays if creation fails
+- [x] Text input area is visible and focused by default
+- [x] Pressing Enter (or button) creates note with `type: 'text'`, `classification_status: 'pending'`
+- [x] New note appears immediately in list (optimistic update)
+- [x] Note saves to database with `category: 'uncategorized'` initially
+- [x] Input clears after successful creation
+- [x] Error toast displays if creation fails
 
 **Files:**
 - Create: `apps/web/src/components/NoteInput.tsx` — text input component
