@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "project_name": "notes_brain",
-  "last_updated": "2026-01-21T10:49:09Z",
+  "last_updated": "2026-01-21T19:49:47Z",
   "generated_by": "phase-start",
   "main": {
     "current_phase": 2,
@@ -35,10 +35,11 @@
       {
         "number": 2,
         "name": "Web App - Core",
-        "status": "IN_PROGRESS",
+        "status": "CHECKPOINTED",
         "tasks_total": 8,
         "tasks_complete": 8,
         "started_at": "2026-01-21T09:52:54Z",
+        "completed_at": "2026-01-21T19:49:47Z",
         "checkpoint": {
           "tests_passed": true,
           "type_check_passed": true,
