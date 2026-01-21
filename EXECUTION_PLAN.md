@@ -221,12 +221,12 @@ Human must complete before agents begin:
 **What:** Build login and signup pages with email/password and magic link options.
 
 **Acceptance Criteria:**
-- [ ] `/login` route renders login form with email and password fields
-- [ ] `/signup` route renders signup form with email and password fields
-- [ ] "Sign in with magic link" button sends OTP email via Supabase
-- [ ] Successful login redirects to `/` (notes list)
-- [ ] Auth state persists across page refreshes (Supabase session)
-- [ ] Logout button signs out and redirects to `/login`
+- [x] `/login` route renders login form with email and password fields
+- [x] `/signup` route renders signup form with email and password fields
+- [x] "Sign in with magic link" button sends OTP email via Supabase
+- [x] Successful login redirects to `/` (notes list)
+- [x] Auth state persists across page refreshes (Supabase session)
+- [x] Logout button signs out and redirects to `/login`
 
 **Files:**
 - Create: `apps/web/src/pages/Login.tsx` — login page
