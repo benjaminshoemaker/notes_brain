@@ -395,14 +395,14 @@ Human must complete before agents begin:
 - [x] All tests pass
 
 **Manual Verification:**
-- [ ] Can sign up with email/password
-- [ ] Can sign in with magic link
-- [ ] Can create text notes
-- [ ] Can upload files with drag-and-drop
-- [ ] Can filter notes by category
-- [ ] Can search notes
-- [ ] Can change note category
-- [ ] Attachment previews work
+- [x] Can sign up with email/password
+- [x] Can sign in with magic link
+- [x] Can create text notes
+- [x] Can upload files with drag-and-drop
+- [x] Can filter notes by category
+- [x] Can search notes
+- [x] Can change note category
+- [x] Attachment previews work
 
 ---
 
