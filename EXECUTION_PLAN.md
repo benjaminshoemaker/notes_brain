@@ -273,12 +273,12 @@ Human must complete before agents begin:
 **What:** Add search functionality using Postgres tsvector full-text search.
 
 **Acceptance Criteria:**
-- [ ] Search input field exists in the notes page header
-- [ ] Typing triggers search after 300ms debounce
-- [ ] Search uses Supabase `textSearch` on `search_vector` column
-- [ ] Search results replace the note list while query is active
-- [ ] Clearing search input restores full note list
-- [ ] Empty search results show appropriate message
+- [x] Search input field exists in the notes page header
+- [x] Typing triggers search after 300ms debounce
+- [x] Search uses Supabase `textSearch` on `search_vector` column
+- [x] Search results replace the note list while query is active
+- [x] Clearing search input restores full note list
+- [x] Empty search results show appropriate message
 
 **Files:**
 - Create: `apps/web/src/components/SearchInput.tsx` — search field

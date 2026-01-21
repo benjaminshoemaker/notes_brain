@@ -5,7 +5,9 @@ import { useNavigate } from "react-router-dom";
 
 import { CategoryFilter } from "../components/CategoryFilter";
 import { NoteList } from "../components/NoteList";
+import { SearchInput } from "../components/SearchInput";
 import { useNotes } from "../hooks/useNotes";
+import { useSearch } from "../hooks/useSearch";
 import { signOutUser } from "../lib/authApi";
 
 function sortNotes(notes: NoteWithAttachments[]) {
@@ -19,14 +21,23 @@ function sortNotes(notes: NoteWithAttachments[]) {
 export default function NotesPage() {
   const navigate = useNavigate();
   const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
+  const [searchQuery, setSearchQuery] = useState("");
 
   const { data, isLoading, error } = useNotes();
+  const {
+    data: searchResults,
+    isLoading: isSearchLoading,
+    isFetching: isSearchFetching
+  } = useSearch(searchQuery);
 
   const notes = useMemo(() => sortNotes(data ?? []), [data]);
+
+  const isSearchMode = searchQuery.trim().length > 0;
+  const baseNotes = isSearchMode ? sortNotes(searchResults ?? []) : notes;
   const filteredNotes = useMemo(() => {
-    if (!selectedCategory) return notes;
-    return notes.filter((note) => note.category === selectedCategory);
-  }, [notes, selectedCategory]);
+    if (!selectedCategory) return baseNotes;
+    return baseNotes.filter((note) => note.category === selectedCategory);
+  }, [baseNotes, selectedCategory]);
 
   async function handleLogout() {
     await signOutUser();
@@ -37,6 +48,11 @@ export default function NotesPage() {
     <div style={{ display: "grid", gap: 16 }}>
       <header style={{ display: "flex", alignItems: "center", gap: 12 }}>
         <h1 style={{ margin: 0 }}>Notes</h1>
+
+        <div style={{ flex: 1 }}>
+          <SearchInput value={searchQuery} onChange={setSearchQuery} />
+        </div>
+
         <div style={{ marginLeft: "auto" }}>
           <button type="button" onClick={handleLogout}>
             Logout
@@ -48,8 +64,17 @@ export default function NotesPage() {
 
       {isLoading ? <p>Loading…</p> : null}
       {error ? <p role="alert">Failed to load notes.</p> : null}
-      {!isLoading && !error ? <NoteList notes={filteredNotes} /> : null}
+      {isSearchMode && (isSearchLoading || isSearchFetching) ? <p>Searching…</p> : null}
+
+      {!isLoading && !error && !isSearchMode ? <NoteList notes={filteredNotes} /> : null}
+
+      {!isLoading && !error && isSearchMode ? (
+        filteredNotes.length === 0 && !isSearchLoading ? (
+          <p>No matching notes.</p>
+        ) : (
+          <NoteList notes={filteredNotes} />
+        )
+      ) : null}
     </div>
   );
 }
-

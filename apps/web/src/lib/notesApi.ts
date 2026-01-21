@@ -15,3 +15,21 @@ export async function fetchNotes(): Promise<NoteWithAttachments[]> {
   return (data ?? []) as unknown as NoteWithAttachments[];
 }
 
+export async function searchNotes(searchQuery: string): Promise<NoteWithAttachments[]> {
+  const query = searchQuery.trim();
+  if (!query) {
+    return [];
+  }
+
+  const { data, error } = await supabase
+    .from("notes")
+    .select("*, attachments(*)")
+    .textSearch("search_vector", query)
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    throw error;
+  }
+
+  return (data ?? []) as unknown as NoteWithAttachments[];
+}
