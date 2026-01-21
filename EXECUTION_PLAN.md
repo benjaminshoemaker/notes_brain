@@ -125,12 +125,12 @@ Human must complete before agents begin:
 **What:** Create SQL migration files for all database tables, types, indexes, RLS policies, and triggers.
 
 **Acceptance Criteria:**
-- [ ] Migration creates all enums: `note_category`, `note_type`, `classification_status`, `device_platform`
-- [ ] Migration creates all tables: `users`, `notes`, `attachments`, `daily_summaries`, `devices`
-- [ ] All indexes from TECHNICAL_SPEC.md are created
-- [ ] RLS is enabled on all tables with correct policies
-- [ ] `update_updated_at()` trigger function and triggers exist
-- [ ] Migration runs successfully via `supabase db push` or `supabase migration up`
+- [x] Migration creates all enums: `note_category`, `note_type`, `classification_status`, `device_platform`
+- [x] Migration creates all tables: `users`, `notes`, `attachments`, `daily_summaries`, `devices`
+- [x] All indexes from TECHNICAL_SPEC.md are created
+- [x] RLS is enabled on all tables with correct policies
+- [x] `update_updated_at()` trigger function and triggers exist
+- [x] Migration runs successfully via `supabase db push` or `supabase migration up`
 
 **Files:**
 - Create: `supabase/migrations/00001_initial_schema.sql` — complete schema

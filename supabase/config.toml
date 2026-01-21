@@ -1,0 +1,14 @@
+project_id = "REPLACE_WITH_SUPABASE_PROJECT_ID"
+
+[api]
+enabled = true
+port = 54321
+schemas = ["public", "storage", "graphql_public"]
+extra_search_path = ["public", "extensions"]
+max_rows = 1000
+
+[db]
+port = 54322
+shadow_port = 54320
+major_version = 15
+
