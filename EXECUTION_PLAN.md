@@ -49,11 +49,11 @@ Human must complete before agents begin:
 **What:** Create the monorepo with Turborepo and npm workspaces, including apps and packages directories.
 
 **Acceptance Criteria:**
-- [ ] Root `package.json` exists with `workspaces` configured for `apps/*` and `packages/*`
-- [ ] `turbo.json` exists with pipeline configuration for `build`, `test`, `lint`, `typecheck`
-- [ ] Directory structure matches: `apps/mobile/`, `apps/web/`, `packages/shared/`, `supabase/`
-- [ ] Running `npm install` at root succeeds without errors
-- [ ] `.gitignore` includes `node_modules`, `.env*`, `.turbo`, `dist`
+- [x] Root `package.json` exists with `workspaces` configured for `apps/*` and `packages/*`
+- [x] `turbo.json` exists with pipeline configuration for `build`, `test`, `lint`, `typecheck`
+- [x] Directory structure matches: `apps/mobile/`, `apps/web/`, `packages/shared/`, `supabase/`
+- [x] Running `npm install` at root succeeds without errors
+- [x] `.gitignore` includes `node_modules`, `.env*`, `.turbo`, `dist`
 
 **Files:**
 - Create: `package.json` — root workspace configuration
@@ -76,11 +76,11 @@ Human must complete before agents begin:
 **What:** Set up the shared package with TypeScript types, constants, and Zod validation schemas.
 
 **Acceptance Criteria:**
-- [ ] `packages/shared/package.json` exists with name `@notesbrain/shared`
-- [ ] TypeScript compiles without errors (`npm run build` in shared package)
-- [ ] All types from TECHNICAL_SPEC.md are exported: `User`, `Note`, `Attachment`, `NoteWithAttachments`, `DailySummary`, `Device`, `Category`, `NoteType`, `ClassificationStatus`, `DevicePlatform`
-- [ ] `CATEGORIES` constant array is exported
-- [ ] Zod schemas exist for `CreateNoteRequest` and `ClassificationResult`
+- [x] `packages/shared/package.json` exists with name `@notesbrain/shared`
+- [x] TypeScript compiles without errors (`npm run build` in shared package)
+- [x] All types from TECHNICAL_SPEC.md are exported: `User`, `Note`, `Attachment`, `NoteWithAttachments`, `DailySummary`, `Device`, `Category`, `NoteType`, `ClassificationStatus`, `DevicePlatform`
+- [x] `CATEGORIES` constant array is exported
+- [x] Zod schemas exist for `CreateNoteRequest` and `ClassificationResult`
 
 **Files:**
 - Create: `packages/shared/package.json` — package config
@@ -101,11 +101,11 @@ Human must complete before agents begin:
 **What:** Create the Supabase client initialization and auth helper functions in the shared package.
 
 **Acceptance Criteria:**
-- [ ] `createSupabaseClient` function exists and accepts URL and anon key
-- [ ] Auth functions exported: `signUp`, `signIn`, `signInWithMagicLink`, `signOut`
-- [ ] `signUp` creates user profile in `users` table with auto-detected timezone
-- [ ] Client types are properly typed with database schema types
-- [ ] Package exports client from `@notesbrain/shared`
+- [x] `createSupabaseClient` function exists and accepts URL and anon key
+- [x] Auth functions exported: `signUp`, `signIn`, `signInWithMagicLink`, `signOut`
+- [x] `signUp` creates user profile in `users` table with auto-detected timezone
+- [x] Client types are properly typed with database schema types
+- [x] Package exports client from `@notesbrain/shared`
 
 **Files:**
 - Create: `packages/shared/src/supabase.ts` — client factory
@@ -125,12 +125,12 @@ Human must complete before agents begin:
 **What:** Create SQL migration files for all database tables, types, indexes, RLS policies, and triggers.
 
 **Acceptance Criteria:**
-- [ ] Migration creates all enums: `note_category`, `note_type`, `classification_status`, `device_platform`
-- [ ] Migration creates all tables: `users`, `notes`, `attachments`, `daily_summaries`, `devices`
-- [ ] All indexes from TECHNICAL_SPEC.md are created
-- [ ] RLS is enabled on all tables with correct policies
-- [ ] `update_updated_at()` trigger function and triggers exist
-- [ ] Migration runs successfully via `supabase db push` or `supabase migration up`
+- [x] Migration creates all enums: `note_category`, `note_type`, `classification_status`, `device_platform`
+- [x] Migration creates all tables: `users`, `notes`, `attachments`, `daily_summaries`, `devices`
+- [x] All indexes from TECHNICAL_SPEC.md are created
+- [x] RLS is enabled on all tables with correct policies
+- [x] `update_updated_at()` trigger function and triggers exist
+- [x] Migration runs successfully via `supabase db push` or `supabase migration up`
 
 **Files:**
 - Create: `supabase/migrations/00001_initial_schema.sql` — complete schema
@@ -147,9 +147,9 @@ Human must complete before agents begin:
 **What:** Create Supabase storage bucket configuration for file attachments.
 
 **Acceptance Criteria:**
-- [ ] Migration creates `attachments` bucket (private)
-- [ ] Storage RLS policy allows users to access only their own files
-- [ ] Policy uses `(storage.foldername(name))[1] = auth.uid()::text` pattern
+- [x] Migration creates `attachments` bucket (private)
+- [x] Storage RLS policy allows users to access only their own files
+- [x] Policy uses `(storage.foldername(name))[1] = auth.uid()::text` pattern
 
 **Files:**
 - Create: `supabase/migrations/00002_storage_bucket.sql` — storage config
@@ -163,10 +163,10 @@ Human must complete before agents begin:
 ### Phase 1 Checkpoint
 
 **Automated:**
-- [ ] `npm install` succeeds at monorepo root
-- [ ] `npm run build` succeeds (builds shared package)
-- [ ] TypeScript compilation has no errors
-- [ ] Supabase migrations apply successfully
+- [x] `npm install` succeeds at monorepo root
+- [x] `npm run build` succeeds (builds shared package)
+- [x] TypeScript compilation has no errors
+- [x] Supabase migrations apply successfully
 
 **Manual Verification:**
 - [ ] Supabase dashboard shows all tables: users, notes, attachments, daily_summaries, devices
