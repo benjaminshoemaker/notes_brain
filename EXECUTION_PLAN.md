@@ -147,9 +147,9 @@ Human must complete before agents begin:
 **What:** Create Supabase storage bucket configuration for file attachments.
 
 **Acceptance Criteria:**
-- [ ] Migration creates `attachments` bucket (private)
-- [ ] Storage RLS policy allows users to access only their own files
-- [ ] Policy uses `(storage.foldername(name))[1] = auth.uid()::text` pattern
+- [x] Migration creates `attachments` bucket (private)
+- [x] Storage RLS policy allows users to access only their own files
+- [x] Policy uses `(storage.foldername(name))[1] = auth.uid()::text` pattern
 
 **Files:**
 - Create: `supabase/migrations/00002_storage_bucket.sql` — storage config
