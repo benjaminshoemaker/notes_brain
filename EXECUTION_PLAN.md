@@ -449,11 +449,11 @@ Human must complete before agents begin:
 **What:** Add exponential backoff retry logic for classification failures.
 
 **Acceptance Criteria:**
-- [ ] Failed API calls retry up to 3 times
-- [ ] Backoff delays are 1s, 2s, 4s (exponential)
-- [ ] After all retries fail, note updated with `category: 'uncategorized'`, `classification_status: 'failed'`
-- [ ] Errors are logged with note ID and attempt number
-- [ ] Function returns appropriate error response on final failure
+- [x] Failed API calls retry up to 3 times
+- [x] Backoff delays are 1s, 2s, 4s (exponential)
+- [x] After all retries fail, note updated with `category: 'uncategorized'`, `classification_status: 'failed'`
+- [x] Errors are logged with note ID and attempt number
+- [x] Function returns appropriate error response on final failure
 
 **Files:**
 - Modify: `supabase/functions/classify-note/index.ts` — add retry logic

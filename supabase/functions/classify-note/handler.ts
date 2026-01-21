@@ -3,6 +3,8 @@ type Logger = {
   error: (...args: unknown[]) => void;
 };
 
+import { retryWithBackoff } from "../_shared/retry.ts";
+
 type NoteRecord = {
   id: string;
   user_id: string;
@@ -22,6 +24,7 @@ type Dependencies = {
   updateNote: (noteId: string, patch: UpdateNoteInput) => Promise<void>;
   classifyContent: (content: string) => Promise<{ category: string; confidence: number }>;
   logger: Logger;
+  sleep?: (ms: number) => Promise<void>;
 };
 
 const corsHeaders = {
@@ -59,7 +62,7 @@ function jsonResponse(body: unknown, status = 200) {
   });
 }
 
-export function createHandler({ getNoteById, updateNote, classifyContent, logger }: Dependencies) {
+export function createHandler({ getNoteById, updateNote, classifyContent, logger, sleep }: Dependencies) {
   return async (req: Request): Promise<Response> => {
     if (req.method === "OPTIONS") {
       return new Response(null, { headers: corsHeaders });
@@ -95,7 +98,13 @@ export function createHandler({ getNoteById, updateNote, classifyContent, logger
     }
 
     try {
-      const result = await classifyContent(content);
+      const result = await retryWithBackoff(() => classifyContent(content), {
+        delaysMs: [1000, 2000, 4000],
+        sleep,
+        onRetry: (error, retryNumber) => {
+          logger.error("Classification attempt failed", { noteId, retryNumber, error });
+        }
+      });
       await updateNote(noteId, {
         category: result.category,
         classification_confidence: result.confidence,
@@ -110,8 +119,17 @@ export function createHandler({ getNoteById, updateNote, classifyContent, logger
       });
     } catch (error) {
       logger.error("Classification failed", { noteId, error });
+      try {
+        await updateNote(noteId, {
+          category: "uncategorized",
+          classification_confidence: null,
+          classification_status: "failed"
+        });
+      } catch (updateError) {
+        logger.error("Failed to mark note as failed", { noteId, error: updateError });
+      }
+
       return jsonResponse({ error: "Classification failed", note_id: noteId }, 500);
     }
   };
 }
-
