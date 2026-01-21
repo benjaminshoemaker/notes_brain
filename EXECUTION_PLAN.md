@@ -194,11 +194,11 @@ Human must complete before agents begin:
 **What:** Create the Vite React app with TypeScript, React Query, and basic routing.
 
 **Acceptance Criteria:**
-- [ ] `apps/web/package.json` exists with dependencies: `react`, `react-dom`, `@tanstack/react-query`, `@supabase/supabase-js`, `react-router-dom`
-- [ ] Vite config uses `@notesbrain/shared` from workspace
-- [ ] App renders without errors on `npm run dev`
-- [ ] React Query provider wraps the app with configured client
-- [ ] Environment variables are loaded for Supabase URL and anon key
+- [x] `apps/web/package.json` exists with dependencies: `react`, `react-dom`, `@tanstack/react-query`, `@supabase/supabase-js`, `react-router-dom`
+- [x] Vite config uses `@notesbrain/shared` from workspace
+- [x] App renders without errors on `npm run dev`
+- [x] React Query provider wraps the app with configured client
+- [x] Environment variables are loaded for Supabase URL and anon key
 
 **Files:**
 - Create: `apps/web/package.json` — dependencies
