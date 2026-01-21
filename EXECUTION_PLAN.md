@@ -76,11 +76,11 @@ Human must complete before agents begin:
 **What:** Set up the shared package with TypeScript types, constants, and Zod validation schemas.
 
 **Acceptance Criteria:**
-- [ ] `packages/shared/package.json` exists with name `@notesbrain/shared`
-- [ ] TypeScript compiles without errors (`npm run build` in shared package)
-- [ ] All types from TECHNICAL_SPEC.md are exported: `User`, `Note`, `Attachment`, `NoteWithAttachments`, `DailySummary`, `Device`, `Category`, `NoteType`, `ClassificationStatus`, `DevicePlatform`
-- [ ] `CATEGORIES` constant array is exported
-- [ ] Zod schemas exist for `CreateNoteRequest` and `ClassificationResult`
+- [x] `packages/shared/package.json` exists with name `@notesbrain/shared`
+- [x] TypeScript compiles without errors (`npm run build` in shared package)
+- [x] All types from TECHNICAL_SPEC.md are exported: `User`, `Note`, `Attachment`, `NoteWithAttachments`, `DailySummary`, `Device`, `Category`, `NoteType`, `ClassificationStatus`, `DevicePlatform`
+- [x] `CATEGORIES` constant array is exported
+- [x] Zod schemas exist for `CreateNoteRequest` and `ClassificationResult`
 
 **Files:**
 - Create: `packages/shared/package.json` — package config
