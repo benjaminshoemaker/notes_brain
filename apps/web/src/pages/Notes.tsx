@@ -10,6 +10,7 @@ import { NoteInput } from "../components/NoteInput";
 import { NoteList } from "../components/NoteList";
 import { SearchInput } from "../components/SearchInput";
 import { useNotes } from "../hooks/useNotes";
+import { useRealtimeNotes } from "../hooks/useRealtimeNotes";
 import { useSearch } from "../hooks/useSearch";
 import { useUploadFile } from "../hooks/useUploadFile";
 import { useToast } from "../hooks/useToast";
@@ -39,6 +40,8 @@ export default function NotesPage() {
   } = useSearch(searchQuery);
   const uploadFile = useUploadFile();
   const { showToast } = useToast();
+
+  useRealtimeNotes();
 
   const notes = useMemo(() => sortNotes(data ?? []), [data]);
 

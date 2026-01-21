@@ -518,11 +518,11 @@ Human must complete before agents begin:
 **What:** Subscribe to note changes so UI updates when classification completes.
 
 **Acceptance Criteria:**
-- [ ] Web app subscribes to `postgres_changes` on `notes` table for current user
-- [ ] When note `classification_status` changes to `completed`, UI updates category
-- [ ] Subscription established on auth and cleaned up on logout
-- [ ] Category badge animates/highlights briefly on update
-- [ ] Works for both new notes and re-classified notes
+- [x] Web app subscribes to `postgres_changes` on `notes` table for current user
+- [x] When note `classification_status` changes to `completed`, UI updates category
+- [x] Subscription established on auth and cleaned up on logout
+- [x] Category badge animates/highlights briefly on update
+- [x] Works for both new notes and re-classified notes
 
 **Files:**
 - Create: `apps/web/src/hooks/useRealtimeNotes.ts` — realtime subscription hook

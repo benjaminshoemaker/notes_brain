@@ -24,6 +24,10 @@ vi.mock("../hooks/useAuth", () => ({
   })
 }));
 
+vi.mock("../hooks/useRealtimeNotes", () => ({
+  useRealtimeNotes: () => undefined
+}));
+
 vi.mock("../lib/uploadApi", () => ({
   uploadAttachmentFile: vi.fn()
 }));

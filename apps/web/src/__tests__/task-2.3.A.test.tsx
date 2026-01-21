@@ -22,6 +22,10 @@ vi.mock("../hooks/useAuth", () => ({
   })
 }));
 
+vi.mock("../hooks/useRealtimeNotes", () => ({
+  useRealtimeNotes: () => undefined
+}));
+
 import NotesPage from "../pages/Notes";
 
 function renderNotes() {

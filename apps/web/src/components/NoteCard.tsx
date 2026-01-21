@@ -1,5 +1,5 @@
 import type { NoteWithAttachments } from "@notesbrain/shared";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { AttachmentPreview } from "./AttachmentPreview";
 import { CategoryEditor } from "./CategoryEditor";
@@ -19,7 +19,27 @@ function formatPreview(content: string | null) {
 export function NoteCard({ note }: Props) {
   const preview = formatPreview(note.content);
   const [isEditingCategory, setIsEditingCategory] = useState(false);
+  const [isCategoryHighlighted, setIsCategoryHighlighted] = useState(false);
+  const previousStatusRef = useRef(note.classification_status);
   const attachmentCount = note.attachments?.length ?? 0;
+
+  useEffect(() => {
+    const previousStatus = previousStatusRef.current;
+    previousStatusRef.current = note.classification_status;
+
+    if (note.classification_status === "completed" && previousStatus !== "completed") {
+      setIsCategoryHighlighted(true);
+      const handle = window.setTimeout(() => {
+        setIsCategoryHighlighted(false);
+      }, 1500);
+
+      return () => {
+        window.clearTimeout(handle);
+      };
+    }
+
+    return undefined;
+  }, [note.classification_status]);
 
   return (
     <article
@@ -42,12 +62,14 @@ export function NoteCard({ note }: Props) {
         ) : (
           <button
             type="button"
+            data-highlighted={isCategoryHighlighted ? "true" : undefined}
             onClick={() => setIsEditingCategory(true)}
             style={{
               fontSize: 12,
               fontWeight: 600,
               border: "1px solid #ddd",
-              background: "white",
+              background: isCategoryHighlighted ? "#fff7cc" : "white",
+              transition: "background 200ms ease",
               borderRadius: 999,
               padding: "2px 8px",
               cursor: "pointer"
