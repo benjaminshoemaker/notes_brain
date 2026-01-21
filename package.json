@@ -1,0 +1,18 @@
+{
+  "name": "notes-brain",
+  "private": true,
+  "type": "module",
+  "workspaces": ["apps/*", "packages/*"],
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev --parallel",
+    "lint": "turbo run lint",
+    "typecheck": "turbo run typecheck",
+    "test:root": "node --test tests",
+    "test": "npm run test:root && turbo run test"
+  },
+  "devDependencies": {
+    "turbo": "^2.5.5"
+  }
+}
+

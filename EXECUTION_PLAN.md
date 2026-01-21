@@ -49,11 +49,11 @@ Human must complete before agents begin:
 **What:** Create the monorepo with Turborepo and npm workspaces, including apps and packages directories.
 
 **Acceptance Criteria:**
-- [ ] Root `package.json` exists with `workspaces` configured for `apps/*` and `packages/*`
-- [ ] `turbo.json` exists with pipeline configuration for `build`, `test`, `lint`, `typecheck`
-- [ ] Directory structure matches: `apps/mobile/`, `apps/web/`, `packages/shared/`, `supabase/`
-- [ ] Running `npm install` at root succeeds without errors
-- [ ] `.gitignore` includes `node_modules`, `.env*`, `.turbo`, `dist`
+- [x] Root `package.json` exists with `workspaces` configured for `apps/*` and `packages/*`
+- [x] `turbo.json` exists with pipeline configuration for `build`, `test`, `lint`, `typecheck`
+- [x] Directory structure matches: `apps/mobile/`, `apps/web/`, `packages/shared/`, `supabase/`
+- [x] Running `npm install` at root succeeds without errors
+- [x] `.gitignore` includes `node_modules`, `.env*`, `.turbo`, `dist`
 
 **Files:**
 - Create: `package.json` — root workspace configuration
