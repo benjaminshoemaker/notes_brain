@@ -347,11 +347,11 @@ Human must complete before agents begin:
 **What:** Allow users to change a note's category with a single interaction.
 
 **Acceptance Criteria:**
-- [ ] Clicking category badge on note card opens category selector
-- [ ] Selecting new category updates note immediately (optimistic)
-- [ ] Category change sets `classification_status: 'manual'`, `classification_confidence: null`
-- [ ] Selector closes after selection
-- [ ] Updated category persists on page refresh
+- [x] Clicking category badge on note card opens category selector
+- [x] Selecting new category updates note immediately (optimistic)
+- [x] Category change sets `classification_status: 'manual'`, `classification_confidence: null`
+- [x] Selector closes after selection
+- [x] Updated category persists on page refresh
 
 **Files:**
 - Create: `apps/web/src/components/CategoryEditor.tsx` — inline category editor

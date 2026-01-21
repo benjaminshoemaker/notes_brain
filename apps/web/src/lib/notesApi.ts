@@ -1,4 +1,4 @@
-import type { NoteWithAttachments } from "@notesbrain/shared";
+import type { Category, NoteWithAttachments } from "@notesbrain/shared";
 
 import { supabase } from "./supabaseClient";
 
@@ -60,4 +60,23 @@ export async function searchNotes(searchQuery: string): Promise<NoteWithAttachme
   }
 
   return (data ?? []) as unknown as NoteWithAttachments[];
+}
+
+export async function updateNoteCategory(noteId: string, category: Category) {
+  const { data, error } = await supabase
+    .from("notes")
+    .update({
+      category,
+      classification_status: "manual",
+      classification_confidence: null
+    })
+    .eq("id", noteId)
+    .select("*")
+    .single();
+
+  if (error) {
+    throw error;
+  }
+
+  return data;
 }

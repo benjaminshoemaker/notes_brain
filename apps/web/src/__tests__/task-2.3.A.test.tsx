@@ -142,10 +142,17 @@ describe("Task 2.3.A", () => {
     ]);
 
     const user = userEvent.setup();
-    const { findAllByTestId, getByRole } = renderNotes();
+    const { findAllByTestId, getAllByRole } = renderNotes();
 
     await findAllByTestId("note-card");
-    await user.click(getByRole("button", { name: /projects/i }));
+
+    const projectButtons = getAllByRole("button", { name: /projects/i });
+    const filterButton = projectButtons.find((button) => button.getAttribute("aria-pressed") !== null);
+    if (!filterButton) {
+      throw new Error("Category filter button not found");
+    }
+
+    await user.click(filterButton);
 
     const cards = await findAllByTestId("note-card");
     expect(cards).toHaveLength(1);
@@ -181,11 +188,17 @@ describe("Task 2.3.A", () => {
     ]);
 
     const user = userEvent.setup();
-    const { findAllByTestId, getByRole } = renderNotes();
+    const { findAllByTestId, getAllByRole, getByRole } = renderNotes();
 
     await findAllByTestId("note-card");
 
-    await user.click(getByRole("button", { name: /projects/i }));
+    const projectButtons = getAllByRole("button", { name: /projects/i });
+    const filterButton = projectButtons.find((button) => button.getAttribute("aria-pressed") !== null);
+    if (!filterButton) {
+      throw new Error("Category filter button not found");
+    }
+
+    await user.click(filterButton);
     let cards = await findAllByTestId("note-card");
     expect(cards).toHaveLength(1);
 
