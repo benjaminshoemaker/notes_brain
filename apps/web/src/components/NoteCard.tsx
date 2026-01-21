@@ -1,6 +1,7 @@
 import type { NoteWithAttachments } from "@notesbrain/shared";
 import { useState } from "react";
 
+import { AttachmentPreview } from "./AttachmentPreview";
 import { CategoryEditor } from "./CategoryEditor";
 
 type Props = {
@@ -18,6 +19,7 @@ function formatPreview(content: string | null) {
 export function NoteCard({ note }: Props) {
   const preview = formatPreview(note.content);
   const [isEditingCategory, setIsEditingCategory] = useState(false);
+  const attachmentCount = note.attachments?.length ?? 0;
 
   return (
     <article
@@ -61,9 +63,30 @@ export function NoteCard({ note }: Props) {
         >
           {new Date(note.created_at).toLocaleString()}
         </time>
+        {attachmentCount > 0 ? (
+          <span
+            data-testid="attachment-count"
+            style={{
+              fontSize: 12,
+              border: "1px solid #ddd",
+              borderRadius: 999,
+              padding: "2px 8px"
+            }}
+          >
+            {attachmentCount}
+          </span>
+        ) : null}
       </div>
 
       <p style={{ margin: 0, whiteSpace: "pre-wrap" }}>{preview}</p>
+
+      {attachmentCount > 0 ? (
+        <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+          {note.attachments.map((attachment) => (
+            <AttachmentPreview key={attachment.id} attachment={attachment} />
+          ))}
+        </div>
+      ) : null}
     </article>
   );
 }

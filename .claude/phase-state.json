@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "project_name": "notes_brain",
-  "last_updated": "2026-01-21T10:35:09Z",
+  "last_updated": "2026-01-21T10:38:02Z",
   "generated_by": "phase-start",
   "main": {
     "current_phase": 2,
@@ -37,7 +37,7 @@
         "name": "Web App - Core",
         "status": "IN_PROGRESS",
         "tasks_total": 8,
-        "tasks_complete": 7,
+        "tasks_complete": 8,
         "started_at": "2026-01-21T09:52:54Z",
         "tasks": {
           "2.1.A": { "status": "COMPLETE", "completed_at": "2026-01-21T09:59:43Z" },
@@ -47,7 +47,7 @@
           "2.4.A": { "status": "COMPLETE", "completed_at": "2026-01-21T10:22:20Z" },
           "2.4.B": { "status": "COMPLETE", "completed_at": "2026-01-21T10:28:45Z" },
           "2.5.A": { "status": "COMPLETE", "completed_at": "2026-01-21T10:35:09Z" },
-          "2.5.B": { "status": "NOT_STARTED" }
+          "2.5.B": { "status": "COMPLETE", "completed_at": "2026-01-21T10:38:02Z" }
         }
       },
       {

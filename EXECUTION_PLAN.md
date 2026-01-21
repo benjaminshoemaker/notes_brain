@@ -369,11 +369,11 @@ Human must complete before agents begin:
 **What:** Show inline previews for note attachments (images, PDFs).
 
 **Acceptance Criteria:**
-- [ ] Image attachments (PNG, JPG, GIF, WEBP) show thumbnail preview
-- [ ] PDF attachments show PDF icon with filename
-- [ ] Clicking attachment opens in new tab (signed URL from Supabase Storage)
-- [ ] Attachment count badge shows on notes with files
-- [ ] Loading state displays while fetching signed URL
+- [x] Image attachments (PNG, JPG, GIF, WEBP) show thumbnail preview
+- [x] PDF attachments show PDF icon with filename
+- [x] Clicking attachment opens in new tab (signed URL from Supabase Storage)
+- [x] Attachment count badge shows on notes with files
+- [x] Loading state displays while fetching signed URL
 
 **Files:**
 - Create: `apps/web/src/components/AttachmentPreview.tsx` — preview component
