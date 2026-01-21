@@ -1,3 +1,8 @@
+-- Ensure extensions schema exists and is in the search path.
+-- Supabase often installs extension functions (e.g. uuid_generate_v4) into the `extensions` schema.
+CREATE SCHEMA IF NOT EXISTS extensions;
+SET search_path = public, extensions;
+
 -- Enable required extensions
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 CREATE EXTENSION IF NOT EXISTS "pg_cron";
@@ -124,4 +129,3 @@ CREATE TRIGGER notes_updated_at BEFORE UPDATE ON notes
   FOR EACH ROW EXECUTE FUNCTION update_updated_at();
 CREATE TRIGGER devices_updated_at BEFORE UPDATE ON devices
   FOR EACH ROW EXECUTE FUNCTION update_updated_at();
-

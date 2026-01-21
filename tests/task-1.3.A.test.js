@@ -11,6 +11,7 @@ test("should create initial schema migration when checking supabase migrations",
 
 test("should define required enums when reading the schema migration", async () => {
   const sql = await readFile(migrationPath, "utf8");
+  assert.match(sql, /SET\s+search_path\s*=\s*public\s*,\s*extensions/i);
   for (const enumName of [
     "note_category",
     "note_type",
@@ -74,4 +75,3 @@ test("should create supabase config when checking supabase config.toml", async (
   const cfgStat = await stat("supabase/config.toml");
   assert.ok(cfgStat.isFile());
 });
-
