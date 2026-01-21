@@ -4,12 +4,17 @@ import type { Category, NoteWithAttachments } from "@notesbrain/shared";
 import { useNavigate } from "react-router-dom";
 
 import { CategoryFilter } from "../components/CategoryFilter";
+import { CategorySelect } from "../components/CategorySelect";
+import { FileDropZone } from "../components/FileDropZone";
 import { NoteInput } from "../components/NoteInput";
 import { NoteList } from "../components/NoteList";
 import { SearchInput } from "../components/SearchInput";
 import { useNotes } from "../hooks/useNotes";
 import { useSearch } from "../hooks/useSearch";
+import { useUploadFile } from "../hooks/useUploadFile";
+import { useToast } from "../hooks/useToast";
 import { signOutUser } from "../lib/authApi";
+import { validateAttachmentFile } from "../lib/fileValidation";
 
 function sortNotes(notes: NoteWithAttachments[]) {
   return [...notes].sort((a, b) => {
@@ -23,6 +28,8 @@ export default function NotesPage() {
   const navigate = useNavigate();
   const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
+  const [pendingFile, setPendingFile] = useState<File | null>(null);
+  const [pendingFileCategory, setPendingFileCategory] = useState<Category | "">("");
 
   const { data, isLoading, error } = useNotes();
   const {
@@ -30,6 +37,8 @@ export default function NotesPage() {
     isLoading: isSearchLoading,
     isFetching: isSearchFetching
   } = useSearch(searchQuery);
+  const uploadFile = useUploadFile();
+  const { showToast } = useToast();
 
   const notes = useMemo(() => sortNotes(data ?? []), [data]);
 
@@ -45,39 +54,101 @@ export default function NotesPage() {
     navigate("/login", { replace: true });
   }
 
+  function handleFilesDropped(files: File[]) {
+    const file = files[0];
+    if (!file) return;
+
+    const result = validateAttachmentFile(file);
+    if (!result.ok) {
+      showToast(result.error, "error");
+      return;
+    }
+
+    setPendingFile(file);
+    setPendingFileCategory("");
+  }
+
+  async function handleUploadPendingFile() {
+    if (!pendingFile) return;
+
+    try {
+      await uploadFile.mutateAsync({
+        file: pendingFile,
+        category: pendingFileCategory || undefined
+      });
+      setPendingFile(null);
+      setPendingFileCategory("");
+    } catch {
+      // Toast handled in mutation.
+    }
+  }
+
   return (
-    <div style={{ display: "grid", gap: 16 }}>
-      <header style={{ display: "flex", alignItems: "center", gap: 12 }}>
-        <h1 style={{ margin: 0 }}>Notes</h1>
+    <FileDropZone onFilesDropped={handleFilesDropped}>
+      <div style={{ display: "grid", gap: 16 }}>
+        <header style={{ display: "flex", alignItems: "center", gap: 12 }}>
+          <h1 style={{ margin: 0 }}>Notes</h1>
 
-        <div style={{ flex: 1 }}>
-          <SearchInput value={searchQuery} onChange={setSearchQuery} />
-        </div>
+          <div style={{ flex: 1 }}>
+            <SearchInput value={searchQuery} onChange={setSearchQuery} />
+          </div>
 
-        <div style={{ marginLeft: "auto" }}>
-          <button type="button" onClick={handleLogout}>
-            Logout
-          </button>
-        </div>
-      </header>
+          <div style={{ marginLeft: "auto" }}>
+            <button type="button" onClick={handleLogout}>
+              Logout
+            </button>
+          </div>
+        </header>
 
-      <NoteInput />
+        <NoteInput />
 
-      <CategoryFilter selectedCategory={selectedCategory} onSelectCategory={setSelectedCategory} />
+        {pendingFile ? (
+          <div
+            style={{
+              border: "1px solid #ddd",
+              borderRadius: 10,
+              padding: 12,
+              display: "grid",
+              gap: 10
+            }}
+          >
+            <div>
+              <strong>Upload:</strong> {pendingFile.name}
+            </div>
 
-      {isLoading ? <p>Loading…</p> : null}
-      {error ? <p role="alert">Failed to load notes.</p> : null}
-      {isSearchMode && (isSearchLoading || isSearchFetching) ? <p>Searching…</p> : null}
+            <CategorySelect value={pendingFileCategory} onChange={setPendingFileCategory} />
 
-      {!isLoading && !error && !isSearchMode ? <NoteList notes={filteredNotes} /> : null}
+            <div style={{ display: "flex", gap: 8 }}>
+              <button
+                type="button"
+                onClick={handleUploadPendingFile}
+                disabled={uploadFile.isPending}
+              >
+                Upload file
+              </button>
+              <button type="button" onClick={() => setPendingFile(null)} disabled={uploadFile.isPending}>
+                Cancel
+              </button>
+            </div>
+          </div>
+        ) : null}
 
-      {!isLoading && !error && isSearchMode ? (
-        filteredNotes.length === 0 && !isSearchLoading ? (
-          <p>No matching notes.</p>
-        ) : (
-          <NoteList notes={filteredNotes} />
-        )
-      ) : null}
-    </div>
+        <CategoryFilter selectedCategory={selectedCategory} onSelectCategory={setSelectedCategory} />
+
+        {isLoading ? <p>Loading…</p> : null}
+        {error ? <p role="alert">Failed to load notes.</p> : null}
+        {isSearchMode && (isSearchLoading || isSearchFetching) ? <p>Searching…</p> : null}
+
+        {!isLoading && !error && !isSearchMode ? <NoteList notes={filteredNotes} /> : null}
+
+        {!isLoading && !error && isSearchMode ? (
+          filteredNotes.length === 0 && !isSearchLoading ? (
+            <p>No matching notes.</p>
+          ) : (
+            <NoteList notes={filteredNotes} />
+          )
+        ) : null}
+      </div>
+    </FileDropZone>
   );
 }

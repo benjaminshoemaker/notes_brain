@@ -321,12 +321,12 @@ Human must complete before agents begin:
 **What:** Add file upload via drag-and-drop with optional category selection.
 
 **Acceptance Criteria:**
-- [ ] Drag-and-drop zone activates when files dragged over page
-- [ ] Accepted file types: PDF, PNG, JPG, JPEG, GIF, WEBP, DOC, DOCX, TXT
-- [ ] Files over 10MB are rejected with error message
-- [ ] Category selection dropdown appears after file drop (optional)
-- [ ] File uploads to Supabase storage at `{user_id}/attachments/{note_id}/{filename}`
-- [ ] Note created with `type: 'file'`, `classification_status: 'manual'`
+- [x] Drag-and-drop zone activates when files dragged over page
+- [x] Accepted file types: PDF, PNG, JPG, JPEG, GIF, WEBP, DOC, DOCX, TXT
+- [x] Files over 10MB are rejected with error message
+- [x] Category selection dropdown appears after file drop (optional)
+- [x] File uploads to Supabase storage at `{user_id}/attachments/{note_id}/{filename}`
+- [x] Note created with `type: 'file'`, `classification_status: 'manual'`
 
 **Files:**
 - Create: `apps/web/src/components/FileDropZone.tsx` — drag-drop component
