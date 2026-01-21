@@ -5,6 +5,7 @@ import { defineConfig } from "vite";
 
 export default defineConfig({
   plugins: [react()],
+  envDir: path.resolve(__dirname, "../.."),
   optimizeDeps: {
     include: ["@notesbrain/shared"]
   },
@@ -23,4 +24,3 @@ export default defineConfig({
     setupFiles: ["./src/test/setup.ts"]
   }
 });
-
