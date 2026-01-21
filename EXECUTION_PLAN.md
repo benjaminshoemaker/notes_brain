@@ -101,11 +101,11 @@ Human must complete before agents begin:
 **What:** Create the Supabase client initialization and auth helper functions in the shared package.
 
 **Acceptance Criteria:**
-- [ ] `createSupabaseClient` function exists and accepts URL and anon key
-- [ ] Auth functions exported: `signUp`, `signIn`, `signInWithMagicLink`, `signOut`
-- [ ] `signUp` creates user profile in `users` table with auto-detected timezone
-- [ ] Client types are properly typed with database schema types
-- [ ] Package exports client from `@notesbrain/shared`
+- [x] `createSupabaseClient` function exists and accepts URL and anon key
+- [x] Auth functions exported: `signUp`, `signIn`, `signInWithMagicLink`, `signOut`
+- [x] `signUp` creates user profile in `users` table with auto-detected timezone
+- [x] Client types are properly typed with database schema types
+- [x] Package exports client from `@notesbrain/shared`
 
 **Files:**
 - Create: `packages/shared/src/supabase.ts` — client factory
