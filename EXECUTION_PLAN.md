@@ -389,10 +389,10 @@ Human must complete before agents begin:
 ### Phase 2 Checkpoint
 
 **Automated:**
-- [ ] `npm run build` succeeds for web app
-- [ ] `npm run typecheck` passes
-- [ ] `npm run lint` passes
-- [ ] All tests pass
+- [x] `npm run build` succeeds for web app
+- [x] `npm run typecheck` passes
+- [x] `npm run lint` passes
+- [x] All tests pass
 
 **Manual Verification:**
 - [ ] Can sign up with email/password
