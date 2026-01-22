@@ -10,10 +10,10 @@ test("should document database webhooks when reading webhook documentation migra
 
   assert.ok(sql.includes("Database > Webhooks"));
   assert.ok(sql.includes("/functions/v1/classify-note"));
+  assert.ok(sql.includes("do not support row-level filters"));
   assert.ok(sql.includes("type = 'text'"));
   assert.ok(sql.includes("classification_status = 'pending'"));
 
   assert.ok(sql.includes("/functions/v1/transcribe-voice"));
   assert.ok(sql.includes("type = 'voice'"));
 });
-

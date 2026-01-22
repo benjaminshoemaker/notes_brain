@@ -18,7 +18,11 @@
   Trigger:
   - Table: public.notes
   - Events: INSERT
-  - Filter: type = 'text' AND classification_status = 'pending'
+  - Note: Supabase Dashboard Database Webhooks do not support row-level filters.
+    Configure this webhook on all INSERTs; the Edge Function will skip unless:
+      - type = 'text'
+      - classification_status = 'pending'
+      - content is non-empty
 
   URL:
   - https://<project>.supabase.co/functions/v1/classify-note
@@ -28,7 +32,9 @@
   Trigger:
   - Table: public.notes
   - Events: INSERT
-  - Filter: type = 'voice'
+  - Note: Supabase Dashboard Database Webhooks do not support row-level filters.
+    Configure this webhook on all INSERTs; the Edge Function will skip unless:
+      - type = 'voice'
 
   URL:
   - https://<project>.supabase.co/functions/v1/transcribe-voice
@@ -37,4 +43,3 @@
   - Supabase will send an INSERT payload including record.id; both functions
     accept the webhook payload format and derive note_id from record.id.
 */
-

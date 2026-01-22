@@ -616,18 +616,21 @@ Authorization: Bearer {access_token}
 
 ## Database Webhooks Configuration
 
-```sql
--- Webhook trigger for new text notes (triggers classification)
--- Configured in Supabase Dashboard: Database > Webhooks
+Supabase Database Webhooks are configured in the dashboard:
+Supabase Dashboard → Database → Webhooks
 
--- Trigger: INSERT on notes table
--- Filter: type = 'text' AND classification_status = 'pending'
--- URL: https://<project>.supabase.co/functions/v1/classify-note
+Note: Supabase Dashboard Database Webhooks do not support row-level filters.
+Configure the webhooks on INSERT for `public.notes`; the Edge Functions will no-op unless the row is relevant.
 
--- Trigger: INSERT on notes table
--- Filter: type = 'voice'
--- URL: https://<project>.supabase.co/functions/v1/transcribe-voice
-```
+- Webhook: Notes INSERT → `classify-note`
+  - Trigger: INSERT on `public.notes`
+  - Behavior: the function will only take action when `type = 'text'` AND `classification_status = 'pending'` AND content is non-empty
+  - URL: `https://<project>.supabase.co/functions/v1/classify-note`
+
+- Webhook: Notes INSERT → `transcribe-voice`
+  - Trigger: INSERT on `public.notes`
+  - Behavior: the function will only take action when `type = 'voice'`
+  - URL: `https://<project>.supabase.co/functions/v1/transcribe-voice`
 
 ---
 

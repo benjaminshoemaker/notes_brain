@@ -496,8 +496,8 @@ Human must complete before agents begin:
 **What:** Set up Supabase database webhooks to trigger Edge Functions on note insert.
 
 **Acceptance Criteria:**
-- [ ] Webhook triggers `classify-note` on INSERT where `type = 'text'` AND `classification_status = 'pending'`
-- [ ] Webhook triggers `transcribe-voice` on INSERT where `type = 'voice'`
+- [ ] Webhook triggers `classify-note` on INSERT on `public.notes` (no dashboard row filter; function skips unless `type = 'text'` AND `classification_status = 'pending'` AND content is non-empty)
+- [ ] Webhook triggers `transcribe-voice` on INSERT on `public.notes` (no dashboard row filter; function skips unless `type = 'voice'`)
 - [ ] Webhooks configured in Supabase dashboard (documented in migration comment)
 - [ ] Test: creating text note triggers classification
 - [ ] Test: creating voice note triggers transcription
