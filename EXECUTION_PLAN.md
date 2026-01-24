@@ -571,12 +571,12 @@ Human must complete before agents begin:
 **What:** Create the Expo app with Expo Router, configured for Android with FCM.
 
 **Acceptance Criteria:**
-- [ ] `apps/mobile/package.json` exists with Expo dependencies
-- [ ] `app.json` configured with package name `com.notesbrain.app`
-- [ ] Expo Router configured with file-based routing
+- [x] `apps/mobile/package.json` exists with Expo dependencies
+- [x] `app.json` configured with package name `com.notesbrain.app`
+- [x] Expo Router configured with file-based routing
 - [ ] App runs on Android emulator via `npx expo start`
-- [ ] React Query provider wraps the app
-- [ ] Supabase client initialized from shared package
+- [x] React Query provider wraps the app
+- [x] Supabase client initialized from shared package
 
 **Files:**
 - Create: `apps/mobile/package.json` — dependencies

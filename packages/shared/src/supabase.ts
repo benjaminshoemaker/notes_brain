@@ -1,4 +1,4 @@
-import { createClient, type SupabaseClient } from "@supabase/supabase-js";
+import { createClient, type SupabaseClient, type SupabaseClientOptions } from "@supabase/supabase-js";
 
 import type {
   Category,
@@ -157,8 +157,9 @@ export type Database = {
 
 export function createSupabaseClient(
   supabaseUrl: string,
-  supabaseAnonKey: string
+  supabaseAnonKey: string,
+  options?: SupabaseClientOptions<"public">
 ): SupabaseClient<Database> {
-  return createClient<Database>(supabaseUrl, supabaseAnonKey);
+  return createClient<Database>(supabaseUrl, supabaseAnonKey, options);
 }
 
