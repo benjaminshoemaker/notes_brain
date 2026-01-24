@@ -675,12 +675,12 @@ Human must complete before agents begin:
 **What:** Configure app to receive shared content from other Android apps.
 
 **Acceptance Criteria:**
-- [ ] `app.json` has intent filters for text/*, image/*, application/pdf
-- [ ] App receives shared text and creates note
-- [ ] App receives shared images/files and prompts for category
-- [ ] Shared URLs detected and saved as text notes
-- [ ] App handles share intent when launched from cold start
-- [ ] App handles share intent when already running
+- [x] `app.json` has intent filters for text/*, image/*, application/pdf
+- [x] App receives shared text and creates note
+- [x] App receives shared images/files and prompts for category
+- [x] Shared URLs detected and saved as text notes
+- [x] App handles share intent when launched from cold start
+- [x] App handles share intent when already running
 
 **Files:**
 - Modify: `apps/mobile/app.json` — add intent filters

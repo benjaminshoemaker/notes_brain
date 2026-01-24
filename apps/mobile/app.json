@@ -23,18 +23,7 @@
         "backgroundColor": "#ffffff"
       },
       "package": "com.notesbrain.app",
-      "googleServicesFile": "./google-services.json",
-      "intentFilters": [
-        {
-          "action": "android.intent.action.SEND",
-          "category": ["android.intent.category.DEFAULT"],
-          "data": [
-            { "mimeType": "text/*" },
-            { "mimeType": "image/*" },
-            { "mimeType": "application/pdf" }
-          ]
-        }
-      ]
+      "googleServicesFile": "./google-services.json"
     },
     "web": {
       "bundler": "metro",
@@ -48,6 +37,13 @@
         "expo-av",
         {
           "microphonePermission": "Allow NotesBrain to record voice notes"
+        }
+      ],
+      [
+        "expo-share-intent",
+        {
+          "androidIntentFilters": ["text/*", "image/*", "application/pdf"],
+          "androidMultiIntentFilters": ["image/*"]
         }
       ]
     ],
