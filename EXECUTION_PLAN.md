@@ -624,12 +624,12 @@ Human must complete before agents begin:
 **What:** Create the main capture screen that opens immediately to text input.
 
 **Acceptance Criteria:**
-- [ ] Home screen shows text input focused by default
-- [ ] Keyboard opens automatically on screen load
-- [ ] Submit button (or Enter) creates text note
-- [ ] Note saves with `classification_status: 'pending'`
-- [ ] Success feedback shown (brief toast or checkmark)
-- [ ] Input clears after submission
+- [x] Home screen shows text input focused by default
+- [x] Keyboard opens automatically on screen load
+- [x] Submit button (or Enter) creates text note
+- [x] Note saves with `classification_status: 'pending'`
+- [x] Success feedback shown (brief toast or checkmark)
+- [x] Input clears after submission
 
 **Files:**
 - Create: `apps/mobile/app/(app)/index.tsx` — capture screen
