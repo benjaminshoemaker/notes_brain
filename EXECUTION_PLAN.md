@@ -598,12 +598,12 @@ Human must complete before agents begin:
 **What:** Build login/signup screens with shared auth logic from @notesbrain/shared.
 
 **Acceptance Criteria:**
-- [ ] Login screen with email/password fields
-- [ ] Signup screen with email/password fields
-- [ ] Magic link option sends email and shows "check email" message
-- [ ] Successful auth navigates to home (capture screen)
-- [ ] Auth state persists using Supabase session
-- [ ] Logout returns to login screen
+- [x] Login screen with email/password fields
+- [x] Signup screen with email/password fields
+- [x] Magic link option sends email and shows "check email" message
+- [x] Successful auth navigates to home (capture screen)
+- [x] Auth state persists using Supabase session
+- [x] Logout returns to login screen
 
 **Files:**
 - Create: `apps/mobile/app/(auth)/login.tsx` — login screen

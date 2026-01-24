@@ -12,28 +12,38 @@ import {
 } from "react-native";
 import { Stack, Link, useRouter } from "expo-router";
 
-import { signInWithPassword, sendMagicLink } from "../../lib/authApi";
+import { signUpWithPassword } from "../../lib/authApi";
 
-export default function LoginScreen() {
+export default function SignupScreen() {
   const router = useRouter();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
-  const [status, setStatus] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  async function handleSignIn() {
+  async function handleSignUp() {
     setError(null);
-    setStatus(null);
 
-    if (!email.trim() || !password) {
+    const trimmedEmail = email.trim();
+    if (!trimmedEmail || !password) {
       setError("Email and password are required.");
       return;
     }
 
+    if (password !== confirmPassword) {
+      setError("Passwords do not match.");
+      return;
+    }
+
+    if (password.length < 6) {
+      setError("Password must be at least 6 characters.");
+      return;
+    }
+
     setIsSubmitting(true);
-    const result = await signInWithPassword(email.trim(), password);
+    const result = await signUpWithPassword(trimmedEmail, password);
     setIsSubmitting(false);
 
     if (result.error) {
@@ -41,29 +51,8 @@ export default function LoginScreen() {
       return;
     }
 
+    // After successful signup, navigate to the app
     router.replace("/(app)");
-  }
-
-  async function handleMagicLink() {
-    setError(null);
-    setStatus(null);
-
-    const trimmedEmail = email.trim();
-    if (!trimmedEmail) {
-      setError("Email is required for magic link sign-in.");
-      return;
-    }
-
-    setIsSubmitting(true);
-    const result = await sendMagicLink(trimmedEmail);
-    setIsSubmitting(false);
-
-    if (result.error) {
-      setError(result.error.message);
-      return;
-    }
-
-    setStatus("Magic link sent! Check your email.");
   }
 
   return (
@@ -71,14 +60,14 @@ export default function LoginScreen() {
       style={styles.container}
       behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
-      <Stack.Screen options={{ title: "Sign In" }} />
+      <Stack.Screen options={{ title: "Create Account" }} />
       <ScrollView
         contentContainerStyle={styles.scrollContent}
         keyboardShouldPersistTaps="handled"
       >
         <View style={styles.formContainer}>
-          <Text style={styles.title}>Sign In</Text>
-          <Text style={styles.subtitle}>Welcome back to NotesBrain</Text>
+          <Text style={styles.title}>Create Account</Text>
+          <Text style={styles.subtitle}>Start capturing your thoughts</Text>
 
           <View style={styles.inputGroup}>
             <Text style={styles.label}>Email</Text>
@@ -101,31 +90,36 @@ export default function LoginScreen() {
               style={styles.input}
               value={password}
               onChangeText={setPassword}
-              placeholder="Your password"
+              placeholder="At least 6 characters"
               secureTextEntry
-              autoComplete="password"
+              autoComplete="new-password"
+              editable={!isSubmitting}
+            />
+          </View>
+
+          <View style={styles.inputGroup}>
+            <Text style={styles.label}>Confirm Password</Text>
+            <TextInput
+              style={styles.input}
+              value={confirmPassword}
+              onChangeText={setConfirmPassword}
+              placeholder="Confirm your password"
+              secureTextEntry
+              autoComplete="new-password"
               editable={!isSubmitting}
             />
           </View>
 
           <TouchableOpacity
             style={[styles.button, styles.primaryButton, isSubmitting && styles.buttonDisabled]}
-            onPress={handleSignIn}
+            onPress={handleSignUp}
             disabled={isSubmitting}
           >
             {isSubmitting ? (
               <ActivityIndicator color="#ffffff" />
             ) : (
-              <Text style={styles.buttonText}>Sign In</Text>
+              <Text style={styles.buttonText}>Create Account</Text>
             )}
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={[styles.button, styles.secondaryButton, isSubmitting && styles.buttonDisabled]}
-            onPress={handleMagicLink}
-            disabled={isSubmitting}
-          >
-            <Text style={styles.secondaryButtonText}>Sign in with magic link</Text>
           </TouchableOpacity>
 
           {error && (
@@ -134,17 +128,11 @@ export default function LoginScreen() {
             </View>
           )}
 
-          {status && (
-            <View style={styles.statusContainer}>
-              <Text style={styles.statusText}>{status}</Text>
-            </View>
-          )}
-
           <View style={styles.footer}>
-            <Text style={styles.footerText}>New here? </Text>
-            <Link href="/(auth)/signup" asChild>
+            <Text style={styles.footerText}>Already have an account? </Text>
+            <Link href="/(auth)/login" asChild>
               <TouchableOpacity>
-                <Text style={styles.linkText}>Create an account</Text>
+                <Text style={styles.linkText}>Sign in</Text>
               </TouchableOpacity>
             </Link>
           </View>
@@ -204,21 +192,11 @@ const styles = StyleSheet.create({
   primaryButton: {
     backgroundColor: "#0066cc",
   },
-  secondaryButton: {
-    backgroundColor: "transparent",
-    borderWidth: 1,
-    borderColor: "#0066cc",
-  },
   buttonDisabled: {
     opacity: 0.6,
   },
   buttonText: {
     color: "#ffffff",
-    fontSize: 16,
-    fontWeight: "600",
-  },
-  secondaryButtonText: {
-    color: "#0066cc",
     fontSize: 16,
     fontWeight: "600",
   },
@@ -230,16 +208,6 @@ const styles = StyleSheet.create({
   },
   errorText: {
     color: "#cc0000",
-    fontSize: 14,
-  },
-  statusContainer: {
-    backgroundColor: "#f0fff0",
-    padding: 12,
-    borderRadius: 8,
-    marginTop: 16,
-  },
-  statusText: {
-    color: "#006600",
     fontSize: 14,
   },
   footer: {
