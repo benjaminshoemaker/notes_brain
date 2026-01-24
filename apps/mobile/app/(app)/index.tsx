@@ -1,13 +1,16 @@
 import { useState, useCallback } from "react";
-import { View, StyleSheet, KeyboardAvoidingView, Platform } from "react-native";
+import { View, StyleSheet, KeyboardAvoidingView, Platform, ScrollView, Text } from "react-native";
 import { useFocusEffect } from "expo-router";
 
 import { CaptureInput } from "../../components/CaptureInput";
+import { VoiceRecorder } from "../../components/VoiceRecorder";
 import { Toast } from "../../components/Toast";
 import { useCreateNote } from "../../hooks/useCreateNote";
+import { useUploadVoiceNote } from "../../hooks/useUploadVoiceNote";
 
 export default function CaptureScreen() {
   const createNote = useCreateNote();
+  const uploadVoiceNote = useUploadVoiceNote();
   const [toast, setToast] = useState<{ message: string; type: "success" | "error" } | null>(null);
   const [shouldFocus, setShouldFocus] = useState(true);
 
@@ -19,7 +22,7 @@ export default function CaptureScreen() {
     }, [])
   );
 
-  async function handleSubmit(content: string) {
+  async function handleTextSubmit(content: string) {
     try {
       await createNote.mutateAsync({ content, type: "text" });
       setToast({ message: "Note saved!", type: "success" });
@@ -29,9 +32,21 @@ export default function CaptureScreen() {
     }
   }
 
+  async function handleVoiceRecordingComplete(uri: string) {
+    try {
+      await uploadVoiceNote.mutateAsync({ uri });
+      setToast({ message: "Voice note saved!", type: "success" });
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "Failed to save voice note";
+      setToast({ message, type: "error" });
+    }
+  }
+
   function hideToast() {
     setToast(null);
   }
+
+  const isSubmitting = createNote.isPending || uploadVoiceNote.isPending;
 
   return (
     <KeyboardAvoidingView
@@ -39,13 +54,34 @@ export default function CaptureScreen() {
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       keyboardVerticalOffset={Platform.OS === "ios" ? 90 : 0}
     >
-      <View style={styles.content}>
-        <CaptureInput
-          onSubmit={handleSubmit}
-          isSubmitting={createNote.isPending}
-          autoFocus={shouldFocus}
-        />
-      </View>
+      <ScrollView
+        style={styles.scrollView}
+        contentContainerStyle={styles.scrollContent}
+        keyboardShouldPersistTaps="handled"
+      >
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Text Note</Text>
+          <CaptureInput
+            onSubmit={handleTextSubmit}
+            isSubmitting={isSubmitting}
+            autoFocus={shouldFocus}
+          />
+        </View>
+
+        <View style={styles.divider}>
+          <View style={styles.dividerLine} />
+          <Text style={styles.dividerText}>or</Text>
+          <View style={styles.dividerLine} />
+        </View>
+
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Voice Note</Text>
+          <VoiceRecorder
+            onRecordingComplete={handleVoiceRecordingComplete}
+            isUploading={uploadVoiceNote.isPending}
+          />
+        </View>
+      </ScrollView>
 
       {toast && (
         <Toast
@@ -64,9 +100,37 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#f5f5f5",
   },
-  content: {
+  scrollView: {
     flex: 1,
+  },
+  scrollContent: {
     padding: 16,
     paddingTop: 24,
+  },
+  section: {
+    marginBottom: 8,
+  },
+  sectionTitle: {
+    fontSize: 14,
+    fontWeight: "600",
+    color: "#666666",
+    marginBottom: 8,
+    textTransform: "uppercase",
+    letterSpacing: 0.5,
+  },
+  divider: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginVertical: 24,
+  },
+  dividerLine: {
+    flex: 1,
+    height: 1,
+    backgroundColor: "#dddddd",
+  },
+  dividerText: {
+    marginHorizontal: 16,
+    color: "#999999",
+    fontSize: 14,
   },
 });

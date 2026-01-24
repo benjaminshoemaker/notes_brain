@@ -649,13 +649,13 @@ Human must complete before agents begin:
 **What:** Add voice note recording using expo-av with 5-minute limit.
 
 **Acceptance Criteria:**
-- [ ] Mic button visible on capture screen
-- [ ] Tapping mic starts recording with visual indicator
-- [ ] Timer shows recording duration
-- [ ] Recording stops automatically at 5 minutes
-- [ ] Stop button ends recording early
-- [ ] Audio saved as .m4a and uploaded to Supabase Storage
-- [ ] Note created with `type: 'voice'` and attachment reference
+- [x] Mic button visible on capture screen
+- [x] Tapping mic starts recording with visual indicator
+- [x] Timer shows recording duration
+- [x] Recording stops automatically at 5 minutes
+- [x] Stop button ends recording early
+- [x] Audio saved as .m4a and uploaded to Supabase Storage
+- [x] Note created with `type: 'voice'` and attachment reference
 
 **Files:**
 - Create: `apps/mobile/components/VoiceRecorder.tsx` — recording UI
