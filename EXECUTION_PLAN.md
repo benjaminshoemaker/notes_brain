@@ -558,9 +558,9 @@ Human must complete before agents begin:
 
 Human must complete before agents begin:
 
-- [ ] Install Expo CLI: `npm install -g expo-cli`
-- [ ] Create `.env` in `apps/mobile/` with `EXPO_PUBLIC_SUPABASE_URL` and `EXPO_PUBLIC_SUPABASE_ANON_KEY`
-- [ ] Place `google-services.json` in `apps/mobile/`
+- [x] Expo CLI available via `npx expo` (no global install needed)
+- [x] Add `EXPO_PUBLIC_SUPABASE_URL` and `EXPO_PUBLIC_SUPABASE_ANON_KEY` to root `.env.local`
+- [x] Place `google-services.json` in `apps/mobile/`
 
 ---
 
