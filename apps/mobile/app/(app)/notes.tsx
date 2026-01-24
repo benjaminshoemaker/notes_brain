@@ -1,10 +1,35 @@
-import { View, Text, StyleSheet } from "react-native";
+import { useState } from "react";
+import { View, StyleSheet } from "react-native";
+import type { Category } from "@notesbrain/shared";
+
+import { NotesList } from "../../components/NotesList";
+import { MobileCategoryFilter } from "../../components/MobileCategoryFilter";
+import { useNotes } from "../../hooks/useNotes";
+import { useRealtimeNotes } from "../../hooks/useRealtimeNotes";
+import { useAuth } from "../../hooks/useAuth";
 
 export default function NotesScreen() {
+  const { user } = useAuth();
+  const { data: notes = [], isLoading, isRefetching, refetch } = useNotes();
+  const [selectedCategory, setSelectedCategory] = useState<Category | "all">("all");
+
+  // Subscribe to realtime updates
+  useRealtimeNotes(user?.id);
+
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Notes</Text>
-      <Text style={styles.subtitle}>Notes list will be implemented in Task 4.6.A</Text>
+      <MobileCategoryFilter
+        selectedCategory={selectedCategory}
+        onSelectCategory={setSelectedCategory}
+      />
+
+      <NotesList
+        notes={notes}
+        isLoading={isLoading}
+        isRefetching={isRefetching}
+        onRefresh={refetch}
+        selectedCategory={selectedCategory}
+      />
     </View>
   );
 }
@@ -12,19 +37,6 @@ export default function NotesScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    padding: 20,
-    backgroundColor: "#ffffff",
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginBottom: 8,
-  },
-  subtitle: {
-    fontSize: 14,
-    color: "#666666",
-    textAlign: "center",
+    backgroundColor: "#f5f5f5",
   },
 });

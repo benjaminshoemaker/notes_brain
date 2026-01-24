@@ -701,12 +701,12 @@ Human must complete before agents begin:
 **What:** Create note list screen mirroring web functionality.
 
 **Acceptance Criteria:**
-- [ ] Notes tab shows reverse-chronological list
-- [ ] Each note shows content preview, category badge, timestamp
-- [ ] Category filter tabs at top
-- [ ] Pull-to-refresh reloads notes
-- [ ] Tapping note opens detail view (or expands inline)
-- [ ] Realtime subscription updates list when classification completes
+- [x] Notes tab shows reverse-chronological list
+- [x] Each note shows content preview, category badge, timestamp
+- [x] Category filter tabs at top
+- [x] Pull-to-refresh reloads notes
+- [x] Tapping note opens detail view (or expands inline)
+- [x] Realtime subscription updates list when classification completes
 
 **Files:**
 - Create: `apps/mobile/app/(app)/notes.tsx` — notes list screen
