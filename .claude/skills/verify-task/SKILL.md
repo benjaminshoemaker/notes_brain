@@ -1,4 +1,5 @@
 ---
+name: verify-task
 description: Run code-verification on a specific task
 argument-hint: [task-id]
 allowed-tools: Read, Edit, Bash, Grep, Glob, AskUserQuestion

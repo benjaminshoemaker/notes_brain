@@ -1,4 +1,5 @@
 ---
+name: fresh-start
 description: Orient to project structure and load context
 argument-hint: [project-directory]
 allowed-tools: Read, Write, Edit, Glob, Grep, Bash, AskUserQuestion

@@ -7,3 +7,6 @@ google-services.json
 GoogleService-Info.plist
 supabase/.temp
 supabase/.branches
+
+# Verification credentials (never commit)
+.claude/verification/auth-state.json

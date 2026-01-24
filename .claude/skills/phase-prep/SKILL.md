@@ -1,10 +1,62 @@
 ---
+name: phase-prep
 description: Check prerequisites before starting a phase
 argument-hint: [phase-number]
-allowed-tools: Bash, Read, Glob, Grep, AskUserQuestion
+allowed-tools: Bash, Read, Glob, Grep, AskUserQuestion, WebFetch, WebSearch
 ---
 
 I want to execute Phase $1 from EXECUTION_PLAN.md. Before starting, read EXECUTION_PLAN.md and check:
+
+## External Tool Documentation Protocol
+
+**CRITICAL:** Before providing setup instructions for any external service (Supabase, Stripe, Firebase, Auth0, Vercel, etc.), you MUST read the latest official documentation first.
+
+### When to Fetch Docs
+
+Fetch documentation when ANY of these apply:
+- Pre-Phase Setup mentions an external service
+- You're about to provide step-by-step setup instructions
+- The phase involves integrating with a third-party API
+- Environment variables reference external services (e.g., `STRIPE_API_KEY`, `SUPABASE_URL`)
+
+### How to Fetch Docs
+
+1. **Identify the service** from Pre-Phase Setup items or EXECUTION_PLAN.md
+2. **Fetch official docs** using WebFetch or WebSearch:
+   - Primary: Official quickstart/setup guide
+   - Secondary: API reference for specific integrations
+3. **Cache per session** — Don't re-fetch the same docs within one session
+4. **Handle failures gracefully:**
+   - Retry with exponential backoff (2-3 attempts)
+   - If all retries fail: warn user and proceed with best available info
+   - Never block entirely on doc fetch failure
+
+### Documentation URLs by Service
+
+| Service | Primary Doc URL |
+|---------|----------------|
+| Supabase | https://supabase.com/docs/guides/getting-started |
+| Firebase | https://firebase.google.com/docs/web/setup |
+| Stripe | https://stripe.com/docs/development/quickstart |
+| Auth0 | https://auth0.com/docs/quickstart |
+| Vercel | https://vercel.com/docs/getting-started |
+| Netlify | https://docs.netlify.com/get-started/ |
+| Clerk | https://clerk.com/docs/quickstarts |
+| Resend | https://resend.com/docs/introduction |
+| Neon | https://neon.tech/docs/get-started-with-neon |
+| PlanetScale | https://planetscale.com/docs |
+| Turso | https://docs.turso.tech/quickstart |
+
+For services not listed, use WebSearch: `{service name} official documentation quickstart`
+
+### Integration with Setup Instructions
+
+When generating detailed setup guides (see "Detailed Setup Instructions" section below):
+1. Fetch docs FIRST
+2. Cross-reference fetched content with your instructions
+3. Update any outdated steps (UI changes, renamed fields, new requirements)
+4. Include version/date context: "As of {date}, the Supabase dashboard..."
+
 
 ## Context Detection
 
@@ -27,6 +79,10 @@ Before starting, confirm the required files exist:
 - If either does not exist, **STOP** and tell the user:
   - They are likely in the toolkit repo (or the wrong folder)
   - They should `cd` into their project/feature directory (the one containing `EXECUTION_PLAN.md`) and re-run `/phase-prep $1`
+
+## Context Check
+
+**Before starting:** If context is below 40% remaining, run `/compact` first. This ensures the full command instructions remain in context throughout execution. Compaction mid-command loses procedural instructions.
 
 ## Pre-Flight Checks
 
@@ -278,57 +334,39 @@ Read `.claude/settings.local.json` for auto-advance configuration:
 ```json
 {
   "autoAdvance": {
-    "enabled": true,      // default: true
-    "delaySeconds": 15    // default: 15
+    "enabled": true      // default: true
   }
 }
 ```
 
-If `autoAdvance` is not configured, use defaults (`enabled: true`, `delaySeconds: 15`).
+If `autoAdvance` is not configured, use defaults (`enabled: true`).
 
 ### Auto-Advance Conditions
 
 Auto-advance to `/phase-start $1` ONLY if ALL of these are true:
 
 1. ✓ All Pre-Phase Setup items are PASS (none FAIL or BLOCKED)
-2. ✓ No human setup tasks exist (not just incomplete—none at all)
-3. ✓ Dependencies (prior phases) are complete
-4. ✓ Verification config is properly configured
-5. ✓ Criteria audit passed (for Phase 1)
-6. ✓ `--pause` flag was NOT passed to this command
-7. ✓ `autoAdvance.enabled` is true (or not configured, defaulting to true)
+2. ✓ Dependencies (prior phases) are complete
+3. ✓ Verification config is properly configured
+4. ✓ Criteria audit passed (for Phase 1)
+5. ✓ `--pause` flag was NOT passed to this command
+6. ✓ `autoAdvance.enabled` is true (or not configured, defaulting to true)
 
-**Rationale:** Auto-advance is for fully automated workflows. If human intervention was required (manual setup, external service configuration), the human is already involved and can manually trigger the next step.
+**Rationale:** Auto-advance only proceeds when all prerequisites are verified (PASS). Re-running `/phase-prep` after completing human setup confirms readiness and allows auto-advance.
 
 ### If Auto-Advance Conditions Met
 
-1. **Show countdown:**
+1. **Show brief notification:**
    ```
    AUTO-ADVANCE
    ============
-   All Phase $1 prerequisites verified. Ready to execute...
-
-   Auto-advancing to /phase-start $1 in 15s...
-   (Press Enter to pause)
+   All Phase $1 prerequisites verified. Proceeding to execution...
    ```
 
-2. **Wait for delay or interrupt:**
-   - Wait `autoAdvance.delaySeconds` (default 15)
-   - If user presses Enter during countdown, cancel auto-advance
-   - Show countdown updates: `14s... 13s... 12s...`
-
-3. **If not interrupted:**
+2. **Execute immediately:**
    - Track this command in auto-advance session log
-   - Execute `/phase-start $1`
+   - Invoke `/phase-start $1` using the Skill tool
    - Phase-start will continue, and its checkpoint will continue the chain
-
-4. **If interrupted:**
-   ```
-   Auto-advance paused by user.
-
-   Ready for Phase $1. Run manually when ready:
-     /phase-start $1
-   ```
 
 ### If Auto-Advance Conditions NOT Met
 
@@ -339,7 +377,6 @@ AUTO-ADVANCE STOPPED
 ====================
 
 Reason: {one of below}
-- Human setup tasks exist (human intervention required)
 - Pre-Phase Setup items failed or blocked
 - Prior phases not complete
 - Verification config not configured

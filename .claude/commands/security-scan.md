@@ -65,3 +65,17 @@ Status: PASSED | FAILED | PASSED WITH NOTES
 - **PASSED**: No critical or high issues
 - **PASSED WITH NOTES**: No critical/high, but medium/low exist
 - **FAILED**: Critical or high issues remain unresolved
+
+## Logging
+
+Append a summary entry to `.claude/verification-log.jsonl`:
+```json
+{
+  "timestamp": "{ISO timestamp}",
+  "scope": "security-scan",
+  "status": "PASSED | PASSED WITH NOTES | FAILED",
+  "critical": N,
+  "high": N,
+  "evidence": null
+}
+```

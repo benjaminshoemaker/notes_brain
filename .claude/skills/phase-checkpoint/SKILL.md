@@ -1,10 +1,54 @@
 ---
+name: phase-checkpoint
 description: Run checkpoint criteria after completing a phase
 argument-hint: [phase-number]
-allowed-tools: Bash, Read, Edit, Glob, Grep, AskUserQuestion
+allowed-tools: Bash, Read, Edit, Glob, Grep, AskUserQuestion, WebFetch, WebSearch
 ---
 
 Phase $1 is complete. Read EXECUTION_PLAN.md and run the checkpoint criteria.
+
+## External Tool Documentation Protocol
+
+**CRITICAL:** Before providing verification instructions for external integrations, you MUST read the latest official documentation first.
+
+### When to Fetch Docs
+
+Fetch documentation when ANY of these apply:
+- Checkpoint criteria involve verifying external service integration
+- Manual verification steps reference third-party dashboards or APIs
+- You need to guide users through external service verification (webhooks, API responses, etc.)
+
+### How to Fetch Docs
+
+1. **Identify external services** from checkpoint criteria
+2. **Fetch relevant docs** using WebFetch or WebSearch:
+   - Focus on testing/verification sections
+   - Look for troubleshooting guides for common issues
+3. **Cache per session** — Don't re-fetch docs already fetched in this session
+4. **Handle failures gracefully:**
+   - Retry with exponential backoff (2-3 attempts)
+   - If all retries fail: warn user and proceed with best available info
+
+### Documentation URLs by Service
+
+| Service | Verification/Testing Doc |
+|---------|-------------------------|
+| Supabase | https://supabase.com/docs/guides/getting-started |
+| Firebase | https://firebase.google.com/docs/web/setup |
+| Stripe | https://stripe.com/docs/testing |
+| Auth0 | https://auth0.com/docs/troubleshoot |
+| Vercel | https://vercel.com/docs/deployments/overview |
+| Resend | https://resend.com/docs/dashboard/emails/logs |
+
+For services not listed, use WebSearch: `{service name} testing verification documentation`
+
+### Integration with Verification
+
+When guiding manual verification of external integrations:
+1. Fetch docs FIRST to understand current testing procedures
+2. Provide accurate dashboard navigation (UI may have changed)
+3. Include expected responses/behaviors from official docs
+4. Reference troubleshooting steps for common failures
 
 ## Context Detection
 
@@ -23,6 +67,10 @@ Determine working context:
 Before starting, confirm `EXECUTION_PLAN.md` exists in the current working directory.
 
 - If it does not exist, **STOP** and tell the user to `cd` into their project/feature directory (the one containing `EXECUTION_PLAN.md`) and re-run `/phase-checkpoint $1`.
+
+## Context Check
+
+**Before starting:** If context is below 40% remaining, run `/compact` first. This ensures the full command instructions remain in context throughout execution. Compaction mid-command loses procedural instructions.
 
 ## Tool Availability Check
 
@@ -196,28 +244,161 @@ For each manual item:
 ```
 Automated Successfully:
 - [x] "{item}" — PASS ({method}, {duration})
-
-Automation Failed (needs human review):
-- [ ] "{item}"
-  - Attempted: {method}
-  - Error: {error message}
-  - Suggested Fix: {if applicable}
-  - Manual Steps:
-    1. {First action to take}
-    2. {What to verify/look for}
-    3. {How to confirm success}
-
-Truly Manual (no automation possible):
-- [ ] "{item}"
-  - Reason: {why automation is not feasible}
-  - Steps:
-    1. {First action to take}
-    2. {What to verify/look for}
-    3. {How to confirm success}
 ```
+
+For items requiring manual verification ("Automation Failed" or "Truly Manual"), generate a **comprehensive verification guide** as described below.
+
+### Manual Verification Guide Format
+
+When ANY items require manual verification, produce a detailed, standalone guide that anyone could follow without prior project knowledge.
+
+**CRITICAL:** Do not use placeholder text like "{First action to take}". Generate specific, actionable instructions based on the actual criterion and project context.
+
+#### Guide Structure
+
+For each manual item, generate ALL of the following sections:
+
+```
+═══════════════════════════════════════════════════════════════════════════════
+MANUAL VERIFICATION: {criterion title}
+═══════════════════════════════════════════════════════════════════════════════
+
+## What We're Verifying
+{1-2 sentence plain-English explanation of what this criterion tests and why it matters}
+
+## Prerequisites
+- [ ] Dev server running at {URL} (start with: `{command}`)
+- [ ] Browser open (Chrome/Firefox recommended)
+- [ ] {Any test accounts, API keys, or data needed}
+- [ ] {Any specific state the app must be in}
+
+## Step-by-Step Verification
+
+### Step 1: {Action title}
+1. Open your browser and navigate to: `{exact URL}`
+2. You should see: {description of expected initial state}
+   - If you don't see this: {troubleshooting hint}
+
+### Step 2: {Action title}
+1. {Exact action to take, e.g., "Click the 'Sign In' button in the top-right corner"}
+2. {Next action}
+3. You should see: {expected result}
+   - Screenshot reference: {if applicable, what the UI should look like}
+
+### Step 3: {Action title}
+1. {Continue with specific actions}
+2. {Include exact text to enter, buttons to click, etc.}
+
+{Continue with as many steps as needed - be thorough}
+
+## Expected Results
+✓ {Specific observable outcome 1}
+✓ {Specific observable outcome 2}
+✓ {Specific observable outcome 3}
+
+## How to Confirm Success
+The criterion PASSES if ALL of the following are true:
+1. {Concrete, verifiable condition}
+2. {Concrete, verifiable condition}
+3. {Concrete, verifiable condition}
+
+## Common Issues & Troubleshooting
+
+| Symptom | Likely Cause | Solution |
+|---------|--------------|----------|
+| {What you might see} | {Why it happens} | {How to fix it} |
+| {Another symptom} | {Cause} | {Solution} |
+
+## If Verification Fails
+1. Check the browser console for errors (F12 → Console tab)
+2. Check the terminal running the dev server for errors
+3. Try: {specific recovery steps}
+4. If still failing, note the exact error and report it
+
+───────────────────────────────────────────────────────────────────────────────
+```
+
+#### Examples of Good vs Bad Instructions
+
+**BAD (too vague):**
+```
+1. First action to take
+2. What to verify/look for
+3. How to confirm success
+```
+
+**GOOD (specific and actionable):**
+```
+### Step 1: Navigate to Login Page
+1. Open your browser and go to: `http://localhost:3000/login`
+2. You should see a login form with email and password fields
+   - If you see a 404 error: Make sure the dev server is running with `npm run dev`
+
+### Step 2: Enter Test Credentials
+1. In the "Email" field, enter: `test@example.com`
+2. In the "Password" field, enter: `testpassword123`
+3. Click the blue "Sign In" button below the form
+
+### Step 3: Verify Successful Login
+1. You should be redirected to: `http://localhost:3000/dashboard`
+2. The top-right corner should show "Welcome, Test User"
+3. The navigation should now include "My Account" and "Logout" options
+```
+
+#### Context to Use When Generating Instructions
+
+When writing verification guides, reference:
+1. **EXECUTION_PLAN.md** — for acceptance criteria context
+2. **Project files** — to find exact URLs, component names, test credentials
+3. **package.json / config files** — for correct commands
+4. **Previous phase implementations** — for understanding current app state
 
 **Note:** Only items in "Truly Manual" genuinely require human action. Items in
 "Automation Failed" may be automatable once the underlying issue is fixed.
+
+### Update EXECUTION_PLAN.md Checkboxes (Auto-Verified Items)
+
+After auto-verify passes items, immediately update their checkboxes in EXECUTION_PLAN.md:
+
+1. **For each item that auto-verify marked PASS:**
+   - Read EXECUTION_PLAN.md
+   - Find the "### Phase $1 Checkpoint" section
+   - Locate the exact line: `- [ ] {criterion text}`
+   - Edit: change `- [ ]` to `- [x]`
+   - Verify edit succeeded
+
+2. **Matching rules:**
+   - Match the exact checkbox text (criterion may be truncated in reports)
+   - Use the phase section as anchor to avoid updating wrong items
+   - Skip items already checked (`- [x]`)
+
+### Human Confirmation (Batch)
+
+For items in "Automation Failed" or "Truly Manual" categories, ask human for batch confirmation:
+
+1. **List all items needing human verification:**
+   ```
+   Manual verification needed for {N} items:
+   1. {item 1 text}
+   2. {item 2 text}
+   ...
+   ```
+
+2. **Ask ONE question using AskUserQuestion:**
+   - Question: "Which items have you verified?"
+   - Options:
+     - "All verified" → Update ALL remaining checkboxes at once
+     - "Some verified" → Follow up asking which ones (comma-separated numbers)
+     - "None yet" → Leave all unchecked, continue to next section
+
+3. **Accept natural language responses:**
+   - "they're all good", "verified", "all done" → Treat as "All verified"
+   - "all except 2" or "1 and 3 only" → Update specified items only
+
+4. **Update checkboxes:**
+   - For confirmed items, edit EXECUTION_PLAN.md to change `- [ ]` to `- [x]`
+   - Use a single Edit call when updating multiple items in sequence
+   - Do NOT ask follow-up confirmation questions after user says "all verified"
 
 ### Approach Review (Human)
 
@@ -364,17 +545,15 @@ Manual Local Checks:
 Automated Successfully:
 - [x] "{item}" — PASS ({method}, {duration})
 
-Failed Automation:
-- [ ] "{item}"
-  - Attempted: {method}, Error: {error}
-  - Steps: ...
-
-Truly Manual:
-- [ ] "{item}"
-  - Reason: {why not automatable}
-  - Steps: ...
+Items Requiring Manual Verification: {N}
+(See detailed verification guide below)
 
 Approach Review: No issues noted | {list specific issues}
+```
+
+**If any items require manual verification, append the full Manual Verification Guide (see format above) after this summary report.** The guide should be comprehensive enough that anyone unfamiliar with the project could complete the verification.
+
+```
 
 Local Verification: ✓ PASSED | ✗ FAILED (address issues above)
 
@@ -407,56 +586,40 @@ Read `.claude/settings.local.json` for auto-advance configuration:
 ```json
 {
   "autoAdvance": {
-    "enabled": true,      // default: true
-    "delaySeconds": 15    // default: 15
+    "enabled": true      // default: true
   }
 }
 ```
 
-If `autoAdvance` is not configured, use defaults (`enabled: true`, `delaySeconds: 15`).
+If `autoAdvance` is not configured, use defaults (`enabled: true`).
 
 ### Auto-Advance Conditions
 
 Auto-advance to `/phase-prep {N+1}` ONLY if ALL of these are true:
 
 1. ✓ All automated checks passed (tests, lint, types, security)
-2. ✓ No manual verification items exist (not just unchecked—none at all)
+2. ✓ No "truly manual" verification items remain (auto-verify was attempted above)
 3. ✓ No production verification items exist
 4. ✓ Phase $1 is not the final phase
 5. ✓ `--pause` flag was NOT passed to this command
 6. ✓ `autoAdvance.enabled` is true (or not configured, defaulting to true)
 
-**Rationale:** Auto-advance is for fully automated workflows. If human intervention was required (manual checks, production verification), the human is already involved and can manually trigger the next phase.
+**Rationale:** Auto-verify (run in Manual Local Verification above) attempts automation before blocking. Only items that genuinely require human judgment block auto-advance. Production verification items always require human presence to confirm deployed behavior.
 
 ### If Auto-Advance Conditions Met
 
-1. **Show countdown:**
+1. **Show brief notification:**
    ```
    AUTO-ADVANCE
    ============
-   All Phase $1 criteria verified. Preparing next phase...
-
-   Auto-advancing to /phase-prep {N+1} in 15s...
-   (Press Enter to pause)
+   All Phase $1 criteria verified (no truly manual items remain).
+   Proceeding to next phase...
    ```
 
-2. **Wait for delay or interrupt:**
-   - Wait `autoAdvance.delaySeconds` (default 15)
-   - If user presses Enter during countdown, cancel auto-advance
-   - Show countdown updates: `14s... 13s... 12s...`
-
-3. **If not interrupted:**
+2. **Execute immediately:**
    - Track this command in auto-advance session log
-   - Execute `/phase-prep {N+1}`
+   - Invoke `/phase-prep {N+1}` using the Skill tool
    - Continue auto-advance chain (phase-prep will continue if it passes)
-
-4. **If interrupted:**
-   ```
-   Auto-advance paused by user.
-
-   Ready for Phase {N+1}. Run manually when ready:
-     /phase-prep {N+1}
-   ```
 
 ### If Auto-Advance Conditions NOT Met
 
@@ -467,7 +630,7 @@ AUTO-ADVANCE STOPPED
 ====================
 
 Reason: {one of below}
-- Manual verification items exist (human intervention required)
+- Truly manual verification items remain (human judgment required)
 - Production verification items exist (human intervention required)
 - Phase $1 is the final phase
 - Auto-advance disabled via --pause flag

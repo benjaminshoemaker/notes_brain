@@ -53,18 +53,78 @@ Flag untestable instructions immediately rather than attempting verification.
 
 For instructions with `browser: true`:
 
-1. **Check Playwright MCP availability**
-   - If unavailable, mark instruction as BLOCKED with reason: "Playwright MCP not available"
-   - Suggest: "Ensure Playwright MCP server is running (npx @playwright/mcp@latest)"
+1. **HTTP-First Check (before browser tools)**
 
-2. **Verify dev server is running**
+   Many "browser" criteria can be satisfied with a simple HTTP check. Before
+   launching browser tools, evaluate if the criterion only requires:
+   - Page accessibility (HTTP 200 status)
+   - API response validation
+   - Redirect verification
+   - Basic content presence
+
+   **Attempt HTTP verification first using curl:**
+   ```bash
+   # Page loads check
+   curl -sf "{devServer.url}{route}" -o /dev/null && echo "PASS" || echo "FAIL"
+
+   # Response contains text
+   curl -s "{url}" | grep -q "{expected}" && echo "PASS" || echo "FAIL"
+
+   # API returns expected status
+   curl -sf -o /dev/null -w "%{http_code}" "{url}"
+   ```
+
+   **If HTTP check passes AND criterion does NOT explicitly require:**
+   - DOM element inspection (selector, visibility)
+   - Visual appearance verification
+   - User interaction simulation
+   - Console log inspection
+   - Network timing/performance
+
+   **Then:** Mark as PASS (HTTP-first), skip browser verification.
+
+   **Otherwise:** Continue to browser tool fallback chain.
+
+2. **Check browser tool availability (fallback chain)**
+   - Try tools in order: ExecuteAutomation Playwright → Browser MCP → Microsoft Playwright → Chrome DevTools
+   - Use first available tool for browser verification
+
+   **If NO tools available (SOFT BLOCK):**
+
+   Before marking as BLOCKED, attempt HTTP fallback for any remaining criteria:
+   - Page loading: `curl -sf {url}`
+   - API responses: `curl -s {url} | jq .`
+   - Redirects: `curl -sI {url}`
+
+   Only mark as BLOCKED if both browser tools AND HTTP fallback are insufficient.
+
+   If still blocked after HTTP fallback:
+   - Display warning:
+     ```
+     ⚠️  NO BROWSER TOOLS AVAILABLE
+
+     This verification includes browser-based criteria but no browser
+     MCP tools are available, and HTTP fallback is insufficient.
+
+     Criteria requiring DOM/visual inspection:
+     - {list criteria that truly need browser}
+
+     Options:
+     1. Continue anyway (these criteria become manual verification)
+     2. Stop and configure browser tools first
+     ```
+   - Use AskUserQuestion to let user choose:
+     - "Continue with manual verification" → Mark browser instructions as BLOCKED, continue with non-browser criteria
+     - "Stop to configure tools" → Halt verification, provide setup instructions
+
+2. **Verify dev server is running** (if browser tools available)
    - Check if configured dev server URL responds (e.g., `http://localhost:3000`)
-   - If not running, attempt to start using configured command (e.g., `npm run dev`)
+   - If not running, attempt to start using the configured dev server command
    - Wait for configured startup time before proceeding
    - If unable to start, mark as BLOCKED: "Dev server not accessible at {URL}"
 
-3. **Confirm target route exists**
-   - Navigate to the page specified in the instruction using `browser_navigate`
+3. **Confirm target route exists** (if browser tools available)
+   - Navigate to the page specified in the instruction using the selected browser tool
    - If 404 or error, mark as BLOCKED: "Target route not found: {route}"
 
 ## Step 3: Sub-Agent Verification Protocol

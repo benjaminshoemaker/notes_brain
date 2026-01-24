@@ -1,13 +1,13 @@
 ---
 name: security-scan
-description: Scan for security vulnerabilities in dependencies, code patterns, and secrets. Detects tech stack automatically and runs appropriate tools.
+description: Scan for security vulnerabilities in dependencies, code patterns, and secrets. Uses project-documented tooling where available.
 ---
 
 # Security Scan Skill
 
-Scan the codebase for security vulnerabilities across three categories:
+Scan the codebase for security issues across three categories:
 1. **Dependency vulnerabilities** — Known CVEs in packages
-2. **Static analysis** — Insecure code patterns (OWASP Top 10)
+2. **Static analysis** — Insecure code patterns (per project tooling)
 3. **Secrets detection** — API keys, passwords, tokens in code
 
 ## When This Skill Runs
@@ -19,82 +19,43 @@ Scan the codebase for security vulnerabilities across three categories:
 ## Workflow Overview
 
 ```
-1. Detect tech stack from project files
-2. Run dependency audit (if applicable)
+1. Discover security tooling from project docs
+2. Run dependency audit (if configured)
 3. Run secrets detection
-4. Run static analysis checks
+4. Run static analysis (if configured)
 5. Aggregate and deduplicate findings
 6. Present issues with severity and fix suggestions
-7. Offer to auto-fix where possible
+7. Offer to apply fixes where possible
 ```
 
-## Step 1: Tech Stack Detection
+## Step 1: Discover Project Security Tooling
 
-Check for these files to determine which tools to run:
+Read project documentation and task runners to find the correct commands:
+- `README.md`
+- `CONTRIBUTING.md`
+- `SECURITY.md`
+- `Makefile`
+- `Taskfile.yml`
+- `justfile`
+- Any security or build scripts under `scripts/`
 
-| File | Tech Stack | Dependency Tool |
-|------|------------|-----------------|
-| `package.json` | Node.js | `npm audit` or `yarn audit` or `pnpm audit` |
-| `package-lock.json` | Node.js (npm) | `npm audit --json` |
-| `yarn.lock` | Node.js (yarn) | `yarn audit --json` |
-| `pnpm-lock.yaml` | Node.js (pnpm) | `pnpm audit --json` |
-| `requirements.txt` or `pyproject.toml` | Python | `pip-audit --format=json` (if installed) |
-| `Cargo.toml` | Rust | `cargo audit --json` (if installed) |
-| `go.mod` | Go | `govulncheck ./...` (if installed) |
-| `Gemfile.lock` | Ruby | `bundle audit check --format=json` (if installed) |
+Extract any documented commands for:
+- Dependency auditing
+- Static analysis / security scanning
+- Secrets detection (if the project has a preferred tool)
 
-If a tool is not installed, note it and continue with other checks.
+If nothing is documented, ask the human to provide the correct commands.
 
 ## Step 2: Dependency Audit
 
-Run the appropriate dependency scanner based on detected tech stack.
+- If a dependency audit command is documented or provided, run it.
+- If no command is available, mark this check as SKIPPED and note it in the
+  report.
 
-### Node.js (npm)
+## Step 3: Secrets Detection (Default)
 
-```bash
-npm audit --json 2>/dev/null
-```
-
-Parse the JSON output. Key fields:
-- `vulnerabilities` object with package names as keys
-- Each vulnerability has `severity` (critical, high, moderate, low)
-- `fixAvailable` indicates if `npm audit fix` can resolve it
-
-### Node.js (yarn)
-
-```bash
-yarn audit --json 2>/dev/null
-```
-
-### Node.js (pnpm)
-
-```bash
-pnpm audit --json 2>/dev/null
-```
-
-### Python
-
-```bash
-pip-audit --format=json 2>/dev/null
-```
-
-If pip-audit is not installed, note: "pip-audit not installed. Run `pip install pip-audit` to enable Python dependency scanning."
-
-### Rust
-
-```bash
-cargo audit --json 2>/dev/null
-```
-
-### Go
-
-```bash
-govulncheck -json ./... 2>/dev/null
-```
-
-## Step 3: Secrets Detection
-
-Scan for hardcoded secrets using pattern matching. This runs regardless of tech stack.
+Run a pattern-based secrets scan (stack-agnostic) unless the project documents
+its own secrets tool. If a project-specific tool exists, use it instead.
 
 ### Patterns to Detect
 
@@ -121,48 +82,12 @@ Scan for hardcoded secrets using pattern matching. This runs regardless of tech 
 - `*.min.js`, `*.bundle.js`
 - Binary files
 
-### Implementation
+## Step 4: Static Analysis
 
-Use Grep tool with each pattern, excluding skip directories:
-
-```bash
-# Example for AWS Access Key
-grep -rE "AKIA[0-9A-Z]{16}" --include="*.{js,ts,py,go,rb,java,json,yaml,yml,env,sh}" \
-  --exclude-dir={node_modules,.git,vendor,venv,dist,build} .
-```
-
-## Step 4: Static Analysis (Code Patterns)
-
-Check for common insecure code patterns. These are language-aware.
-
-### JavaScript/TypeScript
-
-| Issue | Pattern | Severity |
-|-------|---------|----------|
-| eval() usage | `eval\s*\(` | HIGH |
-| innerHTML assignment | `\.innerHTML\s*=` | MEDIUM |
-| document.write | `document\.write\s*\(` | MEDIUM |
-| Unvalidated redirect | `window\.location\s*=.*\+` | MEDIUM |
-| SQL string concatenation | `(?i)(SELECT|INSERT|UPDATE|DELETE).*\+.*(?:req\.|request\.|params\.)` | HIGH |
-
-### Python
-
-| Issue | Pattern | Severity |
-|-------|---------|----------|
-| eval() usage | `eval\s*\(` | HIGH |
-| exec() usage | `exec\s*\(` | HIGH |
-| Shell injection | `subprocess\.(call|run|Popen).*shell\s*=\s*True` | HIGH |
-| SQL string formatting | `execute\s*\(\s*f['"]` or `execute\s*\(\s*['"].*%` | HIGH |
-| Pickle untrusted data | `pickle\.loads?\s*\(` | MEDIUM |
-
-### General (All Languages)
-
-| Issue | Pattern | Severity |
-|-------|---------|----------|
-| TODO security | `(?i)TODO.*security` | LOW |
-| FIXME security | `(?i)FIXME.*security` | MEDIUM |
-| Disabled SSL verification | `(?i)(verify\s*=\s*False|ssl_verify\s*=\s*False|NODE_TLS_REJECT_UNAUTHORIZED)` | HIGH |
-| Hardcoded localhost in prod | Check if non-test files reference `localhost` or `127.0.0.1` for API URLs | LOW |
+- If a static analysis or security scanning command is documented or provided,
+  run it.
+- If no command is available, mark this check as SKIPPED and note it in the
+  report.
 
 ## Step 5: Aggregate Findings
 
@@ -172,90 +97,38 @@ Collect all findings into a unified format:
 SECURITY SCAN RESULTS
 =====================
 
-Scanned: 2025-01-08
-Tech Stack: Node.js (npm)
-Checks Run: Dependencies, Secrets, Static Analysis
+Scanned: {timestamp}
+Checks Run: Dependencies | Secrets | Static Analysis
 
-CRITICAL (2)
+CRITICAL (N)
 ------------
-[DEP-001] lodash@4.17.20 — Prototype Pollution (CVE-2021-23337)
-  Fix: npm audit fix --force
+[issue details]
 
-[SEC-001] Hardcoded API key in src/config.ts:15
-  Text: const API_KEY = "sk_live_abc123..."
-  Fix: Move to environment variable
-
-HIGH (1)
+HIGH (N)
 --------
-[SAST-001] SQL string concatenation in src/db/users.ts:42
-  Text: db.query(`SELECT * FROM users WHERE id = ${userId}`)
-  Fix: Use parameterized queries
+[issue details]
 
-MEDIUM (0)
+MEDIUM (N)
 ----------
-None
+[issue details]
 
-LOW (1)
+LOW (N)
 -------
-[SAST-002] TODO security comment in src/auth.ts:78
-  Text: // TODO: add rate limiting for security
-  Fix: Address or remove TODO
+[issue details]
 
-Summary: 2 critical, 1 high, 0 medium, 1 low
+Summary: {N} critical, {N} high, {N} medium, {N} low
 ```
 
 ## Step 6: Present Issues
 
-For CRITICAL and HIGH issues, present interactively:
-
-```
-ISSUE 1 of 3: [DEP-001] Dependency Vulnerability
-------------------------------------------------
-Package: lodash@4.17.20
-Vulnerability: Prototype Pollution (CVE-2021-23337)
-Severity: CRITICAL
-CVSS: 7.4
-
-How would you like to resolve this?
-```
-
-Use AskUserQuestion with options:
-
-**For dependency vulnerabilities:**
-- Option 1: Run `npm audit fix` (if fixAvailable)
-- Option 2: Run `npm audit fix --force` (may have breaking changes)
-- Option 3: Add to ignore list (document accepted risk)
-- Option 4: Skip for now
-
-**For secrets:**
-- Option 1: Remove and add to .env (will show example)
-- Option 2: This is a false positive (test data, example)
-- Option 3: Skip for now
-
-**For code patterns:**
-- Option 1: Show secure alternative (provide fix)
-- Option 2: This is intentional (document reason)
-- Option 3: Skip for now
+For CRITICAL and HIGH issues, present interactively with resolution options.
+If a fix command is documented, offer it as the primary option.
 
 ## Step 7: Apply Fixes
 
-Based on user choices:
-
-### Dependency fixes
-```bash
-npm audit fix
-# or
-npm audit fix --force
-```
-
-### Secret removal
-1. Create or update `.env` file with the secret
-2. Replace hardcoded value with `process.env.SECRET_NAME`
-3. Add `.env` to `.gitignore` if not present
-4. Create `.env.example` with placeholder
-
-### Code pattern fixes
-Use Edit tool to replace insecure pattern with secure alternative.
+Apply fixes based on user choices:
+- Use project-documented fix commands when available
+- Otherwise, propose manual code changes and confirm before editing
 
 ## Output Format
 
@@ -268,7 +141,7 @@ Security Scan: PASSED | FAILED | PASSED WITH NOTES
 
 Issues: X critical, Y high, Z medium
 Fixed: N issues
-Skipped: M issues (documented)
+Skipped: M checks (documented)
 
 Blocking: Yes/No
 ```
@@ -286,34 +159,10 @@ Show full report with all findings and options.
 | MEDIUM | Should be addressed | Note, doesn't block |
 | LOW | Minor issue or informational | Note only |
 
-## Configuration
-
-The skill respects a `.security-scan-ignore` file if present:
-
-```
-# Ignore specific CVEs (with reason)
-CVE-2021-23337  # lodash - not exploitable in our usage
-
-# Ignore specific files for secrets detection
-test/fixtures/mock-credentials.json  # test data only
-
-# Ignore specific patterns
-src/examples/*.ts  # example code, not production
-```
-
 ## Tool Installation Notes
 
-If required tools are missing, provide installation instructions:
-
-```
-Some security tools are not installed:
-
-pip-audit (Python): pip install pip-audit
-cargo-audit (Rust): cargo install cargo-audit
-govulncheck (Go): go install golang.org/x/vuln/cmd/govulncheck@latest
-
-Install these for comprehensive scanning, or continue with available tools.
-```
+If required tools are missing, instruct the user to install them based on the
+project's documentation or security policy.
 
 ## Example Invocations
 

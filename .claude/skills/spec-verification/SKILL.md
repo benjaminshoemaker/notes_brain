@@ -145,6 +145,7 @@ Scan the document for common anti-patterns. Be **conservative** - only flag obvi
 | Q-EP-005 | Insufficient Criteria | Task has fewer than 3 acceptance criteria | MAJOR |
 | Q-EP-006 | Oversized Task | Task description suggests >1 day of work | MAJOR |
 | Q-EP-007 | Vague Acceptance Criterion | Uses "should", "properly", "correctly" without specifics | CRITICAL |
+| Q-EP-008 | Missing Verification Metadata | Acceptance criterion missing verification type or method | CRITICAL |
 
 ### Quality Check Output
 
@@ -217,6 +218,11 @@ Then use AskUserQuestion with appropriate options based on issue type.
 **Untestable Criteria (Q-EP-001):**
 - Option 1: Use suggested testable version (provide suggestion)
 - Option 2: Rewrite criterion
+- Option 3: Remove criterion
+
+**Missing Verification Metadata (Q-EP-008):**
+- Option 1: Add suggested verification type + method (recommended)
+- Option 2: Mark as MANUAL with a reason
 - Option 3: Remove criterion
 
 **Conflicting Requirements (Q-006):**

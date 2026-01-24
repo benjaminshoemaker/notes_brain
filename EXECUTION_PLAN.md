@@ -496,11 +496,11 @@ Human must complete before agents begin:
 **What:** Set up Supabase database webhooks to trigger Edge Functions on note insert.
 
 **Acceptance Criteria:**
-- [ ] Webhook triggers `classify-note` on INSERT on `public.notes` (no dashboard row filter; function skips unless `type = 'text'` AND `classification_status = 'pending'` AND content is non-empty)
-- [ ] Webhook triggers `transcribe-voice` on INSERT on `public.notes` (no dashboard row filter; function skips unless `type = 'voice'`)
-- [ ] Webhooks configured in Supabase dashboard (documented in migration comment)
-- [ ] Test: creating text note triggers classification
-- [ ] Test: creating voice note triggers transcription
+- [x] Webhook triggers `classify-note` on INSERT on `public.notes` (no dashboard row filter; function skips unless `type = 'text'` AND `classification_status = 'pending'` AND content is non-empty)
+- [x] Webhook triggers `transcribe-voice` on INSERT on `public.notes` (no dashboard row filter; function skips unless `type = 'voice'`)
+- [x] Webhooks configured in Supabase dashboard (documented in migration comment)
+- [x] Test: creating text note triggers classification
+- [ ] Test: creating voice note triggers transcription (requires mobile app - Phase 4)
 
 **Files:**
 - Create: `supabase/migrations/00003_webhook_documentation.sql` — webhook config docs
@@ -538,15 +538,15 @@ Human must complete before agents begin:
 ### Phase 3 Checkpoint
 
 **Automated:**
-- [ ] Edge Functions deploy successfully
-- [ ] TypeScript compilation passes
-- [ ] All tests pass
+- [x] Edge Functions deploy successfully
+- [x] TypeScript compilation passes
+- [x] All tests pass
 
 **Manual Verification:**
-- [ ] Create text note → classification completes within 5 seconds
-- [ ] Category appears on note after classification
-- [ ] Classification confidence stored in database
-- [ ] (If voice recording available) Voice note transcribes and classifies
+- [x] Create text note → classification completes within 5 seconds
+- [x] Category appears on note after classification
+- [x] Classification confidence stored in database
+- [ ] (If voice recording available) Voice note transcribes and classifies (requires mobile app - Phase 4)
 
 ---
 

@@ -1,4 +1,5 @@
 ---
+name: list-todos
 description: Analyze and prioritize TODO items from TODOS.md
 allowed-tools: Read, Glob, Grep, AskUserQuestion, Edit
 ---
@@ -202,7 +203,30 @@ Options:
 
 Note: Only show up to 4 items per question (tool limit). If more items exist, include "Other" option for the user to type a number.
 
-### Step 3: Ask Open Questions One at a Time
+### Step 3: Summarize Current State
+
+Before asking questions, output a summary of the selected item's current state so the user has context:
+
+```markdown
+---
+
+## Clarifying: {Item Title}
+
+**Current Score:** {N}/10 {multiplier if applicable}
+**Requirements Clarity:** {Low|Medium|High}
+
+**What's documented:**
+{Summary of what's currently in TODOS.md for this item — existing description, any prior clarifications}
+
+**What needs clarification:**
+{List the open questions that will be asked}
+
+---
+```
+
+This gives the user context before they start answering questions.
+
+### Step 4: Ask Open Questions One at a Time
 
 For the selected item, ask each open question individually using AskUserQuestion:
 
@@ -225,7 +249,7 @@ Options:
 - The user can always select "Other" to provide a custom answer
 - Wait for each answer before asking the next question
 
-### Step 4: Update TODOS.md with Clarifications
+### Step 5: Update TODOS.md with Clarifications
 
 After all questions for an item are answered, update TODOS.md:
 
@@ -246,12 +270,68 @@ After all questions for an item are answered, update TODOS.md:
 
 Use the Edit tool to make these updates.
 
-### Step 5: Continue or Exit
+### Step 6: Summarize Understanding
 
-After updating TODOS.md, use AskUserQuestion to ask:
+After updating TODOS.md, output a summary of the clarified item:
+
+```markdown
+---
+
+## Summary: {Item Title}
+
+**Updated Score:** {N}/10 (re-evaluate based on new clarity)
+**Requirements Clarity:** {Low|Medium|High} (updated)
+
+**Current understanding:**
+{2-4 sentences synthesizing what we now know about this item — the problem it solves, the approach, key decisions made}
+
+**Implementation approach:**
+{Brief description of how to implement, based on clarifications}
+
+**Remaining questions (if any):**
+- {Any questions still unanswered}
+
+---
+```
+
+### Step 7: Check Implementation Readiness
+
+Use AskUserQuestion to ask if the item is ready for implementation:
 
 ```
-Question: "Item updated. Would you like to clarify another item?"
+Question: "Is this item ready for implementation?"
+Header: "Ready?"
+Options:
+  - Label: "Yes, mark as [ready]"
+    Description: "Add [ready] tag to TODOS.md — item can be implemented"
+  - Label: "No, needs more clarification"
+    Description: "Continue Q&A on this item"
+  - Label: "No, move to another item"
+    Description: "Select a different item to clarify"
+  - Label: "No, I'm done for now"
+    Description: "Exit Q&A mode"
+```
+
+**If "Yes, mark as [ready]":**
+- Add `[ready]` tag to the TODO item in TODOS.md
+- Ask if the user wants to clarify another item (go to Step 8)
+
+**If "No, needs more clarification":**
+- Ask what additional questions need answering
+- Return to Step 4 with new questions
+
+**If "No, move to another item":**
+- Return to Step 2 to select another item
+
+**If "No, I'm done for now":**
+- Go to Exit Summary
+
+### Step 8: Continue or Exit
+
+After marking an item ready, use AskUserQuestion to ask:
+
+```
+Question: "Item marked [ready]. Would you like to clarify another item?"
 Header: "Continue?"
 Options:
   - Label: "Yes, continue"
@@ -260,7 +340,7 @@ Options:
     Description: "Exit Q&A mode"
 ```
 
-If "Yes", return to Step 2. If "No", display a summary of items clarified and exit.
+If "Yes", return to Step 2. If "No", go to Exit Summary.
 
 ### Exit Summary
 

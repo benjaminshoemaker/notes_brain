@@ -1,0 +1,27 @@
+{
+  "projectRoot": "/Users/coding/Projects/notes_brain",
+  "commands": {
+    "test": "npm run test",
+    "lint": "npm run lint",
+    "typecheck": "npm run typecheck",
+    "build": "npm run build",
+    "coverage": ""
+  },
+  "devServer": {
+    "command": "npm run dev",
+    "url": "http://localhost:5173",
+    "startupSeconds": 3
+  },
+  "auth": {
+    "strategy": "env",
+    "loginRoute": "/login",
+    "credentials": {
+      "usernameVar": "TEST_USER_EMAIL",
+      "passwordVar": "TEST_USER_PASSWORD"
+    },
+    "storageState": ".claude/verification/auth-state.json"
+  },
+  "browser": {
+    "tool": "auto"
+  }
+}
