@@ -724,17 +724,17 @@ Human must complete before agents begin:
 ### Phase 4 Checkpoint
 
 **Automated:**
-- [ ] `npx expo start` runs without errors
-- [ ] TypeScript compilation passes
-- [ ] All tests pass
+- [x] `npx expo start` runs without errors
+- [x] TypeScript compilation passes
+- [x] All tests pass
 
 **Manual Verification:**
-- [ ] Can sign up and log in on Android emulator
-- [ ] Text capture creates notes that classify
-- [ ] Voice recording works (5-min limit enforced)
-- [ ] Share sheet receives text and files from other apps
-- [ ] Notes list displays and filters work
-- [ ] Realtime updates show classification completion
+- [x] Can sign up and log in on Android emulator
+- [x] Text capture creates notes that classify
+- [x] Voice recording works (5-min limit enforced)
+- [x] Share sheet receives text and files from other apps
+- [x] Notes list displays and filters work
+- [x] Realtime updates show classification completion
 
 ---
 

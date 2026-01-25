@@ -13,7 +13,8 @@ function getRequiredEnv(name: string) {
 }
 
 const supabaseUrl = getRequiredEnv("SUPABASE_URL");
-const serviceRoleKey = getRequiredEnv("SUPABASE_SERVICE_ROLE_KEY");
+// Use custom secret name because system-injected SUPABASE_SERVICE_ROLE_KEY can be out of sync
+const serviceRoleKey = Deno.env.get("SERVICE_ROLE_KEY") ?? getRequiredEnv("SUPABASE_SERVICE_ROLE_KEY");
 const openaiApiKey = getRequiredEnv("OPENAI_API_KEY");
 const classificationModel = Deno.env.get("OPENAI_CLASSIFICATION_MODEL") ?? "gpt-4o-mini";
 

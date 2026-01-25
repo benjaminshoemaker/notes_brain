@@ -5,6 +5,8 @@ export { createSupabaseClient } from "./supabase.js";
 
 export { signIn, signInWithMagicLink, signOut, signUp } from "./auth.js";
 
+export { upsertById } from "./collections.js";
+
 export type {
   Attachment,
   Category,
@@ -20,6 +22,8 @@ export type {
   NoteWithAttachments,
   User
 } from "./types.js";
+
+export { mergeNoteWithAttachments, upsertNoteWithAttachments } from "./notes.js";
 
 export {
   CategorySchema,

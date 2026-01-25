@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import type { NoteWithAttachments } from "@notesbrain/shared";
+import { upsertNoteWithAttachments } from "@notesbrain/shared";
 
 import { supabase } from "../lib/supabaseClient";
 
@@ -63,7 +64,7 @@ export function useCreateNote() {
           classification_confidence: null,
           attachments: [],
         };
-        return old ? [noteWithAttachments, ...old] : [noteWithAttachments];
+        return upsertNoteWithAttachments(old, noteWithAttachments, "start");
       });
     },
   });

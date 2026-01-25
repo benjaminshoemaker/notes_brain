@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import * as FileSystem from "expo-file-system";
 import type { NoteWithAttachments, Attachment } from "@notesbrain/shared";
+import { upsertNoteWithAttachments } from "@notesbrain/shared";
 
 import { supabase } from "../lib/supabaseClient";
 
@@ -60,8 +61,9 @@ async function uploadVoiceNote(input: UploadVoiceNoteInput): Promise<NoteWithAtt
   }
 
   // Upload to Supabase Storage
-  const filename = `voice_${Date.now()}.m4a`;
-  const storagePath = `${user.id}/attachments/${note.id}/${filename}`;
+  // Path must match what transcribe-voice expects: {user_id}/voice/{note_id}.m4a
+  const filename = `${note.id}.m4a`;
+  const storagePath = `${user.id}/voice/${filename}`;
 
   const { error: uploadError } = await supabase.storage
     .from("attachments")
@@ -125,7 +127,7 @@ export function useUploadVoiceNote() {
     mutationFn: uploadVoiceNote,
     onSuccess: (newNote) => {
       queryClient.setQueryData<NoteWithAttachments[]>(["notes"], (old) => {
-        return old ? [newNote, ...old] : [newNote];
+        return upsertNoteWithAttachments(old, newNote, "start");
       });
     },
   });

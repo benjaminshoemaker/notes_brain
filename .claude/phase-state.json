@@ -87,7 +87,7 @@
       {
         "number": 4,
         "name": "Mobile App - Core",
-        "status": "IN_PROGRESS",
+        "status": "CHECKPOINTED",
         "tasks_total": 6,
         "tasks_complete": 6,
         "started_at": "2026-01-23T17:00:00Z",

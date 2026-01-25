@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "main": "expo-router/entry",
   "scripts": {
-    "start": "expo start",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
-    "web": "expo start --web",
+    "start": "EXPO_ROUTER_APP_ROOT=./app expo start",
+    "android": "EXPO_ROUTER_APP_ROOT=./app expo start --android",
+    "ios": "EXPO_ROUTER_APP_ROOT=./app expo start --ios",
+    "web": "EXPO_ROUTER_APP_ROOT=./app expo start --web",
     "typecheck": "tsc --noEmit",
     "test": "echo \"No tests configured yet\""
   },

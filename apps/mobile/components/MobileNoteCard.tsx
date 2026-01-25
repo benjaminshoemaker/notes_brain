@@ -37,6 +37,7 @@ function getCategoryColor(category: string): string {
     journal: "#10b981",
     reference: "#f59e0b",
     uncategorized: "#6b7280",
+    pending: "#9ca3af",
   };
   return colors[category] || colors.uncategorized;
 }
@@ -73,7 +74,9 @@ export function MobileNoteCard({ note }: MobileNoteCardProps) {
     }
   }, [note.classification_status, highlightAnim]);
 
-  const categoryColor = getCategoryColor(note.category);
+  const isPending = note.classification_status === "pending";
+  const displayCategory = isPending ? "classifying..." : note.category;
+  const categoryColor = getCategoryColor(isPending ? "pending" : note.category);
 
   const backgroundColor = highlightAnim.interpolate({
     inputRange: [0, 1],
@@ -84,7 +87,7 @@ export function MobileNoteCard({ note }: MobileNoteCardProps) {
     <Animated.View style={[styles.container, { backgroundColor }]}>
       <View style={styles.header}>
         <View style={[styles.categoryBadge, { backgroundColor: categoryColor }]}>
-          <Text style={styles.categoryText}>{note.category}</Text>
+          <Text style={styles.categoryText}>{displayCategory}</Text>
         </View>
 
         <View style={styles.headerRight}>

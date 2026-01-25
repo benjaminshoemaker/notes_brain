@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import * as FileSystem from "expo-file-system";
 import type { NoteWithAttachments, Attachment } from "@notesbrain/shared";
+import { upsertNoteWithAttachments } from "@notesbrain/shared";
 
 import { supabase } from "../lib/supabaseClient";
 
@@ -138,7 +139,7 @@ export function useUploadFile() {
     mutationFn: uploadFile,
     onSuccess: (newNote) => {
       queryClient.setQueryData<NoteWithAttachments[]>(["notes"], (old) => {
-        return old ? [newNote, ...old] : [newNote];
+        return upsertNoteWithAttachments(old, newNote, "start");
       });
     },
   });
