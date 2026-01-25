@@ -88,6 +88,14 @@ async function uploadVoiceNote(input: UploadVoiceNoteInput): Promise<NoteWithAtt
     console.error("Failed to create attachment record:", attachmentError);
   }
 
+  const { error: transcribeError } = await supabase.functions.invoke("transcribe-voice", {
+    body: { note_id: note.id },
+  });
+
+  if (transcribeError) {
+    console.error("Failed to trigger transcription:", transcribeError);
+  }
+
   // Clean up local file
   try {
     file.delete();

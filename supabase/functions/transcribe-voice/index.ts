@@ -1,6 +1,7 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.91.0";
 
 import { callOpenAIWhisperTranscription } from "../_shared/openai.ts";
+import { retryWithBackoff } from "../_shared/retry.ts";
 import { createServiceRoleClient } from "../_shared/supabase.ts";
 import { createHandler } from "./handler.ts";
 
@@ -48,7 +49,7 @@ Deno.serve(
     getNoteById: async (noteId) => {
       const { data, error } = await supabase
         .from("notes")
-        .select("id,user_id,type")
+        .select("id,user_id,type,content")
         .eq("id", noteId)
         .maybeSingle();
 
@@ -59,19 +60,28 @@ Deno.serve(
       return data;
     },
     downloadVoiceFile: async (storagePath) => {
-      const { data, error } = await supabase.storage
-        .from("attachments")
-        .download(storagePath);
+      const attemptDownload = async () => {
+        const { data, error } = await supabase.storage
+          .from("attachments")
+          .download(storagePath);
 
-      if (error) {
-        throw error;
-      }
+        if (error) {
+          throw error;
+        }
 
-      if (!data) {
-        throw new Error("Missing audio file");
-      }
+        if (!data) {
+          throw new Error("Missing audio file");
+        }
 
-      return data;
+        return data;
+      };
+
+      return retryWithBackoff(attemptDownload, {
+        delaysMs: [500, 1000, 2000, 4000, 8000],
+        onRetry: (error, retryNumber) => {
+          console.error("Retrying voice download", { storagePath, retryNumber, error });
+        }
+      });
     },
     transcribeAudio: async (audio) => {
       return callOpenAIWhisperTranscription({
@@ -85,7 +95,11 @@ Deno.serve(
     updateNoteContent: async (noteId, transcript) => {
       const { error } = await supabase
         .from("notes")
-        .update({ content: transcript })
+        .update({
+          content: transcript,
+          classification_status: "pending",
+          classification_confidence: null
+        })
         .eq("id", noteId);
 
       if (error) {
@@ -109,4 +123,3 @@ Deno.serve(
     }
   })
 );
-
