@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 
 import { supabase } from "../lib/supabaseClient";
 import {
+  areNotificationsAvailable,
   requestNotificationPermissions,
   getExpoPushToken,
   getFCMToken,
@@ -32,6 +33,16 @@ export function usePushToken(userId: string | undefined) {
 
     async function registerToken() {
       try {
+        if (!areNotificationsAvailable()) {
+          setState({
+            token: null,
+            isLoading: false,
+            error: "Push notifications are unavailable on this build",
+            permissionGranted: false,
+          });
+          return;
+        }
+
         // Request permissions
         const granted = await requestNotificationPermissions();
 
