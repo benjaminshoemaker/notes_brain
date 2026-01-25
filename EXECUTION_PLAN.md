@@ -746,10 +746,10 @@ Human must complete before agents begin:
 
 Human must complete before agents begin:
 
-- [ ] Add `FCM_PROJECT_ID` to Supabase secrets
-- [ ] Add `FCM_SERVICE_ACCOUNT_KEY` (full JSON) to Supabase secrets
-- [ ] Enable pg_cron extension in Supabase (Database > Extensions)
-- [ ] Enable pg_net extension in Supabase (Database > Extensions)
+- [x] Add `FCM_PROJECT_ID` to Supabase secrets
+- [x] Add `FCM_SERVICE_ACCOUNT_KEY` (full JSON) to Supabase secrets
+- [x] Enable pg_cron extension in Supabase (Database > Extensions)
+- [x] Enable pg_net extension in Supabase (Database > Extensions)
 
 ---
 
