@@ -5,6 +5,11 @@ import { Tabs, useRouter } from "expo-router";
 import { signOutUser } from "../../lib/authApi";
 import { useAuth } from "../../hooks/useAuth";
 import { usePushToken } from "../../hooks/usePushToken";
+import {
+  addNotificationResponseListener,
+  getLastNotificationResponse,
+  type NotificationData,
+} from "../../services/notifications";
 
 export default function AppLayout() {
   const router = useRouter();
@@ -18,6 +23,31 @@ export default function AppLayout() {
       console.log("Push notification setup:", pushError);
     }
   }, [pushError]);
+
+  // Handle notification taps
+  useEffect(() => {
+    // Check if app was opened from a notification
+    getLastNotificationResponse().then((response) => {
+      if (response) {
+        handleNotificationTap(response.notification.request.content.data);
+      }
+    });
+
+    // Listen for notification taps while app is running
+    const subscription = addNotificationResponseListener((response) => {
+      handleNotificationTap(response.notification.request.content.data);
+    });
+
+    return () => {
+      subscription.remove();
+    };
+  }, []);
+
+  function handleNotificationTap(data: NotificationData) {
+    if (data?.type === "daily_summary") {
+      router.push("/(app)/summary");
+    }
+  }
 
   async function handleLogout() {
     Alert.alert("Sign Out", "Are you sure you want to sign out?", [
@@ -57,6 +87,13 @@ export default function AppLayout() {
         options={{
           title: "Notes",
           tabBarLabel: "Notes",
+        }}
+      />
+      <Tabs.Screen
+        name="summary"
+        options={{
+          title: "Summary",
+          tabBarLabel: "Summary",
         }}
       />
     </Tabs>

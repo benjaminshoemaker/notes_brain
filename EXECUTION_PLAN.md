@@ -854,12 +854,12 @@ Human must complete before agents begin:
 **What:** Create the screen that displays the daily summary content.
 
 **Acceptance Criteria:**
-- [ ] Summary screen shows today's summary if it exists
-- [ ] Displays: top 3 actions as checklist, "avoiding" section, "small win" section
-- [ ] Push notification tap opens summary screen
-- [ ] If no summary for today, shows appropriate message
-- [ ] Pull-to-refresh checks for new summary
-- [ ] Navigation from notes screen to summary screen
+- [x] Summary screen shows today's summary if it exists
+- [x] Displays: top 3 actions as checklist, "avoiding" section, "small win" section
+- [x] Push notification tap opens summary screen
+- [x] If no summary for today, shows appropriate message
+- [x] Pull-to-refresh checks for new summary
+- [x] Navigation from notes screen to summary screen
 
 **Files:**
 - Create: `apps/mobile/app/(app)/summary.tsx` — summary screen
