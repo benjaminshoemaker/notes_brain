@@ -806,15 +806,15 @@ Human must complete before agents begin:
 **What:** Update generate-summary to call send-push at ~08:00 and configure pg_cron.
 
 **Acceptance Criteria:**
-- [ ] generate-summary checks for summaries where local time is ~08:00 AND `sent_at` is null
-- [ ] For eligible summaries, calls send-push function
-- [ ] pg_cron job created: every 5 minutes calls generate-summary
-- [ ] Migration documents cron configuration
-- [ ] Test: manual trigger of generate-summary at appropriate time
+- [x] generate-summary checks for summaries where local time is ~08:00 AND `sent_at` is null
+- [x] For eligible summaries, calls send-push function
+- [x] pg_cron job created: every 5 minutes calls generate-summary
+- [x] Migration documents cron configuration
+- [x] Test: manual trigger of generate-summary at appropriate time
 
 **Files:**
 - Modify: `supabase/functions/generate-summary/index.ts` — add push scheduling logic
-- Create: `supabase/migrations/00004_cron_schedule.sql` — pg_cron setup
+- Create: `supabase/migrations/00005_cron_schedule.sql` — pg_cron setup
 
 **Depends On:** 5.2.A
 
