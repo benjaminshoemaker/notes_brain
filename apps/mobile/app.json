@@ -39,16 +39,22 @@
       ],
       "expo-secure-store",
       [
-        "expo-av",
+        "expo-share-intent",
         {
-          "microphonePermission": "Allow NotesBrain to record voice notes"
+          "androidIntentFilters": [
+            "text/*",
+            "image/*",
+            "application/pdf"
+          ],
+          "androidMultiIntentFilters": [
+            "image/*"
+          ]
         }
       ],
       [
-        "expo-share-intent",
+        "expo-audio",
         {
-          "androidIntentFilters": ["text/*", "image/*", "application/pdf"],
-          "androidMultiIntentFilters": ["image/*"]
+          "microphonePermission": "Allow NotesBrain to record voice notes"
         }
       ]
     ],

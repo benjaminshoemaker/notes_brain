@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import * as FileSystem from "expo-file-system";
+import { File } from "expo-file-system";
 import type { NoteWithAttachments, Attachment } from "@notesbrain/shared";
 import { upsertNoteWithAttachments } from "@notesbrain/shared";
 
@@ -50,17 +50,8 @@ async function uploadFile(input: UploadFileInput): Promise<NoteWithAttachments> 
     throw noteError || new Error("Failed to create note");
   }
 
-  // Read the file as base64
-  const base64 = await FileSystem.readAsStringAsync(uri, {
-    encoding: FileSystem.EncodingType.Base64,
-  });
-
-  // Convert base64 to Uint8Array for upload
-  const binaryString = atob(base64);
-  const bytes = new Uint8Array(binaryString.length);
-  for (let i = 0; i < binaryString.length; i++) {
-    bytes[i] = binaryString.charCodeAt(i);
-  }
+  const file = new File(uri);
+  const bytes = await file.bytes();
 
   // Determine file extension from mime type or use original
   const extension = getExtensionFromMimeType(mimeType) || fileName.split(".").pop() || "bin";
@@ -80,9 +71,7 @@ async function uploadFile(input: UploadFileInput): Promise<NoteWithAttachments> 
     throw uploadError;
   }
 
-  // Get file info for size
-  const fileInfo = await FileSystem.getInfoAsync(uri);
-  const fileSize = fileInfo.exists && "size" in fileInfo ? fileInfo.size : 0;
+  const fileSize = file.size;
 
   // Create attachment record
   const { data: attachment, error: attachmentError } = await supabase

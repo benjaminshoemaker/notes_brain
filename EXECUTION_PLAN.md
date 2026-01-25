@@ -646,7 +646,7 @@ Human must complete before agents begin:
 
 #### Task 4.4.A: Implement Voice Recording
 
-**What:** Add voice note recording using expo-av with 5-minute limit.
+**What:** Add voice note recording using expo-audio with 5-minute limit.
 
 **Acceptance Criteria:**
 - [x] Mic button visible on capture screen
@@ -659,7 +659,7 @@ Human must complete before agents begin:
 
 **Files:**
 - Create: `apps/mobile/components/VoiceRecorder.tsx` — recording UI
-- Create: `apps/mobile/hooks/useVoiceRecording.ts` — expo-av recording hook
+- Create: `apps/mobile/hooks/useVoiceRecording.ts` — expo-audio recording hook
 - Modify: `apps/mobile/app/(app)/index.tsx` — add voice recorder
 
 **Depends On:** 4.3.A

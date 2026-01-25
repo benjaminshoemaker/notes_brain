@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import * as FileSystem from "expo-file-system";
+import { File } from "expo-file-system";
 import type { NoteWithAttachments, Attachment } from "@notesbrain/shared";
 import { upsertNoteWithAttachments } from "@notesbrain/shared";
 
@@ -48,17 +48,8 @@ async function uploadVoiceNote(input: UploadVoiceNoteInput): Promise<NoteWithAtt
     throw noteError || new Error("Failed to create note");
   }
 
-  // Read the file as base64
-  const base64 = await FileSystem.readAsStringAsync(uri, {
-    encoding: FileSystem.EncodingType.Base64,
-  });
-
-  // Convert base64 to Uint8Array for upload
-  const binaryString = atob(base64);
-  const bytes = new Uint8Array(binaryString.length);
-  for (let i = 0; i < binaryString.length; i++) {
-    bytes[i] = binaryString.charCodeAt(i);
-  }
+  const file = new File(uri);
+  const bytes = await file.bytes();
 
   // Upload to Supabase Storage
   // Path must match what transcribe-voice expects: {user_id}/voice/{note_id}.m4a
@@ -78,9 +69,7 @@ async function uploadVoiceNote(input: UploadVoiceNoteInput): Promise<NoteWithAtt
     throw uploadError;
   }
 
-  // Get file info for size
-  const fileInfo = await FileSystem.getInfoAsync(uri);
-  const fileSize = fileInfo.exists && "size" in fileInfo ? fileInfo.size : 0;
+  const fileSize = file.size;
 
   // Create attachment record
   const { data: attachment, error: attachmentError } = await supabase
@@ -101,7 +90,7 @@ async function uploadVoiceNote(input: UploadVoiceNoteInput): Promise<NoteWithAtt
 
   // Clean up local file
   try {
-    await FileSystem.deleteAsync(uri, { idempotent: true });
+    file.delete();
   } catch {
     // Ignore cleanup errors
   }
