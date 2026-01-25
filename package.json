@@ -3,7 +3,10 @@
   "private": true,
   "type": "module",
   "packageManager": "npm@11.5.1",
-  "workspaces": ["apps/*", "packages/*"],
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev --parallel",
@@ -15,5 +18,9 @@
   "devDependencies": {
     "expo": "^54.0.0",
     "turbo": "^2.5.5"
+  },
+  "dependencies": {
+    "expo-device": "^8.0.10",
+    "expo-notifications": "^0.32.16"
   }
 }

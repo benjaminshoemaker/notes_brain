@@ -829,12 +829,12 @@ Human must complete before agents begin:
 **What:** Register device push tokens in the mobile app.
 
 **Acceptance Criteria:**
-- [ ] App requests notification permissions on first launch
-- [ ] FCM token obtained and saved to `devices` table
-- [ ] Token updates if changed (app reinstall)
-- [ ] `platform: 'android'` set correctly
-- [ ] `last_seen_at` updated on app open
-- [ ] Token registration happens after successful auth
+- [x] App requests notification permissions on first launch
+- [x] FCM token obtained and saved to `devices` table
+- [x] Token updates if changed (app reinstall)
+- [x] `platform: 'android'` set correctly
+- [x] `last_seen_at` updated on app open
+- [x] Token registration happens after successful auth
 
 **Files:**
 - Create: `apps/mobile/hooks/usePushToken.ts` — FCM token hook

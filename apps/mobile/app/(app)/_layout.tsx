@@ -1,10 +1,23 @@
+import { useEffect } from "react";
 import { TouchableOpacity, Text, Alert } from "react-native";
 import { Tabs, useRouter } from "expo-router";
 
 import { signOutUser } from "../../lib/authApi";
+import { useAuth } from "../../hooks/useAuth";
+import { usePushToken } from "../../hooks/usePushToken";
 
 export default function AppLayout() {
   const router = useRouter();
+  const { user } = useAuth();
+
+  // Register push token when user is authenticated
+  const { error: pushError } = usePushToken(user?.id);
+
+  useEffect(() => {
+    if (pushError) {
+      console.log("Push notification setup:", pushError);
+    }
+  }, [pushError]);
 
   async function handleLogout() {
     Alert.alert("Sign Out", "Are you sure you want to sign out?", [
