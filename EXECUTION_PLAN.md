@@ -784,12 +784,12 @@ Human must complete before agents begin:
 **What:** Build the Edge Function that sends push notifications via FCM HTTP v1 API.
 
 **Acceptance Criteria:**
-- [ ] Function accepts `user_id`, `summary_id`, `title`, `body`
-- [ ] Function fetches Android device with `push_token` for user
-- [ ] FCM HTTP v1 API called with correct format
-- [ ] `daily_summaries.sent_at` updated on successful send
-- [ ] Function handles case where user has no registered device
-- [ ] Errors logged appropriately
+- [x] Function accepts `user_id`, `summary_id`, `title`, `body`
+- [x] Function fetches Android device with `push_token` for user
+- [x] FCM HTTP v1 API called with correct format
+- [x] `daily_summaries.sent_at` updated on successful send
+- [x] Function handles case where user has no registered device
+- [x] Errors logged appropriately
 
 **Files:**
 - Create: `supabase/functions/send-push/index.ts` — main handler
