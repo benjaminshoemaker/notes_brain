@@ -4,7 +4,7 @@
   "last_updated": "2026-01-23T18:00:00Z",
   "generated_by": "phase-start",
   "main": {
-    "current_phase": 4,
+    "current_phase": 5,
     "total_phases": 6,
     "status": "IN_PROGRESS",
     "phases": [
@@ -103,7 +103,8 @@
       {
         "number": 5,
         "name": "Daily Summary",
-        "status": "NOT_STARTED",
+        "status": "IN_PROGRESS",
+        "started_at": "2026-01-25T06:00:00Z",
         "tasks_total": 5,
         "tasks_complete": 0,
         "tasks": {

@@ -760,12 +760,12 @@ Human must complete before agents begin:
 **What:** Build the Edge Function that generates daily summaries using OpenAI Chat Completions API.
 
 **Acceptance Criteria:**
-- [ ] Function runs on cron trigger `{trigger: 'cron'}`
-- [ ] Function finds users where local time is ~07:55 (±5 min window)
-- [ ] For each eligible user, fetches notes from last 48 hours
-- [ ] OpenAI API called with summary prompt from TECHNICAL_SPEC.md
-- [ ] Response parsed as `DailySummaryContent` (top_actions, avoiding, small_win)
-- [ ] Summary saved to `daily_summaries` table with JSONB content
+- [x] Function runs on cron trigger `{trigger: 'cron'}`
+- [x] Function finds users where local time is ~07:55 (±5 min window)
+- [x] For each eligible user, fetches notes from last 48 hours
+- [x] OpenAI API called with summary prompt from TECHNICAL_SPEC.md
+- [x] Response parsed as `DailySummaryContent` (top_actions, avoiding, small_win)
+- [x] Summary saved to `daily_summaries` table with JSONB content
 
 **Files:**
 - Create: `supabase/functions/generate-summary/index.ts` — main handler
