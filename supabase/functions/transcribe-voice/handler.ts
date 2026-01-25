@@ -7,6 +7,7 @@ type NoteRecord = {
   id: string;
   user_id: string;
   type: "text" | "voice" | "file";
+  content?: string | null;
 };
 
 type Dependencies = {
@@ -93,6 +94,16 @@ export function createHandler({
       return jsonResponse({ success: true, note_id: noteId, skipped: true });
     }
 
+    const existingContent = note.content?.trim() ?? "";
+    if (existingContent.length > 0) {
+      return jsonResponse({
+        success: true,
+        note_id: noteId,
+        skipped: true,
+        reason: "already_transcribed"
+      });
+    }
+
     const storagePath = `${note.user_id}/voice/${noteId}.m4a`;
 
     try {
@@ -113,4 +124,3 @@ export function createHandler({
     }
   };
 }
-

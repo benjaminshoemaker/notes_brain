@@ -1,5 +1,12 @@
-import { useState, useRef, useCallback, useEffect } from "react";
-import { Audio } from "expo-av";
+import { useState, useMemo, useCallback, useEffect } from "react";
+import {
+  RecordingPresets,
+  type RecordingStatus,
+  requestRecordingPermissionsAsync,
+  setAudioModeAsync,
+  useAudioRecorder,
+  useAudioRecorderState,
+} from "expo-audio";
 import { MAX_VOICE_SECONDS } from "@notesbrain/shared";
 
 type RecordingState = {
@@ -18,8 +25,6 @@ type UseVoiceRecordingResult = {
   formatDuration: (ms: number) => string;
 };
 
-const MAX_DURATION_MS = MAX_VOICE_SECONDS * 1000;
-
 export function useVoiceRecording(): UseVoiceRecordingResult {
   const [state, setState] = useState<RecordingState>({
     isRecording: false,
@@ -29,28 +34,61 @@ export function useVoiceRecording(): UseVoiceRecordingResult {
     error: null,
   });
 
-  const recordingRef = useRef<Audio.Recording | null>(null);
-  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
-  const startTimeRef = useRef<number>(0);
+  const recordingOptions = useMemo(
+    () => ({
+      ...RecordingPresets.HIGH_QUALITY,
+      numberOfChannels: 1,
+    }),
+    []
+  );
+
+  const handleStatusUpdate = useCallback((status: RecordingStatus) => {
+    if (status.hasError) {
+      setState((prev) => ({
+        ...prev,
+        isRecording: false,
+        isPaused: false,
+        error: status.error ?? "Recording failed",
+      }));
+    }
+
+    if (status.isFinished) {
+      setState((prev) => ({
+        ...prev,
+        isRecording: false,
+        isPaused: false,
+        uri: status.url ?? prev.uri,
+      }));
+      setAudioModeAsync({ allowsRecording: false }).catch(() => {});
+    }
+  }, []);
+
+  const recorder = useAudioRecorder(recordingOptions, handleStatusUpdate);
+
+  const recorderState = useAudioRecorderState(recorder, 100);
 
   // Cleanup on unmount
   useEffect(() => {
     return () => {
-      if (timerRef.current) {
-        clearInterval(timerRef.current);
-      }
-      if (recordingRef.current) {
-        recordingRef.current.stopAndUnloadAsync().catch(() => {});
+      if (recorder.isRecording) {
+        recorder.stop().catch(() => {});
       }
     };
-  }, []);
+  }, [recorder]);
+
+  // Keep durationMs synced while recording
+  useEffect(() => {
+    if (!state.isRecording) return;
+
+    setState((prev) => ({ ...prev, durationMs: recorderState.durationMillis }));
+  }, [recorderState.durationMillis, state.isRecording]);
 
   const startRecording = useCallback(async () => {
     try {
       setState((prev) => ({ ...prev, error: null }));
 
       // Request permissions
-      const { granted } = await Audio.requestPermissionsAsync();
+      const { granted } = await requestRecordingPermissionsAsync();
       if (!granted) {
         setState((prev) => ({
           ...prev,
@@ -60,40 +98,14 @@ export function useVoiceRecording(): UseVoiceRecordingResult {
       }
 
       // Configure audio mode
-      await Audio.setAudioModeAsync({
-        allowsRecordingIOS: true,
-        playsInSilentModeIOS: true,
+      await setAudioModeAsync({
+        allowsRecording: true,
+        playsInSilentMode: true,
       });
 
-      // Create and prepare recording
-      const recording = new Audio.Recording();
-      await recording.prepareToRecordAsync({
-        android: {
-          extension: ".m4a",
-          outputFormat: Audio.AndroidOutputFormat.MPEG_4,
-          audioEncoder: Audio.AndroidAudioEncoder.AAC,
-          sampleRate: 44100,
-          numberOfChannels: 1,
-          bitRate: 128000,
-        },
-        ios: {
-          extension: ".m4a",
-          audioQuality: Audio.IOSAudioQuality.HIGH,
-          sampleRate: 44100,
-          numberOfChannels: 1,
-          bitRate: 128000,
-          outputFormat: Audio.IOSOutputFormat.MPEG4AAC,
-        },
-        web: {
-          mimeType: "audio/webm",
-          bitsPerSecond: 128000,
-        },
-      });
-
-      recordingRef.current = recording;
-      startTimeRef.current = Date.now();
-
-      await recording.startAsync();
+      // Prepare and start recording
+      await recorder.prepareToRecordAsync();
+      recorder.record({ forDuration: MAX_VOICE_SECONDS });
 
       setState((prev) => ({
         ...prev,
@@ -102,42 +114,23 @@ export function useVoiceRecording(): UseVoiceRecordingResult {
         durationMs: 0,
         uri: null,
       }));
-
-      // Start duration timer
-      timerRef.current = setInterval(() => {
-        const elapsed = Date.now() - startTimeRef.current;
-        setState((prev) => ({ ...prev, durationMs: elapsed }));
-
-        // Auto-stop at max duration
-        if (elapsed >= MAX_DURATION_MS) {
-          stopRecording();
-        }
-      }, 100);
     } catch (error) {
       const message = error instanceof Error ? error.message : "Failed to start recording";
       setState((prev) => ({ ...prev, error: message }));
     }
-  }, []);
+  }, [recorder]);
 
   const stopRecording = useCallback(async (): Promise<string | null> => {
-    if (timerRef.current) {
-      clearInterval(timerRef.current);
-      timerRef.current = null;
-    }
-
-    if (!recordingRef.current) {
+    if (!recorder.isRecording) {
       return null;
     }
 
     try {
-      await recordingRef.current.stopAndUnloadAsync();
-      const uri = recordingRef.current.getURI();
-      recordingRef.current = null;
+      await recorder.stop();
+      const uri = recorder.uri;
 
       // Reset audio mode
-      await Audio.setAudioModeAsync({
-        allowsRecordingIOS: false,
-      });
+      await setAudioModeAsync({ allowsRecording: false });
 
       setState((prev) => ({
         ...prev,
@@ -156,26 +149,18 @@ export function useVoiceRecording(): UseVoiceRecordingResult {
       }));
       return null;
     }
-  }, []);
+  }, [recorder]);
 
   const cancelRecording = useCallback(async () => {
-    if (timerRef.current) {
-      clearInterval(timerRef.current);
-      timerRef.current = null;
-    }
-
-    if (recordingRef.current) {
+    if (recorder.isRecording) {
       try {
-        await recordingRef.current.stopAndUnloadAsync();
+        await recorder.stop();
       } catch {
         // Ignore errors during cancel
       }
-      recordingRef.current = null;
     }
 
-    await Audio.setAudioModeAsync({
-      allowsRecordingIOS: false,
-    });
+    await setAudioModeAsync({ allowsRecording: false });
 
     setState({
       isRecording: false,
@@ -184,7 +169,7 @@ export function useVoiceRecording(): UseVoiceRecordingResult {
       uri: null,
       error: null,
     });
-  }, []);
+  }, [recorder]);
 
   const formatDuration = useCallback((ms: number): string => {
     const totalSeconds = Math.floor(ms / 1000);

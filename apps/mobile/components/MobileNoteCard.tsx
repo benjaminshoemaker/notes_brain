@@ -75,6 +75,7 @@ export function MobileNoteCard({ note }: MobileNoteCardProps) {
   }, [note.classification_status, highlightAnim]);
 
   const isPending = note.classification_status === "pending";
+  const isFailed = note.classification_status === "failed";
   const displayCategory = isPending ? "classifying..." : note.category;
   const categoryColor = getCategoryColor(isPending ? "pending" : note.category);
 
@@ -104,7 +105,11 @@ export function MobileNoteCard({ note }: MobileNoteCardProps) {
         </Text>
       ) : (
         <Text style={styles.emptyContent}>
-          {note.type === "voice" ? "Voice note (transcribing...)" : "No content"}
+          {note.type === "voice"
+            ? isFailed
+              ? "Voice note (transcription failed)"
+              : "Voice note (transcribing...)"
+            : "No content"}
         </Text>
       )}
 

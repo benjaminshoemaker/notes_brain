@@ -13,6 +13,7 @@
     "test": "npm run test:root && turbo run test"
   },
   "devDependencies": {
+    "expo": "^54.0.0",
     "turbo": "^2.5.5"
   }
 }
