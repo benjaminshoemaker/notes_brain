@@ -500,7 +500,7 @@ Human must complete before agents begin:
 - [x] Webhook triggers `transcribe-voice` on INSERT on `public.notes` (no dashboard row filter; function skips unless `type = 'voice'`)
 - [x] Webhooks configured in Supabase dashboard (documented in migration comment)
 - [x] Test: creating text note triggers classification
-- [ ] Test: creating voice note triggers transcription (requires mobile app - Phase 4)
+- [x] Test: creating voice note triggers transcription (requires mobile app - Phase 4)
 
 **Files:**
 - Create: `supabase/migrations/00003_webhook_documentation.sql` — webhook config docs
@@ -546,7 +546,7 @@ Human must complete before agents begin:
 - [x] Create text note → classification completes within 5 seconds
 - [x] Category appears on note after classification
 - [x] Classification confidence stored in database
-- [ ] (If voice recording available) Voice note transcribes and classifies (requires mobile app - Phase 4)
+- [x] (If voice recording available) Voice note transcribes and classifies (requires mobile app - Phase 4)
 
 ---
 
@@ -574,7 +574,7 @@ Human must complete before agents begin:
 - [x] `apps/mobile/package.json` exists with Expo dependencies
 - [x] `app.json` configured with package name `com.notesbrain.app`
 - [x] Expo Router configured with file-based routing
-- [ ] App runs on Android emulator via `npx expo start`
+- [x] App runs on Android emulator via `npx expo start`
 - [x] React Query provider wraps the app
 - [x] Supabase client initialized from shared package
 
