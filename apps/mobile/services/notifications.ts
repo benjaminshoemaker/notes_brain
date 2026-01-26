@@ -1,5 +1,3 @@
-import * as Device from "expo-device";
-import Constants from "expo-constants";
 import { Platform } from "react-native";
 import type {
   EventSubscription,
@@ -8,8 +6,24 @@ import type {
 } from "expo-notifications";
 
 type NotificationsModule = typeof import("expo-notifications");
+type DeviceModule = typeof import("expo-device");
+type ConstantsModule = typeof import("expo-constants");
+type ConstantsLike = {
+  expoConfig?: {
+    extra?: {
+      eas?: {
+        projectId?: string;
+      };
+    };
+  };
+  easConfig?: {
+    projectId?: string;
+  };
+};
 
 let notificationsModule: NotificationsModule | null | undefined;
+let deviceModule: DeviceModule | null | undefined;
+let constantsModule: ConstantsModule | null | undefined;
 let handlerConfigured = false;
 let warnedUnavailable = false;
 
@@ -37,6 +51,38 @@ function loadNotificationsModule(): NotificationsModule | null {
   return notificationsModule;
 }
 
+function loadDeviceModule(): DeviceModule | null {
+  if (deviceModule !== undefined) {
+    return deviceModule;
+  }
+
+  try {
+    deviceModule = require("expo-device") as DeviceModule;
+  } catch (error) {
+    deviceModule = null;
+    const message = error instanceof Error ? error.message : String(error);
+    console.warn("expo-device unavailable:", message);
+  }
+
+  return deviceModule;
+}
+
+function loadConstantsModule(): ConstantsModule | null {
+  if (constantsModule !== undefined) {
+    return constantsModule;
+  }
+
+  try {
+    constantsModule = require("expo-constants") as ConstantsModule;
+  } catch (error) {
+    constantsModule = null;
+    const message = error instanceof Error ? error.message : String(error);
+    console.warn("expo-constants unavailable:", message);
+  }
+
+  return constantsModule;
+}
+
 function ensureNotificationHandler(notifications: NotificationsModule) {
   if (handlerConfigured) {
     return;
@@ -61,13 +107,14 @@ export function areNotificationsAvailable(): boolean {
 
 export async function requestNotificationPermissions(): Promise<boolean> {
   const notifications = loadNotificationsModule();
+  const device = loadDeviceModule();
 
-  if (!notifications) {
+  if (!notifications || !device) {
     console.log("Push notifications are unavailable on this build");
     return false;
   }
 
-  if (!Device.isDevice) {
+  if (!device.isDevice) {
     console.log("Push notifications require a physical device");
     return false;
   }
@@ -92,19 +139,27 @@ export async function requestNotificationPermissions(): Promise<boolean> {
 
 export async function getExpoPushToken(): Promise<string | null> {
   const notifications = loadNotificationsModule();
+  const device = loadDeviceModule();
+  const constantsModule = loadConstantsModule();
+  const constantsValue = constantsModule as
+    | (ConstantsLike & { default?: ConstantsLike })
+    | null
+    | undefined;
+  const constants = constantsValue?.default ?? constantsValue;
 
-  if (!notifications) {
+  if (!notifications || !device || !constants) {
     return null;
   }
 
-  if (!Device.isDevice) {
+  if (!device.isDevice) {
     console.log("Push tokens require a physical device");
     return null;
   }
 
   // For Expo Go, we use the Expo push token
   // For standalone builds, we would use FCM tokens directly
-  const projectId = Constants.expoConfig?.extra?.eas?.projectId ?? Constants.easConfig?.projectId;
+  const projectId =
+    constants.expoConfig?.extra?.eas?.projectId ?? constants.easConfig?.projectId;
 
   if (!projectId) {
     console.log("No project ID found for push notifications");
@@ -124,8 +179,9 @@ export async function getExpoPushToken(): Promise<string | null> {
 
 export async function getFCMToken(): Promise<string | null> {
   const notifications = loadNotificationsModule();
+  const device = loadDeviceModule();
 
-  if (!notifications) {
+  if (!notifications || !device) {
     return null;
   }
 
@@ -133,7 +189,7 @@ export async function getFCMToken(): Promise<string | null> {
     return null;
   }
 
-  if (!Device.isDevice) {
+  if (!device.isDevice) {
     console.log("FCM tokens require a physical device");
     return null;
   }
