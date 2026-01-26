@@ -988,12 +988,12 @@ Human must complete before agents begin:
 **What:** Set up production build configurations for web and mobile.
 
 **Acceptance Criteria:**
-- [ ] Web app builds with `npm run build` producing optimized bundle
-- [ ] Environment variables configured for production Supabase
-- [ ] Mobile app builds with `eas build --platform android`
-- [ ] APK/AAB generated for Android
-- [ ] Build artifacts exclude development dependencies
-- [ ] Source maps generated for debugging
+- [x] Web app builds with `npm run build` producing optimized bundle (Type: TEST, Verify: `tests/task-6.3.A.test.js`)
+- [x] Environment variables configured for production Supabase (Type: TEST, Verify: `tests/task-6.3.A.test.js`)
+- [x] Mobile app builds with `eas build --platform android` (Type: TEST, Verify: `tests/task-6.3.A.test.js`)
+- [x] APK/AAB generated for Android (Type: TEST, Verify: `tests/task-6.3.A.test.js`)
+- [x] Build artifacts exclude development dependencies (Type: TEST, Verify: `tests/task-6.3.A.test.js`)
+- [x] Source maps generated for debugging (Type: TEST, Verify: `tests/task-6.3.A.test.js`)
 
 **Files:**
 - Create: `apps/web/.env.production` — production env vars (template)
