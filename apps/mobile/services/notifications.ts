@@ -8,6 +8,7 @@ import type {
 type NotificationsModule = typeof import("expo-notifications");
 type DeviceModule = typeof import("expo-device");
 type ConstantsModule = typeof import("expo-constants");
+type ExpoModulesCore = typeof import("expo-modules-core");
 type ConstantsLike = {
   expoConfig?: {
     extra?: {
@@ -24,16 +25,99 @@ type ConstantsLike = {
 let notificationsModule: NotificationsModule | null | undefined;
 let deviceModule: DeviceModule | null | undefined;
 let constantsModule: ConstantsModule | null | undefined;
+let expoModulesCore: ExpoModulesCore | null | undefined;
 let handlerConfigured = false;
 let warnedUnavailable = false;
+let warnedDeviceUnavailable = false;
+let warnedExpoModulesCoreUnavailable = false;
+let cachedNotificationsNativeSupport: boolean | null = null;
+let cachedDeviceNativeSupport: boolean | null = null;
+
+const notificationNativeModuleNames = [
+  "ExpoNotificationsEmitter",
+  "ExpoNotificationChannelManager",
+  "ExpoNotificationChannelGroupManager",
+  "ExpoNotificationPermissionsModule",
+  "ExpoNotificationCategoriesModule",
+  "ExpoNotificationsHandlerModule",
+  "ExpoNotificationPresenter",
+  "ExpoNotificationScheduler",
+  "ExpoPushTokenManager",
+  "ExpoBackgroundNotificationTasksModule",
+  "ExpoBadgeModule",
+];
 
 export type NotificationData = {
   summary_id?: string;
   type?: string;
 };
 
+function loadExpoModulesCore(): ExpoModulesCore | null {
+  if (expoModulesCore !== undefined) {
+    return expoModulesCore;
+  }
+
+  try {
+    expoModulesCore = require("expo-modules-core") as ExpoModulesCore;
+  } catch (error) {
+    expoModulesCore = null;
+    if (!warnedExpoModulesCoreUnavailable) {
+      warnedExpoModulesCoreUnavailable = true;
+      const message = error instanceof Error ? error.message : String(error);
+      console.warn("expo-modules-core unavailable:", message);
+    }
+  }
+
+  return expoModulesCore;
+}
+
+function hasNativeModule(moduleName: string): boolean {
+  const core = loadExpoModulesCore();
+
+  if (!core?.requireOptionalNativeModule) {
+    return false;
+  }
+
+  try {
+    return core.requireOptionalNativeModule(moduleName) != null;
+  } catch {
+    return false;
+  }
+}
+
+function hasNotificationsNativeModules(): boolean {
+  if (cachedNotificationsNativeSupport !== null) {
+    return cachedNotificationsNativeSupport;
+  }
+
+  const hasModules = notificationNativeModuleNames.every((name) =>
+    hasNativeModule(name)
+  );
+  cachedNotificationsNativeSupport = hasModules;
+  return hasModules;
+}
+
+function hasDeviceNativeModule(): boolean {
+  if (cachedDeviceNativeSupport !== null) {
+    return cachedDeviceNativeSupport;
+  }
+
+  const hasModule = hasNativeModule("ExpoDevice");
+  cachedDeviceNativeSupport = hasModule;
+  return hasModule;
+}
+
 function loadNotificationsModule(): NotificationsModule | null {
   if (notificationsModule !== undefined) {
+    return notificationsModule;
+  }
+
+  if (!hasNotificationsNativeModules()) {
+    notificationsModule = null;
+    if (!warnedUnavailable) {
+      warnedUnavailable = true;
+      console.warn("expo-notifications unavailable: native modules missing");
+    }
     return notificationsModule;
   }
 
@@ -53,6 +137,15 @@ function loadNotificationsModule(): NotificationsModule | null {
 
 function loadDeviceModule(): DeviceModule | null {
   if (deviceModule !== undefined) {
+    return deviceModule;
+  }
+
+  if (!hasDeviceNativeModule()) {
+    deviceModule = null;
+    if (!warnedDeviceUnavailable) {
+      warnedDeviceUnavailable = true;
+      console.warn("expo-device unavailable: native module missing");
+    }
     return deviceModule;
   }
 
@@ -102,7 +195,7 @@ function ensureNotificationHandler(notifications: NotificationsModule) {
 }
 
 export function areNotificationsAvailable(): boolean {
-  return loadNotificationsModule() !== null;
+  return hasNotificationsNativeModules() && loadNotificationsModule() !== null;
 }
 
 export async function requestNotificationPermissions(): Promise<boolean> {
