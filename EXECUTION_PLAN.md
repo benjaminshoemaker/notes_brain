@@ -910,12 +910,12 @@ Human must complete before agents begin:
 **What:** Add timezone configuration with auto-detect and manual override.
 
 **Acceptance Criteria:**
-- [ ] Settings screen exists in mobile app
-- [ ] Timezone auto-detected on first app open using device locale
-- [ ] Dropdown allows manual timezone selection
-- [ ] Timezone saved to `users.timezone` field
-- [ ] Timezone change affects daily summary delivery time
-- [ ] Web app also shows timezone in settings (read-only or editable)
+- [x] Settings screen exists in mobile app (Type: TEST, Verify: `tests/task-6.1.A.test.js`)
+- [x] Timezone auto-detected on first app open using device locale (Type: TEST, Verify: `tests/task-6.1.A.test.js`)
+- [x] Dropdown allows manual timezone selection (Type: TEST, Verify: `tests/task-6.1.A.test.js`)
+- [x] Timezone saved to `users.timezone` field (Type: TEST, Verify: `tests/task-6.1.A.test.js`)
+- [x] Timezone change affects daily summary delivery time (Type: TEST, Verify: `tests/task-6.1.A.test.js`)
+- [x] Web app also shows timezone in settings (read-only or editable) (Type: TEST, Verify: `tests/task-6.1.A.test.js`)
 
 **Files:**
 - Create: `apps/mobile/app/(app)/settings.tsx` — settings screen

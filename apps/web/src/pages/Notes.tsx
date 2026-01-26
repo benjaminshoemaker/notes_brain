@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 
 import type { Category, NoteWithAttachments } from "@notesbrain/shared";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { CategoryFilter } from "../components/CategoryFilter";
 import { CategorySelect } from "../components/CategorySelect";
@@ -96,7 +96,10 @@ export default function NotesPage() {
             <SearchInput value={searchQuery} onChange={setSearchQuery} />
           </div>
 
-          <div style={{ marginLeft: "auto" }}>
+          <div style={{ marginLeft: "auto", display: "flex", gap: 8 }}>
+            <Link to="/settings">
+              <button type="button">Settings</button>
+            </Link>
             <button type="button" onClick={handleLogout}>
               Logout
             </button>
