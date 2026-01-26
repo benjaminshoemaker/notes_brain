@@ -964,11 +964,11 @@ Human must complete before agents begin:
 **What:** Add optimistic updates for note creation and category changes.
 
 **Acceptance Criteria:**
-- [ ] Creating note shows immediately in list before server confirms
-- [ ] Category change reflects immediately before server confirms
-- [ ] Failed mutations revert to previous state
-- [ ] User notified of sync failure with retry option
-- [ ] React Query mutation options configured for optimistic updates
+- [x] Creating note shows immediately in list before server confirms (Type: TEST, Verify: `tests/task-6.2.B.test.js`)
+- [x] Category change reflects immediately before server confirms (Type: TEST, Verify: `tests/task-6.2.B.test.js`)
+- [x] Failed mutations revert to previous state (Type: TEST, Verify: `tests/task-6.2.B.test.js`)
+- [x] User notified of sync failure with retry option (Type: TEST, Verify: `tests/task-6.2.B.test.js`)
+- [x] React Query mutation options configured for optimistic updates (Type: TEST, Verify: `tests/task-6.2.B.test.js`)
 
 **Files:**
 - Modify: `apps/web/src/hooks/useCreateNote.ts` — add optimistic update

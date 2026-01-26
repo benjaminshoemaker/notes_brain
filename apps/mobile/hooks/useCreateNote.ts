@@ -3,6 +3,7 @@ import type { NoteWithAttachments } from "@notesbrain/shared";
 import { upsertNoteWithAttachments } from "@notesbrain/shared";
 
 import { supabase } from "../lib/supabaseClient";
+import { useAuth } from "./useAuth";
 
 type CreateNoteInput = {
   content: string;
@@ -18,6 +19,11 @@ type CreateNoteResult = {
   classification_status: string;
   created_at: string;
   updated_at: string;
+};
+
+type Context = {
+  previousNotes: NoteWithAttachments[] | undefined;
+  optimisticId: string;
 };
 
 async function createNote(input: CreateNoteInput): Promise<CreateNoteResult> {
@@ -50,11 +56,40 @@ async function createNote(input: CreateNoteInput): Promise<CreateNoteResult> {
 
 export function useCreateNote() {
   const queryClient = useQueryClient();
+  const { user } = useAuth();
 
-  return useMutation({
+  const mutation = useMutation({
     mutationFn: createNote,
-    onSuccess: (newNote) => {
-      // Optimistically add the new note to the cache
+    onMutate: async (input) => {
+      await queryClient.cancelQueries({ queryKey: ["notes"] });
+
+      const previousNotes = queryClient.getQueryData<NoteWithAttachments[]>(["notes"]);
+      const optimisticId = `optimistic-${Date.now()}`;
+      const optimisticNote: NoteWithAttachments = {
+        id: optimisticId,
+        user_id: user?.id ?? "unknown",
+        content: input.content,
+        type: input.type ?? "text",
+        category: "uncategorized",
+        classification_status: "pending",
+        classification_confidence: null,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+        attachments: [],
+      };
+
+      queryClient.setQueryData<NoteWithAttachments[]>(["notes"], (old) => {
+        return upsertNoteWithAttachments(old, optimisticNote, "start");
+      });
+
+      return { previousNotes, optimisticId } satisfies Context;
+    },
+    onError: (_error, _input, context) => {
+      if (context?.previousNotes) {
+        queryClient.setQueryData(["notes"], context.previousNotes);
+      }
+    },
+    onSuccess: (newNote, _input, context) => {
       queryClient.setQueryData<NoteWithAttachments[]>(["notes"], (old) => {
         const noteWithAttachments: NoteWithAttachments = {
           ...newNote,
@@ -64,8 +99,18 @@ export function useCreateNote() {
           classification_confidence: null,
           attachments: [],
         };
-        return upsertNoteWithAttachments(old, noteWithAttachments, "start");
+
+        const current = old ?? [];
+        if (context?.optimisticId) {
+          return current.map((note) =>
+            note.id === context.optimisticId ? noteWithAttachments : note
+          );
+        }
+
+        return upsertNoteWithAttachments(current, noteWithAttachments, "start");
       });
     },
   });
+
+  return mutation;
 }
