@@ -1,11 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
 
+import { isNetworkError } from "../lib/errors";
 import { supabase } from "../lib/supabaseClient";
 
 export function useAttachmentUrl(storagePath: string) {
   return useQuery({
     queryKey: ["attachmentUrl", storagePath],
     enabled: Boolean(storagePath),
+    useErrorBoundary: (error) => !isNetworkError(error),
     queryFn: async () => {
       const { data, error } = await supabase.storage
         .from("attachments")
@@ -23,4 +25,3 @@ export function useAttachmentUrl(storagePath: string) {
     }
   });
 }
-

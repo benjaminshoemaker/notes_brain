@@ -1,14 +1,39 @@
-import { useMemo } from "react";
-import { View, Text, StyleSheet, ActivityIndicator } from "react-native";
+import { useEffect, useMemo, useState } from "react";
+import { Alert, View, Text, StyleSheet } from "react-native";
 
+import { LoadingSpinner } from "../../components/LoadingSpinner";
 import { TimezoneSelect } from "../../components/TimezoneSelect";
 import { useUserSettings } from "../../hooks/useUserSettings";
 import { getDeviceTimezone, getTimezoneOptions } from "../../lib/timezones";
 
 export default function SettingsScreen() {
-  const { data, isLoading, error, updateTimezone, isUpdating } = useUserSettings();
+  const { data, isLoading, error, updateTimezone, refetch, isUpdating } = useUserSettings();
   const timezones = useMemo(() => getTimezoneOptions(), []);
   const currentTimezone = data?.timezone ?? getDeviceTimezone();
+  const [hasShownError, setHasShownError] = useState(false);
+
+  useEffect(() => {
+    if (error && !hasShownError) {
+      setHasShownError(true);
+      Alert.alert(
+        "Connection issue",
+        "We couldn't load your settings. Check your connection and try again.",
+        [
+          {
+            text: "Retry",
+            onPress: () => {
+              refetch();
+            },
+          },
+          { text: "Dismiss", style: "cancel" },
+        ]
+      );
+    }
+
+    if (!error && hasShownError) {
+      setHasShownError(false);
+    }
+  }, [error, hasShownError]);
 
   async function handleTimezoneChange(nextTimezone: string) {
     if (nextTimezone === currentTimezone) return;
@@ -26,10 +51,7 @@ export default function SettingsScreen() {
         </Text>
 
         {isLoading ? (
-          <View style={styles.loadingRow}>
-            <ActivityIndicator size="small" color="#0066cc" />
-            <Text style={styles.loadingText}>Loading settings…</Text>
-          </View>
+          <LoadingSpinner label="Loading settings…" />
         ) : error ? (
           <Text style={styles.errorText}>Failed to load settings.</Text>
         ) : (
@@ -77,15 +99,6 @@ const styles = StyleSheet.create({
     fontSize: 13,
     color: "#6b7280",
     marginBottom: 12,
-  },
-  loadingRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 10,
-  },
-  loadingText: {
-    fontSize: 14,
-    color: "#6b7280",
   },
   errorText: {
     fontSize: 14,

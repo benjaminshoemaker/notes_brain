@@ -23,7 +23,7 @@ export default function LoginPage() {
     setIsSubmitting(false);
 
     if (result.error) {
-      setError(result.error.message);
+      setError("Unable to sign in. Check your email and password, then try again.");
       return;
     }
 
@@ -45,7 +45,7 @@ export default function LoginPage() {
     setIsSubmitting(false);
 
     if (result.error) {
-      setError(result.error.message);
+      setError("Unable to send magic link. Please try again.");
       return;
     }
 
@@ -82,11 +82,11 @@ export default function LoginPage() {
         </div>
 
         <button type="submit" disabled={isSubmitting}>
-          Sign in
+          {isSubmitting ? "Signing in..." : "Sign in"}
         </button>
 
         <button type="button" onClick={handleMagicLink} disabled={isSubmitting}>
-          Sign in with magic link
+          {isSubmitting ? "Sending link..." : "Sign in with magic link"}
         </button>
       </form>
 
@@ -104,4 +104,3 @@ export default function LoginPage() {
     </div>
   );
 }
-

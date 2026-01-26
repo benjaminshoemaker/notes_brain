@@ -937,12 +937,12 @@ Human must complete before agents begin:
 **What:** Implement consistent loading states and error handling across both apps.
 
 **Acceptance Criteria:**
-- [ ] All data fetches show loading spinner/skeleton
-- [ ] Network errors show toast/alert with retry option
-- [ ] Offline state detected and shown appropriately
-- [ ] Form submissions disable button and show progress
-- [ ] API errors display user-friendly messages
-- [ ] React Query error boundaries catch unexpected errors
+- [x] All data fetches show loading spinner/skeleton (Type: TEST, Verify: `tests/task-6.2.A.test.js`)
+- [x] Network errors show toast/alert with retry option (Type: TEST, Verify: `tests/task-6.2.A.test.js`)
+- [x] Offline state detected and shown appropriately (Type: TEST, Verify: `tests/task-6.2.A.test.js`)
+- [x] Form submissions disable button and show progress (Type: TEST, Verify: `tests/task-6.2.A.test.js`)
+- [x] API errors display user-friendly messages (Type: TEST, Verify: `tests/task-6.2.A.test.js`)
+- [x] React Query error boundaries catch unexpected errors (Type: TEST, Verify: `tests/task-6.2.A.test.js`)
 
 **Files:**
 - Create: `apps/web/src/components/LoadingSpinner.tsx` — loading indicator

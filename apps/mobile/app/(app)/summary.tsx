@@ -1,29 +1,50 @@
+import { useEffect, useState } from "react";
 import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
+  Alert,
   RefreshControl,
-  ActivityIndicator,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
 } from "react-native";
 
 import { useAuth } from "../../hooks/useAuth";
 import { useDailySummary } from "../../hooks/useDailySummary";
+import { LoadingSpinner } from "../../components/LoadingSpinner";
 import { SummaryCard } from "../../components/SummaryCard";
 
 export default function SummaryScreen() {
   const { user } = useAuth();
-  const { data: summary, isLoading, refetch, isRefetching } = useDailySummary(
+  const { data: summary, isLoading, refetch, isRefetching, error } = useDailySummary(
     user?.id
   );
+  const [hasShownError, setHasShownError] = useState(false);
+
+  useEffect(() => {
+    if (error && !hasShownError) {
+      setHasShownError(true);
+      Alert.alert(
+        "Connection issue",
+        "We couldn't load the summary. Check your connection and try again.",
+        [
+          {
+            text: "Retry",
+            onPress: () => {
+              refetch();
+            },
+          },
+          { text: "Dismiss", style: "cancel" },
+        ]
+      );
+    }
+
+    if (!error && hasShownError) {
+      setHasShownError(false);
+    }
+  }, [error, hasShownError, refetch]);
 
   if (isLoading) {
-    return (
-      <View style={styles.centered}>
-        <ActivityIndicator size="large" color="#0066cc" />
-        <Text style={styles.loadingText}>Loading summary...</Text>
-      </View>
-    );
+    return <LoadingSpinner label="Loading summary..." />;
   }
 
   if (!summary) {
@@ -80,11 +101,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     padding: 24,
-  },
-  loadingText: {
-    marginTop: 12,
-    fontSize: 16,
-    color: "#666",
   },
   header: {
     padding: 16,

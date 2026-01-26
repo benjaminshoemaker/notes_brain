@@ -21,7 +21,7 @@ export default function SignupPage() {
     setIsSubmitting(false);
 
     if (result.error) {
-      setError(result.error.message);
+      setError("Unable to create account. Please try again.");
       return;
     }
 
@@ -58,7 +58,7 @@ export default function SignupPage() {
         </div>
 
         <button type="submit" disabled={isSubmitting}>
-          Sign up
+          {isSubmitting ? "Creating account..." : "Sign up"}
         </button>
       </form>
 
@@ -74,4 +74,3 @@ export default function SignupPage() {
     </div>
   );
 }
-

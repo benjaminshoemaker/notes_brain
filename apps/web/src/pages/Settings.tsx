@@ -3,6 +3,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 import { useAuth } from "../hooks/useAuth";
 import { useToast } from "../hooks/useToast";
+import { LoadingSpinner } from "../components/LoadingSpinner";
 import { supabase } from "../lib/supabaseClient";
 import { getDeviceTimezone, getTimezoneOptions } from "../lib/timezones";
 
@@ -96,7 +97,7 @@ export default function SettingsPage() {
         </p>
       </header>
 
-      {isLoading ? <p>Loading settings…</p> : null}
+      {isLoading ? <LoadingSpinner label="Loading settings…" /> : null}
       {error ? <p role="alert">Failed to load settings.</p> : null}
 
       {!isLoading && !error ? (
@@ -114,6 +115,9 @@ export default function SettingsPage() {
               </option>
             ))}
           </select>
+          {updateTimezone.isPending ? (
+            <span style={{ fontSize: 12, color: "#6b7280" }}>Saving...</span>
+          ) : null}
         </label>
       ) : null}
     </div>

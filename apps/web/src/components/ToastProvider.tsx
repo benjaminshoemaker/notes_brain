@@ -2,32 +2,37 @@ import { createContext, useCallback, useMemo, useState } from "react";
 
 import type { ReactNode } from "react";
 
-type ToastVariant = "error" | "info";
+import { Toast, type ToastAction, type ToastVariant } from "./Toast";
 
-type Toast = {
+type ToastItem = {
   id: string;
   message: string;
   variant: ToastVariant;
+  action?: ToastAction;
 };
 
 type ToastContextValue = {
-  showToast: (message: string, variant?: ToastVariant) => void;
+  showToast: (message: string, variant?: ToastVariant, action?: ToastAction) => void;
 };
 
 export const ToastContext = createContext<ToastContextValue | null>(null);
 
 export function ToastProvider({ children }: { children: ReactNode }) {
-  const [toasts, setToasts] = useState<Toast[]>([]);
+  const [toasts, setToasts] = useState<ToastItem[]>([]);
 
-  const showToast = useCallback((message: string, variant: ToastVariant = "info") => {
+  const dismissToast = useCallback((id: string) => {
+    setToasts((current) => current.filter((toast) => toast.id !== id));
+  }, []);
+
+  const showToast = useCallback((message: string, variant: ToastVariant = "info", action?: ToastAction) => {
     const id = `${Date.now()}-${Math.random().toString(16).slice(2)}`;
 
-    setToasts((current) => [...current, { id, message, variant }]);
+    setToasts((current) => [...current, { id, message, variant, action }]);
 
     window.setTimeout(() => {
-      setToasts((current) => current.filter((toast) => toast.id !== id));
+      dismissToast(id);
     }, 4000);
-  }, []);
+  }, [dismissToast]);
 
   const value = useMemo(() => ({ showToast }), [showToast]);
 
@@ -46,23 +51,15 @@ export function ToastProvider({ children }: { children: ReactNode }) {
         }}
       >
         {toasts.map((toast) => (
-          <div
+          <Toast
             key={toast.id}
-            role="status"
-            style={{
-              padding: "10px 12px",
-              borderRadius: 10,
-              border: "1px solid #ddd",
-              background: toast.variant === "error" ? "#fff0f0" : "white",
-              color: toast.variant === "error" ? "#8a0000" : "inherit",
-              maxWidth: 320
-            }}
-          >
-            {toast.message}
-          </div>
+            message={toast.message}
+            variant={toast.variant}
+            action={toast.action}
+            onDismiss={() => dismissToast(toast.id)}
+          />
         ))}
       </div>
     </ToastContext.Provider>
   );
 }
-

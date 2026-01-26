@@ -16,7 +16,7 @@ export function useCreateNote() {
   const { showToast } = useToast();
   const queryClient = useQueryClient();
 
-  return useMutation({
+  const mutation = useMutation({
     mutationFn: async (content: string) => {
       if (!user) {
         throw new Error("Not authenticated");
@@ -50,12 +50,17 @@ export function useCreateNote() {
 
       return { previousNotes, optimisticId } satisfies Context;
     },
-    onError: (_error, _content, context) => {
+    onError: (_error, content, context) => {
       if (context?.previousNotes) {
         queryClient.setQueryData(["notes"], context.previousNotes);
       }
 
-      showToast("Failed to create note.", "error");
+      showToast("Failed to create note.", "error", {
+        label: "Retry",
+        onClick: () => {
+          mutation.mutate(content);
+        }
+      });
     },
     onSuccess: (savedNote, _content, context) => {
       queryClient.setQueryData<NoteWithAttachments[]>(["notes"], (current) => {
@@ -64,5 +69,6 @@ export function useCreateNote() {
       });
     }
   });
-}
 
+  return mutation;
+}

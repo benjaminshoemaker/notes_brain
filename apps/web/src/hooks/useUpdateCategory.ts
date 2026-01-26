@@ -18,7 +18,7 @@ export function useUpdateCategory() {
   const queryClient = useQueryClient();
   const { showToast } = useToast();
 
-  return useMutation({
+  const mutation = useMutation({
     mutationFn: async ({ noteId, category }: Payload) => {
       return updateNoteCategory(noteId, category);
     },
@@ -42,11 +42,16 @@ export function useUpdateCategory() {
 
       return { previousNotes } satisfies Context;
     },
-    onError: (_error, _payload, context) => {
+    onError: (_error, payload, context) => {
       if (context?.previousNotes) {
         queryClient.setQueryData(["notes"], context.previousNotes);
       }
-      showToast("Failed to update category.", "error");
+      showToast("Failed to update category.", "error", {
+        label: "Retry",
+        onClick: () => {
+          mutation.mutate(payload);
+        }
+      });
     },
     onSuccess: (updatedNote, { noteId }) => {
       queryClient.setQueryData<NoteWithAttachments[]>(["notes"], (current) => {
@@ -57,5 +62,6 @@ export function useUpdateCategory() {
       });
     }
   });
-}
 
+  return mutation;
+}

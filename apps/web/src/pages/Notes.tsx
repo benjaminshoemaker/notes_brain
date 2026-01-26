@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import type { Category, NoteWithAttachments } from "@notesbrain/shared";
 import { Link, useNavigate } from "react-router-dom";
@@ -6,6 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { CategoryFilter } from "../components/CategoryFilter";
 import { CategorySelect } from "../components/CategorySelect";
 import { FileDropZone } from "../components/FileDropZone";
+import { LoadingSpinner } from "../components/LoadingSpinner";
 import { NoteInput } from "../components/NoteInput";
 import { NoteList } from "../components/NoteList";
 import { SearchInput } from "../components/SearchInput";
@@ -32,11 +33,13 @@ export default function NotesPage() {
   const [pendingFile, setPendingFile] = useState<File | null>(null);
   const [pendingFileCategory, setPendingFileCategory] = useState<Category | "">("");
 
-  const { data, isLoading, error } = useNotes();
+  const { data, isLoading, error, refetch: refetchNotes } = useNotes();
   const {
     data: searchResults,
     isLoading: isSearchLoading,
-    isFetching: isSearchFetching
+    isFetching: isSearchFetching,
+    error: searchError,
+    refetch: refetchSearch
   } = useSearch(searchQuery);
   const uploadFile = useUploadFile();
   const { showToast } = useToast();
@@ -51,6 +54,28 @@ export default function NotesPage() {
     if (!selectedCategory) return baseNotes;
     return baseNotes.filter((note) => note.category === selectedCategory);
   }, [baseNotes, selectedCategory]);
+
+  useEffect(() => {
+    if (error) {
+      showToast("Couldn't load notes. Check your connection.", "error", {
+        label: "Retry",
+        onClick: () => {
+          void refetchNotes();
+        }
+      });
+    }
+  }, [error, refetchNotes, showToast]);
+
+  useEffect(() => {
+    if (searchError) {
+      showToast("Search failed. Try again.", "error", {
+        label: "Retry",
+        onClick: () => {
+          void refetchSearch();
+        }
+      });
+    }
+  }, [searchError, refetchSearch, showToast]);
 
   async function handleLogout() {
     await signOutUser();
@@ -125,12 +150,8 @@ export default function NotesPage() {
             <CategorySelect value={pendingFileCategory} onChange={setPendingFileCategory} />
 
             <div style={{ display: "flex", gap: 8 }}>
-              <button
-                type="button"
-                onClick={handleUploadPendingFile}
-                disabled={uploadFile.isPending}
-              >
-                Upload file
+              <button type="button" onClick={handleUploadPendingFile} disabled={uploadFile.isPending}>
+                {uploadFile.isPending ? "Uploading..." : "Upload file"}
               </button>
               <button type="button" onClick={() => setPendingFile(null)} disabled={uploadFile.isPending}>
                 Cancel
@@ -141,9 +162,11 @@ export default function NotesPage() {
 
         <CategoryFilter selectedCategory={selectedCategory} onSelectCategory={setSelectedCategory} />
 
-        {isLoading ? <p>Loading…</p> : null}
+        {isLoading ? <LoadingSpinner label="Loading notes…" /> : null}
         {error ? <p role="alert">Failed to load notes.</p> : null}
-        {isSearchMode && (isSearchLoading || isSearchFetching) ? <p>Searching…</p> : null}
+        {isSearchMode && (isSearchLoading || isSearchFetching) ? (
+          <LoadingSpinner label="Searching…" />
+        ) : null}
 
         {!isLoading && !error && !isSearchMode ? <NoteList notes={filteredNotes} /> : null}
 

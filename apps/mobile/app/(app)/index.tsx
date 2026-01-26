@@ -1,5 +1,13 @@
 import { useState, useCallback } from "react";
-import { View, StyleSheet, KeyboardAvoidingView, Platform, ScrollView, Text } from "react-native";
+import {
+  Alert,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import { useFocusEffect } from "expo-router";
 
 import { CaptureInput } from "../../components/CaptureInput";
@@ -23,12 +31,22 @@ export default function CaptureScreen() {
   );
 
   async function handleTextSubmit(content: string) {
+    const trimmedContent = content.trim();
     try {
-      await createNote.mutateAsync({ content, type: "text" });
+      await createNote.mutateAsync({ content: trimmedContent, type: "text" });
       setToast({ message: "Note saved!", type: "success" });
     } catch (error) {
-      const message = error instanceof Error ? error.message : "Failed to save note";
+      const message = "Couldn't save your note. Check your connection and try again.";
       setToast({ message, type: "error" });
+      Alert.alert("Save failed", message, [
+        {
+          text: "Retry",
+          onPress: () => {
+            void handleTextSubmit(trimmedContent);
+          },
+        },
+        { text: "Dismiss", style: "cancel" },
+      ]);
     }
   }
 
@@ -37,8 +55,17 @@ export default function CaptureScreen() {
       await uploadVoiceNote.mutateAsync({ uri });
       setToast({ message: "Voice note saved!", type: "success" });
     } catch (error) {
-      const message = error instanceof Error ? error.message : "Failed to save voice note";
+      const message = "Couldn't save your voice note. Check your connection and try again.";
       setToast({ message, type: "error" });
+      Alert.alert("Upload failed", message, [
+        {
+          text: "Retry",
+          onPress: () => {
+            void handleVoiceRecordingComplete(uri);
+          },
+        },
+        { text: "Dismiss", style: "cancel" },
+      ]);
     }
   }
 

@@ -103,6 +103,7 @@ export function useUserSettings() {
     isLoading: settingsQuery.isLoading,
     error: settingsQuery.error,
     updateTimezone: updateMutation.mutateAsync,
+    refetch: settingsQuery.refetch,
     isUpdating: updateMutation.isPending
   };
 }
