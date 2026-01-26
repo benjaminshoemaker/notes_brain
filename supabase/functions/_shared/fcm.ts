@@ -59,6 +59,12 @@ async function createJWT(
     scope
   };
 
+  console.log("FCM createJWT header:", header);
+  console.log("FCM createJWT payload:", payload);
+  console.log(
+    `FCM createJWT exp check: now=${now} exp=${payload.exp} in_future=${payload.exp > now}`
+  );
+
   const encodedHeader = base64UrlEncode(JSON.stringify(header));
   const encodedPayload = base64UrlEncode(JSON.stringify(payload));
   const unsignedToken = `${encodedHeader}.${encodedPayload}`;
@@ -106,11 +112,31 @@ export async function getAccessToken(
   fetchFn: typeof fetch,
   serviceAccountJson: string
 ): Promise<string> {
+  console.log("FCM getAccessToken called");
+
   let serviceAccount: ServiceAccountKey;
   try {
     serviceAccount = JSON.parse(serviceAccountJson);
+    // Fix escaped newlines in private key (common when storing as env var)
+    if (serviceAccount.private_key) {
+      serviceAccount.private_key = serviceAccount.private_key
+        .replace(/\\\\n/g, "\n")
+        .replace(/\\n/g, "\n");
+    }
   } catch {
     throw new Error("Invalid service account JSON");
+  }
+
+  console.log(`FCM service account client_email: ${serviceAccount.client_email}`);
+
+  if (serviceAccount.private_key) {
+    const previewStart = serviceAccount.private_key.slice(0, 50);
+    const previewEnd = serviceAccount.private_key.slice(-50);
+    console.log(
+      `FCM private_key preview: start="${previewStart}" end="${previewEnd}" length=${serviceAccount.private_key.length}`
+    );
+  } else {
+    console.log("FCM private_key is missing after parsing");
   }
 
   const jwt = await createJWT(
@@ -129,12 +155,23 @@ export async function getAccessToken(
     })
   });
 
+  const responseText = await response.text().catch(() => "");
+  console.log("FCM token exchange response:", {
+    status: response.status,
+    body: responseText
+  });
+
   if (!response.ok) {
-    const text = await response.text().catch(() => "");
-    throw new Error(`Failed to get access token: ${response.status} ${text}`);
+    throw new Error(`Failed to get access token: ${response.status} ${responseText}`);
   }
 
-  const data = await response.json() as { access_token?: string };
+  let data: { access_token?: string } = {};
+  try {
+    data = responseText ? JSON.parse(responseText) : {};
+  } catch (error) {
+    throw new Error(`Failed to parse access token response: ${String(error)}`);
+  }
+
   if (!data.access_token) {
     throw new Error("Access token missing from response");
   }
@@ -149,6 +186,11 @@ export async function sendFCMMessage({
   message
 }: FCMSendRequest): Promise<FCMSendResult> {
   const url = `https://fcm.googleapis.com/v1/projects/${projectId}/messages:send`;
+  const tokenStart = message.token.slice(0, 10);
+  const tokenEnd = message.token.slice(-10);
+  console.log(
+    `FCM sendFCMMessage called: projectId=${projectId} token="${tokenStart}...${tokenEnd}"`
+  );
 
   const response = await fetchFn(url, {
     method: "POST",
@@ -159,15 +201,26 @@ export async function sendFCMMessage({
     body: JSON.stringify({ message })
   });
 
+  const responseText = await response.text().catch(() => "");
+  console.log("FCM sendFCMMessage response:", {
+    status: response.status,
+    body: responseText
+  });
+
   if (!response.ok) {
-    const text = await response.text().catch(() => "");
     return {
       success: false,
-      error: `FCM request failed: ${response.status} ${text}`
+      error: `FCM request failed: ${response.status} ${responseText}`
     };
   }
 
-  const data = await response.json() as { name?: string };
+  let data: { name?: string } = {};
+  try {
+    data = responseText ? JSON.parse(responseText) : {};
+  } catch {
+    data = {};
+  }
+
   return {
     success: true,
     messageId: data.name

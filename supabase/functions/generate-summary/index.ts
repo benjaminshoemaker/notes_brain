@@ -21,7 +21,8 @@ type Note = {
 };
 
 type RequestBody = {
-  trigger?: "cron";
+  trigger?: "cron" | "test";
+  user_id?: string; // For testing specific user
 };
 
 // Time windows for summary generation and push delivery
@@ -98,10 +99,11 @@ Deno.serve(async (req) => {
     // Empty body is fine for cron triggers
   }
 
-  // Verify this is a cron trigger
-  if (body.trigger !== "cron") {
+  // Verify this is a valid trigger
+  const isTestMode = body.trigger === "test";
+  if (body.trigger !== "cron" && body.trigger !== "test") {
     return new Response(
-      JSON.stringify({ error: "This function should be called via cron" }),
+      JSON.stringify({ error: "Invalid trigger. Use 'cron' or 'test'" }),
       { status: 400, headers: { "Content-Type": "application/json" } }
     );
   }
@@ -116,10 +118,13 @@ Deno.serve(async (req) => {
   let summariesGenerated = 0;
   let pushesScheduled = 0;
 
-  // Fetch all users
-  const { data: users, error: usersError } = await supabase
-    .from("users")
-    .select("id, email, timezone");
+  // Fetch users (optionally filter by user_id for testing)
+  let usersQuery = supabase.from("users").select("id, email, timezone");
+  if (isTestMode && body.user_id) {
+    usersQuery = usersQuery.eq("id", body.user_id);
+  }
+
+  const { data: users, error: usersError } = await usersQuery;
 
   if (usersError) {
     console.error("Failed to fetch users:", usersError);
@@ -133,8 +138,9 @@ Deno.serve(async (req) => {
     const localTime = getUserLocalTime(now, user.timezone);
     const todayDate = getLocalDateString(localTime);
 
-    // Check if it's time to generate summary (~07:55)
-    if (isWithinTimeWindow(localTime, GENERATION_HOUR, GENERATION_MINUTE, TIME_WINDOW_MINUTES)) {
+    // Check if it's time to generate summary (~07:55) - bypass in test mode
+    const shouldGenerate = isTestMode || isWithinTimeWindow(localTime, GENERATION_HOUR, GENERATION_MINUTE, TIME_WINDOW_MINUTES);
+    if (shouldGenerate) {
       // Check if summary already exists for today
       const { data: existingSummary } = await supabase
         .from("daily_summaries")
@@ -194,8 +200,9 @@ Deno.serve(async (req) => {
       }
     }
 
-    // Check if it's time to send push notification (~08:00)
-    if (isWithinTimeWindow(localTime, PUSH_HOUR, PUSH_MINUTE, TIME_WINDOW_MINUTES)) {
+    // Check if it's time to send push notification (~08:00) - bypass in test mode
+    const shouldPush = isTestMode || isWithinTimeWindow(localTime, PUSH_HOUR, PUSH_MINUTE, TIME_WINDOW_MINUTES);
+    if (shouldPush) {
       // Find today's summary that hasn't been sent yet
       const { data: unsentSummary, error: summaryError } = await supabase
         .from("daily_summaries")

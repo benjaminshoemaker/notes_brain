@@ -876,18 +876,18 @@ Human must complete before agents begin:
 ### Phase 5 Checkpoint
 
 **Automated:**
-- [ ] Edge Functions deploy successfully
-- [ ] pg_cron job visible in Supabase
-- [ ] TypeScript compilation passes
-- [ ] All tests pass
+- [x] Edge Functions deploy successfully
+- [x] pg_cron job visible in Supabase
+- [x] TypeScript compilation passes
+- [x] All tests pass
 
 **Manual Verification:**
-- [ ] Create several notes across categories
-- [ ] Manually trigger generate-summary (or wait for cron)
-- [ ] Summary appears in daily_summaries table with correct structure
-- [ ] Push notification received on Android device/emulator
-- [ ] Tapping notification opens summary screen
-- [ ] Summary content is relevant to recent notes
+- [x] Create several notes across categories
+- [x] Manually trigger generate-summary (or wait for cron)
+- [x] Summary appears in daily_summaries table with correct structure
+- [x] Push notification received on Android device/emulator
+- [x] Tapping notification opens summary screen
+- [x] Summary content is relevant to recent notes
 
 ---
 
