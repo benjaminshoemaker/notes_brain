@@ -4,6 +4,8 @@ export type { Database } from "./supabase.js";
 export { createSupabaseClient } from "./supabase.js";
 
 export { signIn, signInWithMagicLink, signOut, signUp } from "./auth.js";
+export { createAuthApi } from "./authApi.js";
+export { createUseAuth } from "./authHooks.js";
 
 export { upsertById } from "./collections.js";
 

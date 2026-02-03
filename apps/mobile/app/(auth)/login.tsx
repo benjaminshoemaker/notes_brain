@@ -1,17 +1,8 @@
 import { useState } from "react";
-import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  StyleSheet,
-  KeyboardAvoidingView,
-  Platform,
-  ScrollView,
-  ActivityIndicator,
-} from "react-native";
+import { ActivityIndicator, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { Stack, Link, useRouter } from "expo-router";
 
+import { AuthShell, authStyles } from "../../components/AuthShell";
 import { signInWithPassword, sendMagicLink } from "../../lib/authApi";
 
 export default function LoginScreen() {
@@ -67,193 +58,72 @@ export default function LoginScreen() {
   }
 
   return (
-    <KeyboardAvoidingView
-      style={styles.container}
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-    >
+    <>
       <Stack.Screen options={{ title: "Sign In" }} />
-      <ScrollView
-        contentContainerStyle={styles.scrollContent}
-        keyboardShouldPersistTaps="handled"
-      >
-        <View style={styles.formContainer}>
-          <Text style={styles.title}>Sign In</Text>
-          <Text style={styles.subtitle}>Welcome back to NotesBrain</Text>
-
-          <View style={styles.inputGroup}>
-            <Text style={styles.label}>Email</Text>
-            <TextInput
-              style={styles.input}
-              value={email}
-              onChangeText={setEmail}
-              placeholder="you@example.com"
-              keyboardType="email-address"
-              autoCapitalize="none"
-              autoComplete="email"
-              autoCorrect={false}
-              editable={!isSubmitting}
-            />
-          </View>
-
-          <View style={styles.inputGroup}>
-            <Text style={styles.label}>Password</Text>
-            <TextInput
-              style={styles.input}
-              value={password}
-              onChangeText={setPassword}
-              placeholder="Your password"
-              secureTextEntry
-              autoComplete="password"
-              editable={!isSubmitting}
-            />
-          </View>
-
-          <TouchableOpacity
-            style={[styles.button, styles.primaryButton, isSubmitting && styles.buttonDisabled]}
-            onPress={handleSignIn}
-            disabled={isSubmitting}
-          >
-            {isSubmitting ? (
-              <ActivityIndicator color="#ffffff" />
-            ) : (
-              <Text style={styles.buttonText}>Sign In</Text>
-            )}
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={[styles.button, styles.secondaryButton, isSubmitting && styles.buttonDisabled]}
-            onPress={handleMagicLink}
-            disabled={isSubmitting}
-          >
-            <Text style={styles.secondaryButtonText}>Sign in with magic link</Text>
-          </TouchableOpacity>
-
-          {error && (
-            <View style={styles.errorContainer}>
-              <Text style={styles.errorText}>{error}</Text>
-            </View>
-          )}
-
-          {status && (
-            <View style={styles.statusContainer}>
-              <Text style={styles.statusText}>{status}</Text>
-            </View>
-          )}
-
-          <View style={styles.footer}>
-            <Text style={styles.footerText}>New here? </Text>
+      <AuthShell
+        title="Sign In"
+        subtitle="Welcome back to NotesBrain"
+        error={error}
+        status={status}
+        footer={
+          <>
+            <Text style={authStyles.footerText}>New here? </Text>
             <Link href="/(auth)/signup" asChild>
               <TouchableOpacity>
-                <Text style={styles.linkText}>Create an account</Text>
+                <Text style={authStyles.linkText}>Create an account</Text>
               </TouchableOpacity>
             </Link>
-          </View>
+          </>
+        }
+      >
+        <View style={authStyles.inputGroup}>
+          <Text style={authStyles.label}>Email</Text>
+          <TextInput
+            style={authStyles.input}
+            value={email}
+            onChangeText={setEmail}
+            placeholder="you@example.com"
+            keyboardType="email-address"
+            autoCapitalize="none"
+            autoComplete="email"
+            autoCorrect={false}
+            editable={!isSubmitting}
+          />
         </View>
-      </ScrollView>
-    </KeyboardAvoidingView>
+
+        <View style={authStyles.inputGroup}>
+          <Text style={authStyles.label}>Password</Text>
+          <TextInput
+            style={authStyles.input}
+            value={password}
+            onChangeText={setPassword}
+            placeholder="Your password"
+            secureTextEntry
+            autoComplete="password"
+            editable={!isSubmitting}
+          />
+        </View>
+
+        <TouchableOpacity
+          style={[authStyles.button, authStyles.primaryButton, isSubmitting && authStyles.buttonDisabled]}
+          onPress={handleSignIn}
+          disabled={isSubmitting}
+        >
+          {isSubmitting ? (
+            <ActivityIndicator color="#ffffff" />
+          ) : (
+            <Text style={authStyles.buttonText}>Sign In</Text>
+          )}
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={[authStyles.button, authStyles.secondaryButton, isSubmitting && authStyles.buttonDisabled]}
+          onPress={handleMagicLink}
+          disabled={isSubmitting}
+        >
+          <Text style={authStyles.secondaryButtonText}>Sign in with magic link</Text>
+        </TouchableOpacity>
+      </AuthShell>
+    </>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#ffffff",
-  },
-  scrollContent: {
-    flexGrow: 1,
-    justifyContent: "center",
-  },
-  formContainer: {
-    padding: 24,
-  },
-  title: {
-    fontSize: 28,
-    fontWeight: "bold",
-    color: "#1a1a1a",
-    marginBottom: 8,
-  },
-  subtitle: {
-    fontSize: 16,
-    color: "#666666",
-    marginBottom: 32,
-  },
-  inputGroup: {
-    marginBottom: 16,
-  },
-  label: {
-    fontSize: 14,
-    fontWeight: "600",
-    color: "#333333",
-    marginBottom: 6,
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: "#dddddd",
-    borderRadius: 8,
-    paddingHorizontal: 14,
-    paddingVertical: 12,
-    fontSize: 16,
-    backgroundColor: "#fafafa",
-  },
-  button: {
-    borderRadius: 8,
-    paddingVertical: 14,
-    alignItems: "center",
-    marginTop: 8,
-  },
-  primaryButton: {
-    backgroundColor: "#0066cc",
-  },
-  secondaryButton: {
-    backgroundColor: "transparent",
-    borderWidth: 1,
-    borderColor: "#0066cc",
-  },
-  buttonDisabled: {
-    opacity: 0.6,
-  },
-  buttonText: {
-    color: "#ffffff",
-    fontSize: 16,
-    fontWeight: "600",
-  },
-  secondaryButtonText: {
-    color: "#0066cc",
-    fontSize: 16,
-    fontWeight: "600",
-  },
-  errorContainer: {
-    backgroundColor: "#fff0f0",
-    padding: 12,
-    borderRadius: 8,
-    marginTop: 16,
-  },
-  errorText: {
-    color: "#cc0000",
-    fontSize: 14,
-  },
-  statusContainer: {
-    backgroundColor: "#f0fff0",
-    padding: 12,
-    borderRadius: 8,
-    marginTop: 16,
-  },
-  statusText: {
-    color: "#006600",
-    fontSize: 14,
-  },
-  footer: {
-    flexDirection: "row",
-    justifyContent: "center",
-    marginTop: 24,
-  },
-  footerText: {
-    color: "#666666",
-    fontSize: 14,
-  },
-  linkText: {
-    color: "#0066cc",
-    fontSize: 14,
-    fontWeight: "600",
-  },
-});

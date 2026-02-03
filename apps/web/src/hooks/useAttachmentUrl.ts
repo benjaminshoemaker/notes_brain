@@ -4,10 +4,10 @@ import { isNetworkError } from "../lib/errors";
 import { supabase } from "../lib/supabaseClient";
 
 export function useAttachmentUrl(storagePath: string) {
-  return useQuery({
+  return useQuery<string, Error>({
     queryKey: ["attachmentUrl", storagePath],
     enabled: Boolean(storagePath),
-    useErrorBoundary: (error) => !isNetworkError(error),
+    throwOnError: (error) => !isNetworkError(error),
     queryFn: async () => {
       const { data, error } = await supabase.storage
         .from("attachments")

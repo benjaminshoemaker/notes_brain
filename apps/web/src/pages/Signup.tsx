@@ -2,6 +2,7 @@ import { useState } from "react";
 
 import { Link, useNavigate } from "react-router-dom";
 
+import { AuthShell, authStyles } from "../components/AuthShell";
 import { signUpWithPassword } from "../lib/authApi";
 
 export default function SignupPage() {
@@ -29,12 +30,23 @@ export default function SignupPage() {
   }
 
   return (
-    <div style={{ maxWidth: 420 }}>
-      <h1>Create account</h1>
-
-      <form onSubmit={handleSignUp} style={{ display: "grid", gap: 12 }}>
-        <div style={{ display: "grid", gap: 6 }}>
-          <label htmlFor="signup-email">Email</label>
+    <AuthShell
+      title="Create account"
+      error={error}
+      footer={
+        <span style={authStyles.footerText}>
+          Already have an account?{" "}
+          <Link to="/login" style={authStyles.link}>
+            Sign in
+          </Link>
+        </span>
+      }
+    >
+      <form onSubmit={handleSignUp} style={authStyles.form}>
+        <div style={authStyles.field}>
+          <label htmlFor="signup-email" style={authStyles.label}>
+            Email
+          </label>
           <input
             id="signup-email"
             type="email"
@@ -42,11 +54,14 @@ export default function SignupPage() {
             value={email}
             onChange={(event) => setEmail(event.target.value)}
             required
+            style={authStyles.input}
           />
         </div>
 
-        <div style={{ display: "grid", gap: 6 }}>
-          <label htmlFor="signup-password">Password</label>
+        <div style={authStyles.field}>
+          <label htmlFor="signup-password" style={authStyles.label}>
+            Password
+          </label>
           <input
             id="signup-password"
             type="password"
@@ -54,23 +69,22 @@ export default function SignupPage() {
             value={password}
             onChange={(event) => setPassword(event.target.value)}
             required
+            style={authStyles.input}
           />
         </div>
 
-        <button type="submit" disabled={isSubmitting}>
+        <button
+          type="submit"
+          disabled={isSubmitting}
+          style={{
+            ...authStyles.button,
+            ...authStyles.primaryButton,
+            ...(isSubmitting ? authStyles.buttonDisabled : null),
+          }}
+        >
           {isSubmitting ? "Creating account..." : "Sign up"}
         </button>
       </form>
-
-      {error ? (
-        <p role="alert" style={{ color: "crimson" }}>
-          {error}
-        </p>
-      ) : null}
-
-      <p style={{ marginTop: 12 }}>
-        Already have an account? <Link to="/login">Sign in</Link>
-      </p>
-    </div>
+    </AuthShell>
   );
 }
