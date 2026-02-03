@@ -41,10 +41,9 @@ export function NoteInput() {
       />
       <div>
         <button type="button" onClick={submit} disabled={createNote.isPending}>
-          Add note
+          {createNote.isPending ? "Saving..." : "Add note"}
         </button>
       </div>
     </div>
   );
 }
-

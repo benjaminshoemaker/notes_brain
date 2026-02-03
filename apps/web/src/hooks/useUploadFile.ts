@@ -16,7 +16,7 @@ export function useUploadFile() {
   const { user } = useAuth();
   const { showToast } = useToast();
 
-  return useMutation({
+  const mutation = useMutation({
     mutationFn: async ({ file, category }: Payload) => {
       if (!user) {
         throw new Error("Not authenticated");
@@ -26,9 +26,15 @@ export function useUploadFile() {
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ["notes"] });
     },
-    onError: () => {
-      showToast("Failed to upload file.", "error");
+    onError: (_error, variables) => {
+      showToast("Failed to upload file.", "error", {
+        label: "Retry",
+        onClick: () => {
+          mutation.mutate(variables);
+        }
+      });
     }
   });
-}
 
+  return mutation;
+}

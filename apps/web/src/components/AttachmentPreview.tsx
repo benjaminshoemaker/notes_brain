@@ -1,5 +1,6 @@
 import type { Attachment } from "@notesbrain/shared";
 
+import { LoadingSpinner } from "./LoadingSpinner";
 import { useAttachmentUrl } from "../hooks/useAttachmentUrl";
 
 type Props = {
@@ -25,7 +26,7 @@ export function AttachmentPreview({ attachment }: Props) {
   const { data: url, isLoading } = useAttachmentUrl(attachment.storage_path);
 
   if (isLoading) {
-    return <span>Loading…</span>;
+    return <LoadingSpinner label="Loading attachment…" size={16} />;
   }
 
   if (!url) {
@@ -65,4 +66,3 @@ export function AttachmentPreview({ attachment }: Props) {
     </a>
   );
 }
-
