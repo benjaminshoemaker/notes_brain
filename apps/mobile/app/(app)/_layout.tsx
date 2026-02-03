@@ -96,6 +96,13 @@ export default function AppLayout() {
           tabBarLabel: "Summary",
         }}
       />
+      <Tabs.Screen
+        name="settings"
+        options={{
+          title: "Settings",
+          tabBarLabel: "Settings",
+        }}
+      />
     </Tabs>
   );
 }

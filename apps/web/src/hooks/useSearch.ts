@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 
 import { useQuery } from "@tanstack/react-query";
 
+import { isNetworkError } from "../lib/errors";
 import { searchNotes } from "../lib/notesApi";
 
 export function useSearch(searchQuery: string) {
@@ -22,6 +23,7 @@ export function useSearch(searchQuery: string) {
   return useQuery({
     queryKey: ["search", trimmedQuery],
     queryFn: () => searchNotes(trimmedQuery),
-    enabled: trimmedQuery.length > 0
+    enabled: trimmedQuery.length > 0,
+    useErrorBoundary: (error) => !isNetworkError(error)
   });
 }

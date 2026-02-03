@@ -1,6 +1,7 @@
-import { FlatList, View, Text, StyleSheet, RefreshControl, ActivityIndicator } from "react-native";
+import { FlatList, View, Text, StyleSheet, RefreshControl } from "react-native";
 import type { NoteWithAttachments, Category } from "@notesbrain/shared";
 
+import { LoadingSpinner } from "./LoadingSpinner";
 import { MobileNoteCard } from "./MobileNoteCard";
 
 type NotesListProps = {
@@ -25,10 +26,7 @@ export function NotesList({
 
   if (isLoading) {
     return (
-      <View style={styles.centerContainer}>
-        <ActivityIndicator size="large" color="#0066cc" />
-        <Text style={styles.loadingText}>Loading notes...</Text>
-      </View>
+      <LoadingSpinner label="Loading notes..." />
     );
   }
 
@@ -68,11 +66,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     padding: 40,
-  },
-  loadingText: {
-    marginTop: 16,
-    fontSize: 14,
-    color: "#666666",
   },
   emptyIcon: {
     fontSize: 48,

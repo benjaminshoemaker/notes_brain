@@ -3,6 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import { AuthGuard } from "./components/AuthGuard";
 import LoginPage from "./pages/Login";
 import NotesPage from "./pages/Notes";
+import SettingsPage from "./pages/Settings";
 import SignupPage from "./pages/Signup";
 
 function NotFoundPage() {
@@ -19,6 +20,14 @@ export default function App() {
         element={
           <AuthGuard>
             <NotesPage />
+          </AuthGuard>
+        }
+      />
+      <Route
+        path="/settings"
+        element={
+          <AuthGuard>
+            <SettingsPage />
           </AuthGuard>
         }
       />

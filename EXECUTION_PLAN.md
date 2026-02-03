@@ -910,12 +910,12 @@ Human must complete before agents begin:
 **What:** Add timezone configuration with auto-detect and manual override.
 
 **Acceptance Criteria:**
-- [ ] Settings screen exists in mobile app
-- [ ] Timezone auto-detected on first app open using device locale
-- [ ] Dropdown allows manual timezone selection
-- [ ] Timezone saved to `users.timezone` field
-- [ ] Timezone change affects daily summary delivery time
-- [ ] Web app also shows timezone in settings (read-only or editable)
+- [x] Settings screen exists in mobile app (Type: TEST, Verify: `tests/task-6.1.A.test.js`)
+- [x] Timezone auto-detected on first app open using device locale (Type: TEST, Verify: `tests/task-6.1.A.test.js`)
+- [x] Dropdown allows manual timezone selection (Type: TEST, Verify: `tests/task-6.1.A.test.js`)
+- [x] Timezone saved to `users.timezone` field (Type: TEST, Verify: `tests/task-6.1.A.test.js`)
+- [x] Timezone change affects daily summary delivery time (Type: TEST, Verify: `tests/task-6.1.A.test.js`)
+- [x] Web app also shows timezone in settings (read-only or editable) (Type: TEST, Verify: `tests/task-6.1.A.test.js`)
 
 **Files:**
 - Create: `apps/mobile/app/(app)/settings.tsx` — settings screen
@@ -937,12 +937,12 @@ Human must complete before agents begin:
 **What:** Implement consistent loading states and error handling across both apps.
 
 **Acceptance Criteria:**
-- [ ] All data fetches show loading spinner/skeleton
-- [ ] Network errors show toast/alert with retry option
-- [ ] Offline state detected and shown appropriately
-- [ ] Form submissions disable button and show progress
-- [ ] API errors display user-friendly messages
-- [ ] React Query error boundaries catch unexpected errors
+- [x] All data fetches show loading spinner/skeleton (Type: TEST, Verify: `tests/task-6.2.A.test.js`)
+- [x] Network errors show toast/alert with retry option (Type: TEST, Verify: `tests/task-6.2.A.test.js`)
+- [x] Offline state detected and shown appropriately (Type: TEST, Verify: `tests/task-6.2.A.test.js`)
+- [x] Form submissions disable button and show progress (Type: TEST, Verify: `tests/task-6.2.A.test.js`)
+- [x] API errors display user-friendly messages (Type: TEST, Verify: `tests/task-6.2.A.test.js`)
+- [x] React Query error boundaries catch unexpected errors (Type: TEST, Verify: `tests/task-6.2.A.test.js`)
 
 **Files:**
 - Create: `apps/web/src/components/LoadingSpinner.tsx` — loading indicator
@@ -964,11 +964,11 @@ Human must complete before agents begin:
 **What:** Add optimistic updates for note creation and category changes.
 
 **Acceptance Criteria:**
-- [ ] Creating note shows immediately in list before server confirms
-- [ ] Category change reflects immediately before server confirms
-- [ ] Failed mutations revert to previous state
-- [ ] User notified of sync failure with retry option
-- [ ] React Query mutation options configured for optimistic updates
+- [x] Creating note shows immediately in list before server confirms (Type: TEST, Verify: `tests/task-6.2.B.test.js`)
+- [x] Category change reflects immediately before server confirms (Type: TEST, Verify: `tests/task-6.2.B.test.js`)
+- [x] Failed mutations revert to previous state (Type: TEST, Verify: `tests/task-6.2.B.test.js`)
+- [x] User notified of sync failure with retry option (Type: TEST, Verify: `tests/task-6.2.B.test.js`)
+- [x] React Query mutation options configured for optimistic updates (Type: TEST, Verify: `tests/task-6.2.B.test.js`)
 
 **Files:**
 - Modify: `apps/web/src/hooks/useCreateNote.ts` — add optimistic update
@@ -988,12 +988,12 @@ Human must complete before agents begin:
 **What:** Set up production build configurations for web and mobile.
 
 **Acceptance Criteria:**
-- [ ] Web app builds with `npm run build` producing optimized bundle
-- [ ] Environment variables configured for production Supabase
-- [ ] Mobile app builds with `eas build --platform android`
-- [ ] APK/AAB generated for Android
-- [ ] Build artifacts exclude development dependencies
-- [ ] Source maps generated for debugging
+- [x] Web app builds with `npm run build` producing optimized bundle (Type: TEST, Verify: `tests/task-6.3.A.test.js`)
+- [x] Environment variables configured for production Supabase (Type: TEST, Verify: `tests/task-6.3.A.test.js`)
+- [x] Mobile app builds with `eas build --platform android` (Type: TEST, Verify: `tests/task-6.3.A.test.js`)
+- [x] APK/AAB generated for Android (Type: TEST, Verify: `tests/task-6.3.A.test.js`)
+- [x] Build artifacts exclude development dependencies (Type: TEST, Verify: `tests/task-6.3.A.test.js`)
+- [x] Source maps generated for debugging (Type: TEST, Verify: `tests/task-6.3.A.test.js`)
 
 **Files:**
 - Create: `apps/web/.env.production` — production env vars (template)
