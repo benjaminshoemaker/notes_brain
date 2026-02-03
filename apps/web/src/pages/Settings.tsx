@@ -75,7 +75,7 @@ export default function SettingsPage() {
     },
     onSuccess: (updatedSettings) => {
       queryClient.setQueryData(["user-settings", user?.id], updatedSettings);
-      showToast("Timezone updated.", "success");
+      showToast("Timezone updated.", "info");
     },
     onError: () => {
       showToast("Failed to update timezone.", "error");

@@ -1,114 +1,29 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { File } from "expo-file-system";
-import type { NoteWithAttachments, Attachment } from "@notesbrain/shared";
+import type { NoteWithAttachments } from "@notesbrain/shared";
 import { upsertNoteWithAttachments } from "@notesbrain/shared";
 
-import { supabase } from "../lib/supabaseClient";
+import { uploadNoteAttachment } from "../lib/uploadNoteAttachment";
 
 type UploadVoiceNoteInput = {
   uri: string;
 };
 
-type NoteRow = {
-  id: string;
-  user_id: string;
-  type: string;
-  content: string | null;
-  classification_status: string;
-  category: string;
-  created_at: string;
-  updated_at: string;
-};
-
 async function uploadVoiceNote(input: UploadVoiceNoteInput): Promise<NoteWithAttachments> {
   const { uri } = input;
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  if (!user) {
-    throw new Error("Not authenticated");
-  }
-
-  // Create the note first
-  const { data: note, error: noteError } = await supabase
-    .from("notes")
-    .insert({
-      user_id: user.id,
-      type: "voice",
-      content: null, // Will be populated after transcription
-      classification_status: "pending",
-      category: "uncategorized",
-    })
-    .select()
-    .single<NoteRow>();
-
-  if (noteError || !note) {
-    throw noteError || new Error("Failed to create note");
-  }
-
-  const file = new File(uri);
-  const bytes = await file.bytes();
-
-  // Upload to Supabase Storage
-  // Path must match what transcribe-voice expects: {user_id}/voice/{note_id}.m4a
-  const filename = `${note.id}.m4a`;
-  const storagePath = `${user.id}/voice/${filename}`;
-
-  const { error: uploadError } = await supabase.storage
-    .from("attachments")
-    .upload(storagePath, bytes, {
-      contentType: "audio/mp4",
-      upsert: false,
-    });
-
-  if (uploadError) {
-    // Clean up the note if upload fails
-    await supabase.from("notes").delete().eq("id", note.id);
-    throw uploadError;
-  }
-
-  const fileSize = file.size;
-
-  // Create attachment record
-  const { data: attachment, error: attachmentError } = await supabase
-    .from("attachments")
-    .insert({
-      note_id: note.id,
-      filename,
-      mime_type: "audio/mp4",
-      storage_path: storagePath,
-      size_bytes: fileSize,
-    })
-    .select()
-    .single<Attachment>();
-
-  if (attachmentError) {
-    console.error("Failed to create attachment record:", attachmentError);
-  }
-
-  // Transcription is triggered by the DB webhook after note creation.
-
-  // Clean up local file
-  try {
-    file.delete();
-  } catch {
-    // Ignore cleanup errors
-  }
-
-  return {
-    id: note.id,
-    user_id: note.user_id,
-    created_at: note.created_at,
-    updated_at: note.updated_at,
-    content: note.content,
-    category: note.category as NoteWithAttachments["category"],
-    type: note.type as NoteWithAttachments["type"],
-    classification_status: note.classification_status as NoteWithAttachments["classification_status"],
-    classification_confidence: null,
-    attachments: attachment ? [attachment] : [],
-  };
+  return uploadNoteAttachment({
+    noteType: "voice",
+    content: null,
+    classificationStatus: "pending",
+    category: "uncategorized",
+    fileUri: uri,
+    mimeType: "audio/mp4",
+    resolveAttachmentFileName: (noteId) => `${noteId}.m4a`,
+    // Path must match what transcribe-voice expects: {user_id}/voice/{note_id}.m4a
+    resolveStoragePath: (userId, _noteId, attachmentFileName) =>
+      `${userId}/voice/${attachmentFileName}`,
+    cleanupLocalFile: true,
+  });
 }
 
 export function useUploadVoiceNote() {

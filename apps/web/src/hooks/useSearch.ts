@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 
 import { useQuery } from "@tanstack/react-query";
 
+import type { NoteWithAttachments } from "@notesbrain/shared";
+
 import { isNetworkError } from "../lib/errors";
 import { searchNotes } from "../lib/notesApi";
 
@@ -20,10 +22,10 @@ export function useSearch(searchQuery: string) {
 
   const trimmedQuery = debouncedQuery.trim();
 
-  return useQuery({
+  return useQuery<NoteWithAttachments[], Error>({
     queryKey: ["search", trimmedQuery],
     queryFn: () => searchNotes(trimmedQuery),
     enabled: trimmedQuery.length > 0,
-    useErrorBoundary: (error) => !isNetworkError(error)
+    throwOnError: (error) => !isNetworkError(error)
   });
 }
