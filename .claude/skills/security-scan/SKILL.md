@@ -1,6 +1,6 @@
 ---
 name: security-scan
-description: Scan for security vulnerabilities in dependencies, code patterns, and secrets. Uses project-documented tooling where available.
+description: Scan for security vulnerabilities in dependencies, code patterns, and secrets. Uses project-documented tooling where available. Use at phase checkpoints or before releases to check for vulnerabilities.
 ---
 
 # Security Scan Skill
@@ -127,7 +127,14 @@ Summary: {N} critical, {N} high, {N} medium, {N} low
 For CRITICAL and HIGH issues, present interactively with resolution options.
 If a fix command is documented, offer it as the primary option.
 
-## Step 7: Apply Fixes
+## Step 7: Propose Fixes
+
+Propose fixes to the user. Do not apply fixes automatically — present each fix for user approval before making changes.
+
+**For each fix, show a preview:**
+- Display the proposed change (file, line, before/after)
+- Ask for confirmation: "Apply this fix?" (Yes/Skip)
+- Only modify files after explicit user confirmation
 
 Apply fixes based on user choices:
 - Use project-documented fix commands when available

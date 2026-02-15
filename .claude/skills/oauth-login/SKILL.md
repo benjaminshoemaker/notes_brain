@@ -167,9 +167,19 @@ server.listen(3847, () => {
 });
 EOF
 
+# Start callback server as BACKGROUND PROCESS
 node /tmp/oauth-callback-server.js &
 CALLBACK_PID=$!
+echo "Callback server started (PID: $CALLBACK_PID, background process)"
+
+# Verify the server started successfully
+sleep 1
+curl -sf http://localhost:3847/ -o /dev/null 2>&1 || echo "WARNING: Callback server may not have started"
 ```
+
+**Verify server is listening** before proceeding. If the server failed to start
+(port in use, Node.js error), check the error output and try an alternate port
+(3848, 3849) before continuing.
 
 ### Step 6: Build Authorization URL
 
@@ -262,6 +272,20 @@ Parse response for:
 - `access_token`
 - `refresh_token` (Google only)
 - `expires_in`
+
+After obtaining the token, verify it is valid by making a lightweight test API call (e.g., fetch the user profile endpoint). If the test call fails, report the token as invalid and retry the OAuth flow.
+
+**Google verification:**
+```bash
+curl -s -H "Authorization: Bearer $ACCESS_TOKEN" https://www.googleapis.com/oauth2/v2/userinfo
+```
+
+**GitHub verification:**
+```bash
+curl -s -H "Authorization: Bearer $ACCESS_TOKEN" https://api.github.com/user
+```
+
+If the response indicates an error (HTTP 401 or invalid token), report: "Token verification failed — token appears invalid" and restart the OAuth flow from Step 5.
 
 ### Step 10: Store Tokens
 

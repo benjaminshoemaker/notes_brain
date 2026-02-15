@@ -19,6 +19,8 @@ Progress Report:
 - [ ] Step 5: Generate progress report
 ```
 
+After parsing EXECUTION_PLAN.md, validate that at least one phase and one task were found. If parsing yields zero phases or zero tasks, report a parse error (e.g., "EXECUTION_PLAN.md found but no phases/tasks detected — file may be malformed") and stop.
+
 ## Directory Guard (Wrong Directory Check)
 
 Before starting, confirm `EXECUTION_PLAN.md` exists in the current working directory.
@@ -49,7 +51,7 @@ Execution plans contain **4 distinct checkbox categories**. Count them separatel
 
 | Category | Location | Identifier |
 |----------|----------|------------|
-| **Task Acceptance Criteria** | Under `#### Task X.Y.Z` headers, after `**Acceptance Criteria:**` | Has type tags like `(TEST)`, `(CODE)`, `(BROWSER:*)`, `(MANUAL)` |
+| **Task Acceptance Criteria** | Under `#### Task X.Y.Z` headers, after `**Acceptance Criteria:**` | Has type tags like `(TEST)`, `(CODE)`, `(BROWSER:*)`, `(MANUAL)`, `(MANUAL:DEFER)` |
 | **Phase Checkpoint Criteria** | Under `### Phase N Checkpoint` headers | Sections: "Automated Checks", "Manual Local Verification", "Browser Verification" |
 | **Pre-Phase Setup Criteria** | Under `### Pre-Phase Setup` headers | Items with `Verify:` commands |
 | **Manual Verification** | Under "Human Required" headers | Items with `Reason:` lines |
@@ -57,6 +59,14 @@ Execution plans contain **4 distinct checkbox categories**. Count them separatel
 **Primary Metric:** Task Acceptance Criteria only (represents actual implementation work).
 
 **Secondary Metrics:** Checkpoint, Setup, and Manual criteria (procedural/verification work).
+
+**How to distinguish categories when counting:**
+- **Task criteria**: Found under `#### Task X.Y.Z` headers; lines match `- [ ] .*\((TEST|CODE|BROWSER|MANUAL|MANUAL:DEFER)\)`
+- **Checkpoint criteria**: Found under `### Phase N Checkpoint`; in "Automated Checks" or "Manual Verification" subsections
+- **Setup criteria**: Found under `### Pre-Phase Setup`; lines contain `Verify:` commands
+- **Manual verification**: Under "Human Required" headers; lines have `Reason:` annotations
+
+When in doubt, check the parent header level: `####` = task, `###` = phase-level.
 
 ## Progress Report Format
 
@@ -98,10 +108,12 @@ For each execution plan, show:
 
 For each phase, count **Task Acceptance Criteria only**:
 - Total criteria: Count `- [ ]` and `- [x]` lines under `#### Task` sections
-- Completed: Count `- [x]` lines
+- Verified: Count `- [x]` lines that do NOT contain `— Deferred:`
+- Deferred: Count `- [x]` lines that contain `— Deferred:` (implemented but pending review)
 - Remaining: Count `- [ ]` lines
 
-Calculate percentage complete per phase.
+Calculate percentage complete per phase. Deferred items count toward completion
+(they are implemented) but are reported separately for visibility.
 
 **Important:** Do NOT count checkpoint criteria, pre-phase setup items, or phase-level verification checkboxes in the primary progress metric.
 
@@ -135,6 +147,20 @@ Additional Criteria:
 - Manual Verification: X/Y confirmed
 ```
 
+### 6. Deferred Review Queue (if items exist)
+
+Read `.claude/deferred-reviews.json` and count unreviewed items:
+
+```
+Deferred Review Queue:
+- Pending review: {N} items across {P} phases
+- Use /review-deferred to review them
+```
+
+Only show this section if the queue file exists and has unreviewed items.
+
+If `.claude/deferred-reviews.json` exists but fails to parse (invalid JSON), treat as empty and note: "Deferred review queue file is corrupt — treating as empty."
+
 ## Next Action Recommendation
 
 Based on overall status, recommend what to do next:
@@ -158,6 +184,7 @@ Features: 100% (42/42 criteria)
 Consider:
 - Run final /phase-checkpoint on each plan
 - Review for any deferred items in DEFERRED.md
+- Check .claude/deferred-reviews.json for pending verification reviews (/review-deferred)
 - Check TODOS.md for follow-up work
 ```
 
