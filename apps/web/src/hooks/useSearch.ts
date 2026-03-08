@@ -24,6 +24,6 @@ export function useSearch(searchQuery: string) {
     queryKey: ["search", trimmedQuery],
     queryFn: () => searchNotes(trimmedQuery),
     enabled: trimmedQuery.length > 0,
-    useErrorBoundary: (error) => !isNetworkError(error)
+    throwOnError: (error: unknown) => !isNetworkError(error)
   });
 }

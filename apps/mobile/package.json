@@ -7,8 +7,9 @@
     "android": "EXPO_ROUTER_APP_ROOT=./app expo start --android",
     "ios": "EXPO_ROUTER_APP_ROOT=./app expo start --ios",
     "web": "EXPO_ROUTER_APP_ROOT=./app expo start --web",
+    "lint": "eslint app components hooks lib services test --ext .ts,.tsx",
     "typecheck": "tsc --noEmit",
-    "test": "echo \"No tests configured yet\""
+    "test": "vitest run"
   },
   "dependencies": {
     "@react-native-picker/picker": "^2.11.0",
@@ -38,7 +39,10 @@
   "devDependencies": {
     "@babel/core": "^7.26.0",
     "@types/react": "~19.1.10",
-    "typescript": "~5.9.2"
+    "@types/react-test-renderer": "^19.1.0",
+    "react-test-renderer": "^19.1.0",
+    "typescript": "~5.9.2",
+    "vitest": "^3.2.4"
   },
   "private": true
 }

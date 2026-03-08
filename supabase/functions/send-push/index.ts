@@ -1,12 +1,21 @@
 import { createClient } from "jsr:@supabase/supabase-js@2";
 
 import { createServiceRoleClient } from "../_shared/supabase.ts";
+import { createFunctionLogger } from "../_shared/logger.ts";
 import { getAccessToken, sendFCMMessage } from "../_shared/fcm.ts";
 
-const SUPABASE_URL = Deno.env.get("SUPABASE_URL") ?? "";
-const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "";
-const FCM_PROJECT_ID = Deno.env.get("FCM_PROJECT_ID") ?? "";
-const FCM_SERVICE_ACCOUNT_KEY = Deno.env.get("FCM_SERVICE_ACCOUNT_KEY") ?? "";
+type RuntimeConfig = {
+  supabaseUrl: string;
+  serviceRoleKey: string;
+  fcmProjectId: string;
+  fcmServiceAccountKey: string;
+};
+
+const REQUIRED_ENV_KEYS = [
+  "SUPABASE_URL",
+  "FCM_PROJECT_ID",
+  "FCM_SERVICE_ACCOUNT_KEY"
+];
 
 type RequestBody = {
   user_id: string;
@@ -22,12 +31,69 @@ type Device = {
   platform: string;
 };
 
+function getRuntimeConfig(): RuntimeConfig {
+  return {
+    supabaseUrl: Deno.env.get("SUPABASE_URL") ?? "",
+    serviceRoleKey:
+      Deno.env.get("SERVICE_ROLE_KEY") ?? Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "",
+    fcmProjectId: Deno.env.get("FCM_PROJECT_ID") ?? "",
+    fcmServiceAccountKey: Deno.env.get("FCM_SERVICE_ACCOUNT_KEY") ?? ""
+  };
+}
+
+function getMissingEnv(config: RuntimeConfig) {
+  const missing = REQUIRED_ENV_KEYS.filter((key) => !Deno.env.get(key));
+  if (!config.serviceRoleKey) {
+    missing.push("SERVICE_ROLE_KEY|SUPABASE_SERVICE_ROLE_KEY");
+  }
+  return missing;
+}
+
+function healthResponse(config: RuntimeConfig) {
+  const missingEnv = getMissingEnv(config);
+  return new Response(
+    JSON.stringify({
+      status: "ok",
+      function: "send-push",
+      ready: missingEnv.length === 0,
+      missing_env: missingEnv
+    }),
+    {
+      status: 200,
+      headers: { "Content-Type": "application/json" }
+    }
+  );
+}
+
 Deno.serve(async (req) => {
+  const requestId = req.headers.get("x-request-id") ?? crypto.randomUUID();
+  const logger = createFunctionLogger("send-push", requestId);
+  const config = getRuntimeConfig();
+  if (req.method === "GET") {
+    return healthResponse(config);
+  }
+
   if (req.method !== "POST") {
     return new Response(JSON.stringify({ error: "Method not allowed" }), {
       status: 405,
       headers: { "Content-Type": "application/json" }
     });
+  }
+
+  const missingEnv = getMissingEnv(config);
+  if (missingEnv.length > 0) {
+    logger.error("Missing required environment variables", { missingEnv });
+    return new Response(
+      JSON.stringify({
+        error: "Missing required environment variables",
+        missing_env: missingEnv,
+        request_id: requestId
+      }),
+      {
+        status: 500,
+        headers: { "Content-Type": "application/json" }
+      }
+    );
   }
 
   let body: RequestBody;
@@ -49,18 +115,10 @@ Deno.serve(async (req) => {
     );
   }
 
-  if (!FCM_PROJECT_ID || !FCM_SERVICE_ACCOUNT_KEY) {
-    console.error("FCM credentials not configured");
-    return new Response(
-      JSON.stringify({ error: "FCM not configured" }),
-      { status: 500, headers: { "Content-Type": "application/json" } }
-    );
-  }
-
   const supabase = createServiceRoleClient({
     createClient,
-    supabaseUrl: SUPABASE_URL,
-    serviceRoleKey: SUPABASE_SERVICE_ROLE_KEY
+    supabaseUrl: config.supabaseUrl,
+    serviceRoleKey: config.serviceRoleKey
   });
 
   // Fetch Android devices with push tokens for this user
@@ -72,7 +130,7 @@ Deno.serve(async (req) => {
     .not("push_token", "is", null);
 
   if (devicesError) {
-    console.error("Failed to fetch devices:", devicesError);
+    logger.error("Failed to fetch devices", devicesError);
     return new Response(
       JSON.stringify({ error: "Failed to fetch devices" }),
       { status: 500, headers: { "Content-Type": "application/json" } }
@@ -82,7 +140,7 @@ Deno.serve(async (req) => {
   const validDevices = ((devices as Device[]) ?? []).filter(d => d.push_token);
 
   if (validDevices.length === 0) {
-    console.log(`No Android devices with push tokens for user ${user_id}`);
+    logger.info("No Android devices with push tokens for user", { userId: user_id });
     return new Response(
       JSON.stringify({ success: true, tokens_sent: 0, message: "No devices to notify" }),
       { status: 200, headers: { "Content-Type": "application/json" } }
@@ -92,9 +150,9 @@ Deno.serve(async (req) => {
   // Get FCM access token
   let accessToken: string;
   try {
-    accessToken = await getAccessToken(fetch, FCM_SERVICE_ACCOUNT_KEY);
+    accessToken = await getAccessToken(fetch, config.fcmServiceAccountKey);
   } catch (error) {
-    console.error("Failed to get FCM access token:", error);
+    logger.error("Failed to get FCM access token", error);
     return new Response(
       JSON.stringify({ error: "Failed to authenticate with FCM" }),
       { status: 500, headers: { "Content-Type": "application/json" } }
@@ -108,7 +166,7 @@ Deno.serve(async (req) => {
   for (const device of validDevices) {
     const result = await sendFCMMessage({
       fetchFn: fetch,
-      projectId: FCM_PROJECT_ID,
+      projectId: config.fcmProjectId,
       accessToken,
       message: {
         token: device.push_token!,
@@ -125,9 +183,9 @@ Deno.serve(async (req) => {
 
     if (result.success) {
       tokensSent++;
-      console.log(`Push sent to device ${device.id}: ${result.messageId}`);
+      logger.info("Push sent to device", { deviceId: device.id, messageId: result.messageId });
     } else {
-      console.error(`Failed to send push to device ${device.id}: ${result.error}`);
+      logger.error("Failed to send push to device", { deviceId: device.id, error: result.error });
       errors.push(result.error ?? "Unknown error");
     }
   }
@@ -140,7 +198,7 @@ Deno.serve(async (req) => {
       .eq("id", summary_id);
 
     if (updateError) {
-      console.error("Failed to update sent_at:", updateError);
+      logger.error("Failed to update sent_at", updateError);
     }
   }
 

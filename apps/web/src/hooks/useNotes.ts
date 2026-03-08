@@ -7,6 +7,6 @@ export function useNotes() {
   return useQuery({
     queryKey: ["notes"],
     queryFn: fetchNotes,
-    useErrorBoundary: (error) => !isNetworkError(error)
+    throwOnError: (error: unknown) => !isNetworkError(error)
   });
 }

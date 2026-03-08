@@ -110,6 +110,9 @@ export function useCreateNote() {
         return upsertNoteWithAttachments(current, noteWithAttachments, "start");
       });
     },
+    onSettled: async () => {
+      await queryClient.invalidateQueries({ queryKey: ["notes"] });
+    }
   });
 
   return mutation;

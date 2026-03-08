@@ -1,11 +1,19 @@
 import { createClient } from "jsr:@supabase/supabase-js@2";
 
 import { createServiceRoleClient } from "../_shared/supabase.ts";
+import { createFunctionLogger } from "../_shared/logger.ts";
 import { callOpenAISummary, type DailySummaryContent } from "../_shared/openai.ts";
 
-const SUPABASE_URL = Deno.env.get("SUPABASE_URL") ?? "";
-const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "";
-const OPENAI_API_KEY = Deno.env.get("OPENAI_API_KEY") ?? "";
+type RuntimeConfig = {
+  supabaseUrl: string;
+  serviceRoleKey: string;
+  openaiApiKey: string;
+};
+
+const REQUIRED_ENV_KEYS = [
+  "SUPABASE_URL",
+  "OPENAI_API_KEY"
+];
 
 type User = {
   id: string;
@@ -84,12 +92,69 @@ function getLocalDateString(localTime: Date): string {
   return `${year}-${month}-${day}`;
 }
 
+function getRuntimeConfig(): RuntimeConfig {
+  return {
+    supabaseUrl: Deno.env.get("SUPABASE_URL") ?? "",
+    serviceRoleKey:
+      Deno.env.get("SERVICE_ROLE_KEY") ?? Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "",
+    openaiApiKey: Deno.env.get("OPENAI_API_KEY") ?? ""
+  };
+}
+
+function getMissingEnv(config: RuntimeConfig) {
+  const missing = REQUIRED_ENV_KEYS.filter((key) => !Deno.env.get(key));
+  if (!config.serviceRoleKey) {
+    missing.push("SERVICE_ROLE_KEY|SUPABASE_SERVICE_ROLE_KEY");
+  }
+  return missing;
+}
+
+function healthResponse(config: RuntimeConfig) {
+  const missingEnv = getMissingEnv(config);
+  return new Response(
+    JSON.stringify({
+      status: "ok",
+      function: "generate-summary",
+      ready: missingEnv.length === 0,
+      missing_env: missingEnv
+    }),
+    {
+      status: 200,
+      headers: { "content-type": "application/json" }
+    }
+  );
+}
+
 Deno.serve(async (req) => {
+  const requestId = req.headers.get("x-request-id") ?? crypto.randomUUID();
+  const logger = createFunctionLogger("generate-summary", requestId);
+  const config = getRuntimeConfig();
+
+  if (req.method === "GET") {
+    return healthResponse(config);
+  }
+
   if (req.method !== "POST") {
     return new Response(JSON.stringify({ error: "Method not allowed" }), {
       status: 405,
       headers: { "Content-Type": "application/json" }
     });
+  }
+
+  const missingEnv = getMissingEnv(config);
+  if (missingEnv.length > 0) {
+    logger.error("Missing required environment variables", { missingEnv });
+    return new Response(
+      JSON.stringify({
+        error: "Missing required environment variables",
+        missing_env: missingEnv,
+        request_id: requestId
+      }),
+      {
+        status: 500,
+        headers: { "Content-Type": "application/json" }
+      }
+    );
   }
 
   let body: RequestBody = {};
@@ -110,8 +175,8 @@ Deno.serve(async (req) => {
 
   const supabase = createServiceRoleClient({
     createClient,
-    supabaseUrl: SUPABASE_URL,
-    serviceRoleKey: SUPABASE_SERVICE_ROLE_KEY
+    supabaseUrl: config.supabaseUrl,
+    serviceRoleKey: config.serviceRoleKey
   });
 
   const now = new Date();
@@ -127,7 +192,7 @@ Deno.serve(async (req) => {
   const { data: users, error: usersError } = await usersQuery;
 
   if (usersError) {
-    console.error("Failed to fetch users:", usersError);
+    logger.error("Failed to fetch users", usersError);
     return new Response(
       JSON.stringify({ error: "Failed to fetch users" }),
       { status: 500, headers: { "Content-Type": "application/json" } }
@@ -161,21 +226,21 @@ Deno.serve(async (req) => {
           .order("created_at", { ascending: false });
 
         if (notesError) {
-          console.error(`Failed to fetch notes for user ${user.id}:`, notesError);
+          logger.error("Failed to fetch notes for user", { userId: user.id, notesError });
           continue;
         }
 
         const validNotes = ((notes as Note[]) ?? []).filter(n => n.content && n.content.trim());
 
         if (validNotes.length === 0) {
-          console.log(`No notes to summarize for user ${user.id}`);
+          logger.info("No notes to summarize for user", { userId: user.id });
           continue;
         }
 
         try {
           const summaryContent = await callOpenAISummary({
             fetchFn: fetch,
-            apiKey: OPENAI_API_KEY,
+            apiKey: config.openaiApiKey,
             model: "gpt-4o-mini",
             notes: validNotes.map(n => ({ category: n.category, content: n.content! }))
           });
@@ -188,14 +253,14 @@ Deno.serve(async (req) => {
           });
 
           if (insertError) {
-            console.error(`Failed to save summary for user ${user.id}:`, insertError);
+            logger.error("Failed to save summary for user", { userId: user.id, insertError });
             continue;
           }
 
           summariesGenerated++;
-          console.log(`Generated summary for user ${user.id}`);
+          logger.info("Generated summary for user", { userId: user.id });
         } catch (error) {
-          console.error(`Failed to generate summary for user ${user.id}:`, error);
+          logger.error("Failed to generate summary for user", { userId: user.id, error });
         }
       }
     }
@@ -213,7 +278,7 @@ Deno.serve(async (req) => {
         .single();
 
       if (summaryError && summaryError.code !== "PGRST116") {
-        console.error(`Failed to fetch summary for user ${user.id}:`, summaryError);
+        logger.error("Failed to fetch summary for user", { userId: user.id, summaryError });
         continue;
       }
 
@@ -224,12 +289,12 @@ Deno.serve(async (req) => {
         // Call send-push function
         try {
           const pushResponse = await fetch(
-            `${SUPABASE_URL}/functions/v1/send-push`,
+            `${config.supabaseUrl}/functions/v1/send-push`,
             {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
-                Authorization: `Bearer ${SUPABASE_SERVICE_ROLE_KEY}`
+                Authorization: `Bearer ${config.serviceRoleKey}`
               },
               body: JSON.stringify({
                 user_id: user.id,
@@ -246,13 +311,13 @@ Deno.serve(async (req) => {
 
           if (pushResponse.ok) {
             pushesScheduled++;
-            console.log(`Scheduled push for user ${user.id}`);
+            logger.info("Scheduled push for user", { userId: user.id });
           } else {
             const errorText = await pushResponse.text();
-            console.error(`Failed to send push for user ${user.id}:`, errorText);
+            logger.error("Failed to send push for user", { userId: user.id, errorText });
           }
         } catch (error) {
-          console.error(`Failed to call send-push for user ${user.id}:`, error);
+          logger.error("Failed to call send-push for user", { userId: user.id, error });
         }
       }
     }

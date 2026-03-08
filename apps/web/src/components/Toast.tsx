@@ -1,4 +1,4 @@
-type ToastVariant = "error" | "info";
+type ToastVariant = "error" | "info" | "success";
 
 type ToastAction = {
   label: string;
@@ -20,8 +20,18 @@ export function Toast({ message, variant, action, onDismiss }: ToastProps) {
         padding: "10px 12px",
         borderRadius: 10,
         border: "1px solid #ddd",
-        background: variant === "error" ? "#fff0f0" : "white",
-        color: variant === "error" ? "#8a0000" : "inherit",
+        background:
+          variant === "error"
+            ? "#fff0f0"
+            : variant === "success"
+              ? "#ecfdf3"
+              : "white",
+        color:
+          variant === "error"
+            ? "#8a0000"
+            : variant === "success"
+              ? "#0b6b42"
+              : "inherit",
         maxWidth: 320,
         display: "grid",
         gap: 8

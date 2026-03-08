@@ -9,13 +9,24 @@
   ],
   "scripts": {
     "build": "turbo run build",
-    "dev": "turbo run dev --parallel",
+    "dev": "npm run dev:web",
+    "dev:web": "npm run dev -w @notesbrain/web",
+    "dev:mobile": "npm run start -w @notesbrain/mobile",
     "lint": "turbo run lint",
     "typecheck": "turbo run typecheck",
     "test:root": "npm run build -w @notesbrain/shared && node --test tests/*.test.js",
-    "test": "npm run test:root && turbo run test"
+    "test": "npm run test:root && turbo run test",
+    "verify": "npm run test && npm run typecheck && npm run lint && npm run build",
+    "healthcheck:edge": "node scripts/healthcheck-edge-functions.mjs",
+    "deploy:staging": "node scripts/deploy-staging.mjs",
+    "deploy:staging:dry": "node scripts/deploy-staging.mjs --dry-run"
   },
   "devDependencies": {
+    "@eslint/js": "^9.23.0",
+    "@typescript-eslint/eslint-plugin": "^8.28.0",
+    "@typescript-eslint/parser": "^8.28.0",
+    "eslint": "^9.23.0",
+    "eslint-plugin-react-hooks": "^5.2.0",
     "expo": "^54.0.0",
     "turbo": "^2.5.5"
   },
