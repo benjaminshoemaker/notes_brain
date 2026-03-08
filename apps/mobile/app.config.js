@@ -1,11 +1,11 @@
 export default {
   expo: {
-    name: "NotesBrain",
-    slug: "notes-brain",
+    name: "Echo",
+    slug: "echo",
     version: "1.0.0",
     orientation: "portrait",
     icon: "./assets/icon.png",
-    scheme: "notesbrain",
+    scheme: "echo",
     userInterfaceStyle: "automatic",
     newArchEnabled: true,
     splash: {
@@ -15,14 +15,14 @@ export default {
     },
     ios: {
       supportsTablet: true,
-      bundleIdentifier: "com.notesbrain.app"
+      bundleIdentifier: "com.notesbrain.echo"
     },
     android: {
       adaptiveIcon: {
         foregroundImage: "./assets/adaptive-icon.png",
         backgroundColor: "#ffffff"
       },
-      package: "com.notesbrain.app",
+      package: "com.notesbrain.echo",
       googleServicesFile: process.env.GOOGLE_SERVICES_JSON || "./google-services.json",
       permissions: [
         "android.permission.RECORD_AUDIO",
@@ -65,7 +65,7 @@ export default {
       [
         "expo-audio",
         {
-          microphonePermission: "Allow NotesBrain to record voice notes"
+          microphonePermission: "Allow Echo to record voice notes"
         }
       ]
     ],

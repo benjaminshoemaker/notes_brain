@@ -33,7 +33,7 @@ export default function Index() {
   if (isLoading) {
     return (
       <View style={styles.container}>
-        <ActivityIndicator size="large" color="#0066cc" />
+        <ActivityIndicator size="large" color="#4F46E5" />
         <Text style={styles.loadingText}>Loading...</Text>
       </View>
     );
@@ -51,11 +51,11 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#ffffff",
+    backgroundColor: "#FAF8F5",
   },
   loadingText: {
     marginTop: 12,
     fontSize: 16,
-    color: "#666666",
+    color: "#57534E",
   },
 });

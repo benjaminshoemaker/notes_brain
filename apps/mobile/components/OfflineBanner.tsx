@@ -1,6 +1,7 @@
 import { View, Text, StyleSheet } from "react-native";
 
 import { useOnlineStatus } from "../hooks/useOnlineStatus";
+import { colors } from "../lib/theme";
 
 export function OfflineBanner() {
   const isOnline = useOnlineStatus();
@@ -18,12 +19,12 @@ export function OfflineBanner() {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#fef3c7",
+    backgroundColor: colors.warningLight,
     paddingVertical: 8,
     paddingHorizontal: 12,
   },
   text: {
-    color: "#92400e",
+    color: colors.warning,
     textAlign: "center",
     fontSize: 12,
   },

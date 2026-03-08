@@ -3,6 +3,7 @@ import type { NoteWithAttachments } from "@notesbrain/shared";
 import { upsertNoteWithAttachments } from "@notesbrain/shared";
 
 import { supabase } from "../lib/supabaseClient";
+import { ensureUserProfile } from "../lib/ensureUserProfile";
 import { useAuth } from "./useAuth";
 
 type CreateNoteInput = {
@@ -34,6 +35,11 @@ async function createNote(input: CreateNoteInput): Promise<CreateNoteResult> {
   if (!user) {
     throw new Error("Not authenticated");
   }
+
+  await ensureUserProfile({
+    id: user.id,
+    email: user.email
+  });
 
   const { data, error } = await supabase
     .from("notes")

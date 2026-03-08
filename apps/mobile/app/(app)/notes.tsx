@@ -7,6 +7,8 @@ import { MobileCategoryFilter } from "../../components/MobileCategoryFilter";
 import { useNotes } from "../../hooks/useNotes";
 import { useRealtimeNotes } from "../../hooks/useRealtimeNotes";
 import { useAuth } from "../../hooks/useAuth";
+import { testIds } from "../../lib/testIds";
+import { colors } from "../../lib/theme";
 
 export default function NotesScreen() {
   const { user } = useAuth();
@@ -41,7 +43,7 @@ export default function NotesScreen() {
   }, [error, hasShownError, refetch]);
 
   return (
-    <View style={styles.container}>
+    <View testID={testIds.notes.screen} style={styles.container}>
       <MobileCategoryFilter
         selectedCategory={selectedCategory}
         onSelectCategory={setSelectedCategory}
@@ -61,6 +63,6 @@ export default function NotesScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f5f5f5",
+    backgroundColor: colors.background,
   },
 });

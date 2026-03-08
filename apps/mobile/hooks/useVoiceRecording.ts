@@ -70,8 +70,10 @@ export function useVoiceRecording(): UseVoiceRecordingResult {
   // Cleanup on unmount
   useEffect(() => {
     return () => {
-      if (recorder.isRecording) {
-        recorder.stop().catch(() => {});
+      try {
+        void recorder.stop().catch(() => {});
+      } catch {
+        // Recorder may already be released by expo-audio during unmount.
       }
     };
   }, [recorder]);

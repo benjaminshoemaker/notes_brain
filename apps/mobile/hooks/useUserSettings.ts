@@ -4,10 +4,17 @@ import * as SecureStore from "expo-secure-store";
 import type { User } from "@notesbrain/shared";
 
 import { supabase } from "../lib/supabaseClient";
+import { ensureUserProfile } from "../lib/ensureUserProfile";
 import { useAuth } from "./useAuth";
 import { getDeviceTimezone } from "../lib/timezones";
 
-const AUTO_DETECT_PREFIX = "notesbrain:timezone-auto-detected";
+const AUTO_DETECT_PREFIX = "notesbrain.timezone-auto-detected";
+const SECURESTORE_KEY_SANITIZER = /[^A-Za-z0-9._-]/g;
+
+function getTimezoneAutoDetectStorageKey(userId: string): string {
+  const normalizedUserId = userId.replace(SECURESTORE_KEY_SANITIZER, "_");
+  return `${AUTO_DETECT_PREFIX}.${normalizedUserId}`;
+}
 
 async function fetchUserSettings(userId: string): Promise<User> {
   const { data, error } = await supabase.from("users").select("*").eq("id", userId).single();
@@ -45,7 +52,13 @@ export function useUserSettings() {
 
   const settingsQuery = useQuery({
     queryKey: ["user-settings", userId],
-    queryFn: () => fetchUserSettings(userId!),
+    queryFn: async () => {
+      await ensureUserProfile({
+        id: userId!,
+        email: userEmail
+      });
+      return fetchUserSettings(userId!);
+    },
     enabled: Boolean(userId)
   });
 
@@ -69,7 +82,7 @@ export function useUserSettings() {
     let isActive = true;
 
     const checkAndSetTimezone = async () => {
-      const storageKey = `${AUTO_DETECT_PREFIX}:${userId}`;
+      const storageKey = getTimezoneAutoDetectStorageKey(userId);
       const hasAutoDetected = await SecureStore.getItemAsync(storageKey);
 
       if (!isActive || hasAutoDetected) {

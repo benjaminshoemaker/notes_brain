@@ -82,7 +82,7 @@ export default function LoginScreen() {
       >
         <View style={styles.formContainer}>
           <Text style={styles.title}>Sign In</Text>
-          <Text style={styles.subtitle}>Welcome back to NotesBrain</Text>
+          <Text style={styles.subtitle}>Welcome back to Echo</Text>
 
           <View style={styles.inputGroup}>
             <Text style={styles.label}>Email</Text>

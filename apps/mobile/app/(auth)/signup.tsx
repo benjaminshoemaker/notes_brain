@@ -11,8 +11,11 @@ import {
   ActivityIndicator,
 } from "react-native";
 import { Stack, Link, useRouter } from "expo-router";
+import { Ionicons } from "@expo/vector-icons";
 
 import { signUpWithPassword } from "../../lib/authApi";
+import { testIds } from "../../lib/testIds";
+import { colors, radii } from "../../lib/theme";
 
 export default function SignupScreen() {
   const router = useRouter();
@@ -60,7 +63,7 @@ export default function SignupScreen() {
       style={styles.container}
       behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
-      <Stack.Screen options={{ title: "Create Account" }} />
+      <Stack.Screen options={{ title: "Create Account", headerStyle: { backgroundColor: colors.background }, headerTintColor: colors.text }} />
       <ScrollView
         contentContainerStyle={styles.scrollContent}
         keyboardShouldPersistTaps="handled"
@@ -71,52 +74,68 @@ export default function SignupScreen() {
 
           <View style={styles.inputGroup}>
             <Text style={styles.label}>Email</Text>
-            <TextInput
-              style={styles.input}
-              value={email}
-              onChangeText={setEmail}
-              placeholder="you@example.com"
-              keyboardType="email-address"
-              autoCapitalize="none"
-              autoComplete="email"
-              autoCorrect={false}
-              editable={!isSubmitting}
-            />
+            <View style={styles.inputWrapper}>
+              <Ionicons name="mail-outline" size={18} color={colors.textMuted} style={styles.inputIcon} />
+              <TextInput
+                testID={testIds.auth.signupEmailInput}
+                style={styles.input}
+                value={email}
+                onChangeText={setEmail}
+                placeholder="you@example.com"
+                placeholderTextColor={colors.textMuted}
+                keyboardType="email-address"
+                autoCapitalize="none"
+                autoComplete="email"
+                autoCorrect={false}
+                editable={!isSubmitting}
+              />
+            </View>
           </View>
 
           <View style={styles.inputGroup}>
             <Text style={styles.label}>Password</Text>
-            <TextInput
-              style={styles.input}
-              value={password}
-              onChangeText={setPassword}
-              placeholder="At least 6 characters"
-              secureTextEntry
-              autoComplete="new-password"
-              editable={!isSubmitting}
-            />
+            <View style={styles.inputWrapper}>
+              <Ionicons name="lock-closed-outline" size={18} color={colors.textMuted} style={styles.inputIcon} />
+              <TextInput
+                testID={testIds.auth.signupPasswordInput}
+                style={styles.input}
+                value={password}
+                onChangeText={setPassword}
+                placeholder="At least 6 characters"
+                placeholderTextColor={colors.textMuted}
+                secureTextEntry
+                autoComplete="new-password"
+                editable={!isSubmitting}
+              />
+            </View>
           </View>
 
           <View style={styles.inputGroup}>
             <Text style={styles.label}>Confirm Password</Text>
-            <TextInput
-              style={styles.input}
-              value={confirmPassword}
-              onChangeText={setConfirmPassword}
-              placeholder="Confirm your password"
-              secureTextEntry
-              autoComplete="new-password"
-              editable={!isSubmitting}
-            />
+            <View style={styles.inputWrapper}>
+              <Ionicons name="lock-closed-outline" size={18} color={colors.textMuted} style={styles.inputIcon} />
+              <TextInput
+                testID={testIds.auth.signupConfirmPasswordInput}
+                style={styles.input}
+                value={confirmPassword}
+                onChangeText={setConfirmPassword}
+                placeholder="Confirm your password"
+                placeholderTextColor={colors.textMuted}
+                secureTextEntry
+                autoComplete="new-password"
+                editable={!isSubmitting}
+              />
+            </View>
           </View>
 
           <TouchableOpacity
+            testID={testIds.auth.signupSubmitButton}
             style={[styles.button, styles.primaryButton, isSubmitting && styles.buttonDisabled]}
             onPress={handleSignUp}
             disabled={isSubmitting}
           >
             {isSubmitting ? (
-              <ActivityIndicator color="#ffffff" />
+              <ActivityIndicator color={colors.textInverse} />
             ) : (
               <Text style={styles.buttonText}>Create Account</Text>
             )}
@@ -145,11 +164,11 @@ export default function SignupScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#ffffff",
+    backgroundColor: colors.background,
   },
   scrollContent: {
     flexGrow: 1,
-    justifyContent: "center",
+    paddingTop: 80,
   },
   formContainer: {
     padding: 24,
@@ -157,57 +176,66 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 28,
     fontWeight: "bold",
-    color: "#1a1a1a",
+    color: colors.text,
     marginBottom: 8,
   },
   subtitle: {
     fontSize: 16,
-    color: "#666666",
+    color: colors.textSecondary,
     marginBottom: 32,
   },
   inputGroup: {
     marginBottom: 16,
   },
   label: {
-    fontSize: 14,
+    fontSize: 13,
     fontWeight: "600",
-    color: "#333333",
+    color: colors.textSecondary,
     marginBottom: 6,
   },
-  input: {
+  inputWrapper: {
+    flexDirection: "row",
+    alignItems: "center",
     borderWidth: 1,
-    borderColor: "#dddddd",
-    borderRadius: 8,
-    paddingHorizontal: 14,
+    borderColor: colors.border,
+    borderRadius: radii.md,
+    backgroundColor: colors.surfaceRaised,
+  },
+  inputIcon: {
+    marginLeft: 12,
+  },
+  input: {
+    flex: 1,
+    paddingHorizontal: 10,
     paddingVertical: 12,
     fontSize: 16,
-    backgroundColor: "#fafafa",
+    color: colors.text,
   },
   button: {
-    borderRadius: 8,
+    borderRadius: radii.md,
     paddingVertical: 14,
     alignItems: "center",
     marginTop: 8,
   },
   primaryButton: {
-    backgroundColor: "#0066cc",
+    backgroundColor: colors.accent,
   },
   buttonDisabled: {
     opacity: 0.6,
   },
   buttonText: {
-    color: "#ffffff",
+    color: colors.textInverse,
     fontSize: 16,
     fontWeight: "600",
   },
   errorContainer: {
-    backgroundColor: "#fff0f0",
+    backgroundColor: colors.errorLight,
     padding: 12,
-    borderRadius: 8,
+    borderRadius: radii.md,
     marginTop: 16,
   },
   errorText: {
-    color: "#cc0000",
+    color: colors.error,
     fontSize: 14,
   },
   footer: {
@@ -216,11 +244,11 @@ const styles = StyleSheet.create({
     marginTop: 24,
   },
   footerText: {
-    color: "#666666",
+    color: colors.textSecondary,
     fontSize: 14,
   },
   linkText: {
-    color: "#0066cc",
+    color: colors.accent,
     fontSize: 14,
     fontWeight: "600",
   },

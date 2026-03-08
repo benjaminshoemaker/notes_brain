@@ -4,6 +4,7 @@ import type { NoteWithAttachments, Attachment } from "@notesbrain/shared";
 import { upsertNoteWithAttachments } from "@notesbrain/shared";
 
 import { supabase } from "../lib/supabaseClient";
+import { ensureUserProfile } from "../lib/ensureUserProfile";
 
 type UploadFileInput = {
   uri: string;
@@ -32,6 +33,11 @@ async function uploadFile(input: UploadFileInput): Promise<NoteWithAttachments> 
   if (!user) {
     throw new Error("Not authenticated");
   }
+
+  await ensureUserProfile({
+    id: user.id,
+    email: user.email
+  });
 
   // Create the note first
   const { data: note, error: noteError } = await supabase

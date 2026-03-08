@@ -12,7 +12,7 @@ export function signUpWithPassword(email: string, password: string) {
 
 export function sendMagicLink(email: string) {
   // For mobile, we use deep linking scheme
-  const emailRedirectTo = "notesbrain://auth/callback";
+  const emailRedirectTo = "echo://auth/callback";
   return signInWithMagicLink(supabase, { email, emailRedirectTo });
 }
 

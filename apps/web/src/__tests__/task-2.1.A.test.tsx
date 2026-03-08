@@ -61,11 +61,11 @@ describe("Task 2.1.A", () => {
   it("should render without errors when AppProviders wraps a simple app", () => {
     const { getByText } = render(
       <AppProviders>
-        <h1>NotesBrain</h1>
+        <h1>Echo</h1>
       </AppProviders>
     );
 
-    expect(getByText("NotesBrain")).toBeInTheDocument();
+    expect(getByText("Echo")).toBeInTheDocument();
   });
 
   it("should read Supabase URL and anon key when VITE env vars are set", async () => {
