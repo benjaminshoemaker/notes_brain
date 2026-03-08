@@ -1,0 +1,45 @@
+export const testIds = {
+  app: {
+    tabCapture: "tab-capture",
+    tabNotes: "tab-notes",
+    tabSummary: "tab-summary",
+    tabSettings: "tab-settings",
+    signOutButton: "app-signout-button",
+  },
+  auth: {
+    loginEmailInput: "login-email-input",
+    loginPasswordInput: "login-password-input",
+    loginSubmitButton: "login-submit-button",
+    loginMagicLinkButton: "login-magic-link-button",
+    signupEmailInput: "signup-email-input",
+    signupPasswordInput: "signup-password-input",
+    signupConfirmPasswordInput: "signup-confirm-password-input",
+    signupSubmitButton: "signup-submit-button",
+  },
+  capture: {
+    screen: "capture-screen",
+    textInput: "capture-text-input",
+    submitButton: "capture-submit-button",
+    voiceStartButton: "capture-voice-start-button",
+    voiceStopButton: "capture-voice-stop-button",
+    voiceCancelButton: "capture-voice-cancel-button",
+    toast: "capture-toast",
+  },
+  notes: {
+    screen: "notes-screen",
+    list: "notes-list",
+    emptyState: "notes-empty-state",
+    filterAll: "notes-filter-all",
+    filterCategory: (category: string) => `notes-filter-${category}`,
+    card: (noteId: string) => `notes-card-${noteId}`,
+  },
+  summary: {
+    screen: "summary-screen",
+    emptyState: "summary-empty-state",
+    card: "summary-card",
+  },
+  settings: {
+    screen: "settings-screen",
+    timezoneSelect: "settings-timezone-select",
+  },
+} as const;

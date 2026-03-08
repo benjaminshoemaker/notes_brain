@@ -6,12 +6,14 @@ type TimezoneSelectProps = {
   timezones: string[];
   onChange: (timezone: string) => void;
   disabled?: boolean;
+  testID?: string;
 };
 
-export function TimezoneSelect({ value, timezones, onChange, disabled }: TimezoneSelectProps) {
+export function TimezoneSelect({ value, timezones, onChange, disabled, testID }: TimezoneSelectProps) {
   return (
     <View style={styles.container}>
       <Picker
+        testID={testID}
         enabled={!disabled}
         selectedValue={value}
         onValueChange={(itemValue) => onChange(String(itemValue))}

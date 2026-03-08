@@ -12,9 +12,16 @@
     "dev": "npm run dev:web",
     "dev:web": "npm run dev -w @notesbrain/web",
     "dev:mobile": "npm run start -w @notesbrain/mobile",
+    "dev:mobile:mcp": "EXPO_UNSTABLE_MCP_SERVER=1 npm run start -w @notesbrain/mobile -- --dev-client",
+    "dev:mcp": "npm run dev:mobile:mcp",
     "lint": "turbo run lint",
     "typecheck": "turbo run typecheck",
     "test:root": "npm run build -w @notesbrain/shared && node --test tests/*.test.js",
+    "test:e2e:backend": "node --test tests/e2e/backend/*.test.mjs",
+    "test:e2e:web": "node scripts/e2e/run-web-playwright.mjs",
+    "test:e2e:mobile": "node scripts/e2e/run-mobile-detox.mjs",
+    "test:e2e": "npm run test:e2e:backend && npm run test:e2e:web",
+    "test:e2e:full": "npm run test:e2e && npm run test:e2e:mobile",
     "test": "npm run test:root && turbo run test",
     "verify": "npm run test && npm run typecheck && npm run lint && npm run build",
     "healthcheck:edge": "node scripts/healthcheck-edge-functions.mjs",
@@ -22,12 +29,15 @@
     "deploy:staging:dry": "node scripts/deploy-staging.mjs --dry-run"
   },
   "devDependencies": {
+    "@playwright/test": "^1.54.2",
     "@eslint/js": "^9.23.0",
     "@typescript-eslint/eslint-plugin": "^8.28.0",
     "@typescript-eslint/parser": "^8.28.0",
+    "detox": "^20.22.1",
     "eslint": "^9.23.0",
     "eslint-plugin-react-hooks": "^5.2.0",
     "expo": "^54.0.0",
+    "jest": "^30.2.0",
     "turbo": "^2.5.5"
   },
   "dependencies": {

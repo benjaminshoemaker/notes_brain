@@ -13,6 +13,7 @@ import { useAuth } from "../../hooks/useAuth";
 import { useDailySummary } from "../../hooks/useDailySummary";
 import { LoadingSpinner } from "../../components/LoadingSpinner";
 import { SummaryCard } from "../../components/SummaryCard";
+import { testIds } from "../../lib/testIds";
 import { colors } from "../../lib/theme";
 
 export default function SummaryScreen() {
@@ -52,13 +53,14 @@ export default function SummaryScreen() {
   if (!summary) {
     return (
       <ScrollView
+        testID={testIds.summary.screen}
         style={styles.container}
         contentContainerStyle={styles.centered}
         refreshControl={
           <RefreshControl refreshing={isRefetching} onRefresh={refetch} tintColor={colors.accent} />
         }
       >
-        <View style={styles.emptyState}>
+        <View testID={testIds.summary.emptyState} style={styles.emptyState}>
           <View style={styles.emptyIconCircle}>
             <Ionicons name="clipboard-outline" size={36} color={colors.accent} />
           </View>
@@ -74,6 +76,7 @@ export default function SummaryScreen() {
 
   return (
     <ScrollView
+      testID={testIds.summary.screen}
       style={styles.container}
       refreshControl={
         <RefreshControl refreshing={isRefetching} onRefresh={refetch} tintColor={colors.accent} />
@@ -89,7 +92,7 @@ export default function SummaryScreen() {
         </Text>
       </View>
 
-      <SummaryCard content={summary.content} />
+      <SummaryCard testID={testIds.summary.card} content={summary.content} />
     </ScrollView>
   );
 }

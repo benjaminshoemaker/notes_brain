@@ -34,7 +34,7 @@ test("captures a text note and renders it immediately in the feed", async ({ pag
   await page.getByLabel("New note").fill(noteText);
   await page.getByRole("button", { name: "Add note" }).click();
 
-  await expect(page.getByText(noteText)).toBeVisible();
+  await expect(page.getByTestId("note-card").first().getByText(noteText)).toBeVisible();
   await expect(page.getByRole("button", { name: "uncategorized" }).first()).toBeVisible();
 });
 
@@ -43,11 +43,11 @@ test("filters by category and supports full-text search", async ({ page }) => {
 
   await login(page);
 
-  await page.getByRole("button", { name: "Projects" }).click();
+  await page.locator("button[aria-pressed]", { hasText: "Projects" }).click();
   await expect(page.getByText(projectsContent)).toBeVisible();
   await expect(page.getByText(ideasContent)).toHaveCount(0);
 
-  await page.getByRole("button", { name: "All" }).click();
+  await page.locator("button[aria-pressed]", { hasText: "All" }).click();
   await page.getByLabel("Search").fill("ideas");
   await expect(page.getByText(ideasContent)).toBeVisible();
   await expect(page.getByText(projectsContent)).toHaveCount(0);

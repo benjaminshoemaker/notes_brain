@@ -4,6 +4,7 @@ This directory contains the phase-1 E2E foundation:
 
 - Backend integration E2E (Supabase auth + RLS + core data flows)
 - Web E2E (Playwright)
+- Mobile Android E2E (Detox)
 - Shared E2E test-user seeding and cleanup utilities
 
 ## Scope
@@ -15,8 +16,7 @@ Current scope intentionally focuses on stable high-value coverage:
 - Web search and category filter behavior
 - Settings timezone persistence
 - Daily summary data retrieval (backend integration test)
-
-Mobile device E2E (Detox) is deferred to phase 2.
+- Mobile tab navigation + capture + summary rendering on Android emulator
 
 ## Required Environment Variables
 
@@ -42,12 +42,19 @@ The Playwright web server receives:
 ```bash
 npm run test:e2e:backend
 npm run test:e2e:web
+npm run test:e2e:mobile
 ```
 
 Or run both:
 
 ```bash
 npm run test:e2e
+```
+
+To run full stack including mobile:
+
+```bash
+npm run test:e2e:full
 ```
 
 ## Local Supabase Tip
@@ -58,3 +65,6 @@ For recent CLI output, map:
 - `API_URL` -> `E2E_SUPABASE_URL`
 - `ANON_KEY` -> `E2E_SUPABASE_ANON_KEY`
 - `SECRET_KEY` -> `E2E_SUPABASE_SECRET_KEY`
+
+For Android emulator runs, the mobile runner automatically maps `localhost` / `127.0.0.1`
+to `10.0.2.2` for `EXPO_PUBLIC_SUPABASE_URL`.

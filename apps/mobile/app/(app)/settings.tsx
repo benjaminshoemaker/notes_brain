@@ -61,7 +61,7 @@ export default function SettingsScreen() {
   }
 
   return (
-    <View style={styles.container}>
+    <View testID={testIds.settings.screen} style={styles.container}>
       <View style={styles.section}>
         <View style={styles.sectionHeader}>
           <View style={styles.iconCircle}>
@@ -81,6 +81,7 @@ export default function SettingsScreen() {
           <Text style={styles.errorText}>Failed to load settings.</Text>
         ) : (
           <TimezoneSelect
+            testID={testIds.settings.timezoneSelect}
             value={currentTimezone}
             timezones={timezones}
             onChange={handleTimezoneChange}

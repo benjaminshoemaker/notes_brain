@@ -7,9 +7,10 @@ import { colors, radii } from "../lib/theme";
 
 type SummaryCardProps = {
   content: DailySummaryContent;
+  testID?: string;
 };
 
-export function SummaryCard({ content }: SummaryCardProps) {
+export function SummaryCard({ content, testID }: SummaryCardProps) {
   const [checkedActions, setCheckedActions] = useState<Set<number>>(new Set());
 
   function toggleAction(index: number) {
@@ -25,7 +26,7 @@ export function SummaryCard({ content }: SummaryCardProps) {
   }
 
   return (
-    <View style={styles.container}>
+    <View testID={testID} style={styles.container}>
       {/* Top Actions */}
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Today's Top 3</Text>
