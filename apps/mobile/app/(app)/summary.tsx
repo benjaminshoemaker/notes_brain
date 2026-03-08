@@ -7,11 +7,13 @@ import {
   Text,
   View,
 } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 
 import { useAuth } from "../../hooks/useAuth";
 import { useDailySummary } from "../../hooks/useDailySummary";
 import { LoadingSpinner } from "../../components/LoadingSpinner";
 import { SummaryCard } from "../../components/SummaryCard";
+import { colors } from "../../lib/theme";
 
 export default function SummaryScreen() {
   const { user } = useAuth();
@@ -53,11 +55,13 @@ export default function SummaryScreen() {
         style={styles.container}
         contentContainerStyle={styles.centered}
         refreshControl={
-          <RefreshControl refreshing={isRefetching} onRefresh={refetch} />
+          <RefreshControl refreshing={isRefetching} onRefresh={refetch} tintColor={colors.accent} />
         }
       >
         <View style={styles.emptyState}>
-          <Text style={styles.emptyEmoji}>📋</Text>
+          <View style={styles.emptyIconCircle}>
+            <Ionicons name="clipboard-outline" size={36} color={colors.accent} />
+          </View>
           <Text style={styles.emptyTitle}>No Summary Yet</Text>
           <Text style={styles.emptyText}>
             Your daily summary will appear here around 8:00 AM local time.
@@ -72,11 +76,10 @@ export default function SummaryScreen() {
     <ScrollView
       style={styles.container}
       refreshControl={
-        <RefreshControl refreshing={isRefetching} onRefresh={refetch} />
+        <RefreshControl refreshing={isRefetching} onRefresh={refetch} tintColor={colors.accent} />
       }
     >
       <View style={styles.header}>
-        <Text style={styles.headerTitle}>Daily Summary</Text>
         <Text style={styles.headerDate}>
           {new Date().toLocaleDateString("en-US", {
             weekday: "long",
@@ -94,7 +97,7 @@ export default function SummaryScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: colors.background,
   },
   centered: {
     flex: 1,
@@ -104,41 +107,40 @@ const styles = StyleSheet.create({
   },
   header: {
     padding: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: "#eee",
-  },
-  headerTitle: {
-    fontSize: 28,
-    fontWeight: "bold",
-    color: "#333",
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: colors.border,
   },
   headerDate: {
     fontSize: 16,
-    color: "#666",
-    marginTop: 4,
+    color: colors.textSecondary,
   },
   emptyState: {
     alignItems: "center",
     gap: 8,
   },
-  emptyEmoji: {
-    fontSize: 64,
+  emptyIconCircle: {
+    width: 72,
+    height: 72,
+    borderRadius: 36,
+    backgroundColor: colors.accentLight,
+    alignItems: "center",
+    justifyContent: "center",
     marginBottom: 8,
   },
   emptyTitle: {
     fontSize: 22,
     fontWeight: "600",
-    color: "#333",
+    color: colors.text,
   },
   emptyText: {
     fontSize: 16,
-    color: "#666",
+    color: colors.textSecondary,
     textAlign: "center",
     maxWidth: 280,
   },
   emptyHint: {
     fontSize: 14,
-    color: "#999",
+    color: colors.textMuted,
     marginTop: 16,
   },
 });

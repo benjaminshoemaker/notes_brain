@@ -1,7 +1,12 @@
-import { View, TouchableOpacity, Text, StyleSheet, ActivityIndicator } from "react-native";
+import { useEffect, useRef } from "react";
+import { View, TouchableOpacity, Text, StyleSheet, ActivityIndicator, Animated } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import * as Haptics from "expo-haptics";
 import { MAX_VOICE_SECONDS } from "@notesbrain/shared";
 
 import { useVoiceRecording } from "../hooks/useVoiceRecording";
+import { testIds } from "../lib/testIds";
+import { colors, radii, shadows } from "../lib/theme";
 
 type VoiceRecorderProps = {
   onRecordingComplete: (uri: string) => Promise<void>;
@@ -13,10 +18,32 @@ const MAX_DURATION_MS = MAX_VOICE_SECONDS * 1000;
 export function VoiceRecorder({ onRecordingComplete, isUploading }: VoiceRecorderProps) {
   const { state, startRecording, stopRecording, cancelRecording, formatDuration } =
     useVoiceRecording();
+  const pulseAnim = useRef(new Animated.Value(1)).current;
+
+  useEffect(() => {
+    if (state.isRecording) {
+      const pulse = Animated.loop(
+        Animated.sequence([
+          Animated.timing(pulseAnim, { toValue: 0.3, duration: 600, useNativeDriver: true }),
+          Animated.timing(pulseAnim, { toValue: 1, duration: 600, useNativeDriver: true }),
+        ])
+      );
+      pulse.start();
+      return () => pulse.stop();
+    } else {
+      pulseAnim.setValue(1);
+    }
+  }, [state.isRecording, pulseAnim]);
+
+  async function handleStart() {
+    try { Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium); } catch {}
+    await startRecording();
+  }
 
   async function handleStopAndSave() {
     const uri = await stopRecording();
     if (uri) {
+      try { Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success); } catch {}
       await onRecordingComplete(uri);
     }
   }
@@ -27,9 +54,9 @@ export function VoiceRecorder({ onRecordingComplete, isUploading }: VoiceRecorde
 
   if (state.isRecording) {
     return (
-      <View style={styles.recordingContainer}>
+      <View style={styles.recordingContainer} accessibilityLabel={`Recording in progress, ${formatDuration(state.durationMs)}, ${remainingSeconds} seconds remaining`}>
         <View style={styles.timerContainer}>
-          <View style={styles.recordingIndicator} />
+          <Animated.View style={[styles.recordingIndicator, { opacity: pulseAnim }]} />
           <Text style={styles.timerText}>{formatDuration(state.durationMs)}</Text>
           <Text style={styles.remainingText}>
             {remainingSeconds < 60 ? `${remainingSeconds}s left` : ""}
@@ -42,22 +69,32 @@ export function VoiceRecorder({ onRecordingComplete, isUploading }: VoiceRecorde
 
         <View style={styles.recordingActions}>
           <TouchableOpacity
+            testID={testIds.capture.voiceCancelButton}
+            accessibilityRole="button"
+            accessibilityLabel="Cancel recording"
             style={styles.cancelButton}
             onPress={cancelRecording}
             disabled={isUploading}
           >
+            <Ionicons name="close" size={18} color={colors.textSecondary} />
             <Text style={styles.cancelButtonText}>Cancel</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
+            testID={testIds.capture.voiceStopButton}
+            accessibilityRole="button"
+            accessibilityLabel="Stop recording and save"
             style={[styles.stopButton, isUploading && styles.buttonDisabled]}
             onPress={handleStopAndSave}
             disabled={isUploading}
           >
             {isUploading ? (
-              <ActivityIndicator color="#ffffff" size="small" />
+              <ActivityIndicator color={colors.textInverse} size="small" />
             ) : (
-              <Text style={styles.stopButtonText}>Stop & Save</Text>
+              <>
+                <Ionicons name="stop" size={16} color={colors.textInverse} />
+                <Text style={styles.stopButtonText}>Stop & Save</Text>
+              </>
             )}
           </TouchableOpacity>
         </View>
@@ -70,11 +107,14 @@ export function VoiceRecorder({ onRecordingComplete, isUploading }: VoiceRecorde
   return (
     <View style={styles.container}>
       <TouchableOpacity
+        testID={testIds.capture.voiceStartButton}
+        accessibilityRole="button"
+        accessibilityLabel="Record voice note"
         style={[styles.micButton, isUploading && styles.buttonDisabled]}
-        onPress={startRecording}
+        onPress={handleStart}
         disabled={isUploading}
       >
-        <Text style={styles.micIcon}>🎤</Text>
+        <Ionicons name="mic-outline" size={20} color={colors.textInverse} />
         <Text style={styles.micText}>Record Voice Note</Text>
       </TouchableOpacity>
 
@@ -93,34 +133,31 @@ const styles = StyleSheet.create({
   micButton: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "#0066cc",
+    backgroundColor: colors.accent,
     paddingVertical: 14,
     paddingHorizontal: 24,
-    borderRadius: 30,
+    borderRadius: radii.md,
     gap: 8,
   },
   buttonDisabled: {
     opacity: 0.6,
   },
-  micIcon: {
-    fontSize: 20,
-  },
   micText: {
-    color: "#ffffff",
+    color: colors.textInverse,
     fontSize: 16,
     fontWeight: "600",
   },
   hintText: {
     marginTop: 8,
     fontSize: 12,
-    color: "#666666",
+    color: colors.textMuted,
   },
   recordingContainer: {
     padding: 16,
-    backgroundColor: "#fff5f5",
-    borderRadius: 12,
+    backgroundColor: colors.accentLight,
+    borderRadius: radii.lg,
     borderWidth: 1,
-    borderColor: "#ffcccc",
+    borderColor: colors.accent,
   },
   timerContainer: {
     flexDirection: "row",
@@ -133,28 +170,28 @@ const styles = StyleSheet.create({
     width: 12,
     height: 12,
     borderRadius: 6,
-    backgroundColor: "#ef4444",
+    backgroundColor: colors.error,
   },
   timerText: {
     fontSize: 32,
     fontWeight: "bold",
     fontVariant: ["tabular-nums"],
-    color: "#1a1a1a",
+    color: colors.text,
   },
   remainingText: {
     fontSize: 14,
-    color: "#666666",
+    color: colors.textSecondary,
   },
   progressBar: {
     height: 4,
-    backgroundColor: "#e5e5e5",
+    backgroundColor: colors.border,
     borderRadius: 2,
     overflow: "hidden",
-    marginBottom: 16,
+    marginBottom: 20,
   },
   progressFill: {
     height: "100%",
-    backgroundColor: "#ef4444",
+    backgroundColor: colors.accent,
   },
   recordingActions: {
     flexDirection: "row",
@@ -162,32 +199,38 @@ const styles = StyleSheet.create({
     gap: 12,
   },
   cancelButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
     paddingVertical: 12,
-    paddingHorizontal: 24,
-    borderRadius: 8,
+    paddingHorizontal: 20,
+    borderRadius: radii.md,
     borderWidth: 1,
-    borderColor: "#cccccc",
-    backgroundColor: "#ffffff",
+    borderColor: colors.border,
+    backgroundColor: colors.surface,
   },
   cancelButtonText: {
-    color: "#666666",
+    color: colors.textSecondary,
     fontSize: 16,
     fontWeight: "600",
   },
   stopButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
     paddingVertical: 12,
     paddingHorizontal: 24,
-    borderRadius: 8,
-    backgroundColor: "#ef4444",
+    borderRadius: radii.md,
+    backgroundColor: colors.error,
   },
   stopButtonText: {
-    color: "#ffffff",
+    color: colors.textInverse,
     fontSize: 16,
     fontWeight: "600",
   },
   errorText: {
     marginTop: 12,
-    color: "#ef4444",
+    color: colors.error,
     fontSize: 14,
     textAlign: "center",
   },

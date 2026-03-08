@@ -8,6 +8,10 @@ import {
   Keyboard,
   ActivityIndicator,
 } from "react-native";
+import * as Haptics from "expo-haptics";
+
+import { testIds } from "../lib/testIds";
+import { colors, radii, shadows } from "../lib/theme";
 
 type CaptureInputProps = {
   onSubmit: (content: string) => Promise<void>;
@@ -34,6 +38,7 @@ export function CaptureInput({ onSubmit, isSubmitting, autoFocus = true }: Captu
     if (!trimmedContent || isSubmitting) return;
 
     await onSubmit(trimmedContent);
+    try { Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success); } catch {}
     setContent("");
     Keyboard.dismiss();
   }
@@ -48,11 +53,12 @@ export function CaptureInput({ onSubmit, isSubmitting, autoFocus = true }: Captu
     <View style={styles.container}>
       <TextInput
         ref={inputRef}
+        testID={testIds.capture.textInput}
         style={styles.input}
         value={content}
         onChangeText={setContent}
         placeholder="What's on your mind?"
-        placeholderTextColor="#999999"
+        placeholderTextColor={colors.textMuted}
         multiline
         maxLength={5000}
         editable={!isSubmitting}
@@ -61,14 +67,20 @@ export function CaptureInput({ onSubmit, isSubmitting, autoFocus = true }: Captu
         returnKeyType="send"
       />
       <TouchableOpacity
+        testID={testIds.capture.submitButton}
+        accessibilityRole="button"
+        accessibilityLabel="Save note"
+        accessibilityState={{ disabled: !canSubmit }}
         style={[styles.submitButton, !canSubmit && styles.submitButtonDisabled]}
         onPress={handleSubmit}
         disabled={!canSubmit}
       >
         {isSubmitting ? (
-          <ActivityIndicator color="#ffffff" size="small" />
+          <ActivityIndicator color={colors.textInverse} size="small" />
         ) : (
-          <Text style={styles.submitButtonText}>Save</Text>
+          <Text style={[styles.submitButtonText, !canSubmit && styles.submitButtonTextDisabled]}>
+            Save
+          </Text>
         )}
       </TouchableOpacity>
     </View>
@@ -77,14 +89,10 @@ export function CaptureInput({ onSubmit, isSubmitting, autoFocus = true }: Captu
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#ffffff",
-    borderRadius: 12,
+    backgroundColor: colors.surface,
+    borderRadius: radii.lg,
     padding: 16,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
+    ...shadows.md,
   },
   input: {
     fontSize: 16,
@@ -92,22 +100,25 @@ const styles = StyleSheet.create({
     minHeight: 100,
     maxHeight: 200,
     textAlignVertical: "top",
-    color: "#1a1a1a",
+    color: colors.text,
   },
   submitButton: {
-    backgroundColor: "#0066cc",
-    borderRadius: 8,
+    backgroundColor: colors.accent,
+    borderRadius: radii.md,
     paddingVertical: 12,
     paddingHorizontal: 24,
     alignItems: "center",
     marginTop: 12,
   },
   submitButtonDisabled: {
-    backgroundColor: "#cccccc",
+    backgroundColor: colors.border,
   },
   submitButtonText: {
-    color: "#ffffff",
+    color: colors.textInverse,
     fontSize: 16,
     fontWeight: "600",
+  },
+  submitButtonTextDisabled: {
+    color: colors.textMuted,
   },
 });

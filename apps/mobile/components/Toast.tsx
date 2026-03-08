@@ -1,5 +1,9 @@
 import { useEffect, useRef } from "react";
-import { Animated, Text, StyleSheet, View } from "react-native";
+import { Animated, Text, StyleSheet, View, Pressable } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+
+import { colors, radii } from "../lib/theme";
 
 type ToastProps = {
   message: string;
@@ -7,11 +11,42 @@ type ToastProps = {
   visible: boolean;
   onHide: () => void;
   duration?: number;
+  testID?: string;
 };
 
-export function Toast({ message, type = "success", visible, onHide, duration = 2000 }: ToastProps) {
+const ERROR_DURATION = 5000;
+
+export function Toast({
+  message,
+  type = "success",
+  visible,
+  onHide,
+  duration = 2000,
+  testID,
+}: ToastProps) {
+  const insets = useSafeAreaInsets();
   const opacity = useRef(new Animated.Value(0)).current;
   const translateY = useRef(new Animated.Value(-20)).current;
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const effectiveDuration = type === "error" ? ERROR_DURATION : duration;
+
+  function dismiss() {
+    if (timerRef.current) clearTimeout(timerRef.current);
+    Animated.parallel([
+      Animated.timing(opacity, {
+        toValue: 0,
+        duration: 200,
+        useNativeDriver: true,
+      }),
+      Animated.timing(translateY, {
+        toValue: -20,
+        duration: 200,
+        useNativeDriver: true,
+      }),
+    ]).start(() => {
+      onHide();
+    });
+  }
 
   useEffect(() => {
     if (visible) {
@@ -28,52 +63,46 @@ export function Toast({ message, type = "success", visible, onHide, duration = 2
         }),
       ]).start();
 
-      const timer = setTimeout(() => {
-        Animated.parallel([
-          Animated.timing(opacity, {
-            toValue: 0,
-            duration: 200,
-            useNativeDriver: true,
-          }),
-          Animated.timing(translateY, {
-            toValue: -20,
-            duration: 200,
-            useNativeDriver: true,
-          }),
-        ]).start(() => {
-          onHide();
-        });
-      }, duration);
+      timerRef.current = setTimeout(dismiss, effectiveDuration);
 
-      return () => clearTimeout(timer);
+      return () => {
+        if (timerRef.current) clearTimeout(timerRef.current);
+      };
     }
-  }, [visible, duration, onHide, opacity, translateY]);
+  }, [visible, effectiveDuration, onHide, opacity, translateY]);
 
   if (!visible) return null;
 
   return (
-    <Animated.View
-      style={[
-        styles.container,
-        type === "success" ? styles.success : styles.error,
-        { opacity, transform: [{ translateY }] },
-      ]}
-    >
-      <View style={styles.content}>
-        <Text style={styles.icon}>{type === "success" ? "✓" : "✕"}</Text>
-        <Text style={styles.message}>{message}</Text>
-      </View>
-    </Animated.View>
+    <Pressable onPress={dismiss} accessibilityRole="alert">
+      <Animated.View
+        testID={testID}
+        style={[
+          styles.container,
+          type === "success" ? styles.success : styles.error,
+          { top: insets.top + 8, opacity, transform: [{ translateY }] },
+        ]}
+      >
+        <View style={styles.content}>
+          <Ionicons
+            name={type === "success" ? "checkmark-circle" : "close-circle"}
+            size={18}
+            color={colors.textInverse}
+            style={styles.icon}
+          />
+          <Text style={styles.message}>{message}</Text>
+        </View>
+      </Animated.View>
+    </Pressable>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     position: "absolute",
-    top: 60,
     left: 20,
     right: 20,
-    borderRadius: 8,
+    borderRadius: radii.md,
     padding: 14,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
@@ -83,23 +112,20 @@ const styles = StyleSheet.create({
     zIndex: 1000,
   },
   success: {
-    backgroundColor: "#10b981",
+    backgroundColor: colors.success,
   },
   error: {
-    backgroundColor: "#ef4444",
+    backgroundColor: colors.error,
   },
   content: {
     flexDirection: "row",
     alignItems: "center",
   },
   icon: {
-    color: "#ffffff",
-    fontSize: 16,
-    fontWeight: "bold",
     marginRight: 8,
   },
   message: {
-    color: "#ffffff",
+    color: colors.textInverse,
     fontSize: 14,
     fontWeight: "500",
     flex: 1,

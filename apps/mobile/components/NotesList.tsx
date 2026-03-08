@@ -1,8 +1,11 @@
 import { FlatList, View, Text, StyleSheet, RefreshControl } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 import type { NoteWithAttachments, Category } from "@notesbrain/shared";
 
 import { LoadingSpinner } from "./LoadingSpinner";
 import { MobileNoteCard } from "./MobileNoteCard";
+import { testIds } from "../lib/testIds";
+import { colors } from "../lib/theme";
 
 type NotesListProps = {
   notes: NoteWithAttachments[];
@@ -32,8 +35,10 @@ export function NotesList({
 
   if (filteredNotes.length === 0) {
     return (
-      <View style={styles.centerContainer}>
-        <Text style={styles.emptyIcon}>📝</Text>
+      <View testID={testIds.notes.emptyState} accessibilityLabel="No notes found" style={styles.centerContainer}>
+        <View style={styles.emptyIconCircle}>
+          <Ionicons name="document-text-outline" size={36} color={colors.accent} />
+        </View>
         <Text style={styles.emptyTitle}>
           {selectedCategory === "all" ? "No notes yet" : `No ${selectedCategory} notes`}
         </Text>
@@ -48,12 +53,13 @@ export function NotesList({
 
   return (
     <FlatList
+      testID={testIds.notes.list}
       data={filteredNotes}
       keyExtractor={(item) => item.id}
       renderItem={({ item }) => <MobileNoteCard note={item} />}
       contentContainerStyle={styles.listContent}
       refreshControl={
-        <RefreshControl refreshing={isRefetching} onRefresh={onRefresh} tintColor="#0066cc" />
+        <RefreshControl refreshing={isRefetching} onRefresh={onRefresh} tintColor={colors.accent} />
       }
       showsVerticalScrollIndicator={false}
     />
@@ -66,21 +72,27 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     padding: 40,
+    gap: 8,
   },
-  emptyIcon: {
-    fontSize: 48,
-    marginBottom: 16,
+  emptyIconCircle: {
+    width: 72,
+    height: 72,
+    borderRadius: 36,
+    backgroundColor: colors.accentLight,
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 8,
   },
   emptyTitle: {
     fontSize: 18,
     fontWeight: "600",
-    color: "#1a1a1a",
-    marginBottom: 8,
+    color: colors.text,
+    marginTop: 8,
     textAlign: "center",
   },
   emptySubtitle: {
     fontSize: 14,
-    color: "#666666",
+    color: colors.textSecondary,
     textAlign: "center",
     lineHeight: 20,
   },

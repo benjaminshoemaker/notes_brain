@@ -15,6 +15,15 @@ import { VoiceRecorder } from "../../components/VoiceRecorder";
 import { Toast } from "../../components/Toast";
 import { useCreateNote } from "../../hooks/useCreateNote";
 import { useUploadVoiceNote } from "../../hooks/useUploadVoiceNote";
+import { testIds } from "../../lib/testIds";
+import { colors } from "../../lib/theme";
+
+function getGreeting(): string {
+  const hour = new Date().getHours();
+  if (hour < 12) return "Good morning";
+  if (hour < 17) return "Good afternoon";
+  return "Good evening";
+}
 
 export default function CaptureScreen() {
   const createNote = useCreateNote();
@@ -77,9 +86,10 @@ export default function CaptureScreen() {
 
   return (
     <KeyboardAvoidingView
+      testID={testIds.capture.screen}
       style={styles.container}
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-      keyboardVerticalOffset={Platform.OS === "ios" ? 90 : 0}
+      behavior="padding"
+      keyboardVerticalOffset={Platform.OS === "ios" ? 90 : 24}
     >
       <ScrollView
         style={styles.scrollView}
@@ -87,6 +97,7 @@ export default function CaptureScreen() {
         keyboardShouldPersistTaps="handled"
       >
         <View style={styles.section}>
+          <Text style={styles.greeting}>{getGreeting()}</Text>
           <Text style={styles.sectionTitle}>Text Note</Text>
           <CaptureInput
             onSubmit={handleTextSubmit}
@@ -112,6 +123,7 @@ export default function CaptureScreen() {
 
       {toast && (
         <Toast
+          testID={testIds.capture.toast}
           message={toast.message}
           type={toast.type}
           visible={!!toast}
@@ -125,7 +137,7 @@ export default function CaptureScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f5f5f5",
+    backgroundColor: colors.background,
   },
   scrollView: {
     flex: 1,
@@ -137,10 +149,15 @@ const styles = StyleSheet.create({
   section: {
     marginBottom: 8,
   },
+  greeting: {
+    fontSize: 15,
+    color: colors.textSecondary,
+    marginBottom: 8,
+  },
   sectionTitle: {
     fontSize: 14,
     fontWeight: "600",
-    color: "#666666",
+    color: colors.textMuted,
     marginBottom: 8,
     textTransform: "uppercase",
     letterSpacing: 0.5,
@@ -152,12 +169,12 @@ const styles = StyleSheet.create({
   },
   dividerLine: {
     flex: 1,
-    height: 1,
-    backgroundColor: "#dddddd",
+    height: StyleSheet.hairlineWidth,
+    backgroundColor: colors.border,
   },
   dividerText: {
     marginHorizontal: 16,
-    color: "#999999",
+    color: colors.textMuted,
     fontSize: 14,
   },
 });

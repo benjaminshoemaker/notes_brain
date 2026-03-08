@@ -1,12 +1,18 @@
 import { useEffect, useMemo, useState } from "react";
-import { Alert, View, Text, StyleSheet } from "react-native";
+import { Alert, View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { useRouter } from "expo-router";
+import { Ionicons } from "@expo/vector-icons";
 
 import { LoadingSpinner } from "../../components/LoadingSpinner";
 import { TimezoneSelect } from "../../components/TimezoneSelect";
 import { useUserSettings } from "../../hooks/useUserSettings";
 import { getDeviceTimezone, getTimezoneOptions } from "../../lib/timezones";
+import { signOutUser } from "../../lib/authApi";
+import { testIds } from "../../lib/testIds";
+import { colors, radii, shadows } from "../../lib/theme";
 
 export default function SettingsScreen() {
+  const router = useRouter();
   const { data, isLoading, error, updateTimezone, refetch, isUpdating } = useUserSettings();
   const timezones = useMemo(() => getTimezoneOptions(), []);
   const currentTimezone = data?.timezone ?? getDeviceTimezone();
@@ -40,18 +46,37 @@ export default function SettingsScreen() {
     await updateTimezone(nextTimezone);
   }
 
+  function handleLogout() {
+    Alert.alert("Sign Out", "Are you sure you want to sign out?", [
+      { text: "Cancel", style: "cancel" },
+      {
+        text: "Sign Out",
+        style: "destructive",
+        onPress: async () => {
+          await signOutUser();
+          router.replace("/(auth)/login");
+        },
+      },
+    ]);
+  }
+
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Settings</Text>
-
       <View style={styles.section}>
-        <Text style={styles.label}>Timezone</Text>
-        <Text style={styles.helperText}>
-          Daily summaries are delivered at 8:00 AM in this timezone.
-        </Text>
+        <View style={styles.sectionHeader}>
+          <View style={styles.iconCircle}>
+            <Ionicons name="globe-outline" size={18} color={colors.accent} />
+          </View>
+          <View>
+            <Text style={styles.label}>Timezone</Text>
+            <Text style={styles.helperText}>
+              Daily summaries are delivered at 8:00 AM in this timezone.
+            </Text>
+          </View>
+        </View>
 
         {isLoading ? (
-          <LoadingSpinner label="Loading settings…" />
+          <LoadingSpinner label="Loading settings..." />
         ) : error ? (
           <Text style={styles.errorText}>Failed to load settings.</Text>
         ) : (
@@ -63,6 +88,19 @@ export default function SettingsScreen() {
           />
         )}
       </View>
+
+      <TouchableOpacity
+        testID={testIds.app.signOutButton}
+        accessibilityRole="button"
+        accessibilityLabel="Sign out"
+        style={styles.signOutSection}
+        onPress={handleLogout}
+      >
+        <View style={[styles.iconCircle, { backgroundColor: colors.errorLight }]}>
+          <Ionicons name="log-out-outline" size={18} color={colors.error} />
+        </View>
+        <Text style={styles.signOutText}>Sign Out</Text>
+      </TouchableOpacity>
     </View>
   );
 }
@@ -70,38 +108,56 @@ export default function SettingsScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f8fafc",
-    padding: 20,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: "700",
-    marginBottom: 20,
-    color: "#111827",
+    backgroundColor: colors.background,
+    padding: 16,
+    gap: 16,
   },
   section: {
-    backgroundColor: "#ffffff",
-    borderRadius: 12,
+    backgroundColor: colors.surface,
+    borderRadius: radii.lg,
     padding: 16,
-    shadowColor: "#000",
-    shadowOpacity: 0.05,
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 6,
-    elevation: 2,
+    ...shadows.sm,
+  },
+  sectionHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 12,
+    marginBottom: 12,
+  },
+  iconCircle: {
+    width: 36,
+    height: 36,
+    borderRadius: radii.lg,
+    backgroundColor: colors.accentLight,
+    alignItems: "center",
+    justifyContent: "center",
   },
   label: {
     fontSize: 16,
     fontWeight: "600",
-    color: "#111827",
-    marginBottom: 6,
+    color: colors.text,
   },
   helperText: {
     fontSize: 13,
-    color: "#6b7280",
-    marginBottom: 12,
+    color: colors.textSecondary,
+    marginTop: 2,
   },
   errorText: {
     fontSize: 14,
-    color: "#b91c1c",
+    color: colors.error,
+  },
+  signOutSection: {
+    backgroundColor: colors.surface,
+    borderRadius: radii.lg,
+    padding: 16,
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 12,
+    ...shadows.sm,
+  },
+  signOutText: {
+    fontSize: 15,
+    fontWeight: "500",
+    color: colors.error,
   },
 });

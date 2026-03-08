@@ -1,6 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { View, Text, StyleSheet, Animated } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 import type { NoteWithAttachments } from "@notesbrain/shared";
+
+import { testIds } from "../lib/testIds";
+import { colors, radii, shadows, getCategoryTint } from "../lib/theme";
 
 type MobileNoteCardProps = {
   note: NoteWithAttachments;
@@ -30,18 +34,6 @@ function formatTimestamp(dateString: string): string {
   return date.toLocaleDateString();
 }
 
-function getCategoryColor(category: string): string {
-  const colors: Record<string, string> = {
-    task: "#3b82f6",
-    idea: "#8b5cf6",
-    journal: "#10b981",
-    reference: "#f59e0b",
-    uncategorized: "#6b7280",
-    pending: "#9ca3af",
-  };
-  return colors[category] || colors.uncategorized;
-}
-
 export function MobileNoteCard({ note }: MobileNoteCardProps) {
   const preview = formatPreview(note.content);
   const attachmentCount = note.attachments?.length ?? 0;
@@ -62,7 +54,7 @@ export function MobileNoteCard({ note }: MobileNoteCardProps) {
           duration: 200,
           useNativeDriver: false,
         }),
-        Animated.delay(1000),
+        Animated.delay(600),
         Animated.timing(highlightAnim, {
           toValue: 0,
           duration: 300,
@@ -77,23 +69,38 @@ export function MobileNoteCard({ note }: MobileNoteCardProps) {
   const isPending = note.classification_status === "pending";
   const isFailed = note.classification_status === "failed";
   const displayCategory = isPending ? "classifying..." : note.category;
-  const categoryColor = getCategoryColor(isPending ? "pending" : note.category);
+  const tint = getCategoryTint(isPending ? "pending" : note.category);
 
   const backgroundColor = highlightAnim.interpolate({
     inputRange: [0, 1],
-    outputRange: ["#ffffff", "#fffbeb"],
+    outputRange: [colors.surface, colors.accentLight],
   });
 
+  const accessibilityDesc = [
+    displayCategory,
+    note.type === "voice" ? "voice note" : note.type === "file" ? "file attachment" : "",
+    formatTimestamp(note.created_at),
+    preview || (note.type === "voice" ? "Voice note" : "No content"),
+  ].filter(Boolean).join(", ");
+
   return (
-    <Animated.View style={[styles.container, { backgroundColor }]}>
+    <Animated.View
+      testID={testIds.notes.card(note.id)}
+      accessibilityLabel={accessibilityDesc}
+      style={[styles.container, { backgroundColor }]}
+    >
       <View style={styles.header}>
-        <View style={[styles.categoryBadge, { backgroundColor: categoryColor }]}>
-          <Text style={styles.categoryText}>{displayCategory}</Text>
+        <View style={[styles.categoryBadge, { backgroundColor: tint.bg }]}>
+          <Text style={[styles.categoryText, { color: tint.text }]}>{displayCategory}</Text>
         </View>
 
         <View style={styles.headerRight}>
-          {note.type === "voice" && <Text style={styles.typeIcon}>🎤</Text>}
-          {note.type === "file" && <Text style={styles.typeIcon}>📎</Text>}
+          {note.type === "voice" && (
+            <Ionicons name="mic" size={14} color={colors.textMuted} accessibilityLabel="Voice note" />
+          )}
+          {note.type === "file" && (
+            <Ionicons name="attach" size={14} color={colors.textMuted} accessibilityLabel="File attachment" />
+          )}
           {attachmentCount > 0 && <Text style={styles.attachmentCount}>{attachmentCount}</Text>}
           <Text style={styles.timestamp}>{formatTimestamp(note.created_at)}</Text>
         </View>
@@ -124,32 +131,27 @@ export function MobileNoteCard({ note }: MobileNoteCardProps) {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#ffffff",
-    borderRadius: 12,
+    backgroundColor: colors.surface,
+    borderRadius: radii.lg,
     padding: 16,
     marginHorizontal: 16,
     marginBottom: 12,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.05,
-    shadowRadius: 3,
-    elevation: 2,
+    ...shadows.sm,
   },
   header: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginBottom: 10,
+    marginBottom: 12,
   },
   categoryBadge: {
-    paddingVertical: 4,
+    paddingVertical: 3,
     paddingHorizontal: 10,
     borderRadius: 12,
   },
   categoryText: {
     fontSize: 12,
     fontWeight: "600",
-    color: "#ffffff",
     textTransform: "capitalize",
   },
   headerRight: {
@@ -157,40 +159,37 @@ const styles = StyleSheet.create({
     alignItems: "center",
     gap: 8,
   },
-  typeIcon: {
-    fontSize: 14,
-  },
   attachmentCount: {
     fontSize: 12,
-    color: "#666666",
-    backgroundColor: "#f0f0f0",
+    color: colors.textSecondary,
+    backgroundColor: colors.surfaceRaised,
     paddingHorizontal: 6,
     paddingVertical: 2,
     borderRadius: 10,
   },
   timestamp: {
     fontSize: 12,
-    color: "#999999",
+    color: colors.textMuted,
   },
   content: {
     fontSize: 15,
     lineHeight: 22,
-    color: "#1a1a1a",
+    color: colors.text,
   },
   emptyContent: {
     fontSize: 14,
     fontStyle: "italic",
-    color: "#999999",
+    color: colors.textMuted,
   },
   pendingIndicator: {
     marginTop: 10,
     paddingTop: 10,
-    borderTopWidth: 1,
-    borderTopColor: "#f0f0f0",
+    borderTopWidth: StyleSheet.hairlineWidth,
+    borderTopColor: colors.border,
   },
   pendingText: {
     fontSize: 12,
-    color: "#999999",
+    color: colors.textMuted,
     fontStyle: "italic",
   },
 });

@@ -1,8 +1,7 @@
 import { useEffect } from "react";
-import { TouchableOpacity, Text, Alert } from "react-native";
 import { Tabs, useRouter } from "expo-router";
+import { Ionicons } from "@expo/vector-icons";
 
-import { signOutUser } from "../../lib/authApi";
 import { useAuth } from "../../hooks/useAuth";
 import { usePushToken } from "../../hooks/usePushToken";
 import {
@@ -10,6 +9,8 @@ import {
   getLastNotificationResponse,
   type NotificationData,
 } from "../../services/notifications";
+import { testIds } from "../../lib/testIds";
+import { colors } from "../../lib/theme";
 
 export default function AppLayout() {
   const router = useRouter();
@@ -49,30 +50,15 @@ export default function AppLayout() {
     }
   }
 
-  async function handleLogout() {
-    Alert.alert("Sign Out", "Are you sure you want to sign out?", [
-      { text: "Cancel", style: "cancel" },
-      {
-        text: "Sign Out",
-        style: "destructive",
-        onPress: async () => {
-          await signOutUser();
-          router.replace("/(auth)/login");
-        },
-      },
-    ]);
-  }
-
   return (
     <Tabs
       screenOptions={{
         headerShown: true,
-        tabBarActiveTintColor: "#0066cc",
-        headerRight: () => (
-          <TouchableOpacity onPress={handleLogout} style={{ marginRight: 16 }}>
-            <Text style={{ color: "#0066cc", fontSize: 16 }}>Sign Out</Text>
-          </TouchableOpacity>
-        ),
+        headerStyle: { backgroundColor: colors.background },
+        headerTintColor: colors.text,
+        tabBarActiveTintColor: colors.accent,
+        tabBarInactiveTintColor: colors.textMuted,
+        tabBarStyle: { backgroundColor: colors.surface, borderTopColor: colors.border },
       }}
     >
       <Tabs.Screen
@@ -80,6 +66,10 @@ export default function AppLayout() {
         options={{
           title: "Capture",
           tabBarLabel: "Capture",
+          tabBarButtonTestID: testIds.app.tabCapture,
+          tabBarIcon: ({ color, size, focused }) => (
+            <Ionicons name={focused ? "add-circle" : "add-circle-outline"} size={size} color={color} />
+          ),
         }}
       />
       <Tabs.Screen
@@ -87,6 +77,10 @@ export default function AppLayout() {
         options={{
           title: "Notes",
           tabBarLabel: "Notes",
+          tabBarButtonTestID: testIds.app.tabNotes,
+          tabBarIcon: ({ color, size, focused }) => (
+            <Ionicons name={focused ? "documents" : "documents-outline"} size={size} color={color} />
+          ),
         }}
       />
       <Tabs.Screen
@@ -94,6 +88,10 @@ export default function AppLayout() {
         options={{
           title: "Summary",
           tabBarLabel: "Summary",
+          tabBarButtonTestID: testIds.app.tabSummary,
+          tabBarIcon: ({ color, size, focused }) => (
+            <Ionicons name={focused ? "sparkles" : "sparkles-outline"} size={size} color={color} />
+          ),
         }}
       />
       <Tabs.Screen
@@ -101,6 +99,16 @@ export default function AppLayout() {
         options={{
           title: "Settings",
           tabBarLabel: "Settings",
+          tabBarButtonTestID: testIds.app.tabSettings,
+          tabBarIcon: ({ color, size, focused }) => (
+            <Ionicons name={focused ? "settings" : "settings-outline"} size={size} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="mocks"
+        options={{
+          href: null, // Hide from tab bar
         }}
       />
     </Tabs>
