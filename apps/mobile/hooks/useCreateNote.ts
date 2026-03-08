@@ -101,13 +101,12 @@ export function useCreateNote() {
         };
 
         const current = old ?? [];
-        if (context?.optimisticId) {
-          return current.map((note) =>
-            note.id === context.optimisticId ? noteWithAttachments : note
-          );
-        }
+        const withoutOptimistic = context?.optimisticId
+          ? current.filter((note) => note.id !== context.optimisticId)
+          : current;
 
-        return upsertNoteWithAttachments(current, noteWithAttachments, "start");
+        // Realtime INSERT may have already added this note. Upsert prevents duplicates.
+        return upsertNoteWithAttachments(withoutOptimistic, noteWithAttachments, "start");
       });
     },
     onSettled: async () => {
