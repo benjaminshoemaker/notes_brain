@@ -1,5 +1,6 @@
-import { View, StyleSheet } from "react-native";
+import { Platform, StyleSheet, View } from "react-native";
 import { Picker } from "@react-native-picker/picker";
+import { colors, radii } from "../lib/theme";
 
 type TimezoneSelectProps = {
   value: string;
@@ -17,6 +18,7 @@ export function TimezoneSelect({ value, timezones, onChange, disabled, testID }:
         enabled={!disabled}
         selectedValue={value}
         onValueChange={(itemValue) => onChange(String(itemValue))}
+        dropdownIconColor={colors.textSecondary}
         style={styles.picker}
       >
         {timezones.map((timezone) => (
@@ -30,13 +32,15 @@ export function TimezoneSelect({ value, timezones, onChange, disabled, testID }:
 const styles = StyleSheet.create({
   container: {
     borderWidth: 1,
-    borderColor: "#d1d5db",
-    borderRadius: 10,
-    overflow: "hidden",
-    backgroundColor: "#ffffff",
+    borderColor: colors.border,
+    borderRadius: radii.lg,
+    backgroundColor: colors.surface,
+    minHeight: Platform.OS === "android" ? 52 : 48,
+    justifyContent: "center",
   },
   picker: {
     width: "100%",
-    height: 48,
+    height: Platform.OS === "android" ? 52 : 48,
+    color: colors.text,
   },
 });

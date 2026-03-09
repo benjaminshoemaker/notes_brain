@@ -26,17 +26,22 @@ function getGreeting(): string {
 }
 
 export default function CaptureScreen() {
+  const isE2E = process.env.EXPO_PUBLIC_E2E === "1";
   const createNote = useCreateNote();
   const uploadVoiceNote = useUploadVoiceNote();
   const [toast, setToast] = useState<{ message: string; type: "success" | "error" } | null>(null);
-  const [shouldFocus, setShouldFocus] = useState(true);
+  const [shouldFocus, setShouldFocus] = useState(!isE2E);
 
   // Re-focus input when screen comes into focus
   useFocusEffect(
     useCallback(() => {
+      if (isE2E) {
+        setShouldFocus(false);
+        return undefined;
+      }
       setShouldFocus(true);
       return () => setShouldFocus(false);
-    }, [])
+    }, [isE2E])
   );
 
   async function handleTextSubmit(content: string) {

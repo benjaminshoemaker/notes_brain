@@ -12,6 +12,7 @@ This directory contains the phase-1 E2E foundation:
 Current scope intentionally focuses on stable high-value coverage:
 
 - Auth (email/password + magic-link request)
+- Password-reset deep-link allowlist (`echo://auth/callback`)
 - Text capture and notes viewing behavior
 - Web search and category filter behavior
 - Settings timezone persistence
@@ -29,7 +30,7 @@ Set these before running any E2E command:
 Optional:
 
 - `E2E_TEST_EMAIL` (default: `notesbrain-e2e@example.com`)
-- `E2E_TEST_PASSWORD` (default: `NotesBrain-E2E-Password-123!`)
+- `E2E_TEST_PASSWORD` (default: `NotesBrainE2EPassword123`)
 - `E2E_TEST_TIMEZONE` (default: `America/Los_Angeles`)
 
 The Playwright web server receives:

@@ -1,0 +1,898 @@
+17:32:26.570 detox[59584] [90mB[39m node_modules/.bin/detox test --config-path ./tests/e2e/mobile/detox.config.cjs --configuration android.emu.release tests/e2e/mobile/specs/auth-and-tabs.e2e.js --record-logs failing --take-screenshots failing
+  data: {
+    "id": "c44f60bb-a000-4ce7-5099-e0072576aa38",
+    "detoxConfig": {
+      "configurationName": "android.emu.release",
+      "apps": {
+        "default": {
+          "type": "android.apk",
+          "binaryPath": "apps/mobile/android/app/build/outputs/apk/release/app-release.apk",
+          "testBinaryPath": "apps/mobile/android/app/build/outputs/apk/androidTest/release/app-release-androidTest.apk",
+          "build": "cd apps/mobile/android && ./gradlew --no-daemon -Dorg.gradle.jvmargs='-Xmx4096m -XX:MaxMetaspaceSize=1024m' :app:createBundleReleaseJsAndAssets --rerun-tasks -PreactNativeArchitectures=arm64-v8a,x86_64 && ./gradlew --no-daemon -Dorg.gradle.jvmargs='-Xmx4096m -XX:MaxMetaspaceSize=1024m' assembleRelease assembleAndroidTest -DtestBuildType=release -x lint -x test -PreactNativeArchitectures=arm64-v8a,x86_64"
+        }
+      },
+      "artifacts": {
+        "rootDir": "artifacts/android.emu.release.2026-03-09 00-32-26Z",
+        "plugins": {
+          "log": {
+            "enabled": true,
+            "keepOnlyFailedTestsArtifacts": true
+          },
+          "screenshot": {
+            "enabled": true,
+            "shouldTakeAutomaticSnapshots": true,
+            "keepOnlyFailedTestsArtifacts": true
+          },
+          "video": {
+            "enabled": false,
+            "keepOnlyFailedTestsArtifacts": false
+          },
+          "instruments": {
+            "enabled": false,
+            "keepOnlyFailedTestsArtifacts": false
+          },
+          "uiHierarchy": {
+            "enabled": false,
+            "keepOnlyFailedTestsArtifacts": false
+          }
+        }
+      },
+      "behavior": {
+        "init": {
+          "keepLockFile": false,
+          "reinstallApp": true,
+          "exposeGlobals": true
+        },
+        "cleanup": {
+          "shutdownDevice": false
+        },
+        "launchApp": "auto"
+      },
+      "cli": {
+        "recordLogs": "failing",
+        "takeScreenshots": "failing",
+        "configPath": "./tests/e2e/mobile/detox.config.cjs",
+        "configuration": "android.emu.release",
+        "start": true
+      },
+      "commands": [
+        {
+          "appName": "default",
+          "build": "cd apps/mobile/android && ./gradlew --no-daemon -Dorg.gradle.jvmargs='-Xmx4096m -XX:MaxMetaspaceSize=1024m' :app:createBundleReleaseJsAndAssets --rerun-tasks -PreactNativeArchitectures=arm64-v8a,x86_64 && ./gradlew --no-daemon -Dorg.gradle.jvmargs='-Xmx4096m -XX:MaxMetaspaceSize=1024m' assembleRelease assembleAndroidTest -DtestBuildType=release -x lint -x test -PreactNativeArchitectures=arm64-v8a,x86_64"
+        }
+      ],
+      "device": {
+        "type": "android.emulator",
+        "device": {
+          "avdName": "Pixel_9"
+        }
+      },
+      "logger": {
+        "level": "info",
+        "overrideConsole": true,
+        "options": {
+          "showLoggerName": true,
+          "showPid": true,
+          "showLevel": false,
+          "showMetadata": false,
+          "basepath": "/Users/coding/Projects/notes_brain/node_modules/detox/src",
+          "prefixers": {},
+          "stringifiers": {}
+        }
+      },
+      "testRunner": {
+        "retries": 0,
+        "forwardEnv": false,
+        "detached": false,
+        "bail": false,
+        "noRetryArgs": [
+          "shard"
+        ],
+        "jest": {
+          "setupTimeout": 180000,
+          "teardownTimeout": 30000,
+          "retryAfterCircusRetries": false,
+          "reportWorkerAssign": true
+        },
+        "args": {
+          "$0": "jest",
+          "_": [
+            "tests/e2e/mobile/specs/auth-and-tabs.e2e.js"
+          ],
+          "config": "tests/e2e/mobile/jest.config.cjs",
+          "--": []
+        }
+      },
+      "session": {
+        "autoStart": true,
+        "debugSynchronization": 10000
+      }
+    },
+    "detoxIPCServer": "primary-59584",
+    "testResults": [],
+    "testSessionIndex": 0,
+    "workersCount": 0
+  }
+17:32:26.575 detox[59584] [90mi[39m Server path not specified, so defaulting to ipc.config.socketRoot + ipc.config.appspace + ipc.config.id /tmp/detox.primary-59584
+17:32:26.575 detox[59584] [90mi[39m starting server on  /tmp/detox.primary-59584 
+17:32:26.575 detox[59584] [90mi[39m starting TLS server false
+17:32:26.575 detox[59584] [90mi[39m starting server as Unix || Windows Socket
+17:32:26.577 detox[59584] [90mi[39m Detox server listening on localhost:51177...
+17:32:26.580 detox[59584] [90mi[39m Serialized the session state at: /private/var/folders/4z/mqqhpdps32j1l_chr_9wt8rw0000gp/T/c44f60bb-a000-4ce7-5099-e0072576aa38.detox.json
+17:32:26.581 detox[59584] [90mB[39m DETOX_AVD_NAME="Pixel_9" jest --config tests/e2e/mobile/jest.config.cjs tests/e2e/mobile/specs/auth-and-tabs.e2e.js
+17:32:26.583 detox[59584] [90mi[39m (node:59584) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+17:32:27.127 detox[59657] [90mi[39m Service path not specified, so defaulting to ipc.config.socketRoot + ipc.config.appspace + id 
+17:32:27.128 detox[59657] [90mi[39m requested connection to  primary-59584 /tmp/detox.primary-59584
+17:32:27.128 detox[59657] [90mi[39m Connecting client on Unix Socket : /tmp/detox.primary-59584
+17:32:27.129 detox[59584] [90mi[39m ## socket connection to server detected ##
+17:32:27.129 detox[59584] [90mi[39m received event of :  registerContext { id: 'secondary-59657' }
+17:32:27.129 detox[59657] [90mi[39m retrying reset
+17:32:27.129 detox[59657] [90mi[39m dispatching event to  primary-59584 /tmp/detox.primary-59584  :  registerContext , { id: 'secondary-59657' }
+17:32:27.130 detox[59584] [90mi[39m dispatching event to socket  :  registerContextDone {
+  testResults: [],
+  testSessionIndex: 0,
+  unsafe_earlyTeardown: undefined
+}
+17:32:27.130 detox[59657] [90mi[39m ## received events ##
+17:32:27.130 detox[59657] [90mi[39m detected event registerContextDone { testResults: [], testSessionIndex: 0 }
+17:32:27.204 detox[59657] [90mB[39m tests/e2e/mobile/specs/auth-and-tabs.e2e.js
+17:32:27.218 detox[59657] [90mB[39m set up environment
+17:32:27.219 detox[59584] [90mi[39m received event of :  registerWorker { workerId: 'w1' }
+17:32:27.219 detox[59584] [90mi[39m dispatching event to socket  :  registerWorkerDone { workersCount: 1 }
+17:32:27.219 detox[59584] [90mi[39m broadcasting event to all known sockets listening to  /tmp/detox.primary-59584  :   sessionStateUpdate { workersCount: 1 }
+17:32:27.219 detox[59657] [90mi[39m dispatching event to  primary-59584 /tmp/detox.primary-59584  :  registerWorker , { workerId: 'w1' }
+17:32:27.219 detox[59657] [90mi[39m ## received events ##
+17:32:27.219 detox[59657] [90mi[39m detected event registerWorkerDone { workersCount: 1 }
+17:32:27.350 detox[59657] [90mi[39m ## received events ##
+17:32:27.351 detox[59657] [90mi[39m detected event sessionStateUpdate { workersCount: 1 }
+17:32:27.353 detox[59584] [90mB[39m connection :51177<->:51179
+17:32:27.354 detox[59657] [90mi[39m opened web socket to: ws://localhost:51177
+17:32:27.355 detox[59657] [90mi[39m send message
+  data: {"type":"login","params":{"sessionId":"71c36a71-24f1-d3ed-0553-90eb54e31323","role":"tester"},"messageId":0}
+17:32:27.356 detox[59584] [90mi[39m get
+  data: {"type":"login","params":{"sessionId":"71c36a71-24f1-d3ed-0553-90eb54e31323","role":"tester"},"messageId":0}
+17:32:27.356 detox[59584] [90mi[39m created session 71c36a71-24f1-d3ed-0553-90eb54e31323
+17:32:27.356 detox[59584] [90mi[39m send
+  data: {
+    "type": "loginSuccess",
+    "params": {
+      "testerConnected": true,
+      "appConnected": false
+    },
+    "messageId": 0
+  }
+17:32:27.356 detox[59584] [90mi[39m tester joined session 71c36a71-24f1-d3ed-0553-90eb54e31323
+17:32:27.356 detox[59657] [90mi[39m get message
+  data: {"type":"loginSuccess","params":{"testerConnected":true,"appConnected":false},"messageId":0}
+   
+17:32:27.379 detox[59584] [90mi[39m received event of :  allocateDevice {
+  deviceConfig: { type: 'android.emulator', device: { avdName: 'Pixel_9' } }
+}
+17:32:27.379 detox[59657] [90mi[39m dispatching event to  primary-59584 /tmp/detox.primary-59584  :  allocateDevice , {
+  deviceConfig: { type: 'android.emulator', device: { avdName: 'Pixel_9' } }
+}
+17:32:27.393 detox[59584] [90mB[39m init
+  args: ()
+17:32:27.394 detox[59584] [90mE[39m init
+17:32:27.395 detox[59584] [90mB[39m allocate
+  data: {
+    "type": "android.emulator",
+    "device": {
+      "avdName": "Pixel_9"
+    }
+  }
+17:32:27.543 detox[59584] [90mi[39m Detected emulator binary version { major: 36, minor: 3, patch: 10, toString: [Function: toString] }
+17:32:27.544 detox[59584] [90mi[39m "/Users/coding/Library/Android/sdk/platform-tools/adb"  devices
+17:32:27.559 detox[59584] [90mi[39m List of devices attached
+emulator-18696	device
+emulator-5554	device
+
+
+17:32:27.559 detox[59584] [90mi[39m port: 18696, host: localhost
+17:32:27.636 detox[59584] [90mi[39m Found a matching & free device emulator-18696
+17:32:27.637 detox[59584] [90mi[39m settled on emulator-18696 (Pixel_9)
+  data: {
+    "id": "emulator-18696",
+    "adbName": "emulator-18696",
+    "name": "emulator-18696 (Pixel_9)"
+  }
+17:32:27.637 detox[59584] [90mE[39m allocate
+17:32:27.637 detox[59584] [90mB[39m post-allocate: emulator-18696
+  data: {
+    "id": "emulator-18696",
+    "adbName": "emulator-18696",
+    "name": "emulator-18696 (Pixel_9)"
+  }
+17:32:27.637 detox[59584] [90mi[39m "/Users/coding/Library/Android/sdk/platform-tools/adb" -s emulator-18696 shell "getprop dev.bootcomplete"
+17:32:28.452 detox[59584] [90mi[39m 1
+
+17:32:28.453 detox[59584] [90mi[39m "/Users/coding/Library/Android/sdk/platform-tools/adb" -s emulator-18696 shell "getprop ro.build.version.sdk"
+17:32:28.727 detox[59584] [90mi[39m 36
+
+17:32:28.727 detox[59584] [90mi[39m "/Users/coding/Library/Android/sdk/platform-tools/adb" -s emulator-18696 shell "settings put global animator_duration_scale 0"
+17:32:29.367 detox[59584] [90mi[39m 
+17:32:29.367 detox[59584] [90mi[39m "/Users/coding/Library/Android/sdk/platform-tools/adb" -s emulator-18696 shell "settings put global window_animation_scale 0"
+17:32:29.440 detox[59584] [90mi[39m 
+17:32:29.440 detox[59584] [90mi[39m "/Users/coding/Library/Android/sdk/platform-tools/adb" -s emulator-18696 shell "settings put global transition_animation_scale 0"
+17:32:29.532 detox[59584] [90mi[39m 
+17:32:29.532 detox[59584] [90mi[39m "/Users/coding/Library/Android/sdk/platform-tools/adb" -s emulator-18696 shell "dumpsys power | grep \"^[ ]*m[UW].*=\""
+17:32:29.707 detox[59584] [90mi[39m   mWakefulness=Awake
+  mWakefulnessChanging=false
+  mUseAutoSuspend=true
+  mWakeLockSummary=0x0
+  mWakeUpWhenPluggedOrUnpluggedConfig=false
+  mWakeUpWhenPluggedOrUnpluggedInTheaterModeConfig=false
+  mUserActivityTimeoutOverrideFromWindowManager=-1
+  mUserInactiveOverrideFromWindowManager=false
+  mUseNormalBrightnessForDoze=false
+  mUserId=0
+  mWakeLockSummary=0x0
+  mUserInteractionBackoffMillis=60000
+
+17:32:29.707 detox[59584] [90mE[39m post-allocate: emulator-18696
+17:32:29.707 detox[59584] [90mi[39m dispatching event to socket  :  allocateDeviceDone {
+  deviceCookie: {
+    id: 'emulator-18696',
+    adbName: 'emulator-18696',
+    name: 'emulator-18696 (Pixel_9)'
+  }
+}
+17:32:29.708 detox[59657] [90mi[39m ## received events ##
+17:32:29.708 detox[59657] [90mi[39m detected event allocateDeviceDone {
+  deviceCookie: {
+    id: 'emulator-18696',
+    adbName: 'emulator-18696',
+    name: 'emulator-18696 (Pixel_9)'
+  }
+}
+17:32:29.730 detox[59657] [90mB[39m onBootDevice
+  args: ({"deviceId":"emulator-18696"})
+17:32:29.730 detox[59657] [90mE[39m onBootDevice
+17:32:29.730 detox[59657] [90mB[39m installUtilBinaries
+  args: ()
+17:32:29.730 detox[59657] [90mE[39m installUtilBinaries
+17:32:29.731 detox[59657] [90mB[39m selectApp
+  args: ("default")
+17:32:29.731 detox[59657] [90mi[39m "/Users/coding/Library/Android/sdk/build-tools/36.1.0/aapt" dump badging "/Users/coding/Projects/notes_brain/apps/mobile/android/app/build/outputs/apk/release/app-release.apk"
+17:32:29.752 detox[59657] [90mi[39m package: name='com.notesbrain.echo' versionCode='1' versionName='1.0.0' platformBuildVersionName='16' platformBuildVersionCode='36' compileSdkVersion='36' compileSdkVersionCodename='16'
+sdkVersion:'24'
+targetSdkVersion:'36'
+uses-permission: name='android.permission.INTERNET'
+uses-permission: name='android.permission.MODIFY_AUDIO_SETTINGS'
+uses-permission: name='android.permission.READ_EXTERNAL_STORAGE'
+uses-permission: name='android.permission.RECORD_AUDIO'
+uses-permission: name='android.permission.SYSTEM_ALERT_WINDOW'
+uses-permission: name='android.permission.VIBRATE'
+uses-permission: name='android.permission.WRITE_EXTERNAL_STORAGE'
+uses-permission: name='android.permission.ACCESS_NETWORK_STATE'
+uses-permission: name='android.permission.ACCESS_WIFI_STATE'
+uses-permission: name='android.permission.FOREGROUND_SERVICE'
+uses-permission: name='android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK'
+uses-permission: name='android.permission.RECEIVE_BOOT_COMPLETED'
+uses-permission: name='android.permission.POST_NOTIFICATIONS'
+uses-permission: name='android.permission.WAKE_LOCK'
+uses-permission: name='com.google.android.c2dm.permission.RECEIVE'
+uses-permission: name='android.permission.USE_BIOMETRIC'
+uses-permission: name='android.permission.USE_FINGERPRINT'
+uses-permission: name='com.notesbrain.echo.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION'
+uses-permission: name='com.google.android.finsky.permission.BIND_GET_INSTALL_REFERRER_SERVICE'
+uses-permission: name='com.sec.android.provider.badge.permission.READ'
+uses-permission: name='com.sec.android.provider.badge.permission.WRITE'
+uses-permission: name='com.htc.launcher.permission.READ_SETTINGS'
+uses-permission: name='com.htc.launcher.permission.UPDATE_SHORTCUT'
+uses-permission: name='com.sonyericsson.home.permission.BROADCAST_BADGE'
+uses-permission: name='com.sonymobile.home.permission.PROVIDER_INSERT_BADGE'
+uses-permission: name='com.anddoes.launcher.permission.UPDATE_COUNT'
+uses-permission: name='com.majeur.launcher.permission.UPDATE_BADGE'
+uses-permission: name='com.huawei.android.launcher.permission.CHANGE_BADGE'
+uses-permission: name='com.huawei.android.launcher.permission.READ_SETTINGS'
+uses-permission: name='com.huawei.android.launcher.permission.WRITE_SETTINGS'
+uses-permission: name='android.permission.READ_APP_BADGE'
+uses-permission: name='com.oppo.launcher.permission.READ_SETTINGS'
+uses-permission: name='com.oppo.launcher.permission.WRITE_SETTINGS'
+uses-permission: name='me.everything.badger.permission.BADGE_COUNT_READ'
+uses-permission: name='me.everything.badger.permission.BADGE_COUNT_WRITE'
+application-label:'Echo'
+application-label-af:'Echo'
+application-label-am:'Echo'
+application-label-ar:'Echo'
+application-label-as:'Echo'
+application-label-az:'Echo'
+application-label-be:'Echo'
+application-label-bg:'Echo'
+application-label-bn:'Echo'
+application-label-bs:'Echo'
+application-label-ca:'Echo'
+application-label-cs:'Echo'
+application-label-da:'Echo'
+application-label-de:'Echo'
+application-label-el:'Echo'
+application-label-en-AU:'Echo'
+application-label-en-CA:'Echo'
+application-label-en-GB:'Echo'
+application-label-en-IN:'Echo'
+application-label-en-XC:'Echo'
+application-label-es:'Echo'
+application-label-es-419:'Echo'
+application-label-es-ES:'Echo'
+application-label-es-US:'Echo'
+application-label-et:'Echo'
+application-label-eu:'Echo'
+application-label-fa:'Echo'
+application-label-fi:'Echo'
+application-label-fr:'Echo'
+application-label-fr-CA:'Echo'
+application-label-gl:'Echo'
+application-label-gu:'Echo'
+application-label-hi:'Echo'
+application-label-hr:'Echo'
+application-label-hu:'Echo'
+application-label-hy:'Echo'
+application-label-in:'Echo'
+application-label-is:'Echo'
+application-label-it:'Echo'
+application-label-iw:'Echo'
+application-label-ja:'Echo'
+application-label-ka:'Echo'
+application-label-kk:'Echo'
+application-label-km:'Echo'
+application-label-kn:'Echo'
+application-label-ko:'Echo'
+application-label-ky:'Echo'
+application-label-lo:'Echo'
+application-label-lt:'Echo'
+application-label-lv:'Echo'
+application-label-mk:'Echo'
+application-label-ml:'Echo'
+application-label-mn:'Echo'
+application-label-mr:'Echo'
+application-label-ms:'Echo'
+application-label-my:'Echo'
+application-label-nb:'Echo'
+application-label-ne:'Echo'
+application-label-nl:'Echo'
+application-label-or:'Echo'
+application-label-pa:'Echo'
+application-label-pl:'Echo'
+application-label-pt:'Echo'
+application-label-pt-BR:'Echo'
+application-label-pt-PT:'Echo'
+application-label-ro:'Echo'
+application-label-ru:'Echo'
+application-label-si:'Echo'
+application-label-sk:'Echo'
+application-label-sl:'Echo'
+application-label-sq:'Echo'
+application-label-sr:'Echo'
+application-label-sr-Latn:'Echo'
+application-label-sv:'Echo'
+application-label-sw:'Echo'
+application-label-ta:'Echo'
+application-label-te:'Echo'
+application-label-th:'Echo'
+application-label-tl:'Echo'
+application-label-tr:'Echo'
+application-label-uk:'Echo'
+application-label-ur:'Echo'
+application-label-uz:'Echo'
+application-label-vi:'Echo'
+application-label-zh-CN:'Echo'
+application-label-zh-HK:'Echo'
+application-label-zh-TW:'Echo'
+application-label-zu:'Echo'
+application-icon-120:'res/BW.xml'
+application-icon-160:'res/BW.xml'
+application-icon-240:'res/BW.xml'
+application-icon-320:'res/BW.xml'
+application-icon-480:'res/BW.xml'
+application-icon-640:'res/BW.xml'
+application-icon-65534:'res/BW.xml'
+application: label='Echo' icon='res/BW.xml'
+launchable-activity: name='com.notesbrain.echo.MainActivity'  label='' icon=''
+feature-group: label=''
+  uses-feature: name='android.hardware.faketouch'
+  uses-implied-feature: name='android.hardware.faketouch' reason='default feature for all apps'
+  uses-feature: name='android.hardware.microphone'
+  uses-implied-feature: name='android.hardware.microphone' reason='requested android.permission.RECORD_AUDIO permission'
+  uses-feature: name='android.hardware.screen.portrait'
+  uses-implied-feature: name='android.hardware.screen.portrait' reason='one or more activities have specified a portrait orientation'
+  uses-feature: name='android.hardware.wifi'
+  uses-implied-feature: name='android.hardware.wifi' reason='requested android.permission.ACCESS_WIFI_STATE permission'
+main
+other-activities
+other-receivers
+other-services
+supports-screens: 'small' 'normal' 'large' 'xlarge'
+supports-any-density: 'true'
+locales: '--_--' 'af' 'am' 'ar' 'as' 'az' 'be' 'bg' 'bn' 'bs' 'ca' 'cs' 'da' 'de' 'el' 'en-AU' 'en-CA' 'en-GB' 'en-IN' 'en-XC' 'es' 'es-419' 'es-ES' 'es-US' 'et' 'eu' 'fa' 'fi' 'fr' 'fr-CA' 'gl' 'gu' 'hi' 'hr' 'hu' 'hy' 'in' 'is' 'it' 'iw' 'ja' 'ka' 'kk' 'km' 'kn' 'ko' 'ky' 'lo' 'lt' 'lv' 'mk' 'ml' 'mn' 'mr' 'ms' 'my' 'nb' 'ne' 'nl' 'or' 'pa' 'pl' 'pt' 'pt-BR' 'pt-PT' 'ro' 'ru' 'si' 'sk' 'sl' 'sq' 'sr' 'sr-Latn' 'sv' 'sw' 'ta' 'te' 'th' 'tl' 'tr' 'uk' 'ur' 'uz' 'vi' 'zh-CN' 'zh-HK' 'zh-TW' 'zu'
+densities: '120' '160' '240' '320' '480' '640' '65534'
+native-code: 'arm64-v8a' 'x86_64'
+
+17:32:29.753 detox[59657] [90mE[39m selectApp
+17:32:29.753 detox[59657] [90mB[39m uninstallApp
+  args: ()
+17:32:29.753 detox[59657] [90mB[39m onBeforeUninstallApp
+  args: ({"deviceId":"emulator-18696","bundleId":"com.notesbrain.echo"})
+17:32:29.753 detox[59657] [90mE[39m onBeforeUninstallApp
+17:32:29.753 detox[59657] [90mi[39m "/Users/coding/Library/Android/sdk/platform-tools/adb" -s emulator-18696 shell "pm list packages com.notesbrain.echo"
+17:32:29.817 detox[59657] [90mi[39m package:com.notesbrain.echo
+
+17:32:29.817 detox[59657] [90mi[39m "/Users/coding/Library/Android/sdk/platform-tools/adb" -s emulator-18696 uninstall com.notesbrain.echo
+17:32:30.270 detox[59657] [90mi[39m Success
+
+17:32:30.270 detox[59657] [90mi[39m "/Users/coding/Library/Android/sdk/platform-tools/adb" -s emulator-18696 shell "pm list packages com.notesbrain.echo.test"
+17:32:30.636 detox[59657] [90mi[39m 
+17:32:30.636 detox[59657] [90mE[39m uninstallApp
+17:32:30.636 detox[59657] [90mB[39m selectApp
+  args: ("default")
+17:32:30.636 detox[59657] [90mB[39m terminateApp
+  args: ()
+17:32:30.637 detox[59657] [90mB[39m onBeforeTerminateApp
+  args: ({"deviceId":"emulator-18696","bundleId":"com.notesbrain.echo"})
+17:32:30.637 detox[59657] [90mE[39m onBeforeTerminateApp
+17:32:30.637 detox[59657] [90mi[39m "/Users/coding/Library/Android/sdk/platform-tools/adb" -s emulator-18696 shell "am force-stop com.notesbrain.echo"
+17:32:31.712 detox[59657] [90mi[39m 
+17:32:31.712 detox[59657] [90mB[39m onTerminateApp
+  args: ({"deviceId":"emulator-18696","bundleId":"com.notesbrain.echo"})
+17:32:31.712 detox[59657] [90mE[39m onTerminateApp
+17:32:31.712 detox[59657] [90mE[39m terminateApp
+17:32:31.712 detox[59657] [90mE[39m selectApp
+17:32:31.713 detox[59657] [90mB[39m installApp
+  args: ()
+17:32:31.713 detox[59657] [90mi[39m "/Users/coding/Library/Android/sdk/build-tools/36.1.0/aapt" dump xmlstrings "/Users/coding/Projects/notes_brain/apps/mobile/android/app/build/outputs/apk/release/app-release.apk" AndroidManifest.xml
+17:32:31.734 detox[59657] [90mi[39m String pool of 190 unique UTF-16 non-sorted strings, 190 entries and 0 styles using 14400 bytes:
+String #0: theme
+String #1: label
+String #2: icon
+String #3: name
+String #4: permission
+String #5: protectionLevel
+String #6: enabled
+String #7: exported
+String #8: taskAffinity
+String #9: excludeFromRecents
+String #10: authorities
+String #11: initOrder
+String #12: grantUriPermissions
+String #13: priority
+String #14: launchMode
+String #15: screenOrientation
+String #16: configChanges
+String #17: value
+String #18: resource
+String #19: mimeType
+String #20: scheme
+String #21: minSdkVersion
+String #22: versionCode
+String #23: versionName
+String #24: windowSoftInputMode
+String #25: noHistory
+String #26: targetSdkVersion
+String #27: allowBackup
+String #28: supportsRtl
+String #29: extractNativeLibs
+String #30: fullBackupContent
+String #31: usesCleartextTraffic
+String #32: directBootAware
+String #33: roundIcon
+String #34: compileSdkVersion
+String #35: compileSdkVersionCodename
+String #36: appComponentFactory
+String #37: foregroundServiceType
+String #38: dataExtractionRules
+String #39: enableOnBackInvokedCallback
+String #40: 
+String #41: 1.0.0
+String #42: 16
+String #43: ALWAYS
+String #44: action
+String #45: activity
+String #46: android
+String #47: android.intent.action.BOOT_COMPLETED
+String #48: android.intent.action.MAIN
+String #49: android.intent.action.MY_PACKAGE_REPLACED
+String #50: android.intent.action.OPEN_DOCUMENT_TREE
+String #51: android.intent.action.QUICKBOOT_POWERON
+String #52: android.intent.action.REBOOT
+String #53: android.intent.action.SEND
+String #54: android.intent.action.SEND_MULTIPLE
+String #55: android.intent.action.VIEW
+String #56: android.intent.category.BROWSABLE
+String #57: android.intent.category.DEFAULT
+String #58: android.intent.category.LAUNCHER
+String #59: android.permission.ACCESS_NETWORK_STATE
+String #60: android.permission.ACCESS_WIFI_STATE
+String #61: android.permission.BIND_JOB_SERVICE
+String #62: android.permission.DUMP
+String #63: android.permission.FOREGROUND_SERVICE
+String #64: android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK
+String #65: android.permission.INTERNET
+String #66: android.permission.MODIFY_AUDIO_SETTINGS
+String #67: android.permission.POST_NOTIFICATIONS
+String #68: android.permission.READ_APP_BADGE
+String #69: android.permission.READ_EXTERNAL_STORAGE
+String #70: android.permission.RECEIVE_BOOT_COMPLETED
+String #71: android.permission.RECORD_AUDIO
+String #72: android.permission.SYSTEM_ALERT_WINDOW
+String #73: android.permission.USE_BIOMETRIC
+String #74: android.permission.USE_FINGERPRINT
+String #75: android.permission.VIBRATE
+String #76: android.permission.WAKE_LOCK
+String #77: android.permission.WRITE_EXTERNAL_STORAGE
+String #78: android.support.FILE_PROVIDER_PATHS
+String #79: androidx.compose.ui.tooling.PreviewActivity
+String #80: androidx.core.app.CoreComponentFactory
+String #81: androidx.emoji2.text.EmojiCompatInitializer
+String #82: androidx.lifecycle.ProcessLifecycleInitializer
+String #83: androidx.media3.session.MediaSessionService
+String #84: androidx.profileinstaller.ProfileInstallReceiver
+String #85: androidx.profileinstaller.ProfileInstallerInitializer
+String #86: androidx.profileinstaller.action.BENCHMARK_OPERATION
+String #87: androidx.profileinstaller.action.INSTALL_PROFILE
+String #88: androidx.profileinstaller.action.SAVE_PROFILE
+String #89: androidx.profileinstaller.action.SKIP_FILE
+String #90: androidx.startup
+String #91: androidx.startup.InitializationProvider
+String #92: application
+String #93: application/pdf
+String #94: backend:com.google.android.datatransport.cct.CctBackendFactory
+String #95: barcode_ui
+String #96: category
+String #97: cct
+String #98: com.anddoes.launcher.permission.UPDATE_COUNT
+String #99: com.facebook.soloader.enabled
+String #100: com.google.android.c2dm.intent.RECEIVE
+String #101: com.google.android.c2dm.permission.RECEIVE
+String #102: com.google.android.c2dm.permission.SEND
+String #103: com.google.android.datatransport.runtime.backends.TransportBackendDiscovery
+String #104: com.google.android.datatransport.runtime.scheduling.jobscheduling.AlarmManagerSchedulerBroadcastReceiver
+String #105: com.google.android.datatransport.runtime.scheduling.jobscheduling.JobInfoSchedulerService
+String #106: com.google.android.finsky.permission.BIND_GET_INSTALL_REFERRER_SERVICE
+String #107: com.google.android.gms.cloudmessaging.FINISHED_AFTER_HANDLED
+String #108: com.google.android.gms.common.api.GoogleApiActivity
+String #109: com.google.android.gms.version
+String #110: com.google.firebase.MESSAGING_EVENT
+String #111: com.google.firebase.components.ComponentDiscoveryService
+String #112: com.google.firebase.components.ComponentRegistrar
+String #113: com.google.firebase.components:com.google.firebase.FirebaseCommonKtxRegistrar
+String #114: com.google.firebase.components:com.google.firebase.datatransport.TransportRegistrar
+String #115: com.google.firebase.components:com.google.firebase.installations.FirebaseInstallationsKtxRegistrar
+String #116: com.google.firebase.components:com.google.firebase.installations.FirebaseInstallationsRegistrar
+String #117: com.google.firebase.components:com.google.firebase.ktx.FirebaseCommonLegacyRegistrar
+String #118: com.google.firebase.components:com.google.firebase.messaging.FirebaseMessagingKtxRegistrar
+String #119: com.google.firebase.components:com.google.firebase.messaging.FirebaseMessagingRegistrar
+String #120: com.google.firebase.components:com.google.mlkit.common.internal.CommonComponentRegistrar
+String #121: com.google.firebase.components:com.google.mlkit.vision.barcode.internal.BarcodeRegistrar
+String #122: com.google.firebase.components:com.google.mlkit.vision.common.internal.VisionCommonRegistrar
+String #123: com.google.firebase.iid.FirebaseInstanceIdReceiver
+String #124: com.google.firebase.messaging.FirebaseMessagingService
+String #125: com.google.firebase.messaging.default_notification_color
+String #126: com.google.firebase.messaging.default_notification_icon
+String #127: com.google.firebase.provider.FirebaseInitProvider
+String #128: com.google.mlkit.common.internal.MlKitComponentDiscoveryService
+String #129: com.google.mlkit.common.internal.MlKitInitProvider
+String #130: com.google.mlkit.vision.DEPENDENCIES
+String #131: com.google.mlkit.vision.codescanner.internal.GmsBarcodeScanningDelegateActivity
+String #132: com.htc.intent.action.QUICKBOOT_POWERON
+String #133: com.htc.launcher.permission.READ_SETTINGS
+String #134: com.htc.launcher.permission.UPDATE_SHORTCUT
+String #135: com.huawei.android.launcher.permission.CHANGE_BADGE
+String #136: com.huawei.android.launcher.permission.READ_SETTINGS
+String #137: com.huawei.android.launcher.permission.WRITE_SETTINGS
+String #138: com.majeur.launcher.permission.UPDATE_BADGE
+String #139: com.notesbrain.echo
+String #140: com.notesbrain.echo.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
+String #141: com.notesbrain.echo.FileSystemFileProvider
+String #142: com.notesbrain.echo.MainActivity
+String #143: com.notesbrain.echo.MainApplication
+String #144: com.notesbrain.echo.androidx-startup
+String #145: com.notesbrain.echo.firebaseinitprovider
+String #146: com.notesbrain.echo.mlkitinitprovider
+String #147: com.oppo.launcher.permission.READ_SETTINGS
+String #148: com.oppo.launcher.permission.WRITE_SETTINGS
+String #149: com.sec.android.provider.badge.permission.READ
+String #150: com.sec.android.provider.badge.permission.WRITE
+String #151: com.sonyericsson.home.permission.BROADCAST_BADGE
+String #152: com.sonymobile.home.permission.PROVIDER_INSERT_BADGE
+String #153: data
+String #154: echo
+String #155: exp+echo
+String #156: expo.modules.adapters.react.apploader.RNHeadlessAppLoader
+String #157: expo.modules.audio.service.AudioControlsService
+String #158: expo.modules.audio.service.AudioRecordingService
+String #159: expo.modules.filesystem.FileSystemFileProvider
+String #160: expo.modules.notifications.NOTIFICATION_EVENT
+String #161: expo.modules.notifications.default_notification_color
+String #162: expo.modules.notifications.default_notification_icon
+String #163: expo.modules.notifications.service.ExpoFirebaseMessagingService
+String #164: expo.modules.notifications.service.NotificationForwarderActivity
+String #165: expo.modules.notifications.service.NotificationsService
+String #166: expo.modules.updates.ENABLED
+String #167: expo.modules.updates.EXPO_UPDATES_CHECK_ON_LAUNCH
+String #168: expo.modules.updates.EXPO_UPDATES_LAUNCH_WAIT_MS
+String #169: http://schemas.android.com/apk/res/android
+String #170: https
+String #171: image/*
+String #172: intent
+String #173: intent-filter
+String #174: manifest
+String #175: me.everything.badger.permission.BADGE_COUNT_READ
+String #176: me.everything.badger.permission.BADGE_COUNT_WRITE
+String #177: meta-data
+String #178: org.unimodules.core.AppLoader#react-native-headless
+String #179: package
+String #180: permission
+String #181: platformBuildVersionCode
+String #182: platformBuildVersionName
+String #183: provider
+String #184: queries
+String #185: receiver
+String #186: service
+String #187: text/*
+String #188: uses-permission
+String #189: uses-sdk
+
+17:32:31.734 detox[59657] [90mi[39m "/Users/coding/Library/Android/sdk/build-tools/36.1.0/aapt" dump xmlstrings "/Users/coding/Projects/notes_brain/apps/mobile/android/app/build/outputs/apk/androidTest/release/app-release-androidTest.apk" AndroidManifest.xml
+17:32:31.752 detox[59657] [90mi[39m String pool of 42 unique UTF-16 non-sorted strings, 42 entries and 0 styles using 2112 bytes:
+String #0: theme
+String #1: label
+String #2: name
+String #3: exported
+String #4: priority
+String #5: targetPackage
+String #6: handleProfiling
+String #7: functionalTest
+String #8: minSdkVersion
+String #9: targetSdkVersion
+String #10: extractNativeLibs
+String #11: compileSdkVersion
+String #12: compileSdkVersionCodename
+String #13: 16
+String #14: Tests for com.notesbrain.echo
+String #15: activity
+String #16: android
+String #17: android.intent.category.LAUNCHER
+String #18: android.permission.REORDER_TASKS
+String #19: android.test.runner
+String #20: androidx.test.core.app.InstrumentationActivityInvoker$BootstrapActivity
+String #21: androidx.test.core.app.InstrumentationActivityInvoker$EmptyActivity
+String #22: androidx.test.core.app.InstrumentationActivityInvoker$EmptyFloatingActivity
+String #23: androidx.test.orchestrator
+String #24: androidx.test.runner.AndroidJUnitRunner
+String #25: androidx.test.services
+String #26: application
+String #27: category
+String #28: com.google.android.apps.common.testing.services
+String #29: com.notesbrain.echo
+String #30: com.notesbrain.echo.test
+String #31: http://schemas.android.com/apk/res/android
+String #32: instrumentation
+String #33: intent-filter
+String #34: manifest
+String #35: package
+String #36: platformBuildVersionCode
+String #37: platformBuildVersionName
+String #38: queries
+String #39: uses-library
+String #40: uses-permission
+String #41: uses-sdk
+
+17:32:31.752 detox[59657] [90mi[39m "/Users/coding/Library/Android/sdk/platform-tools/adb" -s emulator-18696 shell "rm -fr /data/local/tmp/detox"
+17:32:32.547 detox[59657] [90mi[39m 
+17:32:32.547 detox[59657] [90mi[39m "/Users/coding/Library/Android/sdk/platform-tools/adb" -s emulator-18696 shell "mkdir -p /data/local/tmp/detox"
+17:32:32.687 detox[59657] [90mi[39m 
+17:32:32.688 detox[59657] [90mi[39m "/Users/coding/Library/Android/sdk/platform-tools/adb" -s emulator-18696 push "/Users/coding/Projects/notes_brain/apps/mobile/android/app/build/outputs/apk/release/app-release.apk" "/data/local/tmp/detox/Application.apk"
+17:32:38.669 detox[59657] [90mi[39m /Users/coding/Projects/notes_brain/apps/mobile/android/app/build/outputs/apk/release/app-release.apk: 1 file pushed, 0 skipped. 15.6 MB/s (66766189 bytes in 4.088s)
+
+17:32:38.670 detox[59657] [90mi[39m "/Users/coding/Library/Android/sdk/platform-tools/adb" -s emulator-18696 shell "getprop ro.build.version.sdk"
+17:32:39.224 detox[59657] [90mi[39m 36
+
+17:32:39.228 detox[59657] [90mi[39m /Users/coding/Library/Android/sdk/platform-tools/adb -s emulator-18696 shell pm install -r -g -t /data/local/tmp/detox/Application.apk
+17:32:43.304 detox[59657] [90mi[39m /Users/coding/Library/Android/sdk/platform-tools/adb -s emulator-18696 shell pm install -r -g -t /data/local/tmp/detox/Application.apk exited with code #255
+17:32:43.407 detox[59657] [90mi[39m 
+17:32:43.412 detox[59657] [90mi[39m (Retry #1) /Users/coding/Library/Android/sdk/platform-tools/adb -s emulator-18696 shell pm install -r -g -t /data/local/tmp/detox/Application.apk
+17:32:43.441 detox[59657] [90mi[39m adb: device offline
+
+17:32:43.443 detox[59657] [90mi[39m /Users/coding/Library/Android/sdk/platform-tools/adb -s emulator-18696 shell pm install -r -g -t /data/local/tmp/detox/Application.apk exited with code #1
+17:32:43.544 detox[59657] [90mi[39m adb: device offline
+
+17:32:43.546 detox[59657] [90mi[39m (Retry #2) /Users/coding/Library/Android/sdk/platform-tools/adb -s emulator-18696 shell pm install -r -g -t /data/local/tmp/detox/Application.apk
+17:32:43.561 detox[59657] [90mi[39m adb: device 'emulator-18696' not found
+
+17:32:43.561 detox[59657] [90mi[39m /Users/coding/Library/Android/sdk/platform-tools/adb -s emulator-18696 shell pm install -r -g -t /data/local/tmp/detox/Application.apk exited with code #1
+17:32:43.664 detox[59657] [90mi[39m adb: device 'emulator-18696' not found
+
+17:32:43.667 detox[59657] [90mi[39m (Retry #3) /Users/coding/Library/Android/sdk/platform-tools/adb -s emulator-18696 shell pm install -r -g -t /data/local/tmp/detox/Application.apk
+17:32:43.685 detox[59657] [90mi[39m adb: device offline
+
+17:32:43.685 detox[59657] [90mi[39m /Users/coding/Library/Android/sdk/platform-tools/adb -s emulator-18696 shell pm install -r -g -t /data/local/tmp/detox/Application.apk exited with code #1
+17:32:43.686 detox[59657] [90mE[39m installApp
+  error: Error: Process exited with code 1
+      at ChildProcess.done (/Users/coding/Projects/notes_brain/node_modules/promisify-child-process/index.cjs:70:19)
+      at ChildProcess.emit (node:events:508:28)
+      at ChildProcess.emit (node:domain:489:12)
+      at maybeClose (node:internal/child_process:1101:16)
+      at Socket.<anonymous> (node:internal/child_process:457:11)
+      at Socket.emit (node:events:508:28)
+      at Socket.emit (node:domain:489:12)
+      at Pipe.<anonymous> (node:net:346:12)
+17:32:43.686 detox[59657] [90mE[39m set up environment
+  error: Error: Process exited with code 1
+      at ChildProcess.done (/Users/coding/Projects/notes_brain/node_modules/promisify-child-process/index.cjs:70:19)
+      at ChildProcess.emit (node:events:508:28)
+      at ChildProcess.emit (node:domain:489:12)
+      at maybeClose (node:internal/child_process:1101:16)
+      at Socket.<anonymous> (node:internal/child_process:457:11)
+      at Socket.emit (node:events:508:28)
+      at Socket.emit (node:domain:489:12)
+      at Pipe.<anonymous> (node:net:346:12)
+17:32:43.687 detox[59657] [90mB[39m tear down environment
+17:32:43.687 detox[59657] [90mB[39m onBeforeCleanup
+  args: ()
+17:32:43.688 detox[59657] [90mE[39m onBeforeCleanup
+17:32:43.689 detox[59584] [90mi[39m tester exited session 71c36a71-24f1-d3ed-0553-90eb54e31323
+17:32:43.689 detox[59584] [90mE[39m connection :51177<->:51179
+17:32:43.689 detox[59584] [90mi[39m received event of :  deallocateDevice {
+  deviceCookie: {
+    id: 'emulator-18696',
+    adbName: 'emulator-18696',
+    name: 'emulator-18696 (Pixel_9)'
+  }
+}
+17:32:43.689 detox[59584] [90mB[39m free: emulator-18696
+  data: {}
+17:32:43.689 detox[59657] [90mi[39m dispatching event to  primary-59584 /tmp/detox.primary-59584  :  deallocateDevice , {
+  deviceCookie: {
+    id: 'emulator-18696',
+    adbName: 'emulator-18696',
+    name: 'emulator-18696 (Pixel_9)'
+  }
+}
+17:32:43.690 detox[59584] [90mE[39m free: emulator-18696
+17:32:43.690 detox[59584] [90mi[39m dispatching event to socket  :  deallocateDeviceDone {}
+17:32:43.690 detox[59657] [90mi[39m ## received events ##
+17:32:43.690 detox[59657] [90mi[39m detected event deallocateDeviceDone {}
+17:32:43.691 detox[59657] [90mE[39m tear down environment
+17:32:43.691 detox[59657] [90mE[39m tests/e2e/mobile/specs/auth-and-tabs.e2e.js
+17:32:43.711 detox[59657] [90mi[39m dispatching event to  primary-59584 /tmp/detox.primary-59584  :  reportTestResults , {
+  testResults: [
+    {
+      success: false,
+      testFilePath: '/Users/coding/Projects/notes_brain/tests/e2e/mobile/specs/auth-and-tabs.e2e.js',
+      testExecError: {
+        code: 1,
+        signal: null,
+        stdout: '',
+        stderr: 'adb: device offline\n',
+        name: 'Error',
+        message: 'Process exited with code 1',
+        stack: 'Error: Process exited with code 1\n' +
+          '    at ChildProcess.done (/Users/coding/Projects/notes_brain/node_modules/promisify-child-process/index.cjs:70:19)\n' +
+          '    at ChildProcess.emit (node:events:508:28)\n' +
+          '    at ChildProcess.emit (node:domain:489:12)\n' +
+          '    at maybeClose (node:internal/child_process:1101:16)\n' +
+          '    at Socket.<anonymous> (node:internal/child_process:457:11)\n' +
+          '    at Socket.emit (node:events:508:28)\n' +
+          '    at Socket.emit (node:domain:489:12)\n' +
+          '    at Pipe.<anonymous> (node:net:346:12)'
+      },
+      isPermanentFailure: false
+    }
+  ]
+}
+17:32:43.712 detox[59584] [90mi[39m received event of :  reportTestResults {
+  testResults: [
+    {
+      success: false,
+      testFilePath: '/Users/coding/Projects/notes_brain/tests/e2e/mobile/specs/auth-and-tabs.e2e.js',
+      testExecError: {
+        code: 1,
+        signal: null,
+        stdout: '',
+        stderr: 'adb: device offline\n',
+        name: 'Error',
+        message: 'Process exited with code 1',
+        stack: 'Error: Process exited with code 1\n' +
+          '    at ChildProcess.done (/Users/coding/Projects/notes_brain/node_modules/promisify-child-process/index.cjs:70:19)\n' +
+          '    at ChildProcess.emit (node:events:508:28)\n' +
+          '    at ChildProcess.emit (node:domain:489:12)\n' +
+          '    at maybeClose (node:internal/child_process:1101:16)\n' +
+          '    at Socket.<anonymous> (node:internal/child_process:457:11)\n' +
+          '    at Socket.emit (node:events:508:28)\n' +
+          '    at Socket.emit (node:domain:489:12)\n' +
+          '    at Pipe.<anonymous> (node:net:346:12)'
+      },
+      isPermanentFailure: false
+    }
+  ]
+}
+17:32:43.712 detox[59584] [90mi[39m dispatching event to socket  :  reportTestResultsDone {
+  testResults: [
+    {
+      success: false,
+      testFilePath: '/Users/coding/Projects/notes_brain/tests/e2e/mobile/specs/auth-and-tabs.e2e.js',
+      testExecError: {
+        code: 1,
+        signal: null,
+        stdout: '',
+        stderr: 'adb: device offline\n',
+        name: 'Error',
+        message: 'Process exited with code 1',
+        stack: 'Error: Process exited with code 1\n' +
+          '    at ChildProcess.done (/Users/coding/Projects/notes_brain/node_modules/promisify-child-process/index.cjs:70:19)\n' +
+          '    at ChildProcess.emit (node:events:508:28)\n' +
+          '    at ChildProcess.emit (node:domain:489:12)\n' +
+          '    at maybeClose (node:internal/child_process:1101:16)\n' +
+          '    at Socket.<anonymous> (node:internal/child_process:457:11)\n' +
+          '    at Socket.emit (node:events:508:28)\n' +
+          '    at Socket.emit (node:domain:489:12)\n' +
+          '    at Pipe.<anonymous> (node:net:346:12)'
+      },
+      isPermanentFailure: false
+    }
+  ]
+}
+17:32:43.712 detox[59584] [90mi[39m broadcasting event to all known sockets listening to  /tmp/detox.primary-59584  :   sessionStateUpdate {
+  testResults: [
+    {
+      success: false,
+      testFilePath: '/Users/coding/Projects/notes_brain/tests/e2e/mobile/specs/auth-and-tabs.e2e.js',
+      testExecError: {
+        code: 1,
+        signal: null,
+        stdout: '',
+        stderr: 'adb: device offline\n',
+        name: 'Error',
+        message: 'Process exited with code 1',
+        stack: 'Error: Process exited with code 1\n' +
+          '    at ChildProcess.done (/Users/coding/Projects/notes_brain/node_modules/promisify-child-process/index.cjs:70:19)\n' +
+          '    at ChildProcess.emit (node:events:508:28)\n' +
+          '    at ChildProcess.emit (node:domain:489:12)\n' +
+          '    at maybeClose (node:internal/child_process:1101:16)\n' +
+          '    at Socket.<anonymous> (node:internal/child_process:457:11)\n' +
+          '    at Socket.emit (node:events:508:28)\n' +
+          '    at Socket.emit (node:domain:489:12)\n' +
+          '    at Pipe.<anonymous> (node:net:346:12)'
+      },
+      isPermanentFailure: false
+    }
+  ]
+}
+17:32:43.712 detox[59657] [90mi[39m ## received events ##
+17:32:43.712 detox[59657] [90mi[39m detected event reportTestResultsDone {
+  testResults: [
+    {
+      success: false,
+      testFilePath: '/Users/coding/Projects/notes_brain/tests/e2e/mobile/specs/auth-and-tabs.e2e.js',
+      testExecError: {
+        code: 1,
+        signal: null,
+        stdout: '',
+        stderr: 'adb: device offline\n',
+        name: 'Error',
+        message: 'Process exited with code 1',
+        stack: 'Error: Process exited with code 1\n' +
+          '    at ChildProcess.done (/Users/coding/Projects/notes_brain/node_modules/promisify-child-process/index.cjs:70:19)\n' +
+          '    at ChildProcess.emit (node:events:508:28)\n' +
+          '    at ChildProcess.emit (node:domain:489:12)\n' +
+          '    at maybeClose (node:internal/child_process:1101:16)\n' +
+          '    at Socket.<anonymous> (node:internal/child_process:457:11)\n' +
+          '    at Socket.emit (node:events:508:28)\n' +
+          '    at Socket.emit (node:domain:489:12)\n' +
+          '    at Pipe.<anonymous> (node:net:346:12)'
+      },
+      isPermanentFailure: false
+    }
+  ]
+}
+17:32:43.713 detox[59584] [90mi[39m socket disconnected secondary-59657
+17:32:43.713 detox[59657] [90mi[39m connection closed primary-59584 /tmp/detox.primary-59584 0 tries remaining of 0
+17:32:43.713 detox[59657] [90mi[39m secondary-59657 exceeded connection rety amount of  or stopRetrying flag set.
+17:32:43.815 detox[59584] [90mE[39m Command failed with exit code = 1:
+DETOX_AVD_NAME="Pixel_9" jest --config tests/e2e/mobile/jest.config.cjs tests/e2e/mobile/specs/auth-and-tabs.e2e.js
+17:32:43.815 detox[59584] [90mB[39m cleanup
+  args: ()
+17:32:43.816 detox[59584] [90mE[39m cleanup
+17:32:43.816 detox[59584] [90mi[39m Detox server has been closed gracefully
+17:32:43.817 detox[59584] [90mE[39m node_modules/.bin/detox test --config-path ./tests/e2e/mobile/detox.config.cjs --configuration android.emu.release tests/e2e/mobile/specs/auth-and-tabs.e2e.js --record-logs failing --take-screenshots failing

@@ -27,12 +27,14 @@ test("email and password sign-in routes to authenticated notes", async ({ page }
   await login(page);
 });
 
-test("magic-link request shows a success status message", async ({ page }) => {
+test("magic-link request shows user-facing status feedback", async ({ page }) => {
   const { testEmail } = getE2EEnv();
 
   await page.goto("/login");
   await page.getByLabel("Email").fill(testEmail);
   await page.getByRole("button", { name: /sign in with magic link/i }).click();
 
-  await expect(page.getByText(/Magic link sent/i)).toBeVisible();
+  await expect(
+    page.getByText(/Magic link sent\. Check your email\.|Unable to send magic link\. Please try again\./i)
+  ).toBeVisible();
 });

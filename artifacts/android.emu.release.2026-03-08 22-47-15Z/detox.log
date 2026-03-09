@@ -1,0 +1,127 @@
+15:47:15.046 detox[3940] B node_modules/.bin/detox test --config-path ./tests/e2e/mobile/detox.config.cjs --configuration android.emu.release tests/e2e/mobile/specs/password-reset.e2e.js --record-logs all
+  data: {
+    "id": "fa7d0909-4160-c705-a154-c6ffb9b7f7ed",
+    "detoxConfig": {
+      "configurationName": "android.emu.release",
+      "apps": {
+        "default": {
+          "type": "android.apk",
+          "binaryPath": "apps/mobile/android/app/build/outputs/apk/release/app-release.apk",
+          "testBinaryPath": "apps/mobile/android/app/build/outputs/apk/androidTest/release/app-release-androidTest.apk",
+          "build": "cd apps/mobile/android && ./gradlew assembleRelease assembleAndroidTest -DtestBuildType=release"
+        }
+      },
+      "artifacts": {
+        "rootDir": "artifacts/android.emu.release.2026-03-08 22-47-15Z",
+        "plugins": {
+          "log": {
+            "enabled": true,
+            "keepOnlyFailedTestsArtifacts": false
+          },
+          "screenshot": {
+            "enabled": true,
+            "shouldTakeAutomaticSnapshots": false,
+            "keepOnlyFailedTestsArtifacts": false
+          },
+          "video": {
+            "enabled": false,
+            "keepOnlyFailedTestsArtifacts": false
+          },
+          "instruments": {
+            "enabled": false,
+            "keepOnlyFailedTestsArtifacts": false
+          },
+          "uiHierarchy": {
+            "enabled": false,
+            "keepOnlyFailedTestsArtifacts": false
+          }
+        }
+      },
+      "behavior": {
+        "init": {
+          "keepLockFile": false,
+          "reinstallApp": true,
+          "exposeGlobals": true
+        },
+        "cleanup": {
+          "shutdownDevice": false
+        },
+        "launchApp": "auto"
+      },
+      "cli": {
+        "recordLogs": "all",
+        "configPath": "./tests/e2e/mobile/detox.config.cjs",
+        "configuration": "android.emu.release",
+        "start": true
+      },
+      "commands": [
+        {
+          "appName": "default",
+          "build": "cd apps/mobile/android && ./gradlew assembleRelease assembleAndroidTest -DtestBuildType=release"
+        }
+      ],
+      "device": {
+        "type": "android.emulator",
+        "device": {
+          "avdName": "Pixel_6_API_34"
+        }
+      },
+      "logger": {
+        "level": "info",
+        "overrideConsole": true,
+        "options": {
+          "showLoggerName": true,
+          "showPid": true,
+          "showLevel": false,
+          "showMetadata": false,
+          "basepath": "/Users/coding/Projects/notes_brain/node_modules/detox/src",
+          "prefixers": {},
+          "stringifiers": {}
+        }
+      },
+      "testRunner": {
+        "retries": 0,
+        "forwardEnv": false,
+        "detached": false,
+        "bail": false,
+        "noRetryArgs": [
+          "shard"
+        ],
+        "jest": {
+          "setupTimeout": 180000,
+          "teardownTimeout": 30000,
+          "retryAfterCircusRetries": false,
+          "reportWorkerAssign": true
+        },
+        "args": {
+          "$0": "jest",
+          "_": [
+            "tests/e2e/mobile/specs/password-reset.e2e.js"
+          ],
+          "config": "tests/e2e/mobile/jest.config.cjs",
+          "--": []
+        }
+      },
+      "session": {
+        "autoStart": true,
+        "debugSynchronization": 10000
+      }
+    },
+    "detoxIPCServer": "primary-3940",
+    "testResults": [],
+    "testSessionIndex": 0,
+    "workersCount": 0
+  }
+15:47:15.050 detox[3940] i Server path not specified, so defaulting to ipc.config.socketRoot + ipc.config.appspace + ipc.config.id /tmp/detox.primary-3940
+15:47:15.051 detox[3940] i starting server on  /tmp/detox.primary-3940 
+15:47:15.051 detox[3940] i starting TLS server false
+15:47:15.051 detox[3940] i starting server as Unix || Windows Socket
+15:47:15.052 detox[3940] i Detox server listening on localhost:64328...
+15:47:15.054 detox[3940] i Serialized the session state at: /private/var/folders/4z/mqqhpdps32j1l_chr_9wt8rw0000gp/T/fa7d0909-4160-c705-a154-c6ffb9b7f7ed.detox.json
+15:47:15.055 detox[3940] B jest --config tests/e2e/mobile/jest.config.cjs tests/e2e/mobile/specs/password-reset.e2e.js
+15:47:15.057 detox[3940] i (node:3940) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+15:47:15.955 detox[3940] E Command failed with exit code = 1:
+jest --config tests/e2e/mobile/jest.config.cjs tests/e2e/mobile/specs/password-reset.e2e.js
+15:47:15.955 detox[3940] i Detox server has been closed gracefully
+15:47:15.956 detox[3940] E node_modules/.bin/detox test --config-path ./tests/e2e/mobile/detox.config.cjs --configuration android.emu.release tests/e2e/mobile/specs/password-reset.e2e.js --record-logs all

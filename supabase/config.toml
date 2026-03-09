@@ -10,7 +10,7 @@ max_rows = 1000
 [db]
 port = 65422
 shadow_port = 65420
-major_version = 15
+major_version = 17
 
 [studio]
 enabled = true

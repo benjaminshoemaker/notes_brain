@@ -1,0 +1,357 @@
+15:48:17.110 detox[4925] B node_modules/.bin/detox test --config-path ./tests/e2e/mobile/detox.config.cjs --configuration android.emu.release tests/e2e/mobile/specs/password-reset.e2e.js --record-logs all
+  data: {
+    "id": "ecc7232f-01fe-bbc1-71d7-06e72820a3c2",
+    "detoxConfig": {
+      "configurationName": "android.emu.release",
+      "apps": {
+        "default": {
+          "type": "android.apk",
+          "binaryPath": "apps/mobile/android/app/build/outputs/apk/release/app-release.apk",
+          "testBinaryPath": "apps/mobile/android/app/build/outputs/apk/androidTest/release/app-release-androidTest.apk",
+          "build": "cd apps/mobile/android && ./gradlew assembleRelease assembleAndroidTest -DtestBuildType=release"
+        }
+      },
+      "artifacts": {
+        "rootDir": "artifacts/android.emu.release.2026-03-08 22-48-17Z",
+        "plugins": {
+          "log": {
+            "enabled": true,
+            "keepOnlyFailedTestsArtifacts": false
+          },
+          "screenshot": {
+            "enabled": true,
+            "shouldTakeAutomaticSnapshots": false,
+            "keepOnlyFailedTestsArtifacts": false
+          },
+          "video": {
+            "enabled": false,
+            "keepOnlyFailedTestsArtifacts": false
+          },
+          "instruments": {
+            "enabled": false,
+            "keepOnlyFailedTestsArtifacts": false
+          },
+          "uiHierarchy": {
+            "enabled": false,
+            "keepOnlyFailedTestsArtifacts": false
+          }
+        }
+      },
+      "behavior": {
+        "init": {
+          "keepLockFile": false,
+          "reinstallApp": true,
+          "exposeGlobals": true
+        },
+        "cleanup": {
+          "shutdownDevice": false
+        },
+        "launchApp": "auto"
+      },
+      "cli": {
+        "recordLogs": "all",
+        "configPath": "./tests/e2e/mobile/detox.config.cjs",
+        "configuration": "android.emu.release",
+        "start": true
+      },
+      "commands": [
+        {
+          "appName": "default",
+          "build": "cd apps/mobile/android && ./gradlew assembleRelease assembleAndroidTest -DtestBuildType=release"
+        }
+      ],
+      "device": {
+        "type": "android.emulator",
+        "device": {
+          "avdName": "Pixel_6_API_34"
+        }
+      },
+      "logger": {
+        "level": "info",
+        "overrideConsole": true,
+        "options": {
+          "showLoggerName": true,
+          "showPid": true,
+          "showLevel": false,
+          "showMetadata": false,
+          "basepath": "/Users/coding/Projects/notes_brain/node_modules/detox/src",
+          "prefixers": {},
+          "stringifiers": {}
+        }
+      },
+      "testRunner": {
+        "retries": 0,
+        "forwardEnv": false,
+        "detached": false,
+        "bail": false,
+        "noRetryArgs": [
+          "shard"
+        ],
+        "jest": {
+          "setupTimeout": 180000,
+          "teardownTimeout": 30000,
+          "retryAfterCircusRetries": false,
+          "reportWorkerAssign": true
+        },
+        "args": {
+          "$0": "jest",
+          "_": [
+            "tests/e2e/mobile/specs/password-reset.e2e.js"
+          ],
+          "config": "tests/e2e/mobile/jest.config.cjs",
+          "--": []
+        }
+      },
+      "session": {
+        "autoStart": true,
+        "debugSynchronization": 10000
+      }
+    },
+    "detoxIPCServer": "primary-4925",
+    "testResults": [],
+    "testSessionIndex": 0,
+    "workersCount": 0
+  }
+15:48:17.114 detox[4925] i Server path not specified, so defaulting to ipc.config.socketRoot + ipc.config.appspace + ipc.config.id /tmp/detox.primary-4925
+15:48:17.115 detox[4925] i starting server on  /tmp/detox.primary-4925 
+15:48:17.115 detox[4925] i starting TLS server false
+15:48:17.115 detox[4925] i starting server as Unix || Windows Socket
+15:48:17.116 detox[4925] i Detox server listening on localhost:64649...
+15:48:17.118 detox[4925] i Serialized the session state at: /private/var/folders/4z/mqqhpdps32j1l_chr_9wt8rw0000gp/T/ecc7232f-01fe-bbc1-71d7-06e72820a3c2.detox.json
+15:48:17.119 detox[4925] B jest --config tests/e2e/mobile/jest.config.cjs tests/e2e/mobile/specs/password-reset.e2e.js
+15:48:17.121 detox[4925] i (node:4925) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+15:48:17.682 detox[4926] i Service path not specified, so defaulting to ipc.config.socketRoot + ipc.config.appspace + id 
+15:48:17.683 detox[4925] i ## socket connection to server detected ##
+15:48:17.683 detox[4926] i requested connection to  primary-4925 /tmp/detox.primary-4925
+15:48:17.683 detox[4926] i Connecting client on Unix Socket : /tmp/detox.primary-4925
+15:48:17.683 detox[4926] i retrying reset
+15:48:17.683 detox[4926] i dispatching event to  primary-4925 /tmp/detox.primary-4925  :  registerContext , { id: 'secondary-4926' }
+15:48:17.684 detox[4925] i received event of :  registerContext { id: 'secondary-4926' }
+15:48:17.684 detox[4925] i dispatching event to socket  :  registerContextDone {
+  testResults: [],
+  testSessionIndex: 0,
+  unsafe_earlyTeardown: undefined
+}
+15:48:17.684 detox[4926] i ## received events ##
+15:48:17.685 detox[4926] i detected event registerContextDone { testResults: [], testSessionIndex: 0 }
+15:48:17.760 detox[4926] B tests/e2e/mobile/specs/password-reset.e2e.js
+15:48:17.771 detox[4926] B set up environment
+15:48:17.772 detox[4925] i received event of :  registerWorker { workerId: 'w1' }
+15:48:17.772 detox[4925] i dispatching event to socket  :  registerWorkerDone { workersCount: 1 }
+15:48:17.772 detox[4925] i broadcasting event to all known sockets listening to  /tmp/detox.primary-4925  :   sessionStateUpdate { workersCount: 1 }
+15:48:17.772 detox[4926] i dispatching event to  primary-4925 /tmp/detox.primary-4925  :  registerWorker , { workerId: 'w1' }
+15:48:17.772 detox[4926] i ## received events ##
+15:48:17.772 detox[4926] i detected event registerWorkerDone { workersCount: 1 }
+15:48:17.920 detox[4926] i ## received events ##
+15:48:17.921 detox[4926] i detected event sessionStateUpdate { workersCount: 1 }
+15:48:17.924 detox[4925] B connection :64649<->:64655
+15:48:17.925 detox[4926] i opened web socket to: ws://localhost:64649
+15:48:17.926 detox[4926] i send message
+  data: {"type":"login","params":{"sessionId":"62ced444-be3f-f498-5434-9ecf90ec9138","role":"tester"},"messageId":0}
+15:48:17.927 detox[4925] i get
+  data: {"type":"login","params":{"sessionId":"62ced444-be3f-f498-5434-9ecf90ec9138","role":"tester"},"messageId":0}
+15:48:17.927 detox[4925] i created session 62ced444-be3f-f498-5434-9ecf90ec9138
+15:48:17.927 detox[4925] i send
+  data: {
+    "type": "loginSuccess",
+    "params": {
+      "testerConnected": true,
+      "appConnected": false
+    },
+    "messageId": 0
+  }
+15:48:17.927 detox[4925] i tester joined session 62ced444-be3f-f498-5434-9ecf90ec9138
+15:48:17.928 detox[4926] i get message
+  data: {"type":"loginSuccess","params":{"testerConnected":true,"appConnected":false},"messageId":0}
+   
+15:48:17.954 detox[4925] i received event of :  allocateDevice {
+  deviceConfig: { type: 'android.emulator', device: { avdName: 'Pixel_6_API_34' } }
+}
+15:48:17.954 detox[4926] i dispatching event to  primary-4925 /tmp/detox.primary-4925  :  allocateDevice , {
+  deviceConfig: { type: 'android.emulator', device: { avdName: 'Pixel_6_API_34' } }
+}
+15:48:17.970 detox[4925] B init
+  args: ()
+15:48:17.972 detox[4925] E init
+15:48:17.972 detox[4925] B allocate
+  data: {
+    "type": "android.emulator",
+    "device": {
+      "avdName": "Pixel_6_API_34"
+    }
+  }
+15:48:18.024 detox[4925] E allocate
+  error: Cannot boot Android Emulator with the name: 'Pixel_6_API_34'
+  
+  HINT: Make sure you choose one of the available emulators: Medium_Phone_API_36.1,Pixel_9
+15:48:18.025 detox[4925] i dispatching event to socket  :  allocateDeviceDone {
+  error: {
+    name: 'DetoxRuntimeError',
+    message: "Cannot boot Android Emulator with the name: 'Pixel_6_API_34'\n" +
+      '\n' +
+      'HINT: Make sure you choose one of the available emulators: Medium_Phone_API_36.1,Pixel_9',
+    stack: "DetoxRuntimeError: Cannot boot Android Emulator with the name: 'Pixel_6_API_34'\n" +
+      '\n' +
+      'HINT: Make sure you choose one of the available emulators: Medium_Phone_API_36.1,Pixel_9\n' +
+      '    at AVDValidator._assertAVDMatch (/Users/coding/Projects/notes_brain/node_modules/detox/src/devices/allocation/drivers/android/emulator/AVDValidator.js:36:13)\n' +
+      '    at AVDValidator.validate (/Users/coding/Projects/notes_brain/node_modules/detox/src/devices/allocation/drivers/android/emulator/AVDValidator.js:18:16)\n' +
+      '    at async EmulatorAllocDriver.allocate (/Users/coding/Projects/notes_brain/node_modules/detox/src/devices/allocation/drivers/android/emulator/EmulatorAllocDriver.js:56:5)\n' +
+      '    at async /Users/coding/Projects/notes_brain/node_modules/detox/src/devices/allocation/DeviceAllocator.js:44:22'
+  }
+}
+15:48:18.025 detox[4926] i ## received events ##
+15:48:18.025 detox[4926] i detected event allocateDeviceDone {
+  error: {
+    name: 'DetoxRuntimeError',
+    message: "Cannot boot Android Emulator with the name: 'Pixel_6_API_34'\n" +
+      '\n' +
+      'HINT: Make sure you choose one of the available emulators: Medium_Phone_API_36.1,Pixel_9',
+    stack: "DetoxRuntimeError: Cannot boot Android Emulator with the name: 'Pixel_6_API_34'\n" +
+      '\n' +
+      'HINT: Make sure you choose one of the available emulators: Medium_Phone_API_36.1,Pixel_9\n' +
+      '    at AVDValidator._assertAVDMatch (/Users/coding/Projects/notes_brain/node_modules/detox/src/devices/allocation/drivers/android/emulator/AVDValidator.js:36:13)\n' +
+      '    at AVDValidator.validate (/Users/coding/Projects/notes_brain/node_modules/detox/src/devices/allocation/drivers/android/emulator/AVDValidator.js:18:16)\n' +
+      '    at async EmulatorAllocDriver.allocate (/Users/coding/Projects/notes_brain/node_modules/detox/src/devices/allocation/drivers/android/emulator/EmulatorAllocDriver.js:56:5)\n' +
+      '    at async /Users/coding/Projects/notes_brain/node_modules/detox/src/devices/allocation/DeviceAllocator.js:44:22'
+  }
+}
+15:48:18.026 detox[4926] E set up environment
+  error: DetoxRuntimeError: Cannot boot Android Emulator with the name: 'Pixel_6_API_34'
+  
+  HINT: Make sure you choose one of the available emulators: Medium_Phone_API_36.1,Pixel_9
+      at AVDValidator._assertAVDMatch (/Users/coding/Projects/notes_brain/node_modules/detox/src/devices/allocation/drivers/android/emulator/AVDValidator.js:36:13)
+      at AVDValidator.validate (/Users/coding/Projects/notes_brain/node_modules/detox/src/devices/allocation/drivers/android/emulator/AVDValidator.js:18:16)
+      at async EmulatorAllocDriver.allocate (/Users/coding/Projects/notes_brain/node_modules/detox/src/devices/allocation/drivers/android/emulator/EmulatorAllocDriver.js:56:5)
+      at async /Users/coding/Projects/notes_brain/node_modules/detox/src/devices/allocation/DeviceAllocator.js:44:22
+15:48:18.026 detox[4926] B tear down environment
+15:48:18.026 detox[4926] B onBeforeCleanup
+  args: ()
+15:48:18.028 detox[4926] i saving FileArtifact to: artifacts/android.emu.release.2026-03-08 22-48-17Z/detox_pid_4926.json.log { append: true }
+15:48:18.028 detox[4926] i saving FileArtifact to: artifacts/android.emu.release.2026-03-08 22-48-17Z/detox_pid_4926.log { append: true }
+15:48:18.028 detox[4926] E onBeforeCleanup
+15:48:18.029 detox[4925] i tester exited session 62ced444-be3f-f498-5434-9ecf90ec9138
+15:48:18.029 detox[4925] E connection :64649<->:64655
+15:48:18.029 detox[4926] E tear down environment
+15:48:18.029 detox[4926] E tests/e2e/mobile/specs/password-reset.e2e.js
+15:48:18.044 detox[4925] i received event of :  reportTestResults {
+  testResults: [
+    {
+      success: false,
+      testFilePath: '/Users/coding/Projects/notes_brain/tests/e2e/mobile/specs/password-reset.e2e.js',
+      testExecError: {
+        name: 'DetoxRuntimeError',
+        message: "Cannot boot Android Emulator with the name: 'Pixel_6_API_34'\n" +
+          '\n' +
+          'HINT: Make sure you choose one of the available emulators: Medium_Phone_API_36.1,Pixel_9',
+        stack: "DetoxRuntimeError: Cannot boot Android Emulator with the name: 'Pixel_6_API_34'\n" +
+          '\n' +
+          'HINT: Make sure you choose one of the available emulators: Medium_Phone_API_36.1,Pixel_9\n' +
+          '    at AVDValidator._assertAVDMatch (/Users/coding/Projects/notes_brain/node_modules/detox/src/devices/allocation/drivers/android/emulator/AVDValidator.js:36:13)\n' +
+          '    at AVDValidator.validate (/Users/coding/Projects/notes_brain/node_modules/detox/src/devices/allocation/drivers/android/emulator/AVDValidator.js:18:16)\n' +
+          '    at async EmulatorAllocDriver.allocate (/Users/coding/Projects/notes_brain/node_modules/detox/src/devices/allocation/drivers/android/emulator/EmulatorAllocDriver.js:56:5)\n' +
+          '    at async /Users/coding/Projects/notes_brain/node_modules/detox/src/devices/allocation/DeviceAllocator.js:44:22'
+      },
+      isPermanentFailure: false
+    }
+  ]
+}
+15:48:18.044 detox[4925] i dispatching event to socket  :  reportTestResultsDone {
+  testResults: [
+    {
+      success: false,
+      testFilePath: '/Users/coding/Projects/notes_brain/tests/e2e/mobile/specs/password-reset.e2e.js',
+      testExecError: {
+        name: 'DetoxRuntimeError',
+        message: "Cannot boot Android Emulator with the name: 'Pixel_6_API_34'\n" +
+          '\n' +
+          'HINT: Make sure you choose one of the available emulators: Medium_Phone_API_36.1,Pixel_9',
+        stack: "DetoxRuntimeError: Cannot boot Android Emulator with the name: 'Pixel_6_API_34'\n" +
+          '\n' +
+          'HINT: Make sure you choose one of the available emulators: Medium_Phone_API_36.1,Pixel_9\n' +
+          '    at AVDValidator._assertAVDMatch (/Users/coding/Projects/notes_brain/node_modules/detox/src/devices/allocation/drivers/android/emulator/AVDValidator.js:36:13)\n' +
+          '    at AVDValidator.validate (/Users/coding/Projects/notes_brain/node_modules/detox/src/devices/allocation/drivers/android/emulator/AVDValidator.js:18:16)\n' +
+          '    at async EmulatorAllocDriver.allocate (/Users/coding/Projects/notes_brain/node_modules/detox/src/devices/allocation/drivers/android/emulator/EmulatorAllocDriver.js:56:5)\n' +
+          '    at async /Users/coding/Projects/notes_brain/node_modules/detox/src/devices/allocation/DeviceAllocator.js:44:22'
+      },
+      isPermanentFailure: false
+    }
+  ]
+}
+15:48:18.044 detox[4925] i broadcasting event to all known sockets listening to  /tmp/detox.primary-4925  :   sessionStateUpdate {
+  testResults: [
+    {
+      success: false,
+      testFilePath: '/Users/coding/Projects/notes_brain/tests/e2e/mobile/specs/password-reset.e2e.js',
+      testExecError: {
+        name: 'DetoxRuntimeError',
+        message: "Cannot boot Android Emulator with the name: 'Pixel_6_API_34'\n" +
+          '\n' +
+          'HINT: Make sure you choose one of the available emulators: Medium_Phone_API_36.1,Pixel_9',
+        stack: "DetoxRuntimeError: Cannot boot Android Emulator with the name: 'Pixel_6_API_34'\n" +
+          '\n' +
+          'HINT: Make sure you choose one of the available emulators: Medium_Phone_API_36.1,Pixel_9\n' +
+          '    at AVDValidator._assertAVDMatch (/Users/coding/Projects/notes_brain/node_modules/detox/src/devices/allocation/drivers/android/emulator/AVDValidator.js:36:13)\n' +
+          '    at AVDValidator.validate (/Users/coding/Projects/notes_brain/node_modules/detox/src/devices/allocation/drivers/android/emulator/AVDValidator.js:18:16)\n' +
+          '    at async EmulatorAllocDriver.allocate (/Users/coding/Projects/notes_brain/node_modules/detox/src/devices/allocation/drivers/android/emulator/EmulatorAllocDriver.js:56:5)\n' +
+          '    at async /Users/coding/Projects/notes_brain/node_modules/detox/src/devices/allocation/DeviceAllocator.js:44:22'
+      },
+      isPermanentFailure: false
+    }
+  ]
+}
+15:48:18.044 detox[4926] i dispatching event to  primary-4925 /tmp/detox.primary-4925  :  reportTestResults , {
+  testResults: [
+    {
+      success: false,
+      testFilePath: '/Users/coding/Projects/notes_brain/tests/e2e/mobile/specs/password-reset.e2e.js',
+      testExecError: {
+        name: 'DetoxRuntimeError',
+        message: "Cannot boot Android Emulator with the name: 'Pixel_6_API_34'\n" +
+          '\n' +
+          'HINT: Make sure you choose one of the available emulators: Medium_Phone_API_36.1,Pixel_9',
+        stack: "DetoxRuntimeError: Cannot boot Android Emulator with the name: 'Pixel_6_API_34'\n" +
+          '\n' +
+          'HINT: Make sure you choose one of the available emulators: Medium_Phone_API_36.1,Pixel_9\n' +
+          '    at AVDValidator._assertAVDMatch (/Users/coding/Projects/notes_brain/node_modules/detox/src/devices/allocation/drivers/android/emulator/AVDValidator.js:36:13)\n' +
+          '    at AVDValidator.validate (/Users/coding/Projects/notes_brain/node_modules/detox/src/devices/allocation/drivers/android/emulator/AVDValidator.js:18:16)\n' +
+          '    at async EmulatorAllocDriver.allocate (/Users/coding/Projects/notes_brain/node_modules/detox/src/devices/allocation/drivers/android/emulator/EmulatorAllocDriver.js:56:5)\n' +
+          '    at async /Users/coding/Projects/notes_brain/node_modules/detox/src/devices/allocation/DeviceAllocator.js:44:22'
+      },
+      isPermanentFailure: false
+    }
+  ]
+}
+15:48:18.044 detox[4926] i ## received events ##
+15:48:18.044 detox[4926] i detected event reportTestResultsDone {
+  testResults: [
+    {
+      success: false,
+      testFilePath: '/Users/coding/Projects/notes_brain/tests/e2e/mobile/specs/password-reset.e2e.js',
+      testExecError: {
+        name: 'DetoxRuntimeError',
+        message: "Cannot boot Android Emulator with the name: 'Pixel_6_API_34'\n" +
+          '\n' +
+          'HINT: Make sure you choose one of the available emulators: Medium_Phone_API_36.1,Pixel_9',
+        stack: "DetoxRuntimeError: Cannot boot Android Emulator with the name: 'Pixel_6_API_34'\n" +
+          '\n' +
+          'HINT: Make sure you choose one of the available emulators: Medium_Phone_API_36.1,Pixel_9\n' +
+          '    at AVDValidator._assertAVDMatch (/Users/coding/Projects/notes_brain/node_modules/detox/src/devices/allocation/drivers/android/emulator/AVDValidator.js:36:13)\n' +
+          '    at AVDValidator.validate (/Users/coding/Projects/notes_brain/node_modules/detox/src/devices/allocation/drivers/android/emulator/AVDValidator.js:18:16)\n' +
+          '    at async EmulatorAllocDriver.allocate (/Users/coding/Projects/notes_brain/node_modules/detox/src/devices/allocation/drivers/android/emulator/EmulatorAllocDriver.js:56:5)\n' +
+          '    at async /Users/coding/Projects/notes_brain/node_modules/detox/src/devices/allocation/DeviceAllocator.js:44:22'
+      },
+      isPermanentFailure: false
+    }
+  ]
+}
+15:48:18.045 detox[4925] i socket disconnected secondary-4926
+15:48:18.045 detox[4926] i connection closed primary-4925 /tmp/detox.primary-4925 0 tries remaining of 0
+15:48:18.045 detox[4926] i secondary-4926 exceeded connection rety amount of  or stopRetrying flag set.
+15:48:18.149 detox[4925] E Command failed with exit code = 1:
+jest --config tests/e2e/mobile/jest.config.cjs tests/e2e/mobile/specs/password-reset.e2e.js
+15:48:18.149 detox[4925] B cleanup
+  args: ()
+15:48:18.150 detox[4925] E cleanup
+15:48:18.150 detox[4925] i Detox server has been closed gracefully
+15:48:18.151 detox[4925] E node_modules/.bin/detox test --config-path ./tests/e2e/mobile/detox.config.cjs --configuration android.emu.release tests/e2e/mobile/specs/password-reset.e2e.js --record-logs all

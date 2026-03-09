@@ -1,0 +1,348 @@
+--------- beginning of main
+03-09 01:30:09.385 18532 18579 I DetoxActionHandlers: Test exception
+03-09 01:30:09.385 18532 18579 I DetoxActionHandlers: java.lang.reflect.InvocationTargetException
+03-09 01:30:09.385 18532 18579 I DetoxActionHandlers: 	at java.lang.reflect.Method.invoke(Native Method)
+03-09 01:30:09.385 18532 18579 I DetoxActionHandlers: 	at org.apache.commons.lang3.reflect.MethodUtils.invokeStaticMethod(MethodUtils.java:443)
+03-09 01:30:09.385 18532 18579 I DetoxActionHandlers: 	at org.apache.commons.lang3.reflect.MethodUtils.invokeStaticMethod(MethodUtils.java:405)
+03-09 01:30:09.385 18532 18579 I DetoxActionHandlers: 	at com.wix.invoke.types.ClassTarget.execute(ClassTarget.java:23)
+03-09 01:30:09.385 18532 18579 I DetoxActionHandlers: 	at com.wix.invoke.types.Target.invoke(Target.java:59)
+03-09 01:30:09.385 18532 18579 I DetoxActionHandlers: 	at com.wix.invoke.MethodInvocation.invoke(MethodInvocation.java:35)
+03-09 01:30:09.385 18532 18579 I DetoxActionHandlers: 	at com.wix.invoke.MethodInvocation.invoke(MethodInvocation.java:26)
+03-09 01:30:09.385 18532 18579 I DetoxActionHandlers: 	at com.wix.invoke.MethodInvocation.invoke(MethodInvocation.java:20)
+03-09 01:30:09.385 18532 18579 I DetoxActionHandlers: 	at com.wix.detox.adapters.server.InvokeActionHandler.handle(DetoxActionHandlers.kt:54)
+03-09 01:30:09.385 18532 18579 I DetoxActionHandlers: 	at com.wix.detox.adapters.server.ActionsExecutor.executeAction$lambda$2$lambda$1(DetoxActionsDispatcher.kt:76)
+03-09 01:30:09.385 18532 18579 I DetoxActionHandlers: 	at com.wix.detox.adapters.server.ActionsExecutor.$r8$lambda$GVbB7LHtBHxNHGbgYnHJ6YrwCqs(Unknown Source:0)
+03-09 01:30:09.385 18532 18579 I DetoxActionHandlers: 	at com.wix.detox.adapters.server.ActionsExecutor$$ExternalSyntheticLambda0.run(D8$$SyntheticClass:0)
+03-09 01:30:09.385 18532 18579 I DetoxActionHandlers: 	at android.os.Handler.handleCallback(Handler.java:995)
+03-09 01:30:09.385 18532 18579 I DetoxActionHandlers: 	at android.os.Handler.dispatchMessage(Handler.java:103)
+03-09 01:30:09.385 18532 18579 I DetoxActionHandlers: 	at android.os.Looper.loopOnce(Looper.java:248)
+03-09 01:30:09.385 18532 18579 I DetoxActionHandlers: 	at android.os.Looper.loop(Looper.java:338)
+03-09 01:30:09.385 18532 18579 I DetoxActionHandlers: 	at com.wix.detox.adapters.server.ActionsExecutor._init_$lambda$0(DetoxActionsDispatcher.kt:62)
+03-09 01:30:09.385 18532 18579 I DetoxActionHandlers: 	at com.wix.detox.adapters.server.ActionsExecutor.$r8$lambda$xlgL0CQim6vNM0wWEqM8JIDgZUE(Unknown Source:0)
+03-09 01:30:09.385 18532 18579 I DetoxActionHandlers: 	at com.wix.detox.adapters.server.ActionsExecutor$$ExternalSyntheticLambda1.run(D8$$SyntheticClass:0)
+03-09 01:30:09.385 18532 18579 I DetoxActionHandlers: 	at java.lang.Thread.run(Thread.java:1119)
+03-09 01:30:09.385 18532 18579 I DetoxActionHandlers: Caused by: androidx.test.espresso.base.RootViewPicker$RootViewWithoutFocusException: Waited for the root of the view hierarchy to have window focus and not request layout for 10 seconds. If you specified a non default root matcher, it may be picking a root that never takes focus. Root:
+03-09 01:30:09.385 18532 18579 I DetoxActionHandlers: Root{application-window-token=android.view.ViewRootImpl$W@6bc7802, window-token=android.view.ViewRootImpl$W@6bc7802, has-window-focus=false, layout-params-type=1, layout-params-string={(0,0)(fillxfill) sim={adjust=resize forwardNavigation} layoutInDisplayCutoutMode=always ty=BASE_APPLICATION wanim=0x103030e
+03-09 01:30:09.385 18532 18579 I DetoxActionHandlers:   fl=LAYOUT_IN_SCREEN LAYOUT_INSET_DECOR SPLIT_TOUCH HARDWARE_ACCELERATED DRAWS_SYSTEM_BAR_BACKGROUNDS
+03-09 01:30:09.385 18532 18579 I DetoxActionHandlers:   pfl=NO_MOVE_ANIMATION EDGE_TO_EDGE_ENFORCED FORCE_DRAW_STATUS_BAR_BACKGROUND FIT_INSETS_CONTROLLED
+03-09 01:30:09.385 18532 18579 I DetoxActionHandlers:   bhv=DEFAULT
+03-09 01:30:09.385 18532 18579 I DetoxActionHandlers:   fitSides=
+03-09 01:30:09.385 18532 18579 I DetoxActionHandlers:   frameRateBoostOnTouch=true
+03-09 01:30:09.385 18532 18579 I DetoxActionHandlers:   dvrrWindowF--------- beginning of main
+03-09 01:30:13.590 19045 19045 I notesbrain.echo: Using CollectorTypeCMC GC.
+03-09 01:30:13.593 19045 19045 E notesbrain.echo: Not starting debugger since process cannot load the jdwp agent.
+03-09 01:30:13.594 19045 19045 D nativeloader: Load libframework-connectivity-tiramisu-jni.so using APEX ns com_android_tethering for caller /apex/com.android.tethering/javalib/framework-connectivity-t.jar: ok
+--------- beginning of system
+03-09 01:30:13.608 19045 19045 W ActivityThread: Package uses different ABI(s) than its instrumentation: package[com.notesbrain.echo]: arm64-v8a, null instrumentation[com.notesbrain.echo.test]: null, null
+03-09 01:30:13.610 19045 19045 W notesbrain.echo: ClassLoaderContext shared library size mismatch. Expected=2, found=0 (PCL[]{PCL[/system/framework/android.test.base.jar*2789897741]#PCL[/system/framework/android.test.mock.jar*3361312393]} | PCL[])
+03-09 01:30:13.610 19045 19045 W notesbrain.echo: ClassLoaderContext classpath size mismatch. expected=0, found=1 (PCL[] | PCL[/system/framework/android.test.runner.jar*895143020])
+03-09 01:30:13.611 19045 19045 W notesbrain.echo: ClassLoaderContext classpath size mismatch. expected=0, found=2 (PCL[] | PCL[/system/framework/android.test.runner.jar*895143020:/system/framework/android.test.mock.jar*3361312393])
+03-09 01:30:13.611 19045 19045 W notesbrain.echo: ClassLoaderContext classpath size mismatch. expected=0, found=3 (PCL[]{PCL[/system/framework/android.test.base.jar*2789897741]#PCL[/system/framework/android.test.mock.jar*3361312393]#PCL[/system/framework/android.test.runner.jar*895143020]{PCL[/system/framework/android.test.base.jar*2789897741]#PCL[/system/framework/android.test.mock.jar*3361312393]}} | PCL[/system/framework/android.test.runner.jar*895143020:/system/framework/android.test.mock.jar*3361312393:/system/framework/android.test.base.jar*2789897741])
+03-09 01:30:13.612 19045 19045 W notesbrain.echo: ClassLoaderContext classpath size mismatch. expected=0, found=4 (PCL[] | PCL[/system/framework/android.test.runner.jar*895143020:/system/framework/android.test.mock.jar*3361312393:/system/framework/android.test.base.jar*2789897741:/data/app/~~xiTg5hs3jCLxb8g-gWYF-Q==/com.notesbrain.echo.test-wlNP-1W_YL1Yb3A14gB6FQ==/base.apk*205880600])
+03-09 01:30:13.613 19045 19045 D nativeloader: Configuring clns-9 for other apk /system/framework/android.test.runner.jar:/system/framework/android.test.mock.jar:/system/framework/android.test.base.jar:/data/app/~~xiTg5hs3jCLxb8g-gWYF-Q==/com.notesbrain.echo.test-wlNP-1W_YL1Yb3A14gB6FQ==/base.apk:/data/app/~~G4WkLMCTy_gONrfYdT0gjg==/com.notesbrain.echo-YY9p3W9DuQ41vH06d-QrWw==/base.apk. target_sdk_version=36, uses_libraries=, library_path=/data/app/~~xiTg5hs3jCLxb8g-gWYF-Q==/com.notesbrain.echo.test-wlNP-1W_YL1Yb3A14gB6FQ==/lib/arm64:/data/app/~~G4WkLMCTy_gONrfYdT0gjg==/com.notesbrain.echo-YY9p3W9DuQ41vH06d-QrWw==/lib/arm64:/data/app/~~xiTg5hs3jCLxb8g-gWYF-Q==/com.notesbrain.echo.test-wlNP-1W_YL1Yb3A14gB6FQ==/base.apk!/lib/arm64-v8a:/data/app/~~G4WkLMCTy_gONrfYdT0gjg==/com.notesbrain.echo-YY9p3W9DuQ41vH06d-QrWw==/base.apk!/lib/arm64-v8a, permitted_path=/data:/mnt/expand:/data/user/0/com.notesbrain.echo
+03-09 01:30:13.614 19045 19045 I notesbrain.echo: AssetManager2(0xb400007662c42818) locale list changing from [] to [en-US]
+03-09 01:30:13.617 19045 19045 V GraphicsEnvironment: Currently set values for:
+03-09 01:30:13.617 19045 19045 V GraphicsEnvironment:   angle_gl_driver_selection_pkgs=[]
+03-09 01:30:13.617 19045 19045 V GraphicsEnvironment:   angle_gl_driver_selection_values=[]
+03-09 01:30:13.617 19045 19045 V GraphicsEnvironment: com.notesbrain.echo is not listed in per-application setting
+03-09 01:30:13.617 19045 19045 V GraphicsEnvironment: ANGLE allowlist from config: com.dreamgames.royalmatch com.dts.freefiremax com.dxx.firenow com.gramgames.mergedragons com.ludo.king com.mojang.minecraftpe com.my.defense com.nintendo.zaka com.os.airforce com.playrix.fishdomdd.gplay io.teslatech.callbreak jp.konami.prospia net.peakgames.toonblast
+03-09 01:30:13.617 19045 19045 V GraphicsEnvironment: com.notesbrain.echo is not listed in ANGLE allowlist or settings, returning default
+03-09 01:30:13.617 19045 19045 V GraphicsEnvironment: Neither updatable production driver nor prerelease driver is supported.
+03-09 01:30:13.618 19045 19045 D ApplicationLoaders: Returning zygote-cached class loader: /system/framework/android.test.base.jar
+03-09 01:30:13.618 19045 19045 D nativeloader: Configuring clns-10 for other apk /system/framework/android.test.mock.jar. target_sdk_version=36, uses_libraries=ALL, library_path=/data/app/~~xiTg5hs3jCLxb8g-gWYF-Q==/com.notesbrain.echo.test-wlNP-1W_YL1Yb3A14gB6FQ==/lib/arm64:/data/app/~~G4WkLMCTy_gONrfYdT0gjg==/com.notesbrain.echo-YY9p3W9DuQ41vH06d-QrWw==/lib/arm64, permitted_path=/data:/mnt/expand
+03-09 01:30:13.618 19045 19045 D ApplicationLoaders: Returning zygote-cached class loader: /system/framework/android.test.base.jar
+03-09 01:30:13.619 19045 19045 D nativeloader: Configuring clns-11 for other apk /system/framework/android.test.runner.jar. target_sdk_version=36, uses_libraries=ALL, library_path=/data/app/~~xiTg5hs3jCLxb8g-gWYF-Q==/com.notesbrain.echo.test-wlNP-1W_YL1Yb3A14gB6FQ==/lib/arm64:/data/app/~~G4WkLMCTy_gONrfYdT0gjg==/com.notesbrain.echo-YY9p3W9DuQ41vH06d-QrWw==/lib/arm64, permitted_path=/data:/mnt/expand
+03-09 01:30:13.619 19045 19045 W notesbrain.echo: ClassLoaderContext shared library size mismatch. Expected=2, found=3 (PCL[]{PCL[/system/framework/android.test.base.jar*2789897741]#PCL[/system/framework/android.test.mock.jar*3361312393]} | PCL[]{PCL[/system/framework/android.test.base.jar*2789897741]#PCL[/system/framework/android.test.mock.jar*3361312393]#PCL[/system/framework/android.test.runner.jar*895143020]{PCL[/system/framework/android.test.base.jar*2789897741]#PCL[/system/framework/android.test.mock.jar*3361312393]}};PCL[/system/framework/android.test.runner.jar*895143020:/system/framework/android.test.mock.jar*3361312393:/system/framework/android.test.base.jar*2789897741:/data/app/~~xiTg5hs3jCLxb8g-gWYF-Q==/com.notesbrain.echo.test-wlNP-1W_YL1Yb3A14gB6FQ==/base.apk*205880600:/data/app/~~G4WkLMCTy_gONrfYdT0gjg==/com.notesbrain.echo-YY9p3W9DuQ41vH06d-QrWw==/base.apk*1950520045])
+03-09 01:30:13.619 19045 19045 W notesbrain.echo: ClassLoaderContext classpath size mismatch. expected=0, found=1 (PCL[] | PCL[/system/framework/android.test.runner.jar*895143020]{PCL[/system/framework/android.test.base.jar*2789897741]#PCL[/system/framework/android.test.mock.jar*3361312393]#PCL[/system/framework/android.test.runner.jar*895143020]{PCL[/system/framework/android.test.base.jar*2789897741]#PCL[/system/framework/android.test.mock.jar*3361312393]}};PCL[/system/framework/android.test.runner.jar*895143020:/system/framework/android.test.mock.jar*3361312393:/system/framework/android.test.base.jar*2789897741:/data/app/~~xiTg5hs3jCLxb8g-gWYF-Q==/com.notesbrain.echo.test-wlNP-1W_YL1Yb3A14gB6FQ==/base.apk*205880600:/data/app/~~G4WkLMCTy_gONrfYdT0gjg==/com.notesbrain.echo-YY9p3W9DuQ41vH06d-QrWw==/base.apk*1950520045])
+03-09 01:30:13.619 19045 19045 W notesbrain.echo: ClassLoaderContext classpath size mismatch. expected=0, found=2 (PCL[] | PCL[/system/framework/android.test.runner.jar*895143020:/system/framework/android.test.mock.jar*3361312393]{PCL[/system/framework/android.test.base.jar*2789897741]#PCL[/system/framework/android.test.mock.jar*3361312393]#PCL[/system/framework/android.test.runner.jar*895143020]{PCL[/system/framework/android.test.base.jar*2789897741]#PCL[/system/framework/android.test.mock.jar*3361312393]}};PCL[/system/framework/android.test.runner.jar*895143020:/system/framework/android.test.mock.jar*3361312393:/system/framework/android.test.base.jar*2789897741:/data/app/~~xiTg5hs3jCLxb8g-gWYF-Q==/com.notesbrain.echo.test-wlNP-1W_YL1Yb3A14gB6FQ==/base.apk*205880600:/data/app/~~G4WkLMCTy_gONrfYdT0gjg==/com.notesbrain.echo-YY9p3W9DuQ41vH06d-QrWw==/base.apk*1950520045])
+03-09 01:30:13.620 19045 19045 W notesbrain.echo: ClassLoaderContext classpath size mismatch. expected=0, found=3 (PCL[]{PCL[/system/framework/android.test.base.jar*2789897741]#PCL[/system/framework/android.test.mock.jar*3361312393]#PCL[/system/framework/android.test.runner.jar*895143020]{PCL[/system/framework/android.test.base.jar*2789897741]#PCL[/system/framework/android.test.mock.jar*3361312393]}} | PCL[/system/framework/android.test.runner.jar*895143020:/system/framework/android.test.mock.jar*3361312393:/system/framework/android.test.base.jar*2789897741]{PCL[/system/framework/android.test.base.jar*2789897741]#PCL[/system/framework/android.test.mock.jar*3361312393]#PCL[/system/framework/android.test.runner.jar*895143020]{PCL[/system/framework/android.test.base.jar*2789897741]#PCL[/system/framework/android.test.mock.jar*3361312393]}};PCL[/system/framework/android.test.runner.jar*895143020:/system/framework/android.test.mock.jar*3361312393:/system/framework/android.test.base.jar*2789897741:/data/app/~~xiTg5hs3jCLxb8g-gWYF-Q==/com.notesbrain.echo.test-wlNP-1W_YL1Yb3A14gB6FQ==/base.apk*205880600:/data/app/~~G4WkLMCTy_gONrfYdT0gjg==/com.notesbrain.echo-YY9p3W9DuQ41vH06d-QrWw==/base.apk*1950520045])
+03-09 01:30:13.620 19045 19045 W notesbrain.echo: ClassLoaderContext classpath size mismatch. expected=0, found=4 (PCL[] | PCL[/system/framework/android.test.runner.jar*895143020:/system/framework/android.test.mock.jar*3361312393:/system/framework/android.test.base.jar*2789897741:/data/app/~~xiTg5hs3jCLxb8g-gWYF-Q==/com.notesbrain.echo.test-wlNP-1W_YL1Yb3A14gB6FQ==/base.apk*205880600]{PCL[/system/framework/android.test.base.jar*2789897741]#PCL[/system/framework/android.test.mock.jar*3361312393]#PCL[/system/framework/android.test.runner.jar*895143020]{PCL[/system/framework/android.test.base.jar*2789897741]#PCL[/system/framework/android.test.mock.jar*3361312393]}};PCL[/system/framework/android.test.runner.jar*895143020:/system/framework/android.test.mock.jar*3361312393:/system/framework/android.test.base.jar*2789897741:/data/app/~~xiTg5hs3jCLxb8g-gWYF-Q==/com.notesbrain.echo.test-wlNP-1W_YL1Yb3A14gB6FQ==/base.apk*205880600:/data/app/~~G4WkLMCTy_gONrfYdT0gjg==/com.notesbrain.echo-YY9p3W9DuQ41vH06d-QrWw==/base.apk*1950520045])
+03-09 01:30:13.621 19045 19045 I notesbrain.echo: AssetManager2(0xb400007662c44758) locale list changing from [] to [en-US]
+03-09 01:30:13.623 19045 19045 I AndroidJUnitRunner: newApplication com.notesbrain.echo.MainApplication
+03-09 01:30:13.634 19045 19045 I FirebaseApp: Device unlocked: initializing all Firebase APIs for app [DEFAULT]
+03-09 01:30:13.636 19045 19045 I FirebaseInitProvider: FirebaseApp initialization successful
+03-09 01:30:13.645 19045 19045 I AndroidJUnitRunner: onCreate Bundle[mParcelledData.dataSize=240]
+03-09 01:30:13.645 19045 19045 D AndroidJUnitRunner: Use the raw file system for managing file I/O.
+03-09 01:30:13.647 19045 19045 V TestEventClient: No service name argument was given (testDiscoveryService, testRunEventService or orchestratorService)
+03-09 01:30:13.648 19045 19069 D AndroidJUnitRunner: onStart is called.
+03-09 01:30:13.648 19045 19045 W SoLoader: Initializing SoLoader: 0
+03-09 01:30:13.648 19045 19045 W SoLoader: Recording new base apk path: /data/app/~~G4WkLMCTy_gONrfYdT0gjg==/com.notesbrain.echo-YY9p3W9DuQ41vH06d-QrWw==/base.apk
+03-09 01:30:13.648 19045 19045 W SoLoader: Previously recorded 0 base apk paths.
+03-09 01:30:13.648 19045 19045 I SoLoader: Preparing SO source: DirectorySoSource[root = /vendor/lib64 flags = 2]
+03-09 01:30:13.649 19045 19045 I SoLoader: Preparing SO source: DirectorySoSource[root = /system/lib64 flags = 2]
+03-09 01:30:13.649 19045 19045 I SoLoader: Preparing SO source: DirectApkSoSource[root = [/data/app/~~G4WkLMCTy_gONrfYdT0gjg==/com.notesbrain.echo-YY9p3W9DuQ41vH06d-QrWw==/base.apk!/lib/arm64-v8a]]
+03-09 01:30:13.650 19045 19045 I SoLoader: Preparing SO source: ApplicationSoSource[DirectorySoSource[root = /data/app/~~G4WkLMCTy_gONrfYdT0gjg==/com.notesbrain.echo-YY9p3W9DuQ41vH06d-QrWw==/lib/arm64 flags = 0]]
+03-09 01:30:13.650 19045 19045 I SoLoader: init finish: 4 SO sources prepared
+03-09 01:30:13.650 19045 19045 W SoLoader: SoLoader initialized: 8
+03-09 01:30:13.660 19045 19045 D nativeloader: Load /data/app/~~G4WkLMCTy_gONrfYdT0gjg==/com.notesbrain.echo-YY9p3W9DuQ41vH06d-QrWw==/base.apk!/lib/arm64-v8a/libc++_shared.so using class loader ns clns-9 (caller=/data/app/~~G4WkLMCTy_gONrfYdT0gjg==/com.notesbrain.echo-YY9p3W9DuQ41vH06d-QrWw==/base.apk!classes3.dex): ok
+03-09 01:30:13.663 19045 19045 D nativeloader: Load /data/app/~~G4WkLMCTy_gONrfYdT0gjg==/com.notesbrain.echo-YY9p3W9DuQ41vH06d-QrWw==/base.apk!/lib/arm64-v8a/libjsi.so using class loader ns clns-9 (caller=/data/app/~~G4WkLMCTy_gONrfYdT0gjg==/com.notesbrain.echo-YY9p3W9DuQ41vH06d-QrWw==/base.apk!classes3.dex): ok
+03-09 01:30:13.665 19045 19045 D nativeloader: Load /data/app/~~G4WkLMCTy_gONrfYdT0gjg==/com.notesbrain.echo-YY9p3W9DuQ41vH06d-QrWw==/base.apk!/lib/arm64-v8a/libfbjni.so using class loader ns clns-9 (caller=/data/app/~~G4WkLMCTy_gONrfYdT0gjg==/com.notesbrain.echo-YY9p3W9DuQ41vH06d-QrWw==/base.apk!classes3.dex): ok
+03-09 01:30:13.673 19045 19045 D nativeloader: Load /data/app/~~G4WkLMCTy_gONrfYdT0gjg==/com.notesbrain.echo-YY9p3W9DuQ41vH06d-QrWw==/base.apk!/lib/arm64-v8a/libreactnative.so using class loader ns clns-9 (caller=/data/app/~~G4WkLMCTy_gONrfYdT0gjg==/com.notesbrain.echo-YY9p3W9DuQ41vH06d-QrWw==/base.apk!classes3.dex): ok
+03-09 01:30:13.673 19045 19045 D jni_lib_merge: Entering merged library JNI_OnLoad.
+03-09 01:30:13.673 19045 19045 D jni_lib_merge: Preparing 12 pre-merged libs (including stub)
+03-09 01:30:13.673 19045 19045 D jni_lib_merge: Preparing to register libfabricjni_so.  onload_func: 0x74e90b3edc
+03-09 01:30:13.673 19045 19045 D jni_lib_merge: Preparing to register libreact_devsupportjni_so.  onload_func: 0x74e9184f40
+03-09 01:30:13.673 19045 19045 D jni_lib_merge: Preparing to register libreact_featureflagsjni_so.  onload_func: 0x74e91979f8
+03-09 01:30:13.673 19045 19045 D jni_lib_merge: Preparing to register libreact_newarchdefaults_so.  onload_func: 0x74e91bce30
+03-09 01:30:13.673 19045 19045 D jni_lib_merge: Preparing to register libreactnativeblob_so.  onload_func: 0x74e924f5b0
+03-09 01:30:13.673 19045 19045 D jni_lib_merge: Preparing to register libreactnativejni_so.  onload_func: 0x74e9269b24
+03-09 01:30:13.673 19045 19045 D jni_lib_merge: Preparing to register libreactnativejni_common_so.  onload_func: 0x74e9270458
+03-09 01:30:13.673 19045 19045 D jni_lib_merge: Preparing to register librninstance_so.  onload_func: 0x74e928c070
+03-09 01:30:13.673 19045 19045 D jni_lib_merge: Preparing to register libturbomodulejsijni_so.  onload_func: 0x74e93241a4
+03-09 01:30:13.673 19045 19045 D jni_lib_merge: Preparing to register libuimanagerjni_so.  onload_func: 0x74e932b7e0
+03-09 01:30:13.673 19045 19045 D jni_lib_merge: Preparing to register libyoga_so.  onload_func: 0x74e9332da4
+03-09 01:30:13.673 19045 19045 D jni_lib_merge: About to register 11 actual methods.
+03-09 01:30:13.678 19045 19045 D nativeloader: Load /data/app/~~G4WkLMCTy_gONrfYdT0gjg==/com.notesbrain.echo-YY9p3W9DuQ41vH06d-QrWw==/base.apk!/lib/arm64-v8a/libreact_codegen_rnscreens.so using class loader ns clns-9 (caller=/data/app/~~G4WkLMCTy_gONrfYdT0gjg==/com.notesbrain.echo-YY9p3W9DuQ41vH06d-QrWw==/base.apk!classes3.dex): ok
+03-09 01:30:13.678 19045 19045 D jni_lib_merge: Entering merged library JNI_OnLoad.
+03-09 01:30:13.678 19045 19045 D jni_lib_merge: Preparing 12 pre-merged libs (including stub)
+03-09 01:30:13.678 19045 19045 D jni_lib_merge: Preparing to register libfabricjni_so.  onload_func: 0x74e90b3edc
+03-09 01:30:13.678 19045 19045 D jni_lib_merge: Preparing to register libreact_devsupportjni_so.  onload_func: 0x74e9184f40
+03-09 01:30:13.678 19045 19045 D jni_lib_merge: Preparing to register libreact_featureflagsjni_so.  onload_func: 0x74e91979f8
+03-09 01:30:13.678 19045 19045 D jni_lib_merge: Preparing to register libreact_newarchdefaults_so.  onload_func: 0x74e91bce30
+03-09 01:30:13.678 19045 19045 D jni_lib_merge: Preparing to register libreactnativeblob_so.  onload_func: 0x74e924f5b0
+03-09 01:30:13.678 19045 19045 D jni_lib_merge: Preparing to register libreactnativejni_so.  onload_func: 0x74e9269b24
+03-09 01:30:13.678 19045 19045 D jni_lib_merge: Preparing to register libreactnativejni_common_so.  onload_func: 0x74e9270458
+03-09 01:30:13.678 19045 19045 D jni_lib_merge: Preparing to register librninstance_so.  onload_func: 0x74e928c070
+03-09 01:30:13.678 19045 19045 D jni_lib_merge: Preparing to register libturbomodulejsijni_so.  onload_func: 0x74e93241a4
+03-09 01:30:13.678 19045 19045 D jni_lib_merge: Preparing to register libuimanagerjni_so.  onload_func: 0x74e932b7e0
+03-09 01:30:13.678 19045 19045 D jni_lib_merge: Preparing to register libyoga_so.  onload_func: 0x74e9332da4
+03-09 01:30:13.678 19045 19045 D jni_lib_merge: About to register 11 actual methods.
+03-09 01:30:13.679 19045 19045 D nativeloader: Load /data/app/~~G4WkLMCTy_gONrfYdT0gjg==/com.notesbrain.echo-YY9p3W9DuQ41vH06d-QrWw==/base.apk!/lib/arm64-v8a/libreact_codegen_safeareacontext.so using class loader ns clns-9 (caller=/data/app/~~G4WkLMCTy_gONrfYdT0gjg==/com.notesbrain.echo-YY9p3W9DuQ41vH06d-QrWw==/base.apk!classes3.dex): ok
+03-09 01:30:13.682 19045 19045 D nativeloader: Load /data/app/~~G4WkLMCTy_gONrfYdT0gjg==/com.notesbrain.echo-YY9p3W9DuQ41vH06d-QrWw==/base.apk!/lib/arm64-v8a/libreact_codegen_rnpicker.so using class loader ns clns-9 (caller=/data/app/~~G4WkLMCTy_gONrfYdT0gjg==/com.notesbrain.echo-YY9p3W9DuQ41vH06d-QrWw==/base.apk!classes3.dex): ok
+03-09 01:30:13.682 19045 19045 D jni_lib_merge: Entering merged library JNI_OnLoad.
+03-09 01:30:13.682 19045 19045 D jni_lib_merge: Preparing 12 pre-merged libs (including stub)
+03-09 01:30:13.682 19045 19045 D jni_lib_merge: Preparing to register libfabricjni_so.  onload_func: 0x74e90b3edc
+03-09 01:30:13.682 19045 19045 D jni_lib_merge: Preparing to register libreact_devsupportjni_so.  onload_func: 0x74e9184f40
+03-09 01:30:13.682 19045 19045 D jni_lib_merge: Preparing to register libreact_featureflagsjni_so.  onload_func: 0x74e91979f8
+03-09 01:30:13.682 19045 19045 D jni_lib_merge: Preparing to register libreact_newarchdefaults_so.  onload_func: 0x74e91bce30
+03-09 01:30:13.682 19045 19045 D jni_lib_merge: Preparing to register libreactnativeblob_so.  onload_func: 0x74e924f5b0
+03-09 01:30:13.682 19045 19045 D jni_lib_merge: Preparing to register libreactnativejni_so.  onload_func: 0x74e9269b24
+03-09 01:30:13.682 19045 19045 D jni_lib_merge: Preparing to register libreactnativejni_common_so.  onload_func: 0x74e9270458
+03-09 01:30:13.682 19045 19045 D jni_lib_merge: Preparing to register librninstance_so.  onload_func: 0x74e928c070
+03-09 01:30:13.682 19045 19045 D jni_lib_merge: Preparing to register libturbomodulejsijni_so.  onload_func: 0x74e93241a4
+03-09 01:30:13.682 19045 19045 D jni_lib_merge: Preparing to register libuimanagerjni_so.  onload_func: 0x74e932b7e0
+03-09 01:30:13.682 19045 19045 D jni_lib_merge: Preparing to register libyoga_so.  onload_func: 0x74e9332da4
+03-09 01:30:13.682 19045 19045 D jni_lib_merge: About to register 11 actual methods.
+03-09 01:30:13.684 19045 19045 D nativeloader: Load /data/app/~~G4WkLMCTy_gONrfYdT0gjg==/com.notesbrain.echo-YY9p3W9DuQ41vH06d-QrWw==/base.apk!/lib/arm64-v8a/libappmodules.so using class loader ns clns-9 (caller=/data/app/~~G4WkLMCTy_gONrfYdT0gjg==/com.notesbrain.echo-YY9p3W9DuQ41vH06d-QrWw==/base.apk!classes3.dex): ok
+03-09 01:30:13.688 19045 19069 I InstrConnection: Could not send broadcast or register receiver (isolatedProcess?)
+03-09 01:30:13.688 19045 19069 D TestRequestBuilder: Using class path scanning to discover tests
+03-09 01:30:13.688 19045 19069 I TestRequestBuilder: Scanning classpath to find tests in paths [/data/app/~~xiTg5hs3jCLxb8g-gWYF-Q==/com.notesbrain.echo.test-wlNP-1W_YL1Yb3A14gB6FQ==/base.apk]
+03-09 01:30:13.689 19045 19069 W notesbrain.echo: Opening an oat file without a class loader. Are you using the deprecated DexFile APIs?
+03-09 01:30:13.756 19045 19069 I TestRunner: run started: 1 tests
+03-09 01:30:13.756 19045 19069 I TestRunner: started: runDetoxTests(com.notesbrain.echo.DetoxTest)
+03-09 01:30:13.757 19045 19069 I Detox   : Detox server connection details: url=ws://localhost:64019, sessionId=58e5ef5c-118d-f35d-4ae6-aa5894f64d6e
+03-09 01:30:13.758 19045 19069 I Tracing : Tracer added: class androidx.test.platform.tracing.AndroidXTracer
+03-09 01:30:13.760 19045 19069 I Detox   : Connecting to server...
+03-09 01:30:13.760 19045 19069 I DetoxWSClient: At connectToServer
+03-09 01:30:13.779 19045 19082 D DetoxWSClient: At onOpen
+03-09 01:30:13.779 19045 19082 I DetoxWSClient: Sending out action 'login' (ID #0)
+03-09 01:30:13.779 19045 19082 I Detox   : Connected to server!
+03-09 01:30:13.781 19045 19082 D DetoxWSClient: Received action 'loginSuccess' (ID #0, params={"testerConnected":true,"appConnected":true})
+03-09 01:30:13.781 19045 19078 I DetoxDispatcher: Handling action 'loginSuccess' (ID #0)...
+03-09 01:30:13.781 19045 19078 I DetoxDispatcher: Done with action 'loginSuccess'
+03-09 01:30:13.781 19045 19069 I Detox   : Launching the tested activity!
+03-09 01:30:13.807 19045 19092 I DisplayManager: Choreographer implicitly registered for the refresh rate.
+03-09 01:30:13.816 19045 19045 I notesbrain.echo: AssetManager2(0xb400007662c3e358) locale list changing from [] to [en-US]
+03-09 01:30:13.821 19045 19045 D AppCompatDelegate: Checking for metadata for AppLocalesMetadataHolderService : Service not found
+03-09 01:30:13.821 19045 19045 I notesbrain.echo: AssetManager2(0xb400007662c4b198) locale list changing from [] to [en-US]
+03-09 01:30:13.822 19045 19045 E ashmem  : Pinning is deprecated since Android Q. Please use trim or other methods.
+03-09 01:30:13.823 19045 19045 D LifecycleMonitor: Lifecycle status change: com.notesbrain.echo.MainActivity@6bb03ed in: PRE_ON_CREATE
+03-09 01:30:13.832 19045 19082 D DetoxWSClient: Received action 'isReady' (ID #-1000, params={})
+03-09 01:30:13.834 19045 19078 I DetoxDispatcher: Handling action 'isReady' (ID #-1000)...
+03-09 01:30:13.844 19045 19092 I EGL_emulation: Opening libGLESv1_CM_emulation.so
+03-09 01:30:13.844 19045 19092 I EGL_emulation: Opening libGLESv2_emulation.so
+03-09 01:30:13.850 19045 19092 W HWUI    : Failed to choose config with EGL_SWAP_BEHAVIOR_PRESERVED, retrying without...
+03-09 01:30:13.851 19045 19092 W HWUI    : Failed to initialize 101010-2 format, error = EGL_SUCCESS
+03-09 01:30:13.851 19045 19045 W unknown:BridgelessReact: ReactHost{0}.startSurface(surfaceId = 0): Schedule
+03-09 01:30:13.852 19045 19045 W unknown:BridgelessReact: ReactHost{0}.attachSurface(surfaceId = 0)
+03-09 01:30:13.852 19045 19096 W unknown:BridgelessReact: ReactHost{0}.getOrCreateReactInstanceTask()
+03-09 01:30:13.852 19045 19096 W unknown:BridgelessReact: ReactHost{0}.getOrCreateReactInstanceTask(): Start
+03-09 01:30:13.852 19045 19096 D Detox.RNMarker: REACT_BRIDGELESS_LOADING_START (null)
+03-09 01:30:13.852 19045 19096 W unknown:BridgelessReact: ReactHost{0}.getJSBundleLoader()
+03-09 01:30:13.852 19045 19096 W unknown:BridgelessReact: ReactHost{0}.getOrCreateReactContext(): Creating BridgelessReactContext
+03-09 01:30:13.852 19045 19096 W unknown:BridgelessReact: ReactHost{0}.getOrCreateReactInstanceTask(): Creating ReactInstance
+03-09 01:30:13.856 19045 19045 D CompatChangeReporter: Compat change id reported: 377864165; UID 10226; state: ENABLED
+03-09 01:30:13.857 19045 19045 D DesktopModeFlags: Toggle override initialized to: OVERRIDE_UNSET
+03-09 01:30:13.864 19045 19045 D LifecycleMonitor: Lifecycle status change: com.notesbrain.echo.MainActivity@6bb03ed in: CREATED
+03-09 01:30:13.864 19045 19045 D LifecycleMonitor: Lifecycle status change: com.notesbrain.echo.MainActivity@6bb03ed in: STARTED
+03-09 01:30:13.864 19045 19045 W WindowOnBackDispatcher: OnBackInvokedCallback is not enabled for the application.
+03-09 01:30:13.864 19045 19045 W WindowOnBackDispatcher: Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+03-09 01:30:13.866 19045 19045 W unknown:BridgelessReact: ReactHost{0}.onHostResume(activity)
+03-09 01:30:13.866 19045 19045 W unknown:BridgelessReact: ReactContext.onHostResume()
+03-09 01:30:13.866 19045 19045 D LifecycleMonitor: Lifecycle status change: com.notesbrain.echo.MainActivity@6bb03ed in: RESUMED
+03-09 01:30:13.870 19045 19096 D nativeloader: Load /data/app/~~G4WkLMCTy_gONrfYdT0gjg==/com.notesbrain.echo-YY9p3W9DuQ41vH06d-QrWw==/base.apk!/lib/arm64-v8a/libhermes.so using class loader ns clns-9 (caller=/data/app/~~G4WkLMCTy_gONrfYdT0gjg==/com.notesbrain.echo-YY9p3W9DuQ41vH06d-QrWw==/base.apk!classes3.dex): ok
+03-09 01:30:13.872 19045 19045 W HWUI    : Unknown dataspace 0
+03-09 01:30:13.873 19045 19096 D nativeloader: Load /data/app/~~G4WkLMCTy_gONrfYdT0gjg==/com.notesbrain.echo-YY9p3W9DuQ41vH06d-QrWw==/base.apk!/lib/arm64-v8a/libhermestooling.so using class loader ns clns-9 (caller=/data/app/~~G4WkLMCTy_gONrfYdT0gjg==/com.notesbrain.echo-YY9p3W9DuQ41vH06d-QrWw==/base.apk!classes3.dex): ok
+03-09 01:30:13.873 19045 19096 D jni_lib_merge: Entering merged library JNI_OnLoad.
+03-09 01:30:13.873 19045 19096 D jni_lib_merge: Preparing 4 pre-merged libs (including stub)
+03-09 01:30:13.873 19045 19096 D jni_lib_merge: Preparing to register libhermes_executor_so.  onload_func: 0x74d96e14b0
+03-09 01:30:13.873 19045 19096 D jni_lib_merge: Preparing to register libhermesinstancejni_so.  onload_func: 0x74d96e8900
+03-09 01:30:13.873 19045 19096 D jni_lib_merge: Preparing to register libjsijniprofiler_so.  onload_func: 0x74d96e90ec
+03-09 01:30:13.873 19045 19096 D jni_lib_merge: About to register 3 actual methods.
+03-09 01:30:13.932 19045 19096 I ExpoModulesCore: ✅ AppContext was initialized
+03-09 01:30:13.946 19045 19096 W unknown:BridgelessReact: ReactHost{0}.getOrCreateReactInstanceTask(): Loading JS Bundle
+03-09 01:30:13.947 19045 19096 W unknown:BridgelessReact: ReactHost{0}.getOrCreateReactInstanceTask(): Calling DevSupportManagerBase.onNewReactContextCreated(reactContext)
+03-09 01:30:13.947 19045 19097 D Detox.RNMarker: RUN_JS_BUNDLE_START (index.android.bundle)
+03-09 01:30:13.948 19045 19045 W unknown:BridgelessReact: ReactContext.onHostResume()
+03-09 01:30:13.948 19045 19045 W unknown:BridgelessReact: ReactHost{0}.getOrCreateReactInstanceTask(): Executing ReactInstanceEventListeners
+03-09 01:30:13.948 19045 19096 W unknown:BridgelessReact: ReactHost{0}.startSurface(surfaceId = 0): Execute
+03-09 01:30:13.969 19045 19097 D nativeloader: Load /data/app/~~G4WkLMCTy_gONrfYdT0gjg==/com.notesbrain.echo-YY9p3W9DuQ41vH06d-QrWw==/base.apk!/lib/arm64-v8a/libexpo-modules-core.so using class loader ns clns-9 (caller=/data/app/~~G4WkLMCTy_gONrfYdT0gjg==/com.notesbrain.echo-YY9p3W9DuQ41vH06d-QrWw==/base.apk!classes3.dex): ok
+03-09 01:30:13.976 19045 19097 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.th3rdwave.safeareacontext.SafeAreaProviderManager
+03-09 01:30:13.976 19045 19097 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.uimanager.LayoutShadowNode
+03-09 01:30:13.977 19045 19097 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.swmansion.rnscreens.SearchBarManager
+03-09 01:30:13.977 19045 19097 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.swmansion.rnscreens.ScreenFooterManager
+03-09 01:30:13.978 19045 19097 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.swmansion.rnscreens.gamma.tabs.TabScreenViewManager
+03-09 01:30:13.978 19045 19097 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.swmansion.rnscreens.ScreenContainerViewManager
+03-09 01:30:13.978 19045 19097 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.swmansion.rnscreens.gamma.tabs.TabsHostViewManager
+03-09 01:30:13.978 19045 19097 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.swmansion.rnscreens.ModalScreenViewManager
+03-09 01:30:13.979 19045 19097 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.swmansion.rnscreens.ScreenStackHeaderConfigViewManager
+03-09 01:30:13.979 19045 19097 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.swmansion.rnscreens.ScreenContentWrapperManager
+03-09 01:30:13.979 19045 19097 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.th3rdwave.safeareacontext.SafeAreaViewManager
+03-09 01:30:13.979 19045 19097 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.th3rdwave.safeareacontext.SafeAreaViewShadowNode
+03-09 01:30:13.979 19045 19097 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.swmansion.rnscreens.ScreenViewManager
+03-09 01:30:13.979 19045 19097 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.swmansion.rnscreens.ScreenStackHeaderSubviewManager
+03-09 01:30:13.980 19045 19097 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.reactnativecommunity.picker.ReactDialogPickerManager
+03-09 01:30:13.980 19045 19097 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.reactnativecommunity.picker.ReactPickerShadowNode
+03-09 01:30:13.980 19045 19097 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.swmansion.rnscreens.ScreenStackViewManager
+03-09 01:30:13.980 19045 19097 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.reactnativecommunity.picker.ReactDropdownPickerManager
+03-09 01:30:13.983 19045 19045 D DetoxRNLoading: Got new RN-context directly and immediately
+03-09 01:30:13.984 19045 19069 I DetoxRNIdleRes: Setting up Espresso Idling Resources for React Native
+03-09 01:30:13.985 19045 19097 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.safeareaview.ReactSafeAreaViewManager
+03-09 01:30:13.985 19045 19097 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.safeareaview.ReactSafeAreaViewShadowNode
+03-09 01:30:13.985 19045 19045 D DetoxRNHelpers: Native RN module resolution (class com.reactnativecommunity.asyncstorage.AsyncStorageModule): no registered module found
+03-09 01:30:13.985 19045 19069 D IdlingRegistry: Registering idling resources: [com.wix.detox.reactnative.idlingresources.uimodule.fabric.FabricUIManagerIdlingResources@85b3c0e]
+03-09 01:30:13.985 19045 19069 D IdlingRegistry: Registering idling resources: [com.wix.detox.reactnative.idlingresources.animations.AnimatedModuleIdlingResource@bf9062f]
+03-09 01:30:13.985 19045 19069 D IdlingRegistry: Registering idling resources: [com.wix.detox.reactnative.idlingresources.timers.FabricTimersIdlingResource@44243c]
+03-09 01:30:13.985 19045 19069 D IdlingRegistry: Registering idling resources: [com.wix.detox.reactnative.idlingresources.network.NetworkIdlingResource@275e5c5]
+03-09 01:30:13.985 19045 19069 D IdlingRegistry: Registering idling resources: [com.wix.detox.reactnative.idlingresources.StabilizedIdlingResource@3930b1a]
+03-09 01:30:13.985 19045 19097 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.modal.ReactModalHostManager
+03-09 01:30:13.986 19045 19097 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.text.frescosupport.FrescoBasedReactTextInlineImageViewManager
+03-09 01:30:13.986 19045 19097 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.text.frescosupport.FrescoBasedReactTextInlineImageShadowNode
+03-09 01:30:13.987 19045 19097 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.progressbar.ReactProgressBarViewManager
+03-09 01:30:13.987 19045 19097 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.progressbar.ProgressBarShadowNode
+03-09 01:30:13.987 19045 19097 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.scroll.ReactHorizontalScrollViewManager
+03-09 01:30:13.988 19045 19097 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.image.ReactImageManager
+03-09 01:30:13.989 19045 19097 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.text.ReactTextViewManager
+03-09 01:30:13.989 19045 19097 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.text.ReactTextShadowNode
+03-09 01:30:13.990 19045 19097 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.scroll.ReactHorizontalScrollContainerViewManager
+03-09 01:30:13.991 19045 19097 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.unimplementedview.ReactUnimplementedViewManager
+03-09 01:30:13.991 19045 19097 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.scroll.ReactScrollViewManager
+03-09 01:30:13.992 19045 19097 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.view.ReactViewManager
+03-09 01:30:13.993 19045 19097 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.drawer.ReactDrawerLayoutManager
+03-09 01:30:13.994 19045 19097 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.switchview.ReactSwitchManager
+03-09 01:30:13.994 19045 19097 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.switchview.ReactSwitchShadowNode
+03-09 01:30:13.994 19045 19097 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.text.ReactVirtualTextViewManager
+03-09 01:30:13.994 19045 19097 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.text.ReactVirtualTextShadowNode
+03-09 01:30:13.995 19045 19097 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.swiperefresh.SwipeRefreshLayoutManager
+03-09 01:30:13.995 19045 19097 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.text.ReactRawTextManager
+03-09 01:30:13.996 19045 19097 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.text.ReactRawTextShadowNode
+03-09 01:30:13.996 19045 19097 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.textinput.ReactTextInputManager
+03-09 01:30:13.996 19045 19097 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.textinput.ReactTextInputShadowNode
+03-09 01:30:13.999 19045 19097 W BridgelessReactContext: [WARNING] Bridgeless doesn't support CatalystInstance. Accessing an API that's not part of the new architecture is not encouraged usage.
+03-09 01:30:14.002 19045 19097 I ExpoModulesCore: ✅ JSI interop was installed
+03-09 01:30:14.003 19045 19097 I ExpoModulesCore: ✅ Constants were exported
+03-09 01:30:14.021 19045 19097 D nativeloader: Load /data/app/~~G4WkLMCTy_gONrfYdT0gjg==/com.notesbrain.echo-YY9p3W9DuQ41vH06d-QrWw==/base.apk!/lib/arm64-v8a/librnscreens.so using class loader ns clns-9 (caller=/data/app/~~G4WkLMCTy_gONrfYdT0gjg==/com.notesbrain.echo-YY9p3W9DuQ41vH06d-QrWw==/base.apk!classes4.dex): ok
+03-09 01:30:14.022 19045 19097 D Detox.RNMarker: RUN_JS_BUNDLE_END (index.android.bundle)
+03-09 01:30:14.023 19045 19097 I ReactNativeJS: Running "main"
+03-09 01:30:14.030 19045 19097 V AsyncStorageExpoMigration: No scoped database found
+03-09 01:30:14.055 19045 19097 D Detox.RNMarker: REACT_BRIDGELESS_LOADING_END (null)
+03-09 01:30:14.061 19045 19045 D Detox.RNMarker: CONTENT_APPEARED (main)
+03-09 01:30:14.089 19045 19098 W unknown:ReactNative: StatusBarModule: Ignored status bar change, current activity is edge-to-edge.
+03-09 01:30:14.089 19045 19098 W unknown:ReactNative: StatusBarModule: Ignored status bar change, current activity is edge-to-edge.
+03-09 01:30:14.095 19045 19045 W [RNScreens]: backTitleVisible prop is not available on Android
+03-09 01:30:14.095 19045 19045 W [RNScreens]: backTitleFontFamily prop is not available on Android
+03-09 01:30:14.095 19045 19045 W [RNScreens]: disableBackButtonMenu prop is not available on Android
+03-09 01:30:14.095 19045 19045 W [RNScreens]: largeTitleFontFamily prop is not available on Android
+03-09 01:30:14.095 19045 19045 W [RNScreens]: largeTitleFontWeight prop is not available on Android
+03-09 01:30:14.095 19045 19045 W [RNScreens]: largeTitleHideShadow prop is not available on Android
+03-09 01:30:14.103 19045 19097 I ReactNativeJS: 'Auth state changed:', 'INITIAL_SESSION', undefined
+03-09 01:30:14.110 19045 19097 W HWUI    : Image decoding logging dropped!
+03-09 01:30:14.111 19045 19097 W HWUI    : Image decoding logging dropped!
+03-09 01:30:14.133 19045 19045 W [RNScreens]: backTitle prop is not available on Android
+03-09 01:30:14.133 19045 19045 W [RNScreens]: backTitleFontFamily prop is not available on Android
+03-09 01:30:14.133 19045 19045 W [RNScreens]: disableBackButtonMenu prop is not available on Android
+03-09 01:30:14.133 19045 19045 W [RNScreens]: backTitleVisible prop is not available on Android
+03-09 01:30:14.133 19045 19045 W [RNScreens]: largeTitleHideShadow prop is not available on Android
+03-09 01:30:14.133 19045 19045 W [RNScreens]: largeTitleFontWeight prop is not available on Android
+03-09 01:30:14.133 19045 19045 W [RNScreens]: largeTitleFontFamily prop is not available on Android
+03-09 01:30:14.134 19045 19045 W [RNScreens]: backTitleVisible prop is not available on Android
+03-09 01:30:14.134 19045 19045 W [RNScreens]: backTitleFontFamily prop is not available on Android
+03-09 01:30:14.134 19045 19045 W [RNScreens]: disableBackButtonMenu prop is not available on Android
+03-09 01:30:14.134 19045 19045 W [RNScreens]: largeTitleFontFamily prop is not available on Android
+03-09 01:30:14.134 19045 19045 W [RNScreens]: largeTitleFontWeight prop is not available on Android
+03-09 01:30:14.134 19045 19045 W [RNScreens]: largeTitleHideShadow prop is not available on Android
+03-09 01:30:14.911 19045 19045 W UiControllerImpl: Waiting for: DYNAMIC_TASKS_HAVE_IDLED for 400 iterations.
+03-09 01:30:18.987 19045 19120 D ProfileInstaller: Installing profile for com.notesbrain.echo
+03-09 01:30:19.037 19045 19045 I Detox   : Wait is over: App is now idle!
+03-09 01:30:19.037 19045 19078 I DetoxWSClient: Sending out action 'ready' (ID #-1000)
+03-09 01:30:19.037 19045 19078 I DetoxDispatcher: Done with action 'isReady'
+03-09 01:30:19.181 19045 19082 D DetoxWSClient: Received action 'invoke' (ID #3, params={"target":{"type":"Class","value":"com.wix.detox.espresso.DetoxAssertion"},"method":"waitForAssertMatcher","args":[{"type":"Invocation","value":{"target":{"type":"Class","value":"androidx.test.espresso.Espresso"},"method":"onView","args":[{"type":"Invocation","value":{"target":{"type":"Class","value":"com.wix.detox.espresso.DetoxMatcher"},"method":"matcherForTestId","args":["login-email-input",{"type":"boolean","value":false}]}}]}},{"type":"Invocation","value":{"target":{"type":"Class","value":"com.wix.detox.espresso.DetoxMatcher"},"method":"matcherForSufficientlyVisible","args":[{"type":"Integer","value":75}]}},{"type":"Double","value":15}]})
+03-09 01:30:19.181 19045 19078 I DetoxDispatcher: Handling action 'invoke' (ID #3)...
+03-09 01:30:19.182 19045 19078 D Detox   : class com.wix.detox.espresso.DetoxMatcher, matcherForTestId, [login-email-input, false]
+03-09 01:30:19.182 19045 19078 D Detox   : class androidx.test.espresso.Espresso, onView, [(view.getTag() is "login-email-input" and view has effective visibility <VISIBLE>)]
+03-09 01:30:19.183 19045 19078 D Detox   : class com.wix.detox.espresso.DetoxMatcher, matcherForSufficientlyVisible, [75]
+03-09 01:30:19.183 19045 19078 D Detox   : class com.wix.detox.espresso.DetoxAssertion, waitForAssertMatcher, [androidx.test.espresso.ViewInteraction@7ed01fa, (view has effective visibility <VISIBLE> and view.getGlobalVisibleRect() covers at least <75> percent of the view's area), 15.0]
+03-09 01:30:19.185 19045 19045 D RootViewPicker: Root not ready - waiting: 10ms for one to appear.
+03-09 01:30:19.195 19045 19045 D RootViewPicker: Root not ready - waiting: 25ms for one to appear.
+03-09 01:30:19.222 19045 19045 D RootViewPicker: Root not ready - waiting: 50ms for one to appear.
+03-09 01:30:19.273 19045 19045 D RootViewPicker: Root not ready - waiting: 100ms for one to appear.
+03-09 01:30:19.381 19045 19045 D RootViewPicker: Root not ready - waiting: 200ms for one to appear.
+03-09 01:30:19.586 19045 19045 D RootViewPicker: Root not ready - waiting: 400ms for one to appear.
+03-09 01:30:19.991 19045 19045 D RootViewPicker: Root not ready - waiting: 800ms for one to appear.
+03-09 01:30:20.792 19045 19045 D RootViewPicker: Root not ready - waiting: 1000ms for one to appear.
+03-09 01:30:21.796 19045 19045 D RootViewPicker: Root not ready - waiting: 1000ms for one to appear.
+03-09 01:30:22.801 19045 19045 D RootViewPicker: Root not ready - waiting: 1000ms for one to appear.
+03-09 01:30:23.806 19045 19045 D RootViewPicker: Root not ready - waiting: 1000ms for one to appear.
+03-09 01:30:23.821 19045 19049 W notesbrain.echo: Cleared Reference was only reachable from finalizer (only reported once)
+03-09 01:30:24.812 19045 19045 D RootViewPicker: Root not ready - waiting: 1000ms for one to appear.
+03-09 01:30:25.817 19045 19045 D RootViewPicker: Root not ready - waiting: 1000ms for one to appear.
+03-09 01:30:26.819 19045 19045 D RootViewPicker: Root not ready - waiting: 1000ms for one to appear.
+03-09 01:30:27.823 19045 19045 D RootViewPicker: Root not ready - waiting: 1000ms for one to appear.
+03-09 01:30:28.826 19045 19045 D RootViewPicker: Root not ready - waiting: 1000ms for one to appear.
+03-09 01:30:29.182 19045 19082 D DetoxWSClient: Received action 'currentStatus' (ID #4, params={})
+03-09 01:30:29.182 19045 19079 I DetoxDispatcher: Handling action 'currentStatus' (ID #4)...
+03-09 01:30:29.184 19045 19079 I DetoxWSClient: Sending out action 'currentStatusResult' (ID #4)
+03-09 01:30:29.184 19045 19079 I DetoxDispatcher: Done with action 'currentStatus'
+03-09 01:30:29.836 19045 19078 I DetoxActionHandlers: Test exception
+03-09 01:30:29.836 19045 19078 I DetoxActionHandlers: java.lang.reflect.InvocationTargetException
+03-09 01:30:29.836 19045 19078 I DetoxActionHandlers: 	at java.lang.reflect.Method.invoke(Native Method)
+03-09 01:30:29.836 19045 19078 I DetoxActionHandlers: 	at org.apache.commons.lang3.reflect.MethodUtils.invokeStaticMethod(MethodUtils.java:443)
+03-09 01:30:29.836 19045 19078 I DetoxActionHandlers: 	at org.apache.commons.lang3.reflect.MethodUtils.invokeStaticMethod(MethodUtils.java:405)
+03-09 01:30:29.836 19045 19078 I DetoxActionHandlers: 	at com.wix.invoke.types.ClassTarget.execute(ClassTarget.java:23)
+03-09 01:30:29.836 19045 19078 I DetoxActionHandlers: 	at com.wix.invoke.types.Target.invoke(Target.java:59)
+03-09 01:30:29.836 19045 19078 I DetoxActionHandlers: 	at com.wix.invoke.MethodInvocation.invoke(MethodInvocation.java:35)
+03-09 01:30:29.836 19045 19078 I DetoxActionHandlers: 	at com.wix.invoke.MethodInvocation.invoke(MethodInvocation.java:26)
+03-09 01:30:29.836 19045 19078 I DetoxActionHandlers: 	at com.wix.invoke.MethodInvocation.invoke(MethodInvocation.java:20)
+03-09 01:30:29.836 19045 19078 I DetoxActionHandlers: 	at com.wix.detox.adapters.server.InvokeActionHandler.handle(DetoxActionHandlers.kt:54)
+03-09 01:30:29.836 19045 19078 I DetoxActionHandlers: 	at com.wix.detox.adapters.server.ActionsExecutor.executeAction$lambda$2$lambda$1(DetoxActionsDispatcher.kt:76)
+03-09 01:30:29.836 19045 19078 I DetoxActionHandlers: 	at com.wix.detox.adapters.server.ActionsExecutor.$r8$lambda$GVbB7LHtBHxNHGbgYnHJ6YrwCqs(Unknown Source:0)
+03-09 01:30:29.836 19045 19078 I DetoxActionHandlers: 	at com.wix.detox.adapters.server.ActionsExecutor$$ExternalSyntheticLambda0.run(D8$$SyntheticClass:0)
+03-09 01:30:29.836 19045 19078 I DetoxActionHandlers: 	at android.os.Handler.handleCallback(Handler.java:995)
+03-09 01:30:29.836 19045 19078 I DetoxActionHandlers: 	at android.os.Handler.dispatchMessage(Handler.java:103)
+03-09 01:30:29.836 19045 19078 I DetoxActionHandlers: 	at android.os.Looper.loopOnce(Looper.java:248)
+03-09 01:30:29.836 19045 19078 I DetoxActionHandlers: 	at android.os.Looper.loop(Looper.java:338)
+03-09 01:30:29.836 19045 19078 I DetoxActionHandlers: 	at com.wix.detox.adapters.server.ActionsExecutor._init_$lambda$0(DetoxActionsDispatcher.kt:62)
+03-09 01:30:29.836 19045 19078 I DetoxActionHandlers: 	at com.wix.detox.adapters.server.ActionsExecutor.$r8$lambda$xlgL0CQim6vNM0wWEqM8JIDgZUE(Unknown Source:0)
+03-09 01:30:29.836 19045 19078 I DetoxActionHandlers: 	at com.wix.detox.adapters.server.ActionsExecutor$$ExternalSyntheticLambda1.run(D8$$SyntheticClass:0)
+03-09 01:30:29.836 19045 19078 I DetoxActionHandlers: 	at java.lang.Thread.run(Thread.java:1119)
+03-09 01:30:29.836 19045 19078 I DetoxActionHandlers: Caused by: androidx.test.espresso.base.RootViewPicker$RootViewWithoutFocusException: Waited for the root of the view hierarchy to have window focus and not request layout for 10 seconds. If you specified a non default root matcher, it may be picking a root that never takes focus. Root:
+03-09 01:30:29.836 19045 19078 I DetoxActionHandlers: Root{application-window-token=android.view.ViewRootImpl$W@5ec5f87, window-token=android.view.ViewRootImpl$W@5ec5f87, has-window-focus=false, layout-params-type=1, layout-params-string={(0,0)(fillxfill) sim={adjust=resize forwardNavigation} layoutInDisplayCutoutMode=always ty=BASE_APPLICATION wanim=0x103030e
+03-09 01:30:29.836 19045 19078 I DetoxActionHandlers:   fl=LAYOUT_IN_SCREEN LAYOUT_INSET_DECOR SPLIT_TOUCH HARDWARE_ACCELERATED DRAWS_SYSTEM_BAR_BACKGROUNDS
+03-09 01:30:29.836 19045 19078 I DetoxActionHandlers:   pfl=NO_MOVE_ANIMATION EDGE_TO_EDGE_ENFORCED FORCE_DRAW_STATUS_BAR_BACKGROUND FIT_INSETS_CONTROLLED
+03-09 01:30:29.836 19045 19078 I DetoxActionHandlers:   bhv=DEFAULT
+03-09 01:30:29.836 19045 19078 I DetoxActionHandlers:   fitSides=
+03-09 01:30:29.836 19045 19078 I DetoxActionHandlers:   frameRateBoostOnTouch=true
+03-09 01:30:29.836 19045 19078 I DetoxActionHandlers:   dvrrWindowFrameRateHint=true}, decor-view-string=DecorView{id=-1, visibility=VISIBLE, width=1080, height=2424, has-focus=true, has-focusable=true, has-window-focus=false, is-clickable=false, is-enabled=true, is-focused=false, is-focusable=false, is-layout-requested=false, is-selected=false, layout-params={(0,0)(fillxfill) sim={adjust=resize forwardNavigation} layoutInDisplayCutoutMode=always ty=BASE_APPLICATION wanim=0x103030e
+03-09 01:30:29.836 19045 19078 I DetoxActionHandlers:   fl=LAYOUT_IN_SCREEN LAYOUT_INSET_DECOR SPLIT_TOUCH HARDWARE_ACCELERATED DRAWS_SYSTEM_BAR_BACKGROUNDS
+03-09 01:30:29.836 19045 19078 I DetoxActionHandlers:   pfl=NO_MOVE_ANIMATION EDGE_TO_EDGE_ENFORCED FORCE_DRAW_STATUS_BAR_BACKGROUND FIT_INSETS_CONTROLLED
+03-09 01:30:29.836 19045 19078 I DetoxActionHandlers:   bhv=DEFAULT
+03-09 01:30:29.836 19045 19078 I DetoxActionHandlers:   fitSides=
+03-09 01:30:29.836 19045 19078 I DetoxActionHandlers:   frameRateBoostOnTouch=true
+03-09 01:30:29.836 19045 19078 I DetoxActionHandlers:   dvrrWindowFrameRateHint=true}, tag=null, root-is-layout-requested=false, has-input-connection=false, x=0.0, y=0.0, child-count=1}}
+03-09 01:30:29.836 19045 19078 I DetoxActionHandlers: 	at androidx.test.espresso.base.RootViewPicker.waitForRootToBeReady(RootViewPicker.java:121)
+03-09 01:30:29.836 19045 19078 I DetoxActionHandlers: 	at androidx.test.espresso.base.RootViewPicker.pickRootView(RootViewPicker.java:159)
+03-09 01:30:29.836 19045 19078 I DetoxActionHandlers: 	at androidx.test.espresso.base.RootViewPicker.get(RootViewPicker.java:101)
+03-09 01:30:29.836 19045 19078 I DetoxActionHandlers: 	at androidx.test.espresso.ViewInteractionModule.provideRootView(ViewInteractionModule.java:83)
+03-09 01:30:29.836 19045 19078 I DetoxActionHandlers: 	at androidx.test.espresso.ViewInteractionModule_ProvideRootViewFactory.provideRootView(ViewInteractionModule_ProvideRootViewFactory.java:49)
+03-09 01:30:29.836 19045 19078 I DetoxActionHandlers: 	at androidx.test.espresso.ViewInteractionModule_ProvideRootViewFactory.get(ViewInteractionModule_ProvideRootViewFactory.java:39)
+03-09 01:30:29.836 19045 19078 I DetoxActionHandlers: 	at androidx.test.espresso.ViewInteractionModule_ProvideRootViewFactory.get(ViewInteractionModule_ProvideRootViewFactory

@@ -30,15 +30,25 @@ describe("mobile e2e: auth and tab navigation", () => {
 
     await expect(element(by.id("capture-screen"))).toBeVisible();
 
+    await waitFor(element(by.id("tab-notes")))
+      .toBeVisible()
+      .withTimeout(10000);
     await element(by.id("tab-notes")).tap();
-    await expect(element(by.id("notes-screen"))).toBeVisible();
+    await waitFor(element(by.id("notes-screen")))
+      .toBeVisible()
+      .withTimeout(10000);
 
     await element(by.id("tab-summary")).tap();
-    await expect(element(by.id("summary-screen"))).toBeVisible();
+    await waitFor(element(by.id("summary-screen")))
+      .toBeVisible()
+      .withTimeout(10000);
 
     await element(by.id("tab-settings")).tap();
-    await expect(element(by.id("settings-screen"))).toBeVisible();
-    await expect(element(by.id("settings-timezone-select"))).toBeVisible();
+    await waitFor(element(by.id("settings-screen")))
+      .toBeVisible()
+      .withTimeout(10000);
+    await waitFor(element(by.id("settings-timezone-select")))
+      .toBeVisible()
+      .withTimeout(10000);
   });
 });
-

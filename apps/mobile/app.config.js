@@ -1,7 +1,7 @@
 export default {
   expo: {
     name: "Echo",
-    slug: "echo",
+    slug: "notes-brain",
     version: "1.0.0",
     orientation: "portrait",
     icon: "./assets/icon.png",

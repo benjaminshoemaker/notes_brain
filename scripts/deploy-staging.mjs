@@ -41,9 +41,10 @@ function loadEnvFile(filePath) {
 
 function bootstrapEnv() {
   const rootDir = process.cwd();
+  loadEnvFile(path.join(rootDir, ".env.production.local"));
+  loadEnvFile(path.join(rootDir, ".env.production"));
   loadEnvFile(path.join(rootDir, ".env.local"));
   loadEnvFile(path.join(rootDir, ".env.verification"));
-  loadEnvFile(path.join(rootDir, ".env.production"));
 }
 
 function getMissingEnv() {

@@ -13,9 +13,9 @@ import {
 import { Stack, Link, useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 
-import { signInWithPassword, sendMagicLink } from "../../lib/authApi";
+import { signInWithPassword, sendMagicLink, sendPasswordResetEmail } from "../../lib/authApi";
 import { testIds } from "../../lib/testIds";
-import { colors, radii, shadows } from "../../lib/theme";
+import { colors, radii } from "../../lib/theme";
 
 export default function LoginScreen() {
   const router = useRouter();
@@ -67,6 +67,28 @@ export default function LoginScreen() {
     }
 
     setStatus("Magic link sent! Check your email.");
+  }
+
+  async function handlePasswordReset() {
+    setError(null);
+    setStatus(null);
+
+    const trimmedEmail = email.trim();
+    if (!trimmedEmail) {
+      setError("Enter your email to receive password reset instructions.");
+      return;
+    }
+
+    setIsSubmitting(true);
+    const result = await sendPasswordResetEmail(trimmedEmail);
+    setIsSubmitting(false);
+
+    if (result.error) {
+      setError(result.error.message);
+      return;
+    }
+
+    setStatus("Password reset email sent. Check your inbox.");
   }
 
   return (
@@ -123,6 +145,17 @@ export default function LoginScreen() {
           </View>
 
           <TouchableOpacity
+            testID={testIds.auth.loginForgotPasswordButton}
+            accessibilityRole="button"
+            accessibilityLabel="Reset password"
+            style={styles.forgotPasswordButton}
+            onPress={handlePasswordReset}
+            disabled={isSubmitting}
+          >
+            <Text style={styles.forgotPasswordText}>Forgot password?</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
             testID={testIds.auth.loginSubmitButton}
             accessibilityRole="button"
             accessibilityLabel="Sign in"
@@ -151,13 +184,17 @@ export default function LoginScreen() {
 
           {error && (
             <View style={styles.errorContainer}>
-              <Text style={styles.errorText}>{error}</Text>
+              <Text testID={testIds.auth.loginErrorMessage} style={styles.errorText}>
+                {error}
+              </Text>
             </View>
           )}
 
           {status && (
             <View style={styles.statusContainer}>
-              <Text style={styles.statusText}>{status}</Text>
+              <Text testID={testIds.auth.loginStatusMessage} style={styles.statusText}>
+                {status}
+              </Text>
             </View>
           )}
 
@@ -224,6 +261,16 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     fontSize: 16,
     color: colors.text,
+  },
+  forgotPasswordButton: {
+    alignSelf: "flex-end",
+    paddingVertical: 4,
+    marginBottom: 2,
+  },
+  forgotPasswordText: {
+    color: colors.accent,
+    fontSize: 14,
+    fontWeight: "600",
   },
   button: {
     borderRadius: radii.md,

@@ -36,14 +36,22 @@ export function VoiceRecorder({ onRecordingComplete, isUploading }: VoiceRecorde
   }, [state.isRecording, pulseAnim]);
 
   async function handleStart() {
-    try { Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium); } catch {}
+    try {
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+    } catch {
+      // Ignore haptics failures (e.g. simulator/device without haptics).
+    }
     await startRecording();
   }
 
   async function handleStopAndSave() {
     const uri = await stopRecording();
     if (uri) {
-      try { Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success); } catch {}
+      try {
+        Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+      } catch {
+        // Ignore haptics failures (e.g. simulator/device without haptics).
+      }
       await onRecordingComplete(uri);
     }
   }

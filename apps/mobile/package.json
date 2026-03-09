@@ -7,6 +7,7 @@
     "android": "EXPO_ROUTER_APP_ROOT=./app expo start --android",
     "ios": "EXPO_ROUTER_APP_ROOT=./app expo start --ios",
     "web": "EXPO_ROUTER_APP_ROOT=./app expo start --web",
+    "eas-build-post-install": "cd ../.. && npm run build -w @notesbrain/shared && cd apps/mobile && if [ -n \"$GOOGLE_SERVICES_JSON\" ] && [ -f \"$GOOGLE_SERVICES_JSON\" ]; then cp \"$GOOGLE_SERVICES_JSON\" android/app/google-services.json; elif [ -f ./google-services.json ]; then cp ./google-services.json android/app/google-services.json; fi",
     "lint": "eslint app components hooks lib services test --ext .ts,.tsx",
     "typecheck": "tsc --noEmit",
     "test": "vitest run"
@@ -32,6 +33,7 @@
     "expo-router": "~6.0.22",
     "expo-secure-store": "~15.0.8",
     "expo-share-intent": "^5.1.1",
+    "expo-splash-screen": "~31.0.13",
     "expo-status-bar": "~3.0.9",
     "is-arrayish": "^0.3.4",
     "react": "19.1.0",

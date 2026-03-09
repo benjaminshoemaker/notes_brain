@@ -1,0 +1,644 @@
+15:48:22.918 detox[5085] B node_modules/.bin/detox test --config-path ./tests/e2e/mobile/detox.config.cjs --configuration android.emu.release tests/e2e/mobile/specs/password-reset.e2e.js --record-logs all
+  data: {
+    "id": "59668f36-5688-bba5-e06f-4944118b97de",
+    "detoxConfig": {
+      "configurationName": "android.emu.release",
+      "apps": {
+        "default": {
+          "type": "android.apk",
+          "binaryPath": "apps/mobile/android/app/build/outputs/apk/release/app-release.apk",
+          "testBinaryPath": "apps/mobile/android/app/build/outputs/apk/androidTest/release/app-release-androidTest.apk",
+          "build": "cd apps/mobile/android && ./gradlew assembleRelease assembleAndroidTest -DtestBuildType=release"
+        }
+      },
+      "artifacts": {
+        "rootDir": "artifacts/android.emu.release.2026-03-08 22-48-22Z",
+        "plugins": {
+          "log": {
+            "enabled": true,
+            "keepOnlyFailedTestsArtifacts": false
+          },
+          "screenshot": {
+            "enabled": true,
+            "shouldTakeAutomaticSnapshots": false,
+            "keepOnlyFailedTestsArtifacts": false
+          },
+          "video": {
+            "enabled": false,
+            "keepOnlyFailedTestsArtifacts": false
+          },
+          "instruments": {
+            "enabled": false,
+            "keepOnlyFailedTestsArtifacts": false
+          },
+          "uiHierarchy": {
+            "enabled": false,
+            "keepOnlyFailedTestsArtifacts": false
+          }
+        }
+      },
+      "behavior": {
+        "init": {
+          "keepLockFile": false,
+          "reinstallApp": true,
+          "exposeGlobals": true
+        },
+        "cleanup": {
+          "shutdownDevice": false
+        },
+        "launchApp": "auto"
+      },
+      "cli": {
+        "recordLogs": "all",
+        "configPath": "./tests/e2e/mobile/detox.config.cjs",
+        "configuration": "android.emu.release",
+        "start": true
+      },
+      "commands": [
+        {
+          "appName": "default",
+          "build": "cd apps/mobile/android && ./gradlew assembleRelease assembleAndroidTest -DtestBuildType=release"
+        }
+      ],
+      "device": {
+        "type": "android.emulator",
+        "device": {
+          "avdName": "Medium_Phone_API_36.1"
+        }
+      },
+      "logger": {
+        "level": "info",
+        "overrideConsole": true,
+        "options": {
+          "showLoggerName": true,
+          "showPid": true,
+          "showLevel": false,
+          "showMetadata": false,
+          "basepath": "/Users/coding/Projects/notes_brain/node_modules/detox/src",
+          "prefixers": {},
+          "stringifiers": {}
+        }
+      },
+      "testRunner": {
+        "retries": 0,
+        "forwardEnv": false,
+        "detached": false,
+        "bail": false,
+        "noRetryArgs": [
+          "shard"
+        ],
+        "jest": {
+          "setupTimeout": 180000,
+          "teardownTimeout": 30000,
+          "retryAfterCircusRetries": false,
+          "reportWorkerAssign": true
+        },
+        "args": {
+          "$0": "jest",
+          "_": [
+            "tests/e2e/mobile/specs/password-reset.e2e.js"
+          ],
+          "config": "tests/e2e/mobile/jest.config.cjs",
+          "--": []
+        }
+      },
+      "session": {
+        "autoStart": true,
+        "debugSynchronization": 10000
+      }
+    },
+    "detoxIPCServer": "primary-5085",
+    "testResults": [],
+    "testSessionIndex": 0,
+    "workersCount": 0
+  }
+15:48:22.921 detox[5085] i Server path not specified, so defaulting to ipc.config.socketRoot + ipc.config.appspace + ipc.config.id /tmp/detox.primary-5085
+15:48:22.921 detox[5085] i starting server on  /tmp/detox.primary-5085 
+15:48:22.921 detox[5085] i starting TLS server false
+15:48:22.922 detox[5085] i starting server as Unix || Windows Socket
+15:48:22.923 detox[5085] i Detox server listening on localhost:64680...
+15:48:22.925 detox[5085] i Serialized the session state at: /private/var/folders/4z/mqqhpdps32j1l_chr_9wt8rw0000gp/T/59668f36-5688-bba5-e06f-4944118b97de.detox.json
+15:48:22.926 detox[5085] B DETOX_AVD_NAME="Medium_Phone_API_36.1" jest --config tests/e2e/mobile/jest.config.cjs tests/e2e/mobile/specs/password-reset.e2e.js
+15:48:22.928 detox[5085] i (node:5085) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+15:48:23.500 detox[5086] i Service path not specified, so defaulting to ipc.config.socketRoot + ipc.config.appspace + id 
+15:48:23.501 detox[5086] i requested connection to  primary-5085 /tmp/detox.primary-5085
+15:48:23.501 detox[5086] i Connecting client on Unix Socket : /tmp/detox.primary-5085
+15:48:23.502 detox[5085] i ## socket connection to server detected ##
+15:48:23.502 detox[5085] i received event of :  registerContext { id: 'secondary-5086' }
+15:48:23.502 detox[5085] i dispatching event to socket  :  registerContextDone {
+  testResults: [],
+  testSessionIndex: 0,
+  unsafe_earlyTeardown: undefined
+}
+15:48:23.502 detox[5086] i retrying reset
+15:48:23.502 detox[5086] i dispatching event to  primary-5085 /tmp/detox.primary-5085  :  registerContext , { id: 'secondary-5086' }
+15:48:23.503 detox[5086] i ## received events ##
+15:48:23.503 detox[5086] i detected event registerContextDone { testResults: [], testSessionIndex: 0 }
+15:48:23.574 detox[5086] B tests/e2e/mobile/specs/password-reset.e2e.js
+15:48:23.586 detox[5086] B set up environment
+15:48:23.587 detox[5085] i received event of :  registerWorker { workerId: 'w1' }
+15:48:23.587 detox[5085] i dispatching event to socket  :  registerWorkerDone { workersCount: 1 }
+15:48:23.587 detox[5085] i broadcasting event to all known sockets listening to  /tmp/detox.primary-5085  :   sessionStateUpdate { workersCount: 1 }
+15:48:23.587 detox[5086] i dispatching event to  primary-5085 /tmp/detox.primary-5085  :  registerWorker , { workerId: 'w1' }
+15:48:23.587 detox[5086] i ## received events ##
+15:48:23.587 detox[5086] i detected event registerWorkerDone { workersCount: 1 }
+15:48:23.717 detox[5086] i ## received events ##
+15:48:23.717 detox[5086] i detected event sessionStateUpdate { workersCount: 1 }
+15:48:23.720 detox[5085] B connection :64680<->:64686
+15:48:23.721 detox[5086] i opened web socket to: ws://localhost:64680
+15:48:23.722 detox[5085] i get
+  data: {"type":"login","params":{"sessionId":"838990a4-2a82-5531-80fb-c46ed2b3ce13","role":"tester"},"messageId":0}
+15:48:23.722 detox[5085] i created session 838990a4-2a82-5531-80fb-c46ed2b3ce13
+15:48:23.722 detox[5086] i send message
+  data: {"type":"login","params":{"sessionId":"838990a4-2a82-5531-80fb-c46ed2b3ce13","role":"tester"},"messageId":0}
+15:48:23.723 detox[5085] i send
+  data: {
+    "type": "loginSuccess",
+    "params": {
+      "testerConnected": true,
+      "appConnected": false
+    },
+    "messageId": 0
+  }
+15:48:23.723 detox[5085] i tester joined session 838990a4-2a82-5531-80fb-c46ed2b3ce13
+15:48:23.723 detox[5086] i get message
+  data: {"type":"loginSuccess","params":{"testerConnected":true,"appConnected":false},"messageId":0}
+   
+15:48:23.739 detox[5085] i received event of :  allocateDevice {
+  deviceConfig: {
+    type: 'android.emulator',
+    device: { avdName: 'Medium_Phone_API_36.1' }
+  }
+}
+15:48:23.739 detox[5086] i dispatching event to  primary-5085 /tmp/detox.primary-5085  :  allocateDevice , {
+  deviceConfig: {
+    type: 'android.emulator',
+    device: { avdName: 'Medium_Phone_API_36.1' }
+  }
+}
+15:48:23.753 detox[5085] B init
+  args: ()
+15:48:23.754 detox[5085] E init
+15:48:23.754 detox[5085] B allocate
+  data: {
+    "type": "android.emulator",
+    "device": {
+      "avdName": "Medium_Phone_API_36.1"
+    }
+  }
+15:48:23.984 detox[5085] i Detected emulator binary version { major: 36, minor: 3, patch: 10, toString: [Function: toString] }
+15:48:23.985 detox[5085] i "/Users/coding/Library/Android/sdk/platform-tools/adb"  devices
+15:48:24.001 detox[5085] i List of devices attached
+emulator-5554	device
+
+
+15:48:24.001 detox[5085] i port: 5554, host: localhost
+15:48:24.011 detox[5085] i Found a matching & free device emulator-5554
+15:48:24.012 detox[5085] i settled on emulator-5554 (Medium_Phone_API_36.1)
+  data: {
+    "id": "emulator-5554",
+    "adbName": "emulator-5554",
+    "name": "emulator-5554 (Medium_Phone_API_36.1)"
+  }
+15:48:24.012 detox[5085] E allocate
+15:48:24.012 detox[5085] B post-allocate: emulator-5554
+  data: {
+    "id": "emulator-5554",
+    "adbName": "emulator-5554",
+    "name": "emulator-5554 (Medium_Phone_API_36.1)"
+  }
+15:48:24.012 detox[5085] i "/Users/coding/Library/Android/sdk/platform-tools/adb" -s emulator-5554 shell "getprop dev.bootcomplete"
+15:48:24.035 detox[5085] i 1
+
+15:48:24.036 detox[5085] i "/Users/coding/Library/Android/sdk/platform-tools/adb" -s emulator-5554 shell "getprop ro.build.version.sdk"
+15:48:24.058 detox[5085] i 36
+
+15:48:24.058 detox[5085] i "/Users/coding/Library/Android/sdk/platform-tools/adb" -s emulator-5554 shell "settings put global animator_duration_scale 0"
+15:48:24.090 detox[5085] i 
+15:48:24.090 detox[5085] i "/Users/coding/Library/Android/sdk/platform-tools/adb" -s emulator-5554 shell "settings put global window_animation_scale 0"
+15:48:24.118 detox[5085] i 
+15:48:24.118 detox[5085] i "/Users/coding/Library/Android/sdk/platform-tools/adb" -s emulator-5554 shell "settings put global transition_animation_scale 0"
+15:48:24.150 detox[5085] i 
+15:48:24.150 detox[5085] i "/Users/coding/Library/Android/sdk/platform-tools/adb" -s emulator-5554 shell "dumpsys power | grep \"^[ ]*m[UW].*=\""
+15:48:24.200 detox[5085] i   mWakefulness=Awake
+  mWakefulnessChanging=false
+  mUseAutoSuspend=true
+  mWakeLockSummary=0x23
+  mWakeUpWhenPluggedOrUnpluggedConfig=false
+  mWakeUpWhenPluggedOrUnpluggedInTheaterModeConfig=false
+  mUserActivityTimeoutOverrideFromWindowManager=-1
+  mUserInactiveOverrideFromWindowManager=false
+  mUseNormalBrightnessForDoze=false
+  mUserId=0
+mWakeLockSummary=0x23
+mWakefulness=1
+  mUserInteractionBackoffMillis=60000
+
+15:48:24.200 detox[5085] E post-allocate: emulator-5554
+15:48:24.200 detox[5085] i dispatching event to socket  :  allocateDeviceDone {
+  deviceCookie: {
+    id: 'emulator-5554',
+    adbName: 'emulator-5554',
+    name: 'emulator-5554 (Medium_Phone_API_36.1)'
+  }
+}
+15:48:24.200 detox[5086] i ## received events ##
+15:48:24.200 detox[5086] i detected event allocateDeviceDone {
+  deviceCookie: {
+    id: 'emulator-5554',
+    adbName: 'emulator-5554',
+    name: 'emulator-5554 (Medium_Phone_API_36.1)'
+  }
+}
+15:48:24.217 detox[5086] B onBootDevice
+  args: ({"deviceId":"emulator-5554"})
+15:48:24.217 detox[5086] E onBootDevice
+15:48:24.217 detox[5086] B installUtilBinaries
+  args: ()
+15:48:24.217 detox[5086] E installUtilBinaries
+15:48:24.218 detox[5086] B selectApp
+  args: ("default")
+15:48:24.219 detox[5086] i "/Users/coding/Library/Android/sdk/build-tools/36.1.0/aapt" dump badging "/Users/coding/Projects/notes_brain/apps/mobile/android/app/build/outputs/apk/release/app-release.apk"
+15:48:24.278 detox[5086] i package: name='com.notesbrain.echo' versionCode='1' versionName='1.0.0' platformBuildVersionName='16' platformBuildVersionCode='36' compileSdkVersion='36' compileSdkVersionCodename='16'
+sdkVersion:'24'
+targetSdkVersion:'36'
+uses-permission: name='android.permission.INTERNET'
+uses-permission: name='android.permission.MODIFY_AUDIO_SETTINGS'
+uses-permission: name='android.permission.READ_EXTERNAL_STORAGE'
+uses-permission: name='android.permission.RECORD_AUDIO'
+uses-permission: name='android.permission.SYSTEM_ALERT_WINDOW'
+uses-permission: name='android.permission.VIBRATE'
+uses-permission: name='android.permission.WRITE_EXTERNAL_STORAGE'
+uses-permission: name='android.permission.ACCESS_NETWORK_STATE'
+uses-permission: name='android.permission.ACCESS_WIFI_STATE'
+uses-permission: name='android.permission.FOREGROUND_SERVICE'
+uses-permission: name='android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK'
+uses-permission: name='android.permission.RECEIVE_BOOT_COMPLETED'
+uses-permission: name='android.permission.POST_NOTIFICATIONS'
+uses-permission: name='android.permission.WAKE_LOCK'
+uses-permission: name='com.google.android.c2dm.permission.RECEIVE'
+uses-permission: name='android.permission.USE_BIOMETRIC'
+uses-permission: name='android.permission.USE_FINGERPRINT'
+uses-permission: name='com.notesbrain.echo.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION'
+uses-permission: name='com.google.android.finsky.permission.BIND_GET_INSTALL_REFERRER_SERVICE'
+uses-permission: name='com.sec.android.provider.badge.permission.READ'
+uses-permission: name='com.sec.android.provider.badge.permission.WRITE'
+uses-permission: name='com.htc.launcher.permission.READ_SETTINGS'
+uses-permission: name='com.htc.launcher.permission.UPDATE_SHORTCUT'
+uses-permission: name='com.sonyericsson.home.permission.BROADCAST_BADGE'
+uses-permission: name='com.sonymobile.home.permission.PROVIDER_INSERT_BADGE'
+uses-permission: name='com.anddoes.launcher.permission.UPDATE_COUNT'
+uses-permission: name='com.majeur.launcher.permission.UPDATE_BADGE'
+uses-permission: name='com.huawei.android.launcher.permission.CHANGE_BADGE'
+uses-permission: name='com.huawei.android.launcher.permission.READ_SETTINGS'
+uses-permission: name='com.huawei.android.launcher.permission.WRITE_SETTINGS'
+uses-permission: name='android.permission.READ_APP_BADGE'
+uses-permission: name='com.oppo.launcher.permission.READ_SETTINGS'
+uses-permission: name='com.oppo.launcher.permission.WRITE_SETTINGS'
+uses-permission: name='me.everything.badger.permission.BADGE_COUNT_READ'
+uses-permission: name='me.everything.badger.permission.BADGE_COUNT_WRITE'
+application-label:'Echo'
+application-label-af:'Echo'
+application-label-am:'Echo'
+application-label-ar:'Echo'
+application-label-as:'Echo'
+application-label-az:'Echo'
+application-label-be:'Echo'
+application-label-bg:'Echo'
+application-label-bn:'Echo'
+application-label-bs:'Echo'
+application-label-ca:'Echo'
+application-label-cs:'Echo'
+application-label-da:'Echo'
+application-label-de:'Echo'
+application-label-el:'Echo'
+application-label-en-AU:'Echo'
+application-label-en-CA:'Echo'
+application-label-en-GB:'Echo'
+application-label-en-IN:'Echo'
+application-label-en-XC:'Echo'
+application-label-es:'Echo'
+application-label-es-419:'Echo'
+application-label-es-ES:'Echo'
+application-label-es-US:'Echo'
+application-label-et:'Echo'
+application-label-eu:'Echo'
+application-label-fa:'Echo'
+application-label-fi:'Echo'
+application-label-fr:'Echo'
+application-label-fr-CA:'Echo'
+application-label-gl:'Echo'
+application-label-gu:'Echo'
+application-label-hi:'Echo'
+application-label-hr:'Echo'
+application-label-hu:'Echo'
+application-label-hy:'Echo'
+application-label-in:'Echo'
+application-label-is:'Echo'
+application-label-it:'Echo'
+application-label-iw:'Echo'
+application-label-ja:'Echo'
+application-label-ka:'Echo'
+application-label-kk:'Echo'
+application-label-km:'Echo'
+application-label-kn:'Echo'
+application-label-ko:'Echo'
+application-label-ky:'Echo'
+application-label-lo:'Echo'
+application-label-lt:'Echo'
+application-label-lv:'Echo'
+application-label-mk:'Echo'
+application-label-ml:'Echo'
+application-label-mn:'Echo'
+application-label-mr:'Echo'
+application-label-ms:'Echo'
+application-label-my:'Echo'
+application-label-nb:'Echo'
+application-label-ne:'Echo'
+application-label-nl:'Echo'
+application-label-or:'Echo'
+application-label-pa:'Echo'
+application-label-pl:'Echo'
+application-label-pt:'Echo'
+application-label-pt-BR:'Echo'
+application-label-pt-PT:'Echo'
+application-label-ro:'Echo'
+application-label-ru:'Echo'
+application-label-si:'Echo'
+application-label-sk:'Echo'
+application-label-sl:'Echo'
+application-label-sq:'Echo'
+application-label-sr:'Echo'
+application-label-sr-Latn:'Echo'
+application-label-sv:'Echo'
+application-label-sw:'Echo'
+application-label-ta:'Echo'
+application-label-te:'Echo'
+application-label-th:'Echo'
+application-label-tl:'Echo'
+application-label-tr:'Echo'
+application-label-uk:'Echo'
+application-label-ur:'Echo'
+application-label-uz:'Echo'
+application-label-vi:'Echo'
+application-label-zh-CN:'Echo'
+application-label-zh-HK:'Echo'
+application-label-zh-TW:'Echo'
+application-label-zu:'Echo'
+application-icon-120:'res/BW.xml'
+application-icon-160:'res/BW.xml'
+application-icon-240:'res/BW.xml'
+application-icon-320:'res/BW.xml'
+application-icon-480:'res/BW.xml'
+application-icon-640:'res/BW.xml'
+application-icon-65534:'res/BW.xml'
+application: label='Echo' icon='res/BW.xml'
+launchable-activity: name='com.notesbrain.echo.MainActivity'  label='' icon=''
+feature-group: label=''
+  uses-feature: name='android.hardware.faketouch'
+  uses-implied-feature: name='android.hardware.faketouch' reason='default feature for all apps'
+  uses-feature: name='android.hardware.microphone'
+  uses-implied-feature: name='android.hardware.microphone' reason='requested android.permission.RECORD_AUDIO permission'
+  uses-feature: name='android.hardware.screen.portrait'
+  uses-implied-feature: name='android.hardware.screen.portrait' reason='one or more activities have specified a portrait orientation'
+  uses-feature: name='android.hardware.wifi'
+  uses-implied-feature: name='android.hardware.wifi' reason='requested android.permission.ACCESS_WIFI_STATE permission'
+main
+other-activities
+other-receivers
+other-services
+supports-screens: 'small' 'normal' 'large' 'xlarge'
+supports-any-density: 'true'
+locales: '--_--' 'af' 'am' 'ar' 'as' 'az' 'be' 'bg' 'bn' 'bs' 'ca' 'cs' 'da' 'de' 'el' 'en-AU' 'en-CA' 'en-GB' 'en-IN' 'en-XC' 'es' 'es-419' 'es-ES' 'es-US' 'et' 'eu' 'fa' 'fi' 'fr' 'fr-CA' 'gl' 'gu' 'hi' 'hr' 'hu' 'hy' 'in' 'is' 'it' 'iw' 'ja' 'ka' 'kk' 'km' 'kn' 'ko' 'ky' 'lo' 'lt' 'lv' 'mk' 'ml' 'mn' 'mr' 'ms' 'my' 'nb' 'ne' 'nl' 'or' 'pa' 'pl' 'pt' 'pt-BR' 'pt-PT' 'ro' 'ru' 'si' 'sk' 'sl' 'sq' 'sr' 'sr-Latn' 'sv' 'sw' 'ta' 'te' 'th' 'tl' 'tr' 'uk' 'ur' 'uz' 'vi' 'zh-CN' 'zh-HK' 'zh-TW' 'zu'
+densities: '120' '160' '240' '320' '480' '640' '65534'
+native-code: 'arm64-v8a' 'armeabi-v7a' 'x86' 'x86_64'
+
+15:48:24.278 detox[5086] E selectApp
+15:48:24.278 detox[5086] B uninstallApp
+  args: ()
+15:48:24.278 detox[5086] B onBeforeUninstallApp
+  args: ({"deviceId":"emulator-5554","bundleId":"com.notesbrain.echo"})
+15:48:24.279 detox[5086] E onBeforeUninstallApp
+15:48:24.279 detox[5086] i "/Users/coding/Library/Android/sdk/platform-tools/adb" -s emulator-5554 shell "pm list packages com.notesbrain.echo"
+15:48:24.308 detox[5086] i package:com.notesbrain.echo
+
+15:48:24.308 detox[5086] i "/Users/coding/Library/Android/sdk/platform-tools/adb" -s emulator-5554 uninstall com.notesbrain.echo
+15:48:24.505 detox[5086] i Success
+
+15:48:24.505 detox[5086] i "/Users/coding/Library/Android/sdk/platform-tools/adb" -s emulator-5554 shell "pm list packages com.notesbrain.echo.test"
+15:48:24.551 detox[5086] i 
+15:48:24.551 detox[5086] E uninstallApp
+15:48:24.551 detox[5086] B selectApp
+  args: ("default")
+15:48:24.552 detox[5086] B terminateApp
+  args: ()
+15:48:24.552 detox[5086] B onBeforeTerminateApp
+  args: ({"deviceId":"emulator-5554","bundleId":"com.notesbrain.echo"})
+15:48:24.552 detox[5086] E onBeforeTerminateApp
+15:48:24.552 detox[5086] i "/Users/coding/Library/Android/sdk/platform-tools/adb" -s emulator-5554 shell "am force-stop com.notesbrain.echo"
+15:48:24.726 detox[5086] i 
+15:48:24.726 detox[5086] B onTerminateApp
+  args: ({"deviceId":"emulator-5554","bundleId":"com.notesbrain.echo"})
+15:48:24.726 detox[5086] E onTerminateApp
+15:48:24.726 detox[5086] E terminateApp
+15:48:24.726 detox[5086] E selectApp
+15:48:24.726 detox[5086] B installApp
+  args: ()
+15:48:24.726 detox[5086] E installApp
+  error: Failed to find the app binary at:
+  /Users/coding/Projects/notes_brain/apps/mobile/android/app/build/outputs/apk/androidTest/release/app-release-androidTest.apk
+  
+  HINT: Make sure that:
+  1. You built the app before running tests:
+    detox build -c <your-configuration-name>
+  2. The app binary can be found at the given path.
+15:48:24.727 detox[5086] E set up environment
+  error: Failed to find the app binary at:
+  /Users/coding/Projects/notes_brain/apps/mobile/android/app/build/outputs/apk/androidTest/release/app-release-androidTest.apk
+  
+  HINT: Make sure that:
+  1. You built the app before running tests:
+    detox build -c <your-configuration-name>
+  2. The app binary can be found at the given path.
+15:48:24.727 detox[5086] B tear down environment
+15:48:24.727 detox[5086] B onBeforeCleanup
+  args: ()
+15:48:24.728 detox[5086] i saving FileArtifact to: artifacts/android.emu.release.2026-03-08 22-48-22Z/detox_pid_5086.json.log { append: true }
+15:48:24.729 detox[5086] i saving FileArtifact to: artifacts/android.emu.release.2026-03-08 22-48-22Z/detox_pid_5086.log { append: true }
+15:48:24.729 detox[5086] E onBeforeCleanup
+15:48:24.730 detox[5085] i tester exited session 838990a4-2a82-5531-80fb-c46ed2b3ce13
+15:48:24.730 detox[5085] E connection :64680<->:64686
+15:48:24.730 detox[5085] i received event of :  deallocateDevice {
+  deviceCookie: {
+    id: 'emulator-5554',
+    adbName: 'emulator-5554',
+    name: 'emulator-5554 (Medium_Phone_API_36.1)'
+  }
+}
+15:48:24.730 detox[5085] B free: emulator-5554
+  data: {}
+15:48:24.730 detox[5086] i dispatching event to  primary-5085 /tmp/detox.primary-5085  :  deallocateDevice , {
+  deviceCookie: {
+    id: 'emulator-5554',
+    adbName: 'emulator-5554',
+    name: 'emulator-5554 (Medium_Phone_API_36.1)'
+  }
+}
+15:48:24.731 detox[5085] E free: emulator-5554
+15:48:24.731 detox[5085] i dispatching event to socket  :  deallocateDeviceDone {}
+15:48:24.731 detox[5086] i ## received events ##
+15:48:24.731 detox[5086] i detected event deallocateDeviceDone {}
+15:48:24.731 detox[5086] E tear down environment
+15:48:24.731 detox[5086] E tests/e2e/mobile/specs/password-reset.e2e.js
+15:48:24.742 detox[5086] i dispatching event to  primary-5085 /tmp/detox.primary-5085  :  reportTestResults , {
+  testResults: [
+    {
+      success: false,
+      testFilePath: '/Users/coding/Projects/notes_brain/tests/e2e/mobile/specs/password-reset.e2e.js',
+      testExecError: {
+        name: 'DetoxRuntimeError',
+        message: 'Failed to find the app binary at:\n' +
+          '/Users/coding/Projects/notes_brain/apps/mobile/android/app/build/outputs/apk/androidTest/release/app-release-androidTest.apk\n' +
+          '\n' +
+          'HINT: Make sure that:\n' +
+          '1. You built the app before running tests:\n' +
+          '  detox build -c <your-configuration-name>\n' +
+          '2. The app binary can be found at the given path.',
+        stack: 'Failed to find the app binary at:\n' +
+          '/Users/coding/Projects/notes_brain/apps/mobile/android/app/build/outputs/apk/androidTest/release/app-release-androidTest.apk\n' +
+          '\n' +
+          'HINT: Make sure that:\n' +
+          '1. You built the app before running tests:\n' +
+          '  detox build -c <your-configuration-name>\n' +
+          '2. The app binary can be found at the given path.\n' +
+          '    at _reinstallAppsOnDevice.next (<anonymous>)\n' +
+          '    at getNextResult (/Users/coding/Projects/notes_brain/node_modules/caf/src/caf.js:253:25)'
+      },
+      isPermanentFailure: false
+    }
+  ]
+}
+15:48:24.743 detox[5085] i received event of :  reportTestResults {
+  testResults: [
+    {
+      success: false,
+      testFilePath: '/Users/coding/Projects/notes_brain/tests/e2e/mobile/specs/password-reset.e2e.js',
+      testExecError: {
+        name: 'DetoxRuntimeError',
+        message: 'Failed to find the app binary at:\n' +
+          '/Users/coding/Projects/notes_brain/apps/mobile/android/app/build/outputs/apk/androidTest/release/app-release-androidTest.apk\n' +
+          '\n' +
+          'HINT: Make sure that:\n' +
+          '1. You built the app before running tests:\n' +
+          '  detox build -c <your-configuration-name>\n' +
+          '2. The app binary can be found at the given path.',
+        stack: 'Failed to find the app binary at:\n' +
+          '/Users/coding/Projects/notes_brain/apps/mobile/android/app/build/outputs/apk/androidTest/release/app-release-androidTest.apk\n' +
+          '\n' +
+          'HINT: Make sure that:\n' +
+          '1. You built the app before running tests:\n' +
+          '  detox build -c <your-configuration-name>\n' +
+          '2. The app binary can be found at the given path.\n' +
+          '    at _reinstallAppsOnDevice.next (<anonymous>)\n' +
+          '    at getNextResult (/Users/coding/Projects/notes_brain/node_modules/caf/src/caf.js:253:25)'
+      },
+      isPermanentFailure: false
+    }
+  ]
+}
+15:48:24.743 detox[5085] i dispatching event to socket  :  reportTestResultsDone {
+  testResults: [
+    {
+      success: false,
+      testFilePath: '/Users/coding/Projects/notes_brain/tests/e2e/mobile/specs/password-reset.e2e.js',
+      testExecError: {
+        name: 'DetoxRuntimeError',
+        message: 'Failed to find the app binary at:\n' +
+          '/Users/coding/Projects/notes_brain/apps/mobile/android/app/build/outputs/apk/androidTest/release/app-release-androidTest.apk\n' +
+          '\n' +
+          'HINT: Make sure that:\n' +
+          '1. You built the app before running tests:\n' +
+          '  detox build -c <your-configuration-name>\n' +
+          '2. The app binary can be found at the given path.',
+        stack: 'Failed to find the app binary at:\n' +
+          '/Users/coding/Projects/notes_brain/apps/mobile/android/app/build/outputs/apk/androidTest/release/app-release-androidTest.apk\n' +
+          '\n' +
+          'HINT: Make sure that:\n' +
+          '1. You built the app before running tests:\n' +
+          '  detox build -c <your-configuration-name>\n' +
+          '2. The app binary can be found at the given path.\n' +
+          '    at _reinstallAppsOnDevice.next (<anonymous>)\n' +
+          '    at getNextResult (/Users/coding/Projects/notes_brain/node_modules/caf/src/caf.js:253:25)'
+      },
+      isPermanentFailure: false
+    }
+  ]
+}
+15:48:24.743 detox[5085] i broadcasting event to all known sockets listening to  /tmp/detox.primary-5085  :   sessionStateUpdate {
+  testResults: [
+    {
+      success: false,
+      testFilePath: '/Users/coding/Projects/notes_brain/tests/e2e/mobile/specs/password-reset.e2e.js',
+      testExecError: {
+        name: 'DetoxRuntimeError',
+        message: 'Failed to find the app binary at:\n' +
+          '/Users/coding/Projects/notes_brain/apps/mobile/android/app/build/outputs/apk/androidTest/release/app-release-androidTest.apk\n' +
+          '\n' +
+          'HINT: Make sure that:\n' +
+          '1. You built the app before running tests:\n' +
+          '  detox build -c <your-configuration-name>\n' +
+          '2. The app binary can be found at the given path.',
+        stack: 'Failed to find the app binary at:\n' +
+          '/Users/coding/Projects/notes_brain/apps/mobile/android/app/build/outputs/apk/androidTest/release/app-release-androidTest.apk\n' +
+          '\n' +
+          'HINT: Make sure that:\n' +
+          '1. You built the app before running tests:\n' +
+          '  detox build -c <your-configuration-name>\n' +
+          '2. The app binary can be found at the given path.\n' +
+          '    at _reinstallAppsOnDevice.next (<anonymous>)\n' +
+          '    at getNextResult (/Users/coding/Projects/notes_brain/node_modules/caf/src/caf.js:253:25)'
+      },
+      isPermanentFailure: false
+    }
+  ]
+}
+15:48:24.743 detox[5086] i ## received events ##
+15:48:24.743 detox[5086] i detected event reportTestResultsDone {
+  testResults: [
+    {
+      success: false,
+      testFilePath: '/Users/coding/Projects/notes_brain/tests/e2e/mobile/specs/password-reset.e2e.js',
+      testExecError: {
+        name: 'DetoxRuntimeError',
+        message: 'Failed to find the app binary at:\n' +
+          '/Users/coding/Projects/notes_brain/apps/mobile/android/app/build/outputs/apk/androidTest/release/app-release-androidTest.apk\n' +
+          '\n' +
+          'HINT: Make sure that:\n' +
+          '1. You built the app before running tests:\n' +
+          '  detox build -c <your-configuration-name>\n' +
+          '2. The app binary can be found at the given path.',
+        stack: 'Failed to find the app binary at:\n' +
+          '/Users/coding/Projects/notes_brain/apps/mobile/android/app/build/outputs/apk/androidTest/release/app-release-androidTest.apk\n' +
+          '\n' +
+          'HINT: Make sure that:\n' +
+          '1. You built the app before running tests:\n' +
+          '  detox build -c <your-configuration-name>\n' +
+          '2. The app binary can be found at the given path.\n' +
+          '    at _reinstallAppsOnDevice.next (<anonymous>)\n' +
+          '    at getNextResult (/Users/coding/Projects/notes_brain/node_modules/caf/src/caf.js:253:25)'
+      },
+      isPermanentFailure: false
+    }
+  ]
+}
+15:48:24.744 detox[5085] i socket disconnected secondary-5086
+15:48:24.744 detox[5086] i connection closed primary-5085 /tmp/detox.primary-5085 0 tries remaining of 0
+15:48:24.744 detox[5086] i secondary-5086 exceeded connection rety amount of  or stopRetrying flag set.
+15:48:24.857 detox[5085] E Command failed with exit code = 1:
+DETOX_AVD_NAME="Medium_Phone_API_36.1" jest --config tests/e2e/mobile/jest.config.cjs tests/e2e/mobile/specs/password-reset.e2e.js
+15:48:24.857 detox[5085] B cleanup
+  args: ()
+15:48:24.859 detox[5085] E cleanup
+15:48:24.861 detox[5085] i Detox server has been closed gracefully
+15:48:24.861 detox[5085] E node_modules/.bin/detox test --config-path ./tests/e2e/mobile/detox.config.cjs --configuration android.emu.release tests/e2e/mobile/specs/password-reset.e2e.js --record-logs all

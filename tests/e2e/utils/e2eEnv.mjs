@@ -12,7 +12,7 @@ export function getE2EEnv() {
     supabaseAnonKey: readEnv("E2E_SUPABASE_ANON_KEY"),
     supabaseAdminKey,
     testEmail: readEnv("E2E_TEST_EMAIL", "notesbrain-e2e@example.com"),
-    testPassword: readEnv("E2E_TEST_PASSWORD", "NotesBrain-E2E-Password-123!"),
+    testPassword: readEnv("E2E_TEST_PASSWORD", "NotesBrainE2EPassword123"),
     testTimezone: readEnv("E2E_TEST_TIMEZONE", "America/Los_Angeles")
   };
 }

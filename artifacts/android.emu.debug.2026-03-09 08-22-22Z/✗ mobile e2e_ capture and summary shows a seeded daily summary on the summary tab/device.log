@@ -1,0 +1,228 @@
+--------- beginning of main
+03-09 01:23:34.764 18555 18593 E TestRunner: failed: runDetoxTests(com.notesbrain.echo.DetoxTest)
+03-09 01:23:34.768 18555 18593 E TestRunner: ----- begin exception -----
+03-09 01:23:34.768 18555 18593 E TestRunner: com.wix.detox.common.DetoxErrors$DetoxRuntimeException: Waited for the new RN-context for too long! (60 seconds)
+03-09 01:23:34.768 18555 18593 E TestRunner: If you think that's not long enough, consider applying a custom Detox runtime-config in DetoxTest.runTests().
+03-09 01:23:34.768 18555 18593 E TestRunner: 	at com.wix.detox.reactnative.ReactNativeLoadingMonitor.awaitNewRNContext(ReactNativeLoadingMonitor.kt:54)
+03-09 01:23:34.768 18555 18593 E TestRunner: 	at com.wix.detox.reactnative.ReactNativeLoadingMonitor.getNewContext(ReactNativeLoadingMonitor.kt:26)
+03-09 01:23:34.768 18555 18593 E TestRunner: 	at com.wix.detox.reactnative.ReactNativeExtension.awaitNewReactNativeContext(ReactNativeExtension.kt:127)
+03-09 01:23:34.768 18555 18593 E TestRunner: 	at com.wix.detox.reactnative.ReactNativeExtension.waitForRNBootstrap(ReactNativeExtension.kt:37)
+03-09 01:23:34.768 18555 18593 E TestRunner: 	at com.wix.detox.DetoxMain.launchActivity(DetoxMain.kt:133)
+03-09 01:23:34.768 18555 18593 E TestRunner: 	at com.wix.detox.DetoxMain.launchActivityOnCue(DetoxMain.kt:55)
+03-09 01:23:34.768 18555 18593 E TestRunner: 	at com.wix.detox.DetoxMain.run(DetoxMain.kt:35)
+03-09 01:23:34.768 18555 18593 E TestRunner: 	at com.wix.detox.Detox.runTests(Detox.java:127)
+03-09 01:23:34.768 18555 18593 E TestRunner: 	at com.wix.detox.Detox.runTests(Detox.java:113)
+03-09 01:23:34.768 18555 18593 E TestRunner: 	at com.wix.detox.Detox.runTests(Detox.java:84)
+03-09 01:23:34.768 18555 18593 E TestRunner: 	at com.notesbrain.echo.DetoxTest.runDetoxTests(DetoxTest.java:20)
+03-09 01:23:34.768 18555 18593 E TestRunner: 	at java.lang.reflect.Method.invoke(Native Method)
+03-09 01:23:34.768 18555 18593 E TestRunner: 	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:59)
+03-09 01:23:34.768 18555 18593 E TestRunner: 	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+03-09 01:23:34.768 18555 18593 E TestRunner: 	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:56)
+03-09 01:23:34.768 18555 18593 E TestRunner: 	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+03-09 01:23:34.768 18555 18593 E TestRunner: 	at androidx.test.rule.ActivityTestRule$ActivityStatement.evaluate(ActivityTestRule.java:522)
+03-09 01:23:34.768 18555 18593 E TestRunner: 	at org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
+03-09 01:23:34.768 18555 18593 E TestRunner: 	at org.junit.runners.BlockJUnit4ClassRunner$1.evaluate(BlockJUnit4ClassRunner.java:100)
+03-09 01:23:34.768 18555 18593 E TestRunner: 	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:366)
+03-09 01:23:34.768 18555 18593 E TestRunner: 	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:103)
+03-09 01:23:34.768 18555 18593 E TestRunner: 	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:63)
+03-09 01:23:34.768 18555 18593 E TestRunner: 	at org.junit.runners.ParentRunner$4.run(ParentRunner.java:331)
+03-09 01:23:34.768 18555 18593 E TestRunner: 	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:79)
+03-09 01:23:34.768 18555 18593 E TestRunner: 	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:329)
+03-09 01:23:34.768 18555 18593 E TestRunner: 	at org.junit.runners.ParentRunner.access$100(ParentRunner.java:66)
+03-09 01:23:34.768 18555 18593 E TestRunner: 	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:293)
+03-09 01:23:34.768 18555 18593 E TestRunner: 	at org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
+03-09 01:23:34.768 18555 18593 E TestRunner: 	at org.junit.runners.ParentRunner.run(ParentRunner.java:413)
+03-09 01:23:34.768 18555 18593 E TestRunner: 	at androidx.test.ext.junit.runners.AndroidJUnit4.run(AndroidJUnit4.java:162)
+03-09 01:23:34.768 18555 18593 E TestRunner: 	at org.junit.runners.Suite.runChild(Suite.java:128)
+03-09 01:23:34.768 18555 18593 E TestRunner: 	at org.junit.runners.Suite.runChild(Suite.java:27)
+03-09 01:23:34.768 18555 18593 E TestRunner: 	at org.junit.runners.ParentRunner$4.run(ParentRunner.java:331)
+03-09 01:23:34.768 18555 18593 E TestRunner: 	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:79)
+03-09 01:23:34.768 18555 18593 E TestRunner: 	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:329)
+03-09 01:23:34.768 18555 18593 E TestRunner: 	at org.junit.runners.ParentRunner.access$100(ParentRunner.java:66)
+03-09 01:23:34.768 18555 18593 E TestRunner: 	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:293)
+03-09 01:23:34.768 18555 18593 E TestRunner: 	at org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
+03-09 01:23:34.768 18555 18593 E TestRunner: 	at org.junit.runners.ParentRunner.run(ParentRunner.java:413)
+03-09 01:23:34.768 18555 18593 E TestRunner: 	at org.junit.runner.JUnitCore.run(JUnitCore.java:137)
+03-09 01:23:34.768 18555 18593 E TestRunner: 	at org.junit.runner.JUnitCore.run(JUnitCore.java:115)
+03-09 01:23:34.768 18555 18593 E TestRunner: 	at androidx.test.internal.runner.TestExecutor.execute(TestExecutor.java:68)
+03-09 01:23:34.768 18555 18593 E TestRunner: 	at androidx.test.internal.runner.TestExecutor.execute(TestExecutor.java:59)
+03-09 01:23:34.768 18555 18593 E TestRunner: 	at androidx.test.runner.AndroidJUnitRunner.onStart(AndroidJUnitRunner.java:467)
+03-09 01:23:34.768 18555 18593 E TestRunner: 	at android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:2597)
+03-09 01:23:34.768 18555 18593 E TestRunner: ----- end exception -----
+03-09 01:23:34.769 18555 18555 I Detox   : Wait is over: App is now idle!
+03-09 01:23:34.769 18555 18609 I DetoxWSClient: Sending out action 'ready' (ID #-1000)
+03-09 01:23:34.770 18555 18609 I DetoxDispatcher: Done with action 'isReady'
+03-09 01:23:34.772 18555 18593 I TestRunner: finished: runDetoxTests(com.notesbrain.echo.DetoxTest)
+03-09 01:23:34.773 18555 18610 I DetoxWSClient: Sending out action 'currentStatusResult' (ID #1)
+03-09 01:23:34.774 18555 18610 I DetoxDispatcher: Done with action 'currentStatus'
+03-09 01:23:34.775 18555 18593 I MonitoringInstr: Unstopped activity count: 1
+03-09 01:23:34.776 18555 18555 I MonitoringInstr: Finishing activity: expo.modules.devlauncher.launcher.DevLauncherActivity@aa4745a
+03-09 01:23:34.777 18555 18614 D DetoxWSClient: Received action 'invoke' (ID #2, params={"target":{"type":"Class","value":"com.wix.detox.espresso.DetoxAssertion"},"method":"waitForAssertMatcher","args":[{"type":"Invocation","value":{"target":{"type":"Class","value":"androidx.test.espresso.Espresso"},"method":"onView","args":[{"type":"Invocation","value":{"target":{"type":"Class","value":"com.wix.detox.espresso.DetoxMatcher"},"method":"matcherForTestId","args":["login-email-input",{"type":"boolean","value":false}]}}]}},{"type":"Invocation","value":{"target":{"type":"Class","value":"com.wix.detox.espresso.DetoxMatcher"},"method":"matcherForSufficientlyVisible","args":[{"type":"Integer","value":75}]}},{"type":"Double","value":15}]})
+03-09 01:23:34.778 18555 18609 I DetoxDispatcher: Handling action 'invoke' (ID #2)...
+03-09 01:23:34.779 18555 18609 D Detox   : class com.wix.detox.espresso.DetoxMatcher, matcherForTestId, [login-email-input, false]
+03-09 01:23:34.780 18555 18609 D Detox   : class androidx.test.espresso.Espresso, onView, [(view.getTag() is "login-email-input" and view has effective visibility <VISIBLE>)]
+03-09 01:23:34.782 18555 18609 D Detox   : class com.wix.detox.espresso.DetoxMatcher, matcherForSufficientlyVisible, [75]
+03-09 01:23:34.783 18555 18609 D Detox   : class com.wix.detox.espresso.DetoxAssertion, waitForAssertMatcher, [androidx.test.espresso.ViewInteraction@947e05a, (view has effective visibility <VISIBLE> and view.getGlobalVisibleRect() covers at least <75> percent of the view's area), 15.0]
+03-09 01:23:34.786 18555 18555 D LifecycleMonitor: Lifecycle statu--------- beginning of main
+03-09 01:23:39.057 18916 18916 I notesbrain.echo: AssetManager2(0xb400007662c44758) locale list changing from [] to [en-US]
+03-09 01:23:39.062 18916 18916 I AndroidJUnitRunner: newApplication com.notesbrain.echo.MainApplication
+03-09 01:23:39.105 18916 18916 I FirebaseApp: Device unlocked: initializing all Firebase APIs for app [DEFAULT]
+03-09 01:23:39.116 18916 18916 I FirebaseInitProvider: FirebaseApp initialization successful
+03-09 01:23:39.132 18916 18916 I AndroidJUnitRunner: onCreate Bundle[mParcelledData.dataSize=240]
+03-09 01:23:39.135 18916 18916 D AndroidJUnitRunner: Use the raw file system for managing file I/O.
+03-09 01:23:39.179 18916 18916 V TestEventClient: No service name argument was given (testDiscoveryService, testRunEventService or orchestratorService)
+03-09 01:23:39.180 18916 18949 D AndroidJUnitRunner: onStart is called.
+03-09 01:23:39.182 18916 18916 W SoLoader: Initializing SoLoader: 0
+03-09 01:23:39.183 18916 18916 W SoLoader: Recording new base apk path: /data/app/~~G4WkLMCTy_gONrfYdT0gjg==/com.notesbrain.echo-YY9p3W9DuQ41vH06d-QrWw==/base.apk
+03-09 01:23:39.183 18916 18916 W SoLoader: Previously recorded 0 base apk paths.
+03-09 01:23:39.184 18916 18916 I SoLoader: Preparing SO source: DirectorySoSource[root = /vendor/lib64 flags = 2]
+03-09 01:23:39.185 18916 18916 I SoLoader: Preparing SO source: DirectorySoSource[root = /system/lib64 flags = 2]
+03-09 01:23:39.185 18916 18916 I SoLoader: Preparing SO source: DirectApkSoSource[root = [/data/app/~~G4WkLMCTy_gONrfYdT0gjg==/com.notesbrain.echo-YY9p3W9DuQ41vH06d-QrWw==/base.apk!/lib/arm64-v8a]]
+03-09 01:23:39.237 18916 18916 I SoLoader: Preparing SO source: ApplicationSoSource[DirectorySoSource[root = /data/app/~~G4WkLMCTy_gONrfYdT0gjg==/com.notesbrain.echo-YY9p3W9DuQ41vH06d-QrWw==/lib/arm64 flags = 0]]
+03-09 01:23:39.237 18916 18916 I SoLoader: init finish: 4 SO sources prepared
+03-09 01:23:39.237 18916 18916 W SoLoader: SoLoader initialized: 8
+03-09 01:23:39.250 18916 18916 D nativeloader: Load /data/app/~~G4WkLMCTy_gONrfYdT0gjg==/com.notesbrain.echo-YY9p3W9DuQ41vH06d-QrWw==/base.apk!/lib/arm64-v8a/libc++_shared.so using class loader ns clns-9 (caller=/data/app/~~G4WkLMCTy_gONrfYdT0gjg==/com.notesbrain.echo-YY9p3W9DuQ41vH06d-QrWw==/base.apk!classes7.dex): ok
+03-09 01:23:39.253 18916 18916 D nativeloader: Load /data/app/~~G4WkLMCTy_gONrfYdT0gjg==/com.notesbrain.echo-YY9p3W9DuQ41vH06d-QrWw==/base.apk!/lib/arm64-v8a/libjsi.so using class loader ns clns-9 (caller=/data/app/~~G4WkLMCTy_gONrfYdT0gjg==/com.notesbrain.echo-YY9p3W9DuQ41vH06d-QrWw==/base.apk!classes7.dex): ok
+03-09 01:23:39.256 18916 18916 D nativeloader: Load /data/app/~~G4WkLMCTy_gONrfYdT0gjg==/com.notesbrain.echo-YY9p3W9DuQ41vH06d-QrWw==/base.apk!/lib/arm64-v8a/libfbjni.so using class loader ns clns-9 (caller=/data/app/~~G4WkLMCTy_gONrfYdT0gjg==/com.notesbrain.echo-YY9p3W9DuQ41vH06d-QrWw==/base.apk!classes7.dex): ok
+03-09 01:23:39.261 18916 18916 D nativeloader: Load /data/app/~~G4WkLMCTy_gONrfYdT0gjg==/com.notesbrain.echo-YY9p3W9DuQ41vH06d-QrWw==/base.apk!/lib/arm64-v8a/libreactnative.so using class loader ns clns-9 (caller=/data/app/~~G4WkLMCTy_gONrfYdT0gjg==/com.notesbrain.echo-YY9p3W9DuQ41vH06d-QrWw==/base.apk!classes7.dex): ok
+03-09 01:23:39.261 18916 18916 D jni_lib_merge: Entering merged library JNI_OnLoad.
+03-09 01:23:39.261 18916 18916 D jni_lib_merge: Preparing 12 pre-merged libs (including stub)
+03-09 01:23:39.261 18916 18916 D jni_lib_merge: Preparing to register libfabricjni_so.  onload_func: 0x74e563bce0
+03-09 01:23:39.261 18916 18916 D jni_lib_merge: Preparing to register libreact_devsupportjni_so.  onload_func: 0x74e5835fc8
+03-09 01:23:39.261 18916 18916 D jni_lib_merge: Preparing to register libreact_featureflagsjni_so.  onload_func: 0x74e5844518
+03-09 01:23:39.261 18916 18916 D jni_lib_merge: Preparing to register libreact_newarchdefaults_so.  onload_func: 0x74e58ac6a8
+03-09 01:23:39.261 18916 18916 D jni_lib_merge: Preparing to register libreactnativeblob_so.  onload_func: 0x74e5a9ccb4
+03-09 01:23:39.261 18916 18916 D jni_lib_merge: Preparing to register libreactnativejni_so.  onload_func: 0x74e5aea6bc
+03-09 01:23:39.261 18916 18916 D jni_lib_merge: Preparing to register libreactnativejni_common_so.  onload_func: 0x74e5afb044
+03-09 01:23:39.261 18916 18916 D jni_lib_merge: Preparing to register librninstance_so.  onload_func: 0x74e5b42764
+03-09 01:23:39.261 18916 18916 D jni_lib_merge: Preparing to register libturbomodulejsijni_so.  onload_func: 0x74e5c5af68
+03-09 01:23:39.261 18916 18916 D jni_lib_merge: Preparing to register libuimanagerjni_so.  onload_func: 0x74e5c73fb8
+03-09 01:23:39.261 18916 18916 D jni_lib_merge: Preparing to register libyoga_so.  onload_func: 0x74e5c83a3c
+03-09 01:23:39.261 18916 18916 D jni_lib_merge: About to register 11 actual methods.
+03-09 01:23:39.270 18916 18916 D nativeloader: Load /data/app/~~G4WkLMCTy_gONrfYdT0gjg==/com.notesbrain.echo-YY9p3W9DuQ41vH06d-QrWw==/base.apk!/lib/arm64-v8a/libreact_codegen_rnscreens.so using class loader ns clns-9 (caller=/data/app/~~G4WkLMCTy_gONrfYdT0gjg==/com.notesbrain.echo-YY9p3W9DuQ41vH06d-QrWw==/base.apk!classes7.dex): ok
+03-09 01:23:39.270 18916 18916 D jni_lib_merge: Entering merged library JNI_OnLoad.
+03-09 01:23:39.270 18916 18916 D jni_lib_merge: Preparing 12 pre-merged libs (including stub)
+03-09 01:23:39.270 18916 18916 D jni_lib_merge: Preparing to register libfabricjni_so.  onload_func: 0x74e563bce0
+03-09 01:23:39.270 18916 18916 D jni_lib_merge: Preparing to register libreact_devsupportjni_so.  onload_func: 0x74e5835fc8
+03-09 01:23:39.270 18916 18916 D jni_lib_merge: Preparing to register libreact_featureflagsjni_so.  onload_func: 0x74e5844518
+03-09 01:23:39.270 18916 18916 D jni_lib_merge: Preparing to register libreact_newarchdefaults_so.  onload_func: 0x74e58ac6a8
+03-09 01:23:39.270 18916 18916 D jni_lib_merge: Preparing to register libreactnativeblob_so.  onload_func: 0x74e5a9ccb4
+03-09 01:23:39.270 18916 18916 D jni_lib_merge: Preparing to register libreactnativejni_so.  onload_func: 0x74e5aea6bc
+03-09 01:23:39.270 18916 18916 D jni_lib_merge: Preparing to register libreactnativejni_common_so.  onload_func: 0x74e5afb044
+03-09 01:23:39.270 18916 18916 D jni_lib_merge: Preparing to register librninstance_so.  onload_func: 0x74e5b42764
+03-09 01:23:39.270 18916 18916 D jni_lib_merge: Preparing to register libturbomodulejsijni_so.  onload_func: 0x74e5c5af68
+03-09 01:23:39.270 18916 18916 D jni_lib_merge: Preparing to register libuimanagerjni_so.  onload_func: 0x74e5c73fb8
+03-09 01:23:39.270 18916 18916 D jni_lib_merge: Preparing to register libyoga_so.  onload_func: 0x74e5c83a3c
+03-09 01:23:39.270 18916 18916 D jni_lib_merge: About to register 11 actual methods.
+03-09 01:23:39.273 18916 18916 D nativeloader: Load /data/app/~~G4WkLMCTy_gONrfYdT0gjg==/com.notesbrain.echo-YY9p3W9DuQ41vH06d-QrWw==/base.apk!/lib/arm64-v8a/libreact_codegen_safeareacontext.so using class loader ns clns-9 (caller=/data/app/~~G4WkLMCTy_gONrfYdT0gjg==/com.notesbrain.echo-YY9p3W9DuQ41vH06d-QrWw==/base.apk!classes7.dex): ok
+03-09 01:23:39.279 18916 18916 D nativeloader: Load /data/app/~~G4WkLMCTy_gONrfYdT0gjg==/com.notesbrain.echo-YY9p3W9DuQ41vH06d-QrWw==/base.apk!/lib/arm64-v8a/libreact_codegen_rnpicker.so using class loader ns clns-9 (caller=/data/app/~~G4WkLMCTy_gONrfYdT0gjg==/com.notesbrain.echo-YY9p3W9DuQ41vH06d-QrWw==/base.apk!classes7.dex): ok
+03-09 01:23:39.279 18916 18916 D jni_lib_merge: Entering merged library JNI_OnLoad.
+03-09 01:23:39.279 18916 18916 D jni_lib_merge: Preparing 12 pre-merged libs (including stub)
+03-09 01:23:39.279 18916 18916 D jni_lib_merge: Preparing to register libfabricjni_so.  onload_func: 0x74e563bce0
+03-09 01:23:39.279 18916 18916 D jni_lib_merge: Preparing to register libreact_devsupportjni_so.  onload_func: 0x74e5835fc8
+03-09 01:23:39.279 18916 18916 D jni_lib_merge: Preparing to register libreact_featureflagsjni_so.  onload_func: 0x74e5844518
+03-09 01:23:39.279 18916 18916 D jni_lib_merge: Preparing to register libreact_newarchdefaults_so.  onload_func: 0x74e58ac6a8
+03-09 01:23:39.279 18916 18916 D jni_lib_merge: Preparing to register libreactnativeblob_so.  onload_func: 0x74e5a9ccb4
+03-09 01:23:39.279 18916 18916 D jni_lib_merge: Preparing to register libreactnativejni_so.  onload_func: 0x74e5aea6bc
+03-09 01:23:39.279 18916 18916 D jni_lib_merge: Preparing to register libreactnativejni_common_so.  onload_func: 0x74e5afb044
+03-09 01:23:39.279 18916 18916 D jni_lib_merge: Preparing to register librninstance_so.  onload_func: 0x74e5b42764
+03-09 01:23:39.279 18916 18916 D jni_lib_merge: Preparing to register libturbomodulejsijni_so.  onload_func: 0x74e5c5af68
+03-09 01:23:39.279 18916 18916 D jni_lib_merge: Preparing to register libuimanagerjni_so.  onload_func: 0x74e5c73fb8
+03-09 01:23:39.279 18916 18916 D jni_lib_merge: Preparing to register libyoga_so.  onload_func: 0x74e5c83a3c
+03-09 01:23:39.279 18916 18916 D jni_lib_merge: About to register 11 actual methods.
+03-09 01:23:39.281 18916 18916 D nativeloader: Load /data/app/~~G4WkLMCTy_gONrfYdT0gjg==/com.notesbrain.echo-YY9p3W9DuQ41vH06d-QrWw==/base.apk!/lib/arm64-v8a/libappmodules.so using class loader ns clns-9 (caller=/data/app/~~G4WkLMCTy_gONrfYdT0gjg==/com.notesbrain.echo-YY9p3W9DuQ41vH06d-QrWw==/base.apk!classes7.dex): ok
+03-09 01:23:39.422 18916 18949 I InstrConnection: Could not send broadcast or register receiver (isolatedProcess?)
+03-09 01:23:39.425 18916 18949 D TestRequestBuilder: Using class path scanning to discover tests
+03-09 01:23:39.426 18916 18949 I TestRequestBuilder: Scanning classpath to find tests in paths [/data/app/~~xiTg5hs3jCLxb8g-gWYF-Q==/com.notesbrain.echo.test-wlNP-1W_YL1Yb3A14gB6FQ==/base.apk]
+03-09 01:23:39.426 18916 18949 W notesbrain.echo: Opening an oat file without a class loader. Are you using the deprecated DexFile APIs?
+03-09 01:23:39.633 18916 18949 I TestRunner: run started: 1 tests
+03-09 01:23:39.633 18916 18949 I TestRunner: started: runDetoxTests(com.notesbrain.echo.DetoxTest)
+03-09 01:23:39.636 18916 18949 I Detox   : Detox server connection details: url=ws://localhost:62465, sessionId=49eb8b85-ccbc-9626-7084-0578dfcb278a
+03-09 01:23:39.640 18916 18949 I Tracing : Tracer added: class androidx.test.platform.tracing.AndroidXTracer
+03-09 01:23:39.646 18916 18949 I notesbrain.echo: hiddenapi: Accessing hidden field Ljava/lang/reflect/Field;->accessFlags:I (runtime_flags=0, domain=core-platform, api=unsupported) from Lorg/joor/Reflect; (domain=app) using reflection: allowed
+03-09 01:23:39.646 18916 18949 I Detox   : Connecting to server...
+03-09 01:23:39.646 18916 18949 I DetoxWSClient: At connectToServer
+03-09 01:23:39.653 18916 18979 D DetoxWSClient: At onOpen
+03-09 01:23:39.653 18916 18979 I DetoxWSClient: Sending out action 'login' (ID #0)
+03-09 01:23:39.653 18916 18979 I Detox   : Connected to server!
+03-09 01:23:39.655 18916 18979 D DetoxWSClient: Received action 'loginSuccess' (ID #0, params={"testerConnected":true,"appConnected":true})
+03-09 01:23:39.655 18916 18975 I DetoxDispatcher: Handling action 'loginSuccess' (ID #0)...
+03-09 01:23:39.655 18916 18975 I DetoxDispatcher: Done with action 'loginSuccess'
+03-09 01:23:39.655 18916 18949 I Detox   : Launching the tested activity!
+03-09 01:23:39.699 18916 18979 D DetoxWSClient: Received action 'isReady' (ID #-1000, params={})
+03-09 01:23:39.700 18916 18975 I DetoxDispatcher: Handling action 'isReady' (ID #-1000)...
+--------- beginning of system
+03-09 01:23:39.711 18916 18988 I DisplayManager: Choreographer implicitly registered for the refresh rate.
+03-09 01:23:39.713 18916 18916 I notesbrain.echo: AssetManager2(0xb400007662c4d718) locale list changing from [] to [en-US]
+03-09 01:23:39.746 18916 18916 D AppCompatDelegate: Checking for metadata for AppLocalesMetadataHolderService : Service not found
+03-09 01:23:39.747 18916 18916 I notesbrain.echo: AssetManager2(0xb400007662c4b7d8) locale list changing from [] to [en-US]
+03-09 01:23:39.752 18916 18916 E ashmem  : Pinning is deprecated since Android Q. Please use trim or other methods.
+03-09 01:23:39.757 18916 18916 D LifecycleMonitor: Lifecycle status change: com.notesbrain.echo.MainActivity@fa4f966 in: PRE_ON_CREATE
+03-09 01:23:39.763 18916 18988 I EGL_emulation: Opening libGLESv1_CM_emulation.so
+03-09 01:23:39.763 18916 18988 I EGL_emulation: Opening libGLESv2_emulation.so
+03-09 01:23:39.767 18916 18988 W HWUI    : Failed to choose config with EGL_SWAP_BEHAVIOR_PRESERVED, retrying without...
+03-09 01:23:39.767 18916 18988 W HWUI    : Failed to initialize 101010-2 format, error = EGL_SUCCESS
+03-09 01:23:39.778 18916 18916 D CompatChangeReporter: Compat change id reported: 377864165; UID 10226; state: ENABLED
+03-09 01:23:39.780 18916 18916 D DesktopModeFlags: Toggle override initialized to: OVERRIDE_UNSET
+03-09 01:23:39.793 18916 18916 I notesbrain.echo: hiddenapi: Accessing hidden method Landroid/view/ViewGroup;->makeOptionalFitsSystemWindows()V (runtime_flags=0, domain=platform, api=unsupported) from Landroidx/appcompat/widget/ViewUtils; (domain=app) using reflection: allowed
+03-09 01:23:39.803 18916 18916 I ExpoDevMenu: Set new dev-menu delegate: class expo.modules.devmenu.DevMenuDefaultDelegate
+03-09 01:23:39.808 18916 18916 D LifecycleMonitor: Lifecycle status change: com.notesbrain.echo.MainActivity@fa4f966 in: CREATED
+03-09 01:23:39.809 18916 18916 D LifecycleMonitor: Lifecycle status change: com.notesbrain.echo.MainActivity@fa4f966 in: STARTED
+03-09 01:23:39.810 18916 18916 W WindowOnBackDispatcher: OnBackInvokedCallback is not enabled for the application.
+03-09 01:23:39.810 18916 18916 W WindowOnBackDispatcher: Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+03-09 01:23:39.814 18916 18916 D LifecycleMonitor: Lifecycle status change: com.notesbrain.echo.MainActivity@fa4f966 in: RESUMED
+03-09 01:23:39.825 18916 18916 W HWUI    : Unknown dataspace 0
+03-09 01:23:39.833 18916 18916 D LifecycleMonitor: Lifecycle status change: com.notesbrain.echo.MainActivity@fa4f966 in: PAUSED
+03-09 01:23:39.850 18916 18916 D LifecycleMonitor: Lifecycle status change: expo.modules.devlauncher.launcher.DevLauncherActivity@38c914e in: PRE_ON_CREATE
+03-09 01:23:39.882 18916 18916 D LifecycleMonitor: Lifecycle status change: expo.modules.devlauncher.launcher.DevLauncherActivity@38c914e in: CREATED
+03-09 01:23:39.884 18916 18916 D LifecycleMonitor: Lifecycle status change: expo.modules.devlauncher.launcher.DevLauncherActivity@38c914e in: STARTED
+03-09 01:23:39.886 18916 18916 D LifecycleMonitor: Lifecycle status change: expo.modules.devlauncher.launcher.DevLauncherActivity@38c914e in: RESUMED
+03-09 01:23:39.891 18916 18916 D VRI[MainActivity]: visibilityChanged oldVisibility=true newVisibility=false
+03-09 01:23:39.989 18916 18920 I notesbrain.echo: Compiler allocated 5111KB to compile void android.view.ViewRootImpl.performTraversals()
+03-09 01:23:39.991 18916 18916 I notesbrain.echo: hiddenapi: Accessing hidden method Landroid/os/SystemProperties;->addChangeCallback(Ljava/lang/Runnable;)V (runtime_flags=0, domain=platform, api=unsupported) from Landroidx/compose/ui/platform/AndroidComposeView$Companion; (domain=app) using reflection: allowed
+03-09 01:23:40.130 18916 18916 W HWUI    : Image decoding logging dropped!
+03-09 01:23:40.353 18916 18916 D LifecycleMonitor: Lifecycle status change: com.notesbrain.echo.MainActivity@fa4f966 in: STOPPED
+03-09 01:23:40.354 18916 18916 D LifecycleMonitor: Lifecycle status change: com.notesbrain.echo.MainActivity@fa4f966 in: DESTROYED
+03-09 01:23:40.354 18916 18916 W WindowOnBackDispatcher: sendCancelIfRunning: isInProgress=false callback=android.view.ViewRootImpl$$ExternalSyntheticLambda13@cfee09b
+03-09 01:23:40.355 18916 18916 D ViewRootImpl: Skipping stats log for color mode
+03-09 01:23:45.143 18916 19014 D ProfileInstaller: Installing profile for com.notesbrain.echo
+03-09 01:23:49.658 18916 18979 D DetoxWSClient: Received action 'currentStatus' (ID #3, params={})
+03-09 01:23:49.658 18916 18976 I DetoxDispatcher: Handling action 'currentStatus' (ID #3)...
+03-09 01:24:40.564 18916 18949 E TestRunner: failed: runDetoxTests(com.notesbrain.echo.DetoxTest)
+03-09 01:24:40.566 18916 18916 I Detox   : Wait is over: App is now idle!
+03-09 01:24:40.566 18916 18975 I DetoxWSClient: Sending out action 'ready' (ID #-1000)
+03-09 01:24:40.566 18916 18949 E TestRunner: ----- begin exception -----
+03-09 01:24:40.566 18916 18949 E TestRunner: com.wix.detox.common.DetoxErrors$DetoxRuntimeException: Waited for the new RN-context for too long! (60 seconds)
+03-09 01:24:40.566 18916 18949 E TestRunner: If you think that's not long enough, consider applying a custom Detox runtime-config in DetoxTest.runTests().
+03-09 01:24:40.566 18916 18949 E TestRunner: 	at com.wix.detox.reactnative.ReactNativeLoadingMonitor.awaitNewRNContext(ReactNativeLoadingMonitor.kt:54)
+03-09 01:24:40.566 18916 18949 E TestRunner: 	at com.wix.detox.reactnative.ReactNativeLoadingMonitor.getNewContext(ReactNativeLoadingMonitor.kt:26)
+03-09 01:24:40.566 18916 18949 E TestRunner: 	at com.wix.detox.reactnative.ReactNativeExtension.awaitNewReactNativeContext(ReactNativeExtension.kt:127)
+03-09 01:24:40.566 18916 18949 E TestRunner: 	at com.wix.detox.reactnative.ReactNativeExtension.waitForRNBootstrap(ReactNativeExtension.kt:37)
+03-09 01:24:40.566 18916 18949 E TestRunner: 	at com.wix.detox.DetoxMain.launchActivity(DetoxMain.kt:133)
+03-09 01:24:40.566 18916 18949 E TestRunner: 	at com.wix.detox.DetoxMain.launchActivityOnCue(DetoxMain.kt:55)
+03-09 01:24:40.566 18916 18949 E TestRunner: 	at com.wix.detox.DetoxMain.run(DetoxMain.kt:35)
+03-09 01:24:40.566 18916 18949 E TestRunner: 	at com.wix.detox.Detox.runTests(Detox.java:127)
+03-09 01:24:40.566 18916 18949 E TestRunner: 	at com.wix.detox.Detox.runTests(Detox.java:113)
+03-09 01:24:40.566 18916 18949 E TestRunner: 	at com.wix.detox.Detox.runTests(Detox.java:84)
+03-09 01:24:40.566 18916 18949 E TestRunner: 	at com.notesbrain.echo.DetoxTest.runDetoxTests(DetoxTest.java:20)
+03-09 01:24:40.566 18916 18949 E TestRunner: 	at java.lang.reflect.Method.invoke(Native Method)
+03-09 01:24:40.566 18916 18949 E TestRunner: 	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:59)
+03-09 01:24:40.566 18916 18949 E TestRunner: 	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+03-09 01:24:40.566 18916 18949 E TestRunner: 	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:56)
+03-09 01:24:40.566 18916 18949 E TestRunner: 	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+03-09 01:24:40.566 18916 18949 E TestRunner: 	at androidx.test.rule.ActivityTestRule$ActivityStatement.evaluate(ActivityTestRule.java:522)
+03-09 01:24:40.566 18916 18949 E TestRunner: 	at org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
+03-09 01:24:40.566 18916 18949 E TestRunner: 	at org.junit.runners.BlockJUnit4ClassRunner$1.evaluate(BlockJUnit4ClassRunner.java:100)
+03-09 01:24:40.566 18916 18949 E TestRunner: 	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:366)
+03-09 01:24:40.566 18916 18949 E TestRunner: 	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:103)
+03-09 01:24:40.566 18916 18949 E TestRunner: 	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:63)
+03-09 01:24:40.566 18916 18949 E TestRunner: 	at org.junit.runners.ParentRunner$4.run(ParentRunner.java:331)
+03-09 01:24:40.566 18916 18949 E TestRunner: 	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:79)
+03-09 01:24:40.566 18916 18949 E TestRunner: 	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:329)
+03-09 01:24:40.566 18916 18949 E TestRunner: 	at org.junit.runners.ParentRunner.access$100(ParentRunner.java:66)
+03-09 01:24:40.566 18916 18949 E TestRunner: 	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:293)
+03-09 01:24:40.566 18916 18949 E TestRunner: 	at org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
+03-09 01:24:40.566 18916 18949 E TestRunner: 	at org.junit.runners.ParentRunner.run(ParentRunner.java:413)
+03-09 01:24:40.566 18916 18949 E TestRunner: 	at androidx.test.ext.junit.runners.AndroidJUnit4.run(AndroidJUnit4.java:162)
+03-09 01:24:40.566 18916 18949 E TestRunner: 	at org.junit.runners.Suite.runChild(Suite.java:128)
+03-09 01:24:40.566 18916 18949 E TestRunner: 	at org.junit.runners

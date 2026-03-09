@@ -18,6 +18,12 @@ allprojects {
     google()
     mavenCentral()
     maven { url 'https://www.jitpack.io' }
+    maven {
+      url(new File(
+        ["node", "--print", "require.resolve('detox/package.json')"].execute(null, rootDir).text.trim(),
+        "../Detox-android"
+      ).absolutePath)
+    }
   }
 }
 

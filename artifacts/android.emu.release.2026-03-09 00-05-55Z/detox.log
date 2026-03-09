@@ -1,0 +1,2034 @@
+17:05:55.924 detox[51014] B node_modules/.bin/detox test --config-path ./tests/e2e/mobile/detox.config.cjs --configuration android.emu.release tests/e2e/mobile/specs/auth-and-tabs.e2e.js --record-logs failing --take-screenshots failing
+  data: {
+    "id": "79ede4f6-3d53-88e4-0663-95e10769ccd3",
+    "detoxConfig": {
+      "configurationName": "android.emu.release",
+      "apps": {
+        "default": {
+          "type": "android.apk",
+          "binaryPath": "apps/mobile/android/app/build/outputs/apk/release/app-release.apk",
+          "testBinaryPath": "apps/mobile/android/app/build/outputs/apk/androidTest/release/app-release-androidTest.apk",
+          "build": "cd apps/mobile/android && ./gradlew --no-daemon -Dorg.gradle.jvmargs='-Xmx4096m -XX:MaxMetaspaceSize=1024m' :app:createBundleReleaseJsAndAssets --rerun-tasks -PreactNativeArchitectures=arm64-v8a,x86_64 && ./gradlew --no-daemon -Dorg.gradle.jvmargs='-Xmx4096m -XX:MaxMetaspaceSize=1024m' assembleRelease assembleAndroidTest -DtestBuildType=release -x lint -x test -PreactNativeArchitectures=arm64-v8a,x86_64"
+        }
+      },
+      "artifacts": {
+        "rootDir": "artifacts/android.emu.release.2026-03-09 00-05-55Z",
+        "plugins": {
+          "log": {
+            "enabled": true,
+            "keepOnlyFailedTestsArtifacts": true
+          },
+          "screenshot": {
+            "enabled": true,
+            "shouldTakeAutomaticSnapshots": true,
+            "keepOnlyFailedTestsArtifacts": true
+          },
+          "video": {
+            "enabled": false,
+            "keepOnlyFailedTestsArtifacts": false
+          },
+          "instruments": {
+            "enabled": false,
+            "keepOnlyFailedTestsArtifacts": false
+          },
+          "uiHierarchy": {
+            "enabled": false,
+            "keepOnlyFailedTestsArtifacts": false
+          }
+        }
+      },
+      "behavior": {
+        "init": {
+          "keepLockFile": false,
+          "reinstallApp": true,
+          "exposeGlobals": true
+        },
+        "cleanup": {
+          "shutdownDevice": false
+        },
+        "launchApp": "auto"
+      },
+      "cli": {
+        "recordLogs": "failing",
+        "takeScreenshots": "failing",
+        "configPath": "./tests/e2e/mobile/detox.config.cjs",
+        "configuration": "android.emu.release",
+        "start": true
+      },
+      "commands": [
+        {
+          "appName": "default",
+          "build": "cd apps/mobile/android && ./gradlew --no-daemon -Dorg.gradle.jvmargs='-Xmx4096m -XX:MaxMetaspaceSize=1024m' :app:createBundleReleaseJsAndAssets --rerun-tasks -PreactNativeArchitectures=arm64-v8a,x86_64 && ./gradlew --no-daemon -Dorg.gradle.jvmargs='-Xmx4096m -XX:MaxMetaspaceSize=1024m' assembleRelease assembleAndroidTest -DtestBuildType=release -x lint -x test -PreactNativeArchitectures=arm64-v8a,x86_64"
+        }
+      ],
+      "device": {
+        "type": "android.emulator",
+        "device": {
+          "avdName": "Pixel_9"
+        }
+      },
+      "logger": {
+        "level": "info",
+        "overrideConsole": true,
+        "options": {
+          "showLoggerName": true,
+          "showPid": true,
+          "showLevel": false,
+          "showMetadata": false,
+          "basepath": "/Users/coding/Projects/notes_brain/node_modules/detox/src",
+          "prefixers": {},
+          "stringifiers": {}
+        }
+      },
+      "testRunner": {
+        "retries": 0,
+        "forwardEnv": false,
+        "detached": false,
+        "bail": false,
+        "noRetryArgs": [
+          "shard"
+        ],
+        "jest": {
+          "setupTimeout": 180000,
+          "teardownTimeout": 30000,
+          "retryAfterCircusRetries": false,
+          "reportWorkerAssign": true
+        },
+        "args": {
+          "$0": "jest",
+          "_": [
+            "tests/e2e/mobile/specs/auth-and-tabs.e2e.js"
+          ],
+          "config": "tests/e2e/mobile/jest.config.cjs",
+          "--": []
+        }
+      },
+      "session": {
+        "autoStart": true,
+        "debugSynchronization": 10000
+      }
+    },
+    "detoxIPCServer": "primary-51014",
+    "testResults": [],
+    "testSessionIndex": 0,
+    "workersCount": 0
+  }
+17:05:55.928 detox[51014] i Server path not specified, so defaulting to ipc.config.socketRoot + ipc.config.appspace + ipc.config.id /tmp/detox.primary-51014
+17:05:55.929 detox[51014] i starting server on  /tmp/detox.primary-51014 
+17:05:55.929 detox[51014] i starting TLS server false
+17:05:55.929 detox[51014] i starting server as Unix || Windows Socket
+17:05:55.930 detox[51014] i Detox server listening on localhost:63630...
+17:05:55.933 detox[51014] i Serialized the session state at: /private/var/folders/4z/mqqhpdps32j1l_chr_9wt8rw0000gp/T/79ede4f6-3d53-88e4-0663-95e10769ccd3.detox.json
+17:05:55.933 detox[51014] B DETOX_AVD_NAME="Pixel_9" jest --config tests/e2e/mobile/jest.config.cjs tests/e2e/mobile/specs/auth-and-tabs.e2e.js
+17:05:55.935 detox[51014] i (node:51014) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+17:05:56.534 detox[51015] i Service path not specified, so defaulting to ipc.config.socketRoot + ipc.config.appspace + id 
+17:05:56.535 detox[51015] i requested connection to  primary-51014 /tmp/detox.primary-51014
+17:05:56.535 detox[51015] i Connecting client on Unix Socket : /tmp/detox.primary-51014
+17:05:56.536 detox[51014] i ## socket connection to server detected ##
+17:05:56.536 detox[51015] i retrying reset
+17:05:56.536 detox[51015] i dispatching event to  primary-51014 /tmp/detox.primary-51014  :  registerContext , { id: 'secondary-51015' }
+17:05:56.537 detox[51014] i received event of :  registerContext { id: 'secondary-51015' }
+17:05:56.537 detox[51014] i dispatching event to socket  :  registerContextDone {
+  testResults: [],
+  testSessionIndex: 0,
+  unsafe_earlyTeardown: undefined
+}
+17:05:56.537 detox[51015] i ## received events ##
+17:05:56.537 detox[51015] i detected event registerContextDone { testResults: [], testSessionIndex: 0 }
+17:05:56.611 detox[51015] B tests/e2e/mobile/specs/auth-and-tabs.e2e.js
+17:05:56.624 detox[51015] B set up environment
+17:05:56.625 detox[51014] i received event of :  registerWorker { workerId: 'w1' }
+17:05:56.625 detox[51014] i dispatching event to socket  :  registerWorkerDone { workersCount: 1 }
+17:05:56.625 detox[51014] i broadcasting event to all known sockets listening to  /tmp/detox.primary-51014  :   sessionStateUpdate { workersCount: 1 }
+17:05:56.625 detox[51015] i dispatching event to  primary-51014 /tmp/detox.primary-51014  :  registerWorker , { workerId: 'w1' }
+17:05:56.625 detox[51015] i ## received events ##
+17:05:56.626 detox[51015] i detected event registerWorkerDone { workersCount: 1 }
+17:05:56.753 detox[51015] i ## received events ##
+17:05:56.753 detox[51015] i detected event sessionStateUpdate { workersCount: 1 }
+17:05:56.756 detox[51014] B connection :63630<->:63634
+17:05:56.757 detox[51015] i opened web socket to: ws://localhost:63630
+17:05:56.758 detox[51014] i get
+  data: {"type":"login","params":{"sessionId":"7631ac57-6c56-62cf-1458-1037538c6ae0","role":"tester"},"messageId":0}
+17:05:56.758 detox[51015] i send message
+  data: {"type":"login","params":{"sessionId":"7631ac57-6c56-62cf-1458-1037538c6ae0","role":"tester"},"messageId":0}
+17:05:56.759 detox[51014] i created session 7631ac57-6c56-62cf-1458-1037538c6ae0
+17:05:56.759 detox[51014] i send
+  data: {
+    "type": "loginSuccess",
+    "params": {
+      "testerConnected": true,
+      "appConnected": false
+    },
+    "messageId": 0
+  }
+17:05:56.759 detox[51014] i tester joined session 7631ac57-6c56-62cf-1458-1037538c6ae0
+17:05:56.759 detox[51015] i get message
+  data: {"type":"loginSuccess","params":{"testerConnected":true,"appConnected":false},"messageId":0}
+   
+17:05:56.781 detox[51014] i received event of :  allocateDevice {
+  deviceConfig: { type: 'android.emulator', device: { avdName: 'Pixel_9' } }
+}
+17:05:56.781 detox[51015] i dispatching event to  primary-51014 /tmp/detox.primary-51014  :  allocateDevice , {
+  deviceConfig: { type: 'android.emulator', device: { avdName: 'Pixel_9' } }
+}
+17:05:56.795 detox[51014] B init
+  args: ()
+17:05:56.796 detox[51014] E init
+17:05:56.796 detox[51014] B allocate
+  data: {
+    "type": "android.emulator",
+    "device": {
+      "avdName": "Pixel_9"
+    }
+  }
+17:05:56.940 detox[51014] i Detected emulator binary version { major: 36, minor: 3, patch: 10, toString: [Function: toString] }
+17:05:56.941 detox[51014] i "/Users/coding/Library/Android/sdk/platform-tools/adb"  devices
+17:05:56.956 detox[51014] i List of devices attached
+emulator-18696	device
+emulator-5554	device
+
+
+17:05:56.956 detox[51014] i port: 18696, host: localhost
+17:05:56.965 detox[51014] i Found a matching & free device emulator-18696
+17:05:56.966 detox[51014] i settled on emulator-18696 (Pixel_9)
+  data: {
+    "id": "emulator-18696",
+    "adbName": "emulator-18696",
+    "name": "emulator-18696 (Pixel_9)"
+  }
+17:05:56.966 detox[51014] E allocate
+17:05:56.966 detox[51014] B post-allocate: emulator-18696
+  data: {
+    "id": "emulator-18696",
+    "adbName": "emulator-18696",
+    "name": "emulator-18696 (Pixel_9)"
+  }
+17:05:56.966 detox[51014] i "/Users/coding/Library/Android/sdk/platform-tools/adb" -s emulator-18696 shell "getprop dev.bootcomplete"
+17:05:56.990 detox[51014] i 1
+
+17:05:56.991 detox[51014] i "/Users/coding/Library/Android/sdk/platform-tools/adb" -s emulator-18696 shell "getprop ro.build.version.sdk"
+17:05:57.022 detox[51014] i 36
+
+17:05:57.022 detox[51014] i "/Users/coding/Library/Android/sdk/platform-tools/adb" -s emulator-18696 shell "settings put global animator_duration_scale 0"
+17:05:57.055 detox[51014] i 
+17:05:57.055 detox[51014] i "/Users/coding/Library/Android/sdk/platform-tools/adb" -s emulator-18696 shell "settings put global window_animation_scale 0"
+17:05:57.084 detox[51014] i 
+17:05:57.084 detox[51014] i "/Users/coding/Library/Android/sdk/platform-tools/adb" -s emulator-18696 shell "settings put global transition_animation_scale 0"
+17:05:57.113 detox[51014] i 
+17:05:57.113 detox[51014] i "/Users/coding/Library/Android/sdk/platform-tools/adb" -s emulator-18696 shell "dumpsys power | grep \"^[ ]*m[UW].*=\""
+17:05:57.155 detox[51014] i   mWakefulness=Awake
+  mWakefulnessChanging=false
+  mUseAutoSuspend=true
+  mWakeLockSummary=0x0
+  mWakeUpWhenPluggedOrUnpluggedConfig=false
+  mWakeUpWhenPluggedOrUnpluggedInTheaterModeConfig=false
+  mUserActivityTimeoutOverrideFromWindowManager=-1
+  mUserInactiveOverrideFromWindowManager=false
+  mUseNormalBrightnessForDoze=false
+  mUserId=0
+  mWakeLockSummary=0x0
+  mUserInteractionBackoffMillis=60000
+
+17:05:57.155 detox[51014] E post-allocate: emulator-18696
+17:05:57.155 detox[51014] i dispatching event to socket  :  allocateDeviceDone {
+  deviceCookie: {
+    id: 'emulator-18696',
+    adbName: 'emulator-18696',
+    name: 'emulator-18696 (Pixel_9)'
+  }
+}
+17:05:57.155 detox[51015] i ## received events ##
+17:05:57.155 detox[51015] i detected event allocateDeviceDone {
+  deviceCookie: {
+    id: 'emulator-18696',
+    adbName: 'emulator-18696',
+    name: 'emulator-18696 (Pixel_9)'
+  }
+}
+17:05:57.171 detox[51015] B onBootDevice
+  args: ({"deviceId":"emulator-18696"})
+17:05:57.171 detox[51015] E onBootDevice
+17:05:57.171 detox[51015] B installUtilBinaries
+  args: ()
+17:05:57.172 detox[51015] E installUtilBinaries
+17:05:57.172 detox[51015] B selectApp
+  args: ("default")
+17:05:57.172 detox[51015] i "/Users/coding/Library/Android/sdk/build-tools/36.1.0/aapt" dump badging "/Users/coding/Projects/notes_brain/apps/mobile/android/app/build/outputs/apk/release/app-release.apk"
+17:05:57.193 detox[51015] i package: name='com.notesbrain.echo' versionCode='1' versionName='1.0.0' platformBuildVersionName='16' platformBuildVersionCode='36' compileSdkVersion='36' compileSdkVersionCodename='16'
+sdkVersion:'24'
+targetSdkVersion:'36'
+uses-permission: name='android.permission.INTERNET'
+uses-permission: name='android.permission.MODIFY_AUDIO_SETTINGS'
+uses-permission: name='android.permission.READ_EXTERNAL_STORAGE'
+uses-permission: name='android.permission.RECORD_AUDIO'
+uses-permission: name='android.permission.SYSTEM_ALERT_WINDOW'
+uses-permission: name='android.permission.VIBRATE'
+uses-permission: name='android.permission.WRITE_EXTERNAL_STORAGE'
+uses-permission: name='android.permission.ACCESS_NETWORK_STATE'
+uses-permission: name='android.permission.ACCESS_WIFI_STATE'
+uses-permission: name='android.permission.FOREGROUND_SERVICE'
+uses-permission: name='android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK'
+uses-permission: name='android.permission.RECEIVE_BOOT_COMPLETED'
+uses-permission: name='android.permission.POST_NOTIFICATIONS'
+uses-permission: name='android.permission.WAKE_LOCK'
+uses-permission: name='com.google.android.c2dm.permission.RECEIVE'
+uses-permission: name='android.permission.USE_BIOMETRIC'
+uses-permission: name='android.permission.USE_FINGERPRINT'
+uses-permission: name='com.notesbrain.echo.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION'
+uses-permission: name='com.google.android.finsky.permission.BIND_GET_INSTALL_REFERRER_SERVICE'
+uses-permission: name='com.sec.android.provider.badge.permission.READ'
+uses-permission: name='com.sec.android.provider.badge.permission.WRITE'
+uses-permission: name='com.htc.launcher.permission.READ_SETTINGS'
+uses-permission: name='com.htc.launcher.permission.UPDATE_SHORTCUT'
+uses-permission: name='com.sonyericsson.home.permission.BROADCAST_BADGE'
+uses-permission: name='com.sonymobile.home.permission.PROVIDER_INSERT_BADGE'
+uses-permission: name='com.anddoes.launcher.permission.UPDATE_COUNT'
+uses-permission: name='com.majeur.launcher.permission.UPDATE_BADGE'
+uses-permission: name='com.huawei.android.launcher.permission.CHANGE_BADGE'
+uses-permission: name='com.huawei.android.launcher.permission.READ_SETTINGS'
+uses-permission: name='com.huawei.android.launcher.permission.WRITE_SETTINGS'
+uses-permission: name='android.permission.READ_APP_BADGE'
+uses-permission: name='com.oppo.launcher.permission.READ_SETTINGS'
+uses-permission: name='com.oppo.launcher.permission.WRITE_SETTINGS'
+uses-permission: name='me.everything.badger.permission.BADGE_COUNT_READ'
+uses-permission: name='me.everything.badger.permission.BADGE_COUNT_WRITE'
+application-label:'Echo'
+application-label-af:'Echo'
+application-label-am:'Echo'
+application-label-ar:'Echo'
+application-label-as:'Echo'
+application-label-az:'Echo'
+application-label-be:'Echo'
+application-label-bg:'Echo'
+application-label-bn:'Echo'
+application-label-bs:'Echo'
+application-label-ca:'Echo'
+application-label-cs:'Echo'
+application-label-da:'Echo'
+application-label-de:'Echo'
+application-label-el:'Echo'
+application-label-en-AU:'Echo'
+application-label-en-CA:'Echo'
+application-label-en-GB:'Echo'
+application-label-en-IN:'Echo'
+application-label-en-XC:'Echo'
+application-label-es:'Echo'
+application-label-es-419:'Echo'
+application-label-es-ES:'Echo'
+application-label-es-US:'Echo'
+application-label-et:'Echo'
+application-label-eu:'Echo'
+application-label-fa:'Echo'
+application-label-fi:'Echo'
+application-label-fr:'Echo'
+application-label-fr-CA:'Echo'
+application-label-gl:'Echo'
+application-label-gu:'Echo'
+application-label-hi:'Echo'
+application-label-hr:'Echo'
+application-label-hu:'Echo'
+application-label-hy:'Echo'
+application-label-in:'Echo'
+application-label-is:'Echo'
+application-label-it:'Echo'
+application-label-iw:'Echo'
+application-label-ja:'Echo'
+application-label-ka:'Echo'
+application-label-kk:'Echo'
+application-label-km:'Echo'
+application-label-kn:'Echo'
+application-label-ko:'Echo'
+application-label-ky:'Echo'
+application-label-lo:'Echo'
+application-label-lt:'Echo'
+application-label-lv:'Echo'
+application-label-mk:'Echo'
+application-label-ml:'Echo'
+application-label-mn:'Echo'
+application-label-mr:'Echo'
+application-label-ms:'Echo'
+application-label-my:'Echo'
+application-label-nb:'Echo'
+application-label-ne:'Echo'
+application-label-nl:'Echo'
+application-label-or:'Echo'
+application-label-pa:'Echo'
+application-label-pl:'Echo'
+application-label-pt:'Echo'
+application-label-pt-BR:'Echo'
+application-label-pt-PT:'Echo'
+application-label-ro:'Echo'
+application-label-ru:'Echo'
+application-label-si:'Echo'
+application-label-sk:'Echo'
+application-label-sl:'Echo'
+application-label-sq:'Echo'
+application-label-sr:'Echo'
+application-label-sr-Latn:'Echo'
+application-label-sv:'Echo'
+application-label-sw:'Echo'
+application-label-ta:'Echo'
+application-label-te:'Echo'
+application-label-th:'Echo'
+application-label-tl:'Echo'
+application-label-tr:'Echo'
+application-label-uk:'Echo'
+application-label-ur:'Echo'
+application-label-uz:'Echo'
+application-label-vi:'Echo'
+application-label-zh-CN:'Echo'
+application-label-zh-HK:'Echo'
+application-label-zh-TW:'Echo'
+application-label-zu:'Echo'
+application-icon-120:'res/BW.xml'
+application-icon-160:'res/BW.xml'
+application-icon-240:'res/BW.xml'
+application-icon-320:'res/BW.xml'
+application-icon-480:'res/BW.xml'
+application-icon-640:'res/BW.xml'
+application-icon-65534:'res/BW.xml'
+application: label='Echo' icon='res/BW.xml'
+launchable-activity: name='com.notesbrain.echo.MainActivity'  label='' icon=''
+feature-group: label=''
+  uses-feature: name='android.hardware.faketouch'
+  uses-implied-feature: name='android.hardware.faketouch' reason='default feature for all apps'
+  uses-feature: name='android.hardware.microphone'
+  uses-implied-feature: name='android.hardware.microphone' reason='requested android.permission.RECORD_AUDIO permission'
+  uses-feature: name='android.hardware.screen.portrait'
+  uses-implied-feature: name='android.hardware.screen.portrait' reason='one or more activities have specified a portrait orientation'
+  uses-feature: name='android.hardware.wifi'
+  uses-implied-feature: name='android.hardware.wifi' reason='requested android.permission.ACCESS_WIFI_STATE permission'
+main
+other-activities
+other-receivers
+other-services
+supports-screens: 'small' 'normal' 'large' 'xlarge'
+supports-any-density: 'true'
+locales: '--_--' 'af' 'am' 'ar' 'as' 'az' 'be' 'bg' 'bn' 'bs' 'ca' 'cs' 'da' 'de' 'el' 'en-AU' 'en-CA' 'en-GB' 'en-IN' 'en-XC' 'es' 'es-419' 'es-ES' 'es-US' 'et' 'eu' 'fa' 'fi' 'fr' 'fr-CA' 'gl' 'gu' 'hi' 'hr' 'hu' 'hy' 'in' 'is' 'it' 'iw' 'ja' 'ka' 'kk' 'km' 'kn' 'ko' 'ky' 'lo' 'lt' 'lv' 'mk' 'ml' 'mn' 'mr' 'ms' 'my' 'nb' 'ne' 'nl' 'or' 'pa' 'pl' 'pt' 'pt-BR' 'pt-PT' 'ro' 'ru' 'si' 'sk' 'sl' 'sq' 'sr' 'sr-Latn' 'sv' 'sw' 'ta' 'te' 'th' 'tl' 'tr' 'uk' 'ur' 'uz' 'vi' 'zh-CN' 'zh-HK' 'zh-TW' 'zu'
+densities: '120' '160' '240' '320' '480' '640' '65534'
+native-code: 'arm64-v8a' 'x86_64'
+
+17:05:57.193 detox[51015] E selectApp
+17:05:57.193 detox[51015] B uninstallApp
+  args: ()
+17:05:57.193 detox[51015] B onBeforeUninstallApp
+  args: ({"deviceId":"emulator-18696","bundleId":"com.notesbrain.echo"})
+17:05:57.193 detox[51015] E onBeforeUninstallApp
+17:05:57.193 detox[51015] i "/Users/coding/Library/Android/sdk/platform-tools/adb" -s emulator-18696 shell "pm list packages com.notesbrain.echo"
+17:05:57.223 detox[51015] i 
+17:05:57.223 detox[51015] i "/Users/coding/Library/Android/sdk/platform-tools/adb" -s emulator-18696 shell "pm list packages com.notesbrain.echo.test"
+17:05:57.253 detox[51015] i 
+17:05:57.253 detox[51015] E uninstallApp
+17:05:57.253 detox[51015] B selectApp
+  args: ("default")
+17:05:57.254 detox[51015] B terminateApp
+  args: ()
+17:05:57.254 detox[51015] B onBeforeTerminateApp
+  args: ({"deviceId":"emulator-18696","bundleId":"com.notesbrain.echo"})
+17:05:57.254 detox[51015] E onBeforeTerminateApp
+17:05:57.254 detox[51015] i "/Users/coding/Library/Android/sdk/platform-tools/adb" -s emulator-18696 shell "am force-stop com.notesbrain.echo"
+17:05:57.283 detox[51015] i 
+17:05:57.284 detox[51015] B onTerminateApp
+  args: ({"deviceId":"emulator-18696","bundleId":"com.notesbrain.echo"})
+17:05:57.284 detox[51015] E onTerminateApp
+17:05:57.284 detox[51015] E terminateApp
+17:05:57.284 detox[51015] E selectApp
+17:05:57.284 detox[51015] B installApp
+  args: ()
+17:05:57.284 detox[51015] i "/Users/coding/Library/Android/sdk/build-tools/36.1.0/aapt" dump xmlstrings "/Users/coding/Projects/notes_brain/apps/mobile/android/app/build/outputs/apk/release/app-release.apk" AndroidManifest.xml
+17:05:57.297 detox[51015] i String pool of 190 unique UTF-16 non-sorted strings, 190 entries and 0 styles using 14400 bytes:
+String #0: theme
+String #1: label
+String #2: icon
+String #3: name
+String #4: permission
+String #5: protectionLevel
+String #6: enabled
+String #7: exported
+String #8: taskAffinity
+String #9: excludeFromRecents
+String #10: authorities
+String #11: initOrder
+String #12: grantUriPermissions
+String #13: priority
+String #14: launchMode
+String #15: screenOrientation
+String #16: configChanges
+String #17: value
+String #18: resource
+String #19: mimeType
+String #20: scheme
+String #21: minSdkVersion
+String #22: versionCode
+String #23: versionName
+String #24: windowSoftInputMode
+String #25: noHistory
+String #26: targetSdkVersion
+String #27: allowBackup
+String #28: supportsRtl
+String #29: extractNativeLibs
+String #30: fullBackupContent
+String #31: usesCleartextTraffic
+String #32: directBootAware
+String #33: roundIcon
+String #34: compileSdkVersion
+String #35: compileSdkVersionCodename
+String #36: appComponentFactory
+String #37: foregroundServiceType
+String #38: dataExtractionRules
+String #39: enableOnBackInvokedCallback
+String #40: 
+String #41: 1.0.0
+String #42: 16
+String #43: ALWAYS
+String #44: action
+String #45: activity
+String #46: android
+String #47: android.intent.action.BOOT_COMPLETED
+String #48: android.intent.action.MAIN
+String #49: android.intent.action.MY_PACKAGE_REPLACED
+String #50: android.intent.action.OPEN_DOCUMENT_TREE
+String #51: android.intent.action.QUICKBOOT_POWERON
+String #52: android.intent.action.REBOOT
+String #53: android.intent.action.SEND
+String #54: android.intent.action.SEND_MULTIPLE
+String #55: android.intent.action.VIEW
+String #56: android.intent.category.BROWSABLE
+String #57: android.intent.category.DEFAULT
+String #58: android.intent.category.LAUNCHER
+String #59: android.permission.ACCESS_NETWORK_STATE
+String #60: android.permission.ACCESS_WIFI_STATE
+String #61: android.permission.BIND_JOB_SERVICE
+String #62: android.permission.DUMP
+String #63: android.permission.FOREGROUND_SERVICE
+String #64: android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK
+String #65: android.permission.INTERNET
+String #66: android.permission.MODIFY_AUDIO_SETTINGS
+String #67: android.permission.POST_NOTIFICATIONS
+String #68: android.permission.READ_APP_BADGE
+String #69: android.permission.READ_EXTERNAL_STORAGE
+String #70: android.permission.RECEIVE_BOOT_COMPLETED
+String #71: android.permission.RECORD_AUDIO
+String #72: android.permission.SYSTEM_ALERT_WINDOW
+String #73: android.permission.USE_BIOMETRIC
+String #74: android.permission.USE_FINGERPRINT
+String #75: android.permission.VIBRATE
+String #76: android.permission.WAKE_LOCK
+String #77: android.permission.WRITE_EXTERNAL_STORAGE
+String #78: android.support.FILE_PROVIDER_PATHS
+String #79: androidx.compose.ui.tooling.PreviewActivity
+String #80: androidx.core.app.CoreComponentFactory
+String #81: androidx.emoji2.text.EmojiCompatInitializer
+String #82: androidx.lifecycle.ProcessLifecycleInitializer
+String #83: androidx.media3.session.MediaSessionService
+String #84: androidx.profileinstaller.ProfileInstallReceiver
+String #85: androidx.profileinstaller.ProfileInstallerInitializer
+String #86: androidx.profileinstaller.action.BENCHMARK_OPERATION
+String #87: androidx.profileinstaller.action.INSTALL_PROFILE
+String #88: androidx.profileinstaller.action.SAVE_PROFILE
+String #89: androidx.profileinstaller.action.SKIP_FILE
+String #90: androidx.startup
+String #91: androidx.startup.InitializationProvider
+String #92: application
+String #93: application/pdf
+String #94: backend:com.google.android.datatransport.cct.CctBackendFactory
+String #95: barcode_ui
+String #96: category
+String #97: cct
+String #98: com.anddoes.launcher.permission.UPDATE_COUNT
+String #99: com.facebook.soloader.enabled
+String #100: com.google.android.c2dm.intent.RECEIVE
+String #101: com.google.android.c2dm.permission.RECEIVE
+String #102: com.google.android.c2dm.permission.SEND
+String #103: com.google.android.datatransport.runtime.backends.TransportBackendDiscovery
+String #104: com.google.android.datatransport.runtime.scheduling.jobscheduling.AlarmManagerSchedulerBroadcastReceiver
+String #105: com.google.android.datatransport.runtime.scheduling.jobscheduling.JobInfoSchedulerService
+String #106: com.google.android.finsky.permission.BIND_GET_INSTALL_REFERRER_SERVICE
+String #107: com.google.android.gms.cloudmessaging.FINISHED_AFTER_HANDLED
+String #108: com.google.android.gms.common.api.GoogleApiActivity
+String #109: com.google.android.gms.version
+String #110: com.google.firebase.MESSAGING_EVENT
+String #111: com.google.firebase.components.ComponentDiscoveryService
+String #112: com.google.firebase.components.ComponentRegistrar
+String #113: com.google.firebase.components:com.google.firebase.FirebaseCommonKtxRegistrar
+String #114: com.google.firebase.components:com.google.firebase.datatransport.TransportRegistrar
+String #115: com.google.firebase.components:com.google.firebase.installations.FirebaseInstallationsKtxRegistrar
+String #116: com.google.firebase.components:com.google.firebase.installations.FirebaseInstallationsRegistrar
+String #117: com.google.firebase.components:com.google.firebase.ktx.FirebaseCommonLegacyRegistrar
+String #118: com.google.firebase.components:com.google.firebase.messaging.FirebaseMessagingKtxRegistrar
+String #119: com.google.firebase.components:com.google.firebase.messaging.FirebaseMessagingRegistrar
+String #120: com.google.firebase.components:com.google.mlkit.common.internal.CommonComponentRegistrar
+String #121: com.google.firebase.components:com.google.mlkit.vision.barcode.internal.BarcodeRegistrar
+String #122: com.google.firebase.components:com.google.mlkit.vision.common.internal.VisionCommonRegistrar
+String #123: com.google.firebase.iid.FirebaseInstanceIdReceiver
+String #124: com.google.firebase.messaging.FirebaseMessagingService
+String #125: com.google.firebase.messaging.default_notification_color
+String #126: com.google.firebase.messaging.default_notification_icon
+String #127: com.google.firebase.provider.FirebaseInitProvider
+String #128: com.google.mlkit.common.internal.MlKitComponentDiscoveryService
+String #129: com.google.mlkit.common.internal.MlKitInitProvider
+String #130: com.google.mlkit.vision.DEPENDENCIES
+String #131: com.google.mlkit.vision.codescanner.internal.GmsBarcodeScanningDelegateActivity
+String #132: com.htc.intent.action.QUICKBOOT_POWERON
+String #133: com.htc.launcher.permission.READ_SETTINGS
+String #134: com.htc.launcher.permission.UPDATE_SHORTCUT
+String #135: com.huawei.android.launcher.permission.CHANGE_BADGE
+String #136: com.huawei.android.launcher.permission.READ_SETTINGS
+String #137: com.huawei.android.launcher.permission.WRITE_SETTINGS
+String #138: com.majeur.launcher.permission.UPDATE_BADGE
+String #139: com.notesbrain.echo
+String #140: com.notesbrain.echo.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
+String #141: com.notesbrain.echo.FileSystemFileProvider
+String #142: com.notesbrain.echo.MainActivity
+String #143: com.notesbrain.echo.MainApplication
+String #144: com.notesbrain.echo.androidx-startup
+String #145: com.notesbrain.echo.firebaseinitprovider
+String #146: com.notesbrain.echo.mlkitinitprovider
+String #147: com.oppo.launcher.permission.READ_SETTINGS
+String #148: com.oppo.launcher.permission.WRITE_SETTINGS
+String #149: com.sec.android.provider.badge.permission.READ
+String #150: com.sec.android.provider.badge.permission.WRITE
+String #151: com.sonyericsson.home.permission.BROADCAST_BADGE
+String #152: com.sonymobile.home.permission.PROVIDER_INSERT_BADGE
+String #153: data
+String #154: echo
+String #155: exp+echo
+String #156: expo.modules.adapters.react.apploader.RNHeadlessAppLoader
+String #157: expo.modules.audio.service.AudioControlsService
+String #158: expo.modules.audio.service.AudioRecordingService
+String #159: expo.modules.filesystem.FileSystemFileProvider
+String #160: expo.modules.notifications.NOTIFICATION_EVENT
+String #161: expo.modules.notifications.default_notification_color
+String #162: expo.modules.notifications.default_notification_icon
+String #163: expo.modules.notifications.service.ExpoFirebaseMessagingService
+String #164: expo.modules.notifications.service.NotificationForwarderActivity
+String #165: expo.modules.notifications.service.NotificationsService
+String #166: expo.modules.updates.ENABLED
+String #167: expo.modules.updates.EXPO_UPDATES_CHECK_ON_LAUNCH
+String #168: expo.modules.updates.EXPO_UPDATES_LAUNCH_WAIT_MS
+String #169: http://schemas.android.com/apk/res/android
+String #170: https
+String #171: image/*
+String #172: intent
+String #173: intent-filter
+String #174: manifest
+String #175: me.everything.badger.permission.BADGE_COUNT_READ
+String #176: me.everything.badger.permission.BADGE_COUNT_WRITE
+String #177: meta-data
+String #178: org.unimodules.core.AppLoader#react-native-headless
+String #179: package
+String #180: permission
+String #181: platformBuildVersionCode
+String #182: platformBuildVersionName
+String #183: provider
+String #184: queries
+String #185: receiver
+String #186: service
+String #187: text/*
+String #188: uses-permission
+String #189: uses-sdk
+
+17:05:57.297 detox[51015] i "/Users/coding/Library/Android/sdk/build-tools/36.1.0/aapt" dump xmlstrings "/Users/coding/Projects/notes_brain/apps/mobile/android/app/build/outputs/apk/androidTest/release/app-release-androidTest.apk" AndroidManifest.xml
+17:05:57.310 detox[51015] i String pool of 42 unique UTF-16 non-sorted strings, 42 entries and 0 styles using 2112 bytes:
+String #0: theme
+String #1: label
+String #2: name
+String #3: exported
+String #4: priority
+String #5: targetPackage
+String #6: handleProfiling
+String #7: functionalTest
+String #8: minSdkVersion
+String #9: targetSdkVersion
+String #10: extractNativeLibs
+String #11: compileSdkVersion
+String #12: compileSdkVersionCodename
+String #13: 16
+String #14: Tests for com.notesbrain.echo
+String #15: activity
+String #16: android
+String #17: android.intent.category.LAUNCHER
+String #18: android.permission.REORDER_TASKS
+String #19: android.test.runner
+String #20: androidx.test.core.app.InstrumentationActivityInvoker$BootstrapActivity
+String #21: androidx.test.core.app.InstrumentationActivityInvoker$EmptyActivity
+String #22: androidx.test.core.app.InstrumentationActivityInvoker$EmptyFloatingActivity
+String #23: androidx.test.orchestrator
+String #24: androidx.test.runner.AndroidJUnitRunner
+String #25: androidx.test.services
+String #26: application
+String #27: category
+String #28: com.google.android.apps.common.testing.services
+String #29: com.notesbrain.echo
+String #30: com.notesbrain.echo.test
+String #31: http://schemas.android.com/apk/res/android
+String #32: instrumentation
+String #33: intent-filter
+String #34: manifest
+String #35: package
+String #36: platformBuildVersionCode
+String #37: platformBuildVersionName
+String #38: queries
+String #39: uses-library
+String #40: uses-permission
+String #41: uses-sdk
+
+17:05:57.310 detox[51015] i "/Users/coding/Library/Android/sdk/platform-tools/adb" -s emulator-18696 shell "rm -fr /data/local/tmp/detox"
+17:05:57.339 detox[51015] i 
+17:05:57.339 detox[51015] i "/Users/coding/Library/Android/sdk/platform-tools/adb" -s emulator-18696 shell "mkdir -p /data/local/tmp/detox"
+17:05:57.364 detox[51015] i 
+17:05:57.364 detox[51015] i "/Users/coding/Library/Android/sdk/platform-tools/adb" -s emulator-18696 push "/Users/coding/Projects/notes_brain/apps/mobile/android/app/build/outputs/apk/release/app-release.apk" "/data/local/tmp/detox/Application.apk"
+17:05:57.536 detox[51015] i /Users/coding/Projects/notes_brain/apps/mobile/android/app/build/outputs/apk/release/app-release.apk: 1 file pushed, 0 skipped. 490.3 MB/s (66766181 bytes in 0.130s)
+
+17:05:57.536 detox[51015] i "/Users/coding/Library/Android/sdk/platform-tools/adb" -s emulator-18696 shell "getprop ro.build.version.sdk"
+17:05:57.560 detox[51015] i 36
+
+17:05:57.561 detox[51015] i /Users/coding/Library/Android/sdk/platform-tools/adb -s emulator-18696 shell pm install -r -g -t /data/local/tmp/detox/Application.apk
+17:05:58.666 detox[51015] i Success
+
+17:05:58.668 detox[51015] i /Users/coding/Library/Android/sdk/platform-tools/adb -s emulator-18696 shell pm install -r -g -t /data/local/tmp/detox/Application.apk exited with code #0
+17:05:58.668 detox[51015] i "/Users/coding/Library/Android/sdk/platform-tools/adb" -s emulator-18696 push "/Users/coding/Projects/notes_brain/apps/mobile/android/app/build/outputs/apk/androidTest/release/app-release-androidTest.apk" "/data/local/tmp/detox/Test.apk"
+17:05:58.708 detox[51015] i /Users/coding/Projects/notes_brain/apps/mobile/android/app/build/outputs/apk/androidTest/release/app-release-androidTest.apk: 1 file pushed, 0 skipped. 318.3 MB/s (3215302 bytes in 0.010s)
+
+17:05:58.709 detox[51015] i /Users/coding/Library/Android/sdk/platform-tools/adb -s emulator-18696 shell pm install -r -g -t /data/local/tmp/detox/Test.apk
+17:05:59.158 detox[51015] i Success
+
+17:05:59.160 detox[51015] i /Users/coding/Library/Android/sdk/platform-tools/adb -s emulator-18696 shell pm install -r -g -t /data/local/tmp/detox/Test.apk exited with code #0
+17:05:59.161 detox[51015] E installApp
+17:05:59.161 detox[51015] B selectApp
+  args: ("default")
+17:05:59.161 detox[51015] B terminateApp
+  args: ()
+17:05:59.161 detox[51015] B onBeforeTerminateApp
+  args: ({"deviceId":"emulator-18696","bundleId":"com.notesbrain.echo"})
+17:05:59.161 detox[51015] E onBeforeTerminateApp
+17:05:59.161 detox[51015] i "/Users/coding/Library/Android/sdk/platform-tools/adb" -s emulator-18696 shell "am force-stop com.notesbrain.echo"
+17:05:59.236 detox[51015] i 
+17:05:59.236 detox[51015] B onTerminateApp
+  args: ({"deviceId":"emulator-18696","bundleId":"com.notesbrain.echo"})
+17:05:59.236 detox[51015] E onTerminateApp
+17:05:59.236 detox[51015] E terminateApp
+17:05:59.237 detox[51015] E selectApp
+17:05:59.237 detox[51015] E set up environment
+17:05:59.369 detox[51015] i auth-and-tabs.e2e.js is assigned to emulator-18696 (Pixel_9)
+17:05:59.369 detox[51015] B run the tests
+17:05:59.369 detox[51015] B onRunDescribeStart
+  args: ({"name":"ROOT_DESCRIBE_BLOCK"})
+17:05:59.370 detox[51015] E onRunDescribeStart
+17:05:59.370 detox[51015] B mobile e2e: auth and tab navigation
+17:05:59.370 detox[51015] B onRunDescribeStart
+  args: ({"name":"mobile e2e: auth and tab navigation"})
+17:05:59.370 detox[51015] E onRunDescribeStart
+17:05:59.370 detox[51015] B beforeAll
+17:05:59.528 detox[51015] E beforeAll
+17:05:59.529 detox[51015] B signs in with email/password and opens each primary tab
+17:05:59.529 detox[51015] i mobile e2e: auth and tab navigation: signs in with email/password and opens each primary tab
+17:05:59.529 detox[51015] B onTestStart
+  args: ({"title":"signs in with email/password and opens each primary tab","fullName":"mobile e2e: auth and tab navigation signs in with email/password and opens each primary tab","status":"running","invocations":1})
+17:05:59.530 detox[51015] i starting ADBLogcatRecording
+17:05:59.531 detox[51015] i /Users/coding/Library/Android/sdk/platform-tools/adb -s emulator-18696 shell "logcat -f /sdcard/17556778_0.log"
+17:05:59.531 detox[51015] i starting ADBScreencapRecording
+17:05:59.531 detox[51015] i "/Users/coding/Library/Android/sdk/platform-tools/adb" -s emulator-18696 shell "screencap /sdcard/17556778_1.png"
+17:05:59.831 detox[51015] i "/Users/coding/Library/Android/sdk/platform-tools/adb" -s emulator-18696 shell du /sdcard/17556778_0.log
+17:05:59.864 detox[51015] i 4	/sdcard/17556778_0.log
+
+17:06:00.430 detox[51015] i 
+17:06:00.430 detox[51015] i stopping ADBScreencapRecording
+17:06:00.430 detox[51015] E onTestStart
+17:06:00.430 detox[51015] B beforeEach
+17:06:00.430 detox[51015] E beforeEach
+17:06:00.430 detox[51015] B beforeEach
+17:06:00.445 detox[51015] B launchApp
+  args: ({"newInstance":true,"delete":true})
+17:06:00.445 detox[51015] B terminateApp
+  args: ("com.notesbrain.echo")
+17:06:00.445 detox[51015] B onBeforeTerminateApp
+  args: ({"deviceId":"emulator-18696","bundleId":"com.notesbrain.echo"})
+17:06:00.445 detox[51015] E onBeforeTerminateApp
+17:06:00.445 detox[51015] i "/Users/coding/Library/Android/sdk/platform-tools/adb" -s emulator-18696 shell "am force-stop com.notesbrain.echo"
+17:06:00.473 detox[51015] i 
+17:06:00.473 detox[51015] B onTerminateApp
+  args: ({"deviceId":"emulator-18696","bundleId":"com.notesbrain.echo"})
+17:06:00.473 detox[51015] E onTerminateApp
+17:06:00.473 detox[51015] E terminateApp
+17:06:00.473 detox[51015] B uninstallApp
+  args: ()
+17:06:00.473 detox[51015] B onBeforeUninstallApp
+  args: ({"deviceId":"emulator-18696","bundleId":"com.notesbrain.echo"})
+17:06:00.473 detox[51015] E onBeforeUninstallApp
+17:06:00.473 detox[51015] i "/Users/coding/Library/Android/sdk/platform-tools/adb" -s emulator-18696 shell "pm list packages com.notesbrain.echo"
+17:06:00.505 detox[51015] i package:com.notesbrain.echo.test
+package:com.notesbrain.echo
+
+17:06:00.505 detox[51015] i "/Users/coding/Library/Android/sdk/platform-tools/adb" -s emulator-18696 uninstall com.notesbrain.echo
+17:06:00.569 detox[51015] i Success
+
+17:06:00.569 detox[51015] i "/Users/coding/Library/Android/sdk/platform-tools/adb" -s emulator-18696 shell "pm list packages com.notesbrain.echo.test"
+17:06:00.617 detox[51015] i package:com.notesbrain.echo.test
+
+17:06:00.617 detox[51015] i "/Users/coding/Library/Android/sdk/platform-tools/adb" -s emulator-18696 uninstall com.notesbrain.echo.test
+17:06:00.747 detox[51015] i Success
+
+17:06:00.747 detox[51015] E uninstallApp
+17:06:00.747 detox[51015] B installApp
+  args: ()
+17:06:00.747 detox[51015] i "/Users/coding/Library/Android/sdk/build-tools/36.1.0/aapt" dump xmlstrings "/Users/coding/Projects/notes_brain/apps/mobile/android/app/build/outputs/apk/release/app-release.apk" AndroidManifest.xml
+17:06:00.761 detox[51015] i String pool of 190 unique UTF-16 non-sorted strings, 190 entries and 0 styles using 14400 bytes:
+String #0: theme
+String #1: label
+String #2: icon
+String #3: name
+String #4: permission
+String #5: protectionLevel
+String #6: enabled
+String #7: exported
+String #8: taskAffinity
+String #9: excludeFromRecents
+String #10: authorities
+String #11: initOrder
+String #12: grantUriPermissions
+String #13: priority
+String #14: launchMode
+String #15: screenOrientation
+String #16: configChanges
+String #17: value
+String #18: resource
+String #19: mimeType
+String #20: scheme
+String #21: minSdkVersion
+String #22: versionCode
+String #23: versionName
+String #24: windowSoftInputMode
+String #25: noHistory
+String #26: targetSdkVersion
+String #27: allowBackup
+String #28: supportsRtl
+String #29: extractNativeLibs
+String #30: fullBackupContent
+String #31: usesCleartextTraffic
+String #32: directBootAware
+String #33: roundIcon
+String #34: compileSdkVersion
+String #35: compileSdkVersionCodename
+String #36: appComponentFactory
+String #37: foregroundServiceType
+String #38: dataExtractionRules
+String #39: enableOnBackInvokedCallback
+String #40: 
+String #41: 1.0.0
+String #42: 16
+String #43: ALWAYS
+String #44: action
+String #45: activity
+String #46: android
+String #47: android.intent.action.BOOT_COMPLETED
+String #48: android.intent.action.MAIN
+String #49: android.intent.action.MY_PACKAGE_REPLACED
+String #50: android.intent.action.OPEN_DOCUMENT_TREE
+String #51: android.intent.action.QUICKBOOT_POWERON
+String #52: android.intent.action.REBOOT
+String #53: android.intent.action.SEND
+String #54: android.intent.action.SEND_MULTIPLE
+String #55: android.intent.action.VIEW
+String #56: android.intent.category.BROWSABLE
+String #57: android.intent.category.DEFAULT
+String #58: android.intent.category.LAUNCHER
+String #59: android.permission.ACCESS_NETWORK_STATE
+String #60: android.permission.ACCESS_WIFI_STATE
+String #61: android.permission.BIND_JOB_SERVICE
+String #62: android.permission.DUMP
+String #63: android.permission.FOREGROUND_SERVICE
+String #64: android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK
+String #65: android.permission.INTERNET
+String #66: android.permission.MODIFY_AUDIO_SETTINGS
+String #67: android.permission.POST_NOTIFICATIONS
+String #68: android.permission.READ_APP_BADGE
+String #69: android.permission.READ_EXTERNAL_STORAGE
+String #70: android.permission.RECEIVE_BOOT_COMPLETED
+String #71: android.permission.RECORD_AUDIO
+String #72: android.permission.SYSTEM_ALERT_WINDOW
+String #73: android.permission.USE_BIOMETRIC
+String #74: android.permission.USE_FINGERPRINT
+String #75: android.permission.VIBRATE
+String #76: android.permission.WAKE_LOCK
+String #77: android.permission.WRITE_EXTERNAL_STORAGE
+String #78: android.support.FILE_PROVIDER_PATHS
+String #79: androidx.compose.ui.tooling.PreviewActivity
+String #80: androidx.core.app.CoreComponentFactory
+String #81: androidx.emoji2.text.EmojiCompatInitializer
+String #82: androidx.lifecycle.ProcessLifecycleInitializer
+String #83: androidx.media3.session.MediaSessionService
+String #84: androidx.profileinstaller.ProfileInstallReceiver
+String #85: androidx.profileinstaller.ProfileInstallerInitializer
+String #86: androidx.profileinstaller.action.BENCHMARK_OPERATION
+String #87: androidx.profileinstaller.action.INSTALL_PROFILE
+String #88: androidx.profileinstaller.action.SAVE_PROFILE
+String #89: androidx.profileinstaller.action.SKIP_FILE
+String #90: androidx.startup
+String #91: androidx.startup.InitializationProvider
+String #92: application
+String #93: application/pdf
+String #94: backend:com.google.android.datatransport.cct.CctBackendFactory
+String #95: barcode_ui
+String #96: category
+String #97: cct
+String #98: com.anddoes.launcher.permission.UPDATE_COUNT
+String #99: com.facebook.soloader.enabled
+String #100: com.google.android.c2dm.intent.RECEIVE
+String #101: com.google.android.c2dm.permission.RECEIVE
+String #102: com.google.android.c2dm.permission.SEND
+String #103: com.google.android.datatransport.runtime.backends.TransportBackendDiscovery
+String #104: com.google.android.datatransport.runtime.scheduling.jobscheduling.AlarmManagerSchedulerBroadcastReceiver
+String #105: com.google.android.datatransport.runtime.scheduling.jobscheduling.JobInfoSchedulerService
+String #106: com.google.android.finsky.permission.BIND_GET_INSTALL_REFERRER_SERVICE
+String #107: com.google.android.gms.cloudmessaging.FINISHED_AFTER_HANDLED
+String #108: com.google.android.gms.common.api.GoogleApiActivity
+String #109: com.google.android.gms.version
+String #110: com.google.firebase.MESSAGING_EVENT
+String #111: com.google.firebase.components.ComponentDiscoveryService
+String #112: com.google.firebase.components.ComponentRegistrar
+String #113: com.google.firebase.components:com.google.firebase.FirebaseCommonKtxRegistrar
+String #114: com.google.firebase.components:com.google.firebase.datatransport.TransportRegistrar
+String #115: com.google.firebase.components:com.google.firebase.installations.FirebaseInstallationsKtxRegistrar
+String #116: com.google.firebase.components:com.google.firebase.installations.FirebaseInstallationsRegistrar
+String #117: com.google.firebase.components:com.google.firebase.ktx.FirebaseCommonLegacyRegistrar
+String #118: com.google.firebase.components:com.google.firebase.messaging.FirebaseMessagingKtxRegistrar
+String #119: com.google.firebase.components:com.google.firebase.messaging.FirebaseMessagingRegistrar
+String #120: com.google.firebase.components:com.google.mlkit.common.internal.CommonComponentRegistrar
+String #121: com.google.firebase.components:com.google.mlkit.vision.barcode.internal.BarcodeRegistrar
+String #122: com.google.firebase.components:com.google.mlkit.vision.common.internal.VisionCommonRegistrar
+String #123: com.google.firebase.iid.FirebaseInstanceIdReceiver
+String #124: com.google.firebase.messaging.FirebaseMessagingService
+String #125: com.google.firebase.messaging.default_notification_color
+String #126: com.google.firebase.messaging.default_notification_icon
+String #127: com.google.firebase.provider.FirebaseInitProvider
+String #128: com.google.mlkit.common.internal.MlKitComponentDiscoveryService
+String #129: com.google.mlkit.common.internal.MlKitInitProvider
+String #130: com.google.mlkit.vision.DEPENDENCIES
+String #131: com.google.mlkit.vision.codescanner.internal.GmsBarcodeScanningDelegateActivity
+String #132: com.htc.intent.action.QUICKBOOT_POWERON
+String #133: com.htc.launcher.permission.READ_SETTINGS
+String #134: com.htc.launcher.permission.UPDATE_SHORTCUT
+String #135: com.huawei.android.launcher.permission.CHANGE_BADGE
+String #136: com.huawei.android.launcher.permission.READ_SETTINGS
+String #137: com.huawei.android.launcher.permission.WRITE_SETTINGS
+String #138: com.majeur.launcher.permission.UPDATE_BADGE
+String #139: com.notesbrain.echo
+String #140: com.notesbrain.echo.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
+String #141: com.notesbrain.echo.FileSystemFileProvider
+String #142: com.notesbrain.echo.MainActivity
+String #143: com.notesbrain.echo.MainApplication
+String #144: com.notesbrain.echo.androidx-startup
+String #145: com.notesbrain.echo.firebaseinitprovider
+String #146: com.notesbrain.echo.mlkitinitprovider
+String #147: com.oppo.launcher.permission.READ_SETTINGS
+String #148: com.oppo.launcher.permission.WRITE_SETTINGS
+String #149: com.sec.android.provider.badge.permission.READ
+String #150: com.sec.android.provider.badge.permission.WRITE
+String #151: com.sonyericsson.home.permission.BROADCAST_BADGE
+String #152: com.sonymobile.home.permission.PROVIDER_INSERT_BADGE
+String #153: data
+String #154: echo
+String #155: exp+echo
+String #156: expo.modules.adapters.react.apploader.RNHeadlessAppLoader
+String #157: expo.modules.audio.service.AudioControlsService
+String #158: expo.modules.audio.service.AudioRecordingService
+String #159: expo.modules.filesystem.FileSystemFileProvider
+String #160: expo.modules.notifications.NOTIFICATION_EVENT
+String #161: expo.modules.notifications.default_notification_color
+String #162: expo.modules.notifications.default_notification_icon
+String #163: expo.modules.notifications.service.ExpoFirebaseMessagingService
+String #164: expo.modules.notifications.service.NotificationForwarderActivity
+String #165: expo.modules.notifications.service.NotificationsService
+String #166: expo.modules.updates.ENABLED
+String #167: expo.modules.updates.EXPO_UPDATES_CHECK_ON_LAUNCH
+String #168: expo.modules.updates.EXPO_UPDATES_LAUNCH_WAIT_MS
+String #169: http://schemas.android.com/apk/res/android
+String #170: https
+String #171: image/*
+String #172: intent
+String #173: intent-filter
+String #174: manifest
+String #175: me.everything.badger.permission.BADGE_COUNT_READ
+String #176: me.everything.badger.permission.BADGE_COUNT_WRITE
+String #177: meta-data
+String #178: org.unimodules.core.AppLoader#react-native-headless
+String #179: package
+String #180: permission
+String #181: platformBuildVersionCode
+String #182: platformBuildVersionName
+String #183: provider
+String #184: queries
+String #185: receiver
+String #186: service
+String #187: text/*
+String #188: uses-permission
+String #189: uses-sdk
+
+17:06:00.761 detox[51015] i "/Users/coding/Library/Android/sdk/build-tools/36.1.0/aapt" dump xmlstrings "/Users/coding/Projects/notes_brain/apps/mobile/android/app/build/outputs/apk/androidTest/release/app-release-androidTest.apk" AndroidManifest.xml
+17:06:00.775 detox[51015] i String pool of 42 unique UTF-16 non-sorted strings, 42 entries and 0 styles using 2112 bytes:
+String #0: theme
+String #1: label
+String #2: name
+String #3: exported
+String #4: priority
+String #5: targetPackage
+String #6: handleProfiling
+String #7: functionalTest
+String #8: minSdkVersion
+String #9: targetSdkVersion
+String #10: extractNativeLibs
+String #11: compileSdkVersion
+String #12: compileSdkVersionCodename
+String #13: 16
+String #14: Tests for com.notesbrain.echo
+String #15: activity
+String #16: android
+String #17: android.intent.category.LAUNCHER
+String #18: android.permission.REORDER_TASKS
+String #19: android.test.runner
+String #20: androidx.test.core.app.InstrumentationActivityInvoker$BootstrapActivity
+String #21: androidx.test.core.app.InstrumentationActivityInvoker$EmptyActivity
+String #22: androidx.test.core.app.InstrumentationActivityInvoker$EmptyFloatingActivity
+String #23: androidx.test.orchestrator
+String #24: androidx.test.runner.AndroidJUnitRunner
+String #25: androidx.test.services
+String #26: application
+String #27: category
+String #28: com.google.android.apps.common.testing.services
+String #29: com.notesbrain.echo
+String #30: com.notesbrain.echo.test
+String #31: http://schemas.android.com/apk/res/android
+String #32: instrumentation
+String #33: intent-filter
+String #34: manifest
+String #35: package
+String #36: platformBuildVersionCode
+String #37: platformBuildVersionName
+String #38: queries
+String #39: uses-library
+String #40: uses-permission
+String #41: uses-sdk
+
+17:06:00.775 detox[51015] i "/Users/coding/Library/Android/sdk/platform-tools/adb" -s emulator-18696 shell "rm -fr /data/local/tmp/detox"
+17:06:00.810 detox[51015] i 
+17:06:00.810 detox[51015] i "/Users/coding/Library/Android/sdk/platform-tools/adb" -s emulator-18696 shell "mkdir -p /data/local/tmp/detox"
+17:06:00.842 detox[51015] i 
+17:06:00.843 detox[51015] i "/Users/coding/Library/Android/sdk/platform-tools/adb" -s emulator-18696 push "/Users/coding/Projects/notes_brain/apps/mobile/android/app/build/outputs/apk/release/app-release.apk" "/data/local/tmp/detox/Application.apk"
+17:06:01.080 detox[51015] i /Users/coding/Projects/notes_brain/apps/mobile/android/app/build/outputs/apk/release/app-release.apk: 1 file pushed, 0 skipped. 415.0 MB/s (66766181 bytes in 0.153s)
+
+17:06:01.081 detox[51015] i /Users/coding/Library/Android/sdk/platform-tools/adb -s emulator-18696 shell pm install -r -g -t /data/local/tmp/detox/Application.apk
+17:06:02.115 detox[51015] i Success
+
+17:06:02.119 detox[51015] i /Users/coding/Library/Android/sdk/platform-tools/adb -s emulator-18696 shell pm install -r -g -t /data/local/tmp/detox/Application.apk exited with code #0
+17:06:02.119 detox[51015] i "/Users/coding/Library/Android/sdk/platform-tools/adb" -s emulator-18696 push "/Users/coding/Projects/notes_brain/apps/mobile/android/app/build/outputs/apk/androidTest/release/app-release-androidTest.apk" "/data/local/tmp/detox/Test.apk"
+17:06:02.151 detox[51015] i /Users/coding/Projects/notes_brain/apps/mobile/android/app/build/outputs/apk/androidTest/release/app-release-androidTest.apk: 1 file pushed, 0 skipped. 414.9 MB/s (3215302 bytes in 0.007s)
+
+17:06:02.152 detox[51015] i /Users/coding/Library/Android/sdk/platform-tools/adb -s emulator-18696 shell pm install -r -g -t /data/local/tmp/detox/Test.apk
+17:06:02.521 detox[51015] i Success
+
+17:06:02.523 detox[51015] i /Users/coding/Library/Android/sdk/platform-tools/adb -s emulator-18696 shell pm install -r -g -t /data/local/tmp/detox/Test.apk exited with code #0
+17:06:02.523 detox[51015] E installApp
+17:06:02.524 detox[51015] B onBeforeLaunchApp
+  args: ({"deviceId":"emulator-18696","bundleId":"com.notesbrain.echo","launchArgs":{"detoxServer":"ws://localhost:63630","detoxSessionId":"7631ac57-6c56-62cf-1458-1037538c6ae0"}})
+17:06:02.524 detox[51015] i "/Users/coding/Library/Android/sdk/platform-tools/adb" -s emulator-18696 shell "date +\"%m-%d %T.000\""
+17:06:02.559 detox[51015] i 03-08 17:05:59.000
+
+17:06:02.559 detox[51015] E onBeforeLaunchApp
+17:06:02.559 detox[51015] i "/Users/coding/Library/Android/sdk/platform-tools/adb" -s emulator-18696 reverse tcp:63630 tcp:63630
+17:06:02.578 detox[51015] i 63630
+
+17:06:02.578 detox[51015] i "/Users/coding/Library/Android/sdk/platform-tools/adb" -s emulator-18696 shell "pm list instrumentation"
+17:06:02.620 detox[51015] i instrumentation:com.notesbrain.echo.test/androidx.test.runner.AndroidJUnitRunner (target=com.notesbrain.echo)
+
+17:06:02.621 detox[51015] i /Users/coding/Library/Android/sdk/platform-tools/adb -s emulator-18696 shell am instrument -w -r -e detoxServer ws://localhost:63630 -e detoxSessionId 7631ac57-6c56-62cf-1458-1037538c6ae0 -e debug false com.notesbrain.echo.test/androidx.test.runner.AndroidJUnitRunner
+17:06:03.122 detox[51015] i "/Users/coding/Library/Android/sdk/platform-tools/adb" -s emulator-18696 shell "ps | grep \"com\.notesbrain\.echo$\""
+17:06:03.170 detox[51015] i u0_a286      27009   452   16872252 102592 0                   0 R com.notesbrain.echo
+
+17:06:03.170 detox[51015] B onLaunchApp
+  args: ({"deviceId":"emulator-18696","bundleId":"com.notesbrain.echo","launchArgs":{"detoxServer":"ws://localhost:63630","detoxSessionId":"7631ac57-6c56-62cf-1458-1037538c6ae0"},"pid":27009})
+17:06:03.170 detox[51015] i starting ADBLogcatRecording
+17:06:03.170 detox[51015] i stopping ADBLogcatRecording
+17:06:03.170 detox[51015] i "/Users/coding/Library/Android/sdk/platform-tools/adb" -s emulator-18696 shell "date +\"%m-%d %T.000\""
+17:06:03.195 detox[51015] i 03-08 17:06:00.000
+
+17:06:03.197 detox[51015] i sending SIGINT to: /Users/coding/Library/Android/sdk/platform-tools/adb -s emulator-18696 shell logcat -f /sdcard/17556778_0.log
+17:06:03.198 detox[51015] i /Users/coding/Library/Android/sdk/platform-tools/adb -s emulator-18696 shell "logcat -f /sdcard/17556778_0.log" terminated with SIGINT
+17:06:03.199 detox[51015] i /Users/coding/Library/Android/sdk/platform-tools/adb -s emulator-18696 shell "logcat -T \"03-08 17:06:00.000\" --pid=27009 -f /sdcard/17556778_0.log"
+17:06:03.199 detox[51015] E onLaunchApp
+17:06:03.247 detox[51015] i INSTRUMENTATION_STATUS: class=com.notesbrain.echo.DetoxTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=
+com.notesbrain.echo.DetoxTest:
+INSTRUMENTATION_STATUS: test=runDetoxTests
+INSTRUMENTATION_STATUS_CODE: 1
+
+17:06:03.263 detox[51014] B connection :63630<->:63771
+17:06:03.264 detox[51014] i get
+  data: {"messageId":0,"type":"login","params":{"role":"app","sessionId":"7631ac57-6c56-62cf-1458-1037538c6ae0"}}
+17:06:03.265 detox[51014] i send
+  data: {
+    "messageId": 0,
+    "type": "loginSuccess",
+    "params": {
+      "testerConnected": true,
+      "appConnected": true
+    }
+  }
+17:06:03.265 detox[51014] i app joined session 7631ac57-6c56-62cf-1458-1037538c6ae0
+17:06:03.265 detox[51014] i send
+  data: {
+    "type": "appConnected"
+  }
+17:06:03.265 detox[51015] i get message
+  data: {"type":"appConnected"}
+   
+17:06:03.266 detox[51014] i get
+  data: {"type":"isReady","params":{},"messageId":-1000}
+17:06:03.266 detox[51014] i send
+  data: {
+    "type": "isReady",
+    "params": {},
+    "messageId": -1000
+  }
+17:06:03.266 detox[51015] i send message
+  data: {"type":"isReady","params":{},"messageId":-1000}
+17:06:03.500 detox[51015] i "/Users/coding/Library/Android/sdk/platform-tools/adb" -s emulator-18696 shell du /sdcard/17556778_0.log
+17:06:03.527 detox[51015] i 21040	/sdcard/17556778_0.log
+
+17:06:08.583 detox[51014] i get
+  data: {"messageId":-1000,"type":"ready","params":{}}
+17:06:08.583 detox[51014] i send
+  data: {
+    "messageId": -1000,
+    "type": "ready",
+    "params": {}
+  }
+17:06:08.584 detox[51015] i get message
+  data: {"messageId":-1000,"type":"ready","params":{}}
+   
+17:06:08.584 detox[51015] B onAppReady
+  args: ({"deviceId":"emulator-18696","bundleId":"com.notesbrain.echo","pid":27009})
+17:06:08.584 detox[51015] E onAppReady
+17:06:08.584 detox[51015] E launchApp
+17:06:08.584 detox[51015] B sendToHome
+  args: ()
+17:06:08.585 detox[51014] i get
+  data: {"type":"invoke","params":{"target":{"type":"Invocation","value":{"target":{"type":"Class","value":"com.wix.detox.uiautomator.UiAutomator"},"method":"uiDevice","args":[]}},"method":"pressHome","args":[]},"messageId":1}
+17:06:08.585 detox[51014] i send
+  data: {
+    "type": "invoke",
+    "params": {
+      "target": {
+        "type": "Invocation",
+        "value": {
+          "target": {
+            "type": "Class",
+            "value": "com.wix.detox.uiautomator.UiAutomator"
+          },
+          "method": "uiDevice",
+          "args": []
+        }
+      },
+      "method": "pressHome",
+      "args": []
+    },
+    "messageId": 1
+  }
+17:06:08.585 detox[51015] i send message
+  data: {"type":"invoke","params":{"target":{"type":"Invocation","value":{"target":{"type":"Class","value":"com.wix.detox.uiautomator.UiAutomator"},"method":"uiDevice","args":[]}},"method":"pressHome","args":[]},"messageId":1}
+17:06:09.159 detox[51014] i get
+  data: {"messageId":1,"type":"invokeResult","params":{"result":true}}
+17:06:09.160 detox[51014] i send
+  data: {
+    "messageId": 1,
+    "type": "invokeResult",
+    "params": {
+      "result": true
+    }
+  }
+17:06:09.160 detox[51015] i get message
+  data: {"messageId":1,"type":"invokeResult","params":{"result":true}}
+   
+17:06:09.160 detox[51015] E sendToHome
+17:06:09.160 detox[51015] B launchApp
+  args: ({"newInstance":false})
+17:06:09.160 detox[51015] B onBeforeLaunchApp
+  args: ({"deviceId":"emulator-18696","bundleId":"com.notesbrain.echo","launchArgs":{"detoxServer":"ws://localhost:63630","detoxSessionId":"7631ac57-6c56-62cf-1458-1037538c6ae0"}})
+17:06:09.160 detox[51015] i "/Users/coding/Library/Android/sdk/platform-tools/adb" -s emulator-18696 shell "date +\"%m-%d %T.000\""
+17:06:09.195 detox[51015] i 03-08 17:06:06.000
+
+17:06:09.195 detox[51015] E onBeforeLaunchApp
+17:06:09.196 detox[51014] i get
+  data: {"type":"invoke","params":{"target":{"type":"Class","value":"com.wix.detox.Detox"},"method":"launchMainActivity","args":[]},"messageId":2}
+17:06:09.196 detox[51014] i send
+  data: {
+    "type": "invoke",
+    "params": {
+      "target": {
+        "type": "Class",
+        "value": "com.wix.detox.Detox"
+      },
+      "method": "launchMainActivity",
+      "args": []
+    },
+    "messageId": 2
+  }
+17:06:09.196 detox[51015] i send message
+  data: {"type":"invoke","params":{"target":{"type":"Class","value":"com.wix.detox.Detox"},"method":"launchMainActivity","args":[]},"messageId":2}
+17:06:09.235 detox[51014] i get
+  data: {"messageId":2,"type":"invokeResult","params":{"result":null}}
+17:06:09.235 detox[51014] i send
+  data: {
+    "messageId": 2,
+    "type": "invokeResult",
+    "params": {
+      "result": null
+    }
+  }
+17:06:09.236 detox[51015] i get message
+  data: {"messageId":2,"type":"invokeResult","params":{"result":null}}
+   
+17:06:09.236 detox[51015] i "/Users/coding/Library/Android/sdk/platform-tools/adb" -s emulator-18696 shell "ps | grep \"com\.notesbrain\.echo$\""
+17:06:09.272 detox[51015] i u0_a286      27009   452   20389700 211568 0                   0 S com.notesbrain.echo
+
+17:06:09.272 detox[51015] B onLaunchApp
+  args: ({"deviceId":"emulator-18696","bundleId":"com.notesbrain.echo","launchArgs":{"detoxServer":"ws://localhost:63630","detoxSessionId":"7631ac57-6c56-62cf-1458-1037538c6ae0"},"pid":27009})
+17:06:09.272 detox[51015] i starting ADBLogcatRecording
+17:06:09.272 detox[51015] i stopping ADBLogcatRecording
+17:06:09.272 detox[51015] i "/Users/coding/Library/Android/sdk/platform-tools/adb" -s emulator-18696 shell "date +\"%m-%d %T.000\""
+17:06:09.299 detox[51015] i 03-08 17:06:06.000
+
+17:06:09.300 detox[51015] i sending SIGINT to: /Users/coding/Library/Android/sdk/platform-tools/adb -s emulator-18696 shell logcat -T "03-08 17:06:00.000" --pid=27009 -f /sdcard/17556778_0.log
+17:06:09.301 detox[51015] i /Users/coding/Library/Android/sdk/platform-tools/adb -s emulator-18696 shell "logcat -T \"03-08 17:06:00.000\" --pid=27009 -f /sdcard/17556778_0.log" terminated with SIGINT
+17:06:09.301 detox[51015] i /Users/coding/Library/Android/sdk/platform-tools/adb -s emulator-18696 shell "logcat -T \"03-08 17:06:06.000\" --pid=27009 -f /sdcard/17556778_0.log"
+17:06:09.301 detox[51015] E onLaunchApp
+17:06:09.301 detox[51015] B onAppReady
+  args: ({"deviceId":"emulator-18696","bundleId":"com.notesbrain.echo","pid":27009})
+17:06:09.301 detox[51015] E onAppReady
+17:06:09.301 detox[51015] E launchApp
+17:06:09.302 detox[51015] E beforeEach
+17:06:09.302 detox[51015] B test_fn
+17:06:09.303 detox[51015] i send message
+  data: {"type":"invoke","params":{"target":{"type":"Class","value":"com.wix.detox.espresso.DetoxAssertion"},"method":"waitForAssertMatcher","args":[{"type":"Invocation","value":{"target":{"type":"Class","value":"androidx.test.espresso.Espresso"},"method":"onView","args":[{"type":"Invocation","value":{"target":{"type":"Class","value":"com.wix.detox.espresso.DetoxMatcher"},"method":"matcherForTestId","args":["login-email-input",{"type":"boolean","value":false}]}}]}},{"type":"Invocation","value":{"target":{"type":"Class","value":"com.wix.detox.espresso.DetoxMatcher"},"method":"matcherForSufficientlyVisible","args":[{"type":"Integer","value":75}]}},{"type":"Double","value":15}]},"messageId":3}
+17:06:09.304 detox[51014] i get
+  data: {"type":"invoke","params":{"target":{"type":"Class","value":"com.wix.detox.espresso.DetoxAssertion"},"method":"waitForAssertMatcher","args":[{"type":"Invocation","value":{"target":{"type":"Class","value":"androidx.test.espresso.Espresso"},"method":"onView","args":[{"type":"Invocation","value":{"target":{"type":"Class","value":"com.wix.detox.espresso.DetoxMatcher"},"method":"matcherForTestId","args":["login-email-input",{"type":"boolean","value":false}]}}]}},{"type":"Invocation","value":{"target":{"type":"Class","value":"com.wix.detox.espresso.DetoxMatcher"},"method":"matcherForSufficientlyVisible","args":[{"type":"Integer","value":75}]}},{"type":"Double","value":15}]},"messageId":3}
+17:06:09.304 detox[51014] i send
+  data: {
+    "type": "invoke",
+    "params": {
+      "target": {
+        "type": "Class",
+        "value": "com.wix.detox.espresso.DetoxAssertion"
+      },
+      "method": "waitForAssertMatcher",
+      "args": [
+        {
+          "type": "Invocation",
+          "value": {
+            "target": {
+              "type": "Class",
+              "value": "androidx.test.espresso.Espresso"
+            },
+            "method": "onView",
+            "args": [
+              {
+                "type": "Invocation",
+                "value": {
+                  "target": {
+                    "type": "Class",
+                    "value": "com.wix.detox.espresso.DetoxMatcher"
+                  },
+                  "method": "matcherForTestId",
+                  "args": [
+                    "login-email-input",
+                    {
+                      "type": "boolean",
+                      "value": false
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "Invocation",
+          "value": {
+            "target": {
+              "type": "Class",
+              "value": "com.wix.detox.espresso.DetoxMatcher"
+            },
+            "method": "matcherForSufficientlyVisible",
+            "args": [
+              {
+                "type": "Integer",
+                "value": 75
+              }
+            ]
+          }
+        },
+        {
+          "type": "Double",
+          "value": 15
+        }
+      ]
+    },
+    "messageId": 3
+  }
+17:06:09.304 detox[51015] B undefined with timeout (15000 ms)
+  data: {
+    "target": {
+      "type": "Class",
+      "value": "com.wix.detox.espresso.DetoxAssertion"
+    },
+    "method": "waitForAssertMatcher",
+    "args": [
+      {
+        "type": "Invocation",
+        "value": {
+          "target": {
+            "type": "Class",
+            "value": "androidx.test.espresso.Espresso"
+          },
+          "method": "onView",
+          "args": [
+            {
+              "type": "Invocation",
+              "value": {
+                "target": {
+                  "type": "Class",
+                  "value": "com.wix.detox.espresso.DetoxMatcher"
+                },
+                "method": "matcherForTestId",
+                "args": [
+                  "login-email-input",
+                  {
+                    "type": "boolean",
+                    "value": false
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        "type": "Invocation",
+        "value": {
+          "target": {
+            "type": "Class",
+            "value": "com.wix.detox.espresso.DetoxMatcher"
+          },
+          "method": "matcherForSufficientlyVisible",
+          "args": [
+            {
+              "type": "Integer",
+              "value": 75
+            }
+          ]
+        }
+      },
+      {
+        "type": "Double",
+        "value": 15
+      }
+    ]
+  }
+17:06:09.311 detox[51014] i get
+  data: {"messageId":3,"type":"invokeResult","params":{"result":null}}
+17:06:09.311 detox[51014] i send
+  data: {
+    "messageId": 3,
+    "type": "invokeResult",
+    "params": {
+      "result": null
+    }
+  }
+17:06:09.311 detox[51015] i get message
+  data: {"messageId":3,"type":"invokeResult","params":{"result":null}}
+   
+17:06:09.311 detox[51015] E undefined with timeout (15000 ms)
+17:06:09.312 detox[51014] i get
+  data: {"type":"invoke","params":{"target":{"type":"Class","value":"com.wix.detox.espresso.EspressoDetox"},"method":"perform","args":[{"type":"Invocation","value":{"target":{"type":"Class","value":"com.wix.detox.espresso.DetoxMatcher"},"method":"matcherForTestId","args":["login-email-input",{"type":"boolean","value":false}]}},{"type":"Invocation","value":{"target":{"type":"Class","value":"androidx.test.espresso.action.ViewActions"},"method":"replaceText","args":["notesbrain-e2e@example.com"]}}]},"messageId":4}
+17:06:09.312 detox[51014] i send
+  data: {
+    "type": "invoke",
+    "params": {
+      "target": {
+        "type": "Class",
+        "value": "com.wix.detox.espresso.EspressoDetox"
+      },
+      "method": "perform",
+      "args": [
+        {
+          "type": "Invocation",
+          "value": {
+            "target": {
+              "type": "Class",
+              "value": "com.wix.detox.espresso.DetoxMatcher"
+            },
+            "method": "matcherForTestId",
+            "args": [
+              "login-email-input",
+              {
+                "type": "boolean",
+                "value": false
+              }
+            ]
+          }
+        },
+        {
+          "type": "Invocation",
+          "value": {
+            "target": {
+              "type": "Class",
+              "value": "androidx.test.espresso.action.ViewActions"
+            },
+            "method": "replaceText",
+            "args": [
+              "notesbrain-e2e@example.com"
+            ]
+          }
+        }
+      ]
+    },
+    "messageId": 4
+  }
+17:06:09.312 detox[51015] i send message
+  data: {"type":"invoke","params":{"target":{"type":"Class","value":"com.wix.detox.espresso.EspressoDetox"},"method":"perform","args":[{"type":"Invocation","value":{"target":{"type":"Class","value":"com.wix.detox.espresso.DetoxMatcher"},"method":"matcherForTestId","args":["login-email-input",{"type":"boolean","value":false}]}},{"type":"Invocation","value":{"target":{"type":"Class","value":"androidx.test.espresso.action.ViewActions"},"method":"replaceText","args":["notesbrain-e2e@example.com"]}}]},"messageId":4}
+17:06:09.312 detox[51015] B replace input text: "notesbrain-e2e@example.com"
+  data: {
+    "target": {
+      "type": "Class",
+      "value": "com.wix.detox.espresso.EspressoDetox"
+    },
+    "method": "perform",
+    "args": [
+      {
+        "type": "Invocation",
+        "value": {
+          "target": {
+            "type": "Class",
+            "value": "com.wix.detox.espresso.DetoxMatcher"
+          },
+          "method": "matcherForTestId",
+          "args": [
+            "login-email-input",
+            {
+              "type": "boolean",
+              "value": false
+            }
+          ]
+        }
+      },
+      {
+        "type": "Invocation",
+        "value": {
+          "target": {
+            "type": "Class",
+            "value": "androidx.test.espresso.action.ViewActions"
+          },
+          "method": "replaceText",
+          "args": [
+            "notesbrain-e2e@example.com"
+          ]
+        }
+      }
+    ]
+  }
+17:06:09.318 detox[51014] i get
+  data: {"messageId":4,"type":"invokeResult","params":{"result":null}}
+17:06:09.318 detox[51014] i send
+  data: {
+    "messageId": 4,
+    "type": "invokeResult",
+    "params": {
+      "result": null
+    }
+  }
+17:06:09.318 detox[51014] i get
+  data: {"type":"invoke","params":{"target":{"type":"Class","value":"com.wix.detox.espresso.EspressoDetox"},"method":"perform","args":[{"type":"Invocation","value":{"target":{"type":"Class","value":"com.wix.detox.espresso.DetoxMatcher"},"method":"matcherForTestId","args":["login-password-input",{"type":"boolean","value":false}]}},{"type":"Invocation","value":{"target":{"type":"Class","value":"androidx.test.espresso.action.ViewActions"},"method":"replaceText","args":["NotesBrainE2EPassword123"]}}]},"messageId":5}
+17:06:09.318 detox[51014] i send
+  data: {
+    "type": "invoke",
+    "params": {
+      "target": {
+        "type": "Class",
+        "value": "com.wix.detox.espresso.EspressoDetox"
+      },
+      "method": "perform",
+      "args": [
+        {
+          "type": "Invocation",
+          "value": {
+            "target": {
+              "type": "Class",
+              "value": "com.wix.detox.espresso.DetoxMatcher"
+            },
+            "method": "matcherForTestId",
+            "args": [
+              "login-password-input",
+              {
+                "type": "boolean",
+                "value": false
+              }
+            ]
+          }
+        },
+        {
+          "type": "Invocation",
+          "value": {
+            "target": {
+              "type": "Class",
+              "value": "androidx.test.espresso.action.ViewActions"
+            },
+            "method": "replaceText",
+            "args": [
+              "NotesBrainE2EPassword123"
+            ]
+          }
+        }
+      ]
+    },
+    "messageId": 5
+  }
+17:06:09.318 detox[51015] i get message
+  data: {"messageId":4,"type":"invokeResult","params":{"result":null}}
+   
+17:06:09.318 detox[51015] E replace input text: "notesbrain-e2e@example.com"
+17:06:09.318 detox[51015] i send message
+  data: {"type":"invoke","params":{"target":{"type":"Class","value":"com.wix.detox.espresso.EspressoDetox"},"method":"perform","args":[{"type":"Invocation","value":{"target":{"type":"Class","value":"com.wix.detox.espresso.DetoxMatcher"},"method":"matcherForTestId","args":["login-password-input",{"type":"boolean","value":false}]}},{"type":"Invocation","value":{"target":{"type":"Class","value":"androidx.test.espresso.action.ViewActions"},"method":"replaceText","args":["NotesBrainE2EPassword123"]}}]},"messageId":5}
+17:06:09.318 detox[51015] B replace input text: "NotesBrainE2EPassword123"
+  data: {
+    "target": {
+      "type": "Class",
+      "value": "com.wix.detox.espresso.EspressoDetox"
+    },
+    "method": "perform",
+    "args": [
+      {
+        "type": "Invocation",
+        "value": {
+          "target": {
+            "type": "Class",
+            "value": "com.wix.detox.espresso.DetoxMatcher"
+          },
+          "method": "matcherForTestId",
+          "args": [
+            "login-password-input",
+            {
+              "type": "boolean",
+              "value": false
+            }
+          ]
+        }
+      },
+      {
+        "type": "Invocation",
+        "value": {
+          "target": {
+            "type": "Class",
+            "value": "androidx.test.espresso.action.ViewActions"
+          },
+          "method": "replaceText",
+          "args": [
+            "NotesBrainE2EPassword123"
+          ]
+        }
+      }
+    ]
+  }
+17:06:09.341 detox[51014] i get
+  data: {"messageId":5,"type":"invokeResult","params":{"result":null}}
+17:06:09.341 detox[51014] i send
+  data: {
+    "messageId": 5,
+    "type": "invokeResult",
+    "params": {
+      "result": null
+    }
+  }
+17:06:09.342 detox[51014] i get
+  data: {"type":"invoke","params":{"target":{"type":"Class","value":"com.wix.detox.espresso.EspressoDetox"},"method":"perform","args":[{"type":"Invocation","value":{"target":{"type":"Class","value":"com.wix.detox.espresso.DetoxMatcher"},"method":"matcherForTestId","args":["login-submit-button",{"type":"boolean","value":false}]}},{"type":"Invocation","value":{"target":{"type":"Class","value":"com.wix.detox.espresso.DetoxViewActions"},"method":"click","args":[]}}]},"messageId":6}
+17:06:09.342 detox[51014] i send
+  data: {
+    "type": "invoke",
+    "params": {
+      "target": {
+        "type": "Class",
+        "value": "com.wix.detox.espresso.EspressoDetox"
+      },
+      "method": "perform",
+      "args": [
+        {
+          "type": "Invocation",
+          "value": {
+            "target": {
+              "type": "Class",
+              "value": "com.wix.detox.espresso.DetoxMatcher"
+            },
+            "method": "matcherForTestId",
+            "args": [
+              "login-submit-button",
+              {
+                "type": "boolean",
+                "value": false
+              }
+            ]
+          }
+        },
+        {
+          "type": "Invocation",
+          "value": {
+            "target": {
+              "type": "Class",
+              "value": "com.wix.detox.espresso.DetoxViewActions"
+            },
+            "method": "click",
+            "args": []
+          }
+        }
+      ]
+    },
+    "messageId": 6
+  }
+17:06:09.342 detox[51015] i get message
+  data: {"messageId":5,"type":"invokeResult","params":{"result":null}}
+   
+17:06:09.342 detox[51015] E replace input text: "NotesBrainE2EPassword123"
+17:06:09.342 detox[51015] i send message
+  data: {"type":"invoke","params":{"target":{"type":"Class","value":"com.wix.detox.espresso.EspressoDetox"},"method":"perform","args":[{"type":"Invocation","value":{"target":{"type":"Class","value":"com.wix.detox.espresso.DetoxMatcher"},"method":"matcherForTestId","args":["login-submit-button",{"type":"boolean","value":false}]}},{"type":"Invocation","value":{"target":{"type":"Class","value":"com.wix.detox.espresso.DetoxViewActions"},"method":"click","args":[]}}]},"messageId":6}
+17:06:09.342 detox[51015] B tap
+  data: {
+    "target": {
+      "type": "Class",
+      "value": "com.wix.detox.espresso.EspressoDetox"
+    },
+    "method": "perform",
+    "args": [
+      {
+        "type": "Invocation",
+        "value": {
+          "target": {
+            "type": "Class",
+            "value": "com.wix.detox.espresso.DetoxMatcher"
+          },
+          "method": "matcherForTestId",
+          "args": [
+            "login-submit-button",
+            {
+              "type": "boolean",
+              "value": false
+            }
+          ]
+        }
+      },
+      {
+        "type": "Invocation",
+        "value": {
+          "target": {
+            "type": "Class",
+            "value": "com.wix.detox.espresso.DetoxViewActions"
+          },
+          "method": "click",
+          "args": []
+        }
+      }
+    ]
+  }
+17:06:09.604 detox[51015] i "/Users/coding/Library/Android/sdk/platform-tools/adb" -s emulator-18696 shell du /sdcard/17556778_0.log
+17:06:09.631 detox[51015] i 21080	/sdcard/17556778_0.log
+
+17:06:10.586 detox[51014] i get
+  data: {"messageId":6,"type":"invokeResult","params":{"result":null}}
+17:06:10.586 detox[51014] i send
+  data: {
+    "messageId": 6,
+    "type": "invokeResult",
+    "params": {
+      "result": null
+    }
+  }
+17:06:10.586 detox[51015] i get message
+  data: {"messageId":6,"type":"invokeResult","params":{"result":null}}
+   
+17:06:10.587 detox[51014] i get
+  data: {"type":"invoke","params":{"target":{"type":"Class","value":"com.wix.detox.espresso.DetoxAssertion"},"method":"waitForAssertMatcher","args":[{"type":"Invocation","value":{"target":{"type":"Class","value":"androidx.test.espresso.Espresso"},"method":"onView","args":[{"type":"Invocation","value":{"target":{"type":"Class","value":"com.wix.detox.espresso.DetoxMatcher"},"method":"matcherForTestId","args":["capture-screen",{"type":"boolean","value":false}]}}]}},{"type":"Invocation","value":{"target":{"type":"Class","value":"com.wix.detox.espresso.DetoxMatcher"},"method":"matcherForSufficientlyVisible","args":[{"type":"Integer","value":75}]}},{"type":"Double","value":20}]},"messageId":7}
+17:06:10.587 detox[51014] i send
+  data: {
+    "type": "invoke",
+    "params": {
+      "target": {
+        "type": "Class",
+        "value": "com.wix.detox.espresso.DetoxAssertion"
+      },
+      "method": "waitForAssertMatcher",
+      "args": [
+        {
+          "type": "Invocation",
+          "value": {
+            "target": {
+              "type": "Class",
+              "value": "androidx.test.espresso.Espresso"
+            },
+            "method": "onView",
+            "args": [
+              {
+                "type": "Invocation",
+                "value": {
+                  "target": {
+                    "type": "Class",
+                    "value": "com.wix.detox.espresso.DetoxMatcher"
+                  },
+                  "method": "matcherForTestId",
+                  "args": [
+                    "capture-screen",
+                    {
+                      "type": "boolean",
+                      "value": false
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "Invocation",
+          "value": {
+            "target": {
+              "type": "Class",
+              "value": "com.wix.detox.espresso.DetoxMatcher"
+            },
+            "method": "matcherForSufficientlyVisible",
+            "args": [
+              {
+                "type": "Integer",
+                "value": 75
+              }
+            ]
+          }
+        },
+        {
+          "type": "Double",
+          "value": 20
+        }
+      ]
+    },
+    "messageId": 7
+  }
+17:06:10.587 detox[51015] E tap
+17:06:10.587 detox[51015] i send message
+  data: {"type":"invoke","params":{"target":{"type":"Class","value":"com.wix.detox.espresso.DetoxAssertion"},"method":"waitForAssertMatcher","args":[{"type":"Invocation","value":{"target":{"type":"Class","value":"androidx.test.espresso.Espresso"},"method":"onView","args":[{"type":"Invocation","value":{"target":{"type":"Class","value":"com.wix.detox.espresso.DetoxMatcher"},"method":"matcherForTestId","args":["capture-screen",{"type":"boolean","value":false}]}}]}},{"type":"Invocation","value":{"target":{"type":"Class","value":"com.wix.detox.espresso.DetoxMatcher"},"method":"matcherForSufficientlyVisible","args":[{"type":"Integer","value":75}]}},{"type":"Double","value":20}]},"messageId":7}
+17:06:10.587 detox[51015] B undefined with timeout (20000 ms)
+  data: {
+    "target": {
+      "type": "Class",
+      "value": "com.wix.detox.espresso.DetoxAssertion"
+    },
+    "method": "waitForAssertMatcher",
+    "args": [
+      {
+        "type": "Invocation",
+        "value": {
+          "target": {
+            "type": "Class",
+            "value": "androidx.test.espresso.Espresso"
+          },
+          "method": "onView",
+          "args": [
+            {
+              "type": "Invocation",
+              "value": {
+                "target": {
+                  "type": "Class",
+                  "value": "com.wix.detox.espresso.DetoxMatcher"
+                },
+                "method": "matcherForTestId",
+                "args": [
+                  "capture-screen",
+                  {
+                    "type": "boolean",
+                    "value": false
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        "type": "Invocation",
+        "value": {
+          "target": {
+            "type": "Class",
+            "value": "com.wix.detox.espresso.DetoxMatcher"
+          },
+          "method": "matcherForSufficientlyVisible",
+          "args": [
+            {
+              "type": "Integer",
+              "value": 75
+            }
+          ]
+        }
+      },
+      {
+        "type": "Double",
+        "value": 20
+      }
+    ]
+  }
+17:06:20.589 detox[51015] i send message
+  data: {"type":"currentStatus","params":{},"messageId":8}
+17:06:20.590 detox[51014] i get
+  data: {"type":"currentStatus","params":{},"messageId":8}
+17:06:20.590 detox[51014] i send
+  data: {
+    "type": "currentStatus",
+    "params": {},
+    "messageId": 8
+  }
+17:06:20.592 detox[51014] i get
+  data: {"messageId":8,"type":"currentStatusResult","params":{"status":{"app_status":"idle"}}}
+17:06:20.593 detox[51014] i send
+  data: {
+    "messageId": 8,
+    "type": "currentStatusResult",
+    "params": {
+      "status": {
+        "app_status": "idle"
+      }
+    }
+  }
+17:06:20.593 detox[51015] i get message
+  data: {"messageId":8,"type":"currentStatusResult","params":{"status":{"app_status":"idle"}}}
+   
+17:06:20.595 detox[51015] i The app seems to be idle
+17:06:30.596 detox[51015] i send message
+  data: {"type":"currentStatus","params":{},"messageId":9}
+17:06:30.597 detox[51014] i get
+  data: {"type":"currentStatus","params":{},"messageId":9}
+17:06:30.597 detox[51014] i send
+  data: {
+    "type": "currentStatus",
+    "params": {},
+    "messageId": 9
+  }
+17:06:30.600 detox[51014] i get
+  data: {"messageId":9,"type":"currentStatusResult","params":{"status":{"app_status":"idle"}}}
+17:06:30.600 detox[51014] i send
+  data: {
+    "messageId": 9,
+    "type": "currentStatusResult",
+    "params": {
+      "status": {
+        "app_status": "idle"
+      }
+    }
+  }
+17:06:30.600 detox[51015] i get message
+  data: {"messageId":9,"type":"currentStatusResult","params":{"status":{"app_status":"idle"}}}
+   
+17:06:30.601 detox[51014] i get
+  data: {"messageId":7,"type":"testFailed","params":{"details":"20.0sec timeout expired without matching of given matcher: (view has effective visibility <VISIBLE> and view.getGlobalVisibleRect() covers at least <75> percent of the view's area)\n","viewHierarchy":null}}
+17:06:30.601 detox[51014] i send
+  data: {
+    "messageId": 7,
+    "type": "testFailed",
+    "params": {
+      "details": "20.0sec timeout expired without matching of given matcher: (view has effective visibility <VISIBLE> and view.getGlobalVisibleRect() covers at least <75> percent of the view's area)\n",
+      "viewHierarchy": null
+    }
+  }
+17:06:30.601 detox[51015] i The app seems to be idle
+17:06:30.601 detox[51015] i get message
+  data: {"messageId":7,"type":"testFailed","params":{"details":"20.0sec timeout expired without matching of given matcher: (view has effective visibility <VISIBLE> and view.getGlobalVisibleRect() covers at least <75> percent of the view's area)\n","viewHierarchy":null}}
+   
+17:06:30.602 detox[51015] E undefined with timeout (20000 ms)
+  error: Test Failed: 20.0sec timeout expired without matching of given matcher: (view has effective visibility <VISIBLE> and view.getGlobalVisibleRect() covers at least <75> percent of the view's area)
+  
+17:06:30.602 detox[51015] B onTestFnFailure
+  args: ({"error":{"name":"DetoxRuntimeError"}})
+17:06:30.602 detox[51015] i starting ADBScreencapRecording
+17:06:30.602 detox[51015] i "/Users/coding/Library/Android/sdk/platform-tools/adb" -s emulator-18696 shell "screencap /sdcard/17556778_2.png"
+17:06:30.846 detox[51015] i 
+17:06:30.846 detox[51015] i stopping ADBScreencapRecording
+17:06:30.846 detox[51015] E onTestFnFailure
+17:06:30.846 detox[51015] E test_fn
+  error: Test Failed: 20.0sec timeout expired without matching of given matcher: (view has effective visibility <VISIBLE> and view.getGlobalVisibleRect() covers at least <75> percent of the view's area)
+  
+17:06:30.847 detox[51015] B onTestDone
+  args: ({"title":"signs in with email/password and opens each primary tab","fullName":"mobile e2e: auth and tab navigation signs in with email/password and opens each primary tab","status":"failed","invocations":1,"timedOut":false})
+17:06:30.847 detox[51015] i stopping ADBLogcatRecording
+17:06:30.847 detox[51015] i starting ADBScreencapRecording
+17:06:30.847 detox[51015] i "/Users/coding/Library/Android/sdk/platform-tools/adb" -s emulator-18696 shell "screencap /sdcard/17556778_3.png"
+17:06:30.848 detox[51015] i "/Users/coding/Library/Android/sdk/platform-tools/adb" -s emulator-18696 shell "date +\"%m-%d %T.000\""
+17:06:30.874 detox[51015] i 03-08 17:06:28.000
+
+17:06:30.875 detox[51015] i sending SIGINT to: /Users/coding/Library/Android/sdk/platform-tools/adb -s emulator-18696 shell logcat -T "03-08 17:06:06.000" --pid=27009 -f /sdcard/17556778_0.log
+17:06:30.876 detox[51015] i /Users/coding/Library/Android/sdk/platform-tools/adb -s emulator-18696 shell "logcat -T \"03-08 17:06:06.000\" --pid=27009 -f /sdcard/17556778_0.log" terminated with SIGINT
+17:06:30.877 detox[51015] i saving ADBLogcatRecording to: artifacts/android.emu.release.2026-03-09 00-05-55Z/✗ mobile e2e_ auth and tab navigation signs in with email_password and opens each primary tab/device.log
+17:06:30.877 detox[51015] i "/Users/coding/Library/Android/sdk/platform-tools/adb" -s emulator-18696 pull "/sdcard/17556778_0.log" "artifacts/android.emu.release.2026-03-09 00-05-55Z/✗ mobile e2e_ auth and tab navigation signs in with email_password and opens each primary tab/device.log"
+17:06:30.991 detox[51015] i /sdcard/17556778_0.log: 1 file pulled, 0 skipped. 219.8 MB/s (21852160 bytes in 0.095s)
+
+17:06:30.992 detox[51015] i "/Users/coding/Library/Android/sdk/platform-tools/adb" -s emulator-18696 shell "rm  \"/sdcard/17556778_0.log\""
+17:06:31.032 detox[51015] i 
+17:06:31.069 detox[51015] i 
+17:06:31.069 detox[51015] i stopping ADBScreencapRecording
+17:06:31.069 detox[51015] E onTestDone
+17:06:31.069 detox[51015] E signs in with email/password and opens each primary tab
+17:06:31.069 detox[51015] i mobile e2e: auth and tab navigation: signs in with email/password and opens each primary tab [FAIL]
+17:06:31.070 detox[51015] B afterAll
+17:06:31.071 detox[51015] i saving ADBScreencapRecording to: artifacts/android.emu.release.2026-03-09 00-05-55Z/✗ mobile e2e_ auth and tab navigation signs in with email_password and opens each primary tab/testStart.png
+17:06:31.071 detox[51015] i "/Users/coding/Library/Android/sdk/platform-tools/adb" -s emulator-18696 pull "/sdcard/17556778_1.png" "artifacts/android.emu.release.2026-03-09 00-05-55Z/✗ mobile e2e_ auth and tab navigation signs in with email_password and opens each primary tab/testStart.png"
+17:06:31.091 detox[51015] E afterAll
+17:06:31.091 detox[51015] B onRunDescribeFinish
+  args: ({"name":"mobile e2e: auth and tab navigation"})
+17:06:31.091 detox[51015] E onRunDescribeFinish
+17:06:31.091 detox[51015] E mobile e2e: auth and tab navigation
+17:06:31.091 detox[51015] B onRunDescribeFinish
+  args: ({"name":"ROOT_DESCRIBE_BLOCK"})
+17:06:31.091 detox[51015] E onRunDescribeFinish
+17:06:31.091 detox[51015] E run the tests
+17:06:31.103 detox[51015] B tear down environment
+17:06:31.103 detox[51015] B onBeforeCleanup
+  args: ()
+17:06:31.103 detox[51015] i /sdcard/17556778_1.png: 1 file pulled, 0 skipped. 124.6 MB/s (1375305 bytes in 0.011s)
+
+17:06:31.103 detox[51015] i "/Users/coding/Library/Android/sdk/platform-tools/adb" -s emulator-18696 shell "rm  \"/sdcard/17556778_1.png\""
+17:06:31.131 detox[51015] i 
+17:06:31.131 detox[51015] i saving ADBScreencapRecording to: artifacts/android.emu.release.2026-03-09 00-05-55Z/✗ mobile e2e_ auth and tab navigation signs in with email_password and opens each primary tab/testFnFailure.png
+17:06:31.131 detox[51015] i "/Users/coding/Library/Android/sdk/platform-tools/adb" -s emulator-18696 pull "/sdcard/17556778_2.png" "artifacts/android.emu.release.2026-03-09 00-05-55Z/✗ mobile e2e_ auth and tab navigation signs in with email_password and opens each primary tab/testFnFailure.png"
+17:06:31.152 detox[51015] i /sdcard/17556778_2.png: 1 file pulled, 0 skipped. 51.7 MB/s (99205 bytes in 0.002s)
+
+17:06:31.152 detox[51015] i "/Users/coding/Library/Android/sdk/platform-tools/adb" -s emulator-18696 shell "rm  \"/sdcard/17556778_2.png\""
+17:06:31.177 detox[51015] i 
+17:06:31.178 detox[51015] i saving ADBScreencapRecording to: artifacts/android.emu.release.2026-03-09 00-05-55Z/✗ mobile e2e_ auth and tab navigation signs in with email_password and opens each primary tab/testDone.png
+17:06:31.178 detox[51015] i "/Users/coding/Library/Android/sdk/platform-tools/adb" -s emulator-18696 pull "/sdcard/17556778_3.png" "artifacts/android.emu.release.2026-03-09 00-05-55Z/✗ mobile e2e_ auth and tab navigation signs in with email_password and opens each primary tab/testDone.png"
+17:06:31.199 detox[51015] i /sdcard/17556778_3.png: 1 file pulled, 0 skipped. 49.6 MB/s (99205 bytes in 0.002s)
+
+17:06:31.199 detox[51015] i "/Users/coding/Library/Android/sdk/platform-tools/adb" -s emulator-18696 shell "rm  \"/sdcard/17556778_3.png\""
+17:06:31.227 detox[51015] i 
+17:06:31.228 detox[51015] i saving FileArtifact to: artifacts/android.emu.release.2026-03-09 00-05-55Z/detox_pid_51015.json.log { append: true }
+17:06:31.228 detox[51015] i saving FileArtifact to: artifacts/android.emu.release.2026-03-09 00-05-55Z/detox_pid_51015.log { append: true }
+17:06:31.228 detox[51015] E onBeforeCleanup
+17:06:31.228 detox[51015] i send message
+  data: {"type":"cleanup","params":{"stopRunner":false},"messageId":-49642}
+17:06:31.229 detox[51014] i get
+  data: {"type":"cleanup","params":{"stopRunner":false},"messageId":-49642}
+17:06:31.229 detox[51014] i send
+  data: {
+    "type": "cleanup",
+    "params": {
+      "stopRunner": false
+    },
+    "messageId": -49642
+  }
+17:06:31.231 detox[51014] i get
+  data: {"messageId":-49642,"type":"cleanupDone","params":{}}
+17:06:31.231 detox[51014] i send
+  data: {
+    "messageId": -49642,
+    "type": "cleanupDone",
+    "params": {}
+  }
+17:06:31.231 detox[51015] i get message
+  data: {"messageId":-49642,"type":"cleanupDone","params":{}}
+   
+17:06:31.233 detox[51014] i tester exited session 7631ac57-6c56-62cf-1458-1037538c6ae0
+17:06:31.233 detox[51014] i send
+  data: {
+    "type": "testerDisconnected",
+    "messageId": -1
+  }
+17:06:31.233 detox[51014] E connection :63630<->:63634
+17:06:31.234 detox[51015] i sending SIGINT to: /Users/coding/Library/Android/sdk/platform-tools/adb -s emulator-18696 shell am instrument -w -r -e detoxServer ws://localhost:63630 -e detoxSessionId 7631ac57-6c56-62cf-1458-1037538c6ae0 -e debug false com.notesbrain.echo.test/androidx.test.runner.AndroidJUnitRunner
+17:06:31.234 detox[51015] i /Users/coding/Library/Android/sdk/platform-tools/adb -s emulator-18696 shell am instrument -w -r -e detoxServer ws://localhost:63630 -e detoxSessionId 7631ac57-6c56-62cf-1458-1037538c6ae0 -e debug false com.notesbrain.echo.test/androidx.test.runner.AndroidJUnitRunner terminated with SIGINT
+17:06:31.235 detox[51015] i "/Users/coding/Library/Android/sdk/platform-tools/adb" -s emulator-18696 reverse --remove tcp:63630
+17:06:31.235 detox[51015] i dispatching event to  primary-51014 /tmp/detox.primary-51014  :  deallocateDevice , {
+  deviceCookie: {
+    id: 'emulator-18696',
+    adbName: 'emulator-18696',
+    name: 'emulator-18696 (Pixel_9)'
+  }
+}
+17:06:31.236 detox[51014] i received event of :  deallocateDevice {
+  deviceCookie: {
+    id: 'emulator-18696',
+    adbName: 'emulator-18696',
+    name: 'emulator-18696 (Pixel_9)'
+  }
+}
+17:06:31.236 detox[51014] B free: emulator-18696
+  data: {}
+17:06:31.236 detox[51014] E free: emulator-18696
+17:06:31.236 detox[51014] i dispatching event to socket  :  deallocateDeviceDone {}
+17:06:31.236 detox[51015] i ## received events ##
+17:06:31.237 detox[51015] i detected event deallocateDeviceDone {}
+17:06:31.237 detox[51015] E tear down environment
+17:06:31.237 detox[51015] E tests/e2e/mobile/specs/auth-and-tabs.e2e.js
+17:06:31.240 detox[51014] i received event of :  reportTestResults {
+  testResults: [
+    {
+      success: false,
+      testFilePath: '/Users/coding/Projects/notes_brain/tests/e2e/mobile/specs/auth-and-tabs.e2e.js',
+      isPermanentFailure: false
+    }
+  ]
+}
+17:06:31.240 detox[51014] i dispatching event to socket  :  reportTestResultsDone {
+  testResults: [
+    {
+      success: false,
+      testFilePath: '/Users/coding/Projects/notes_brain/tests/e2e/mobile/specs/auth-and-tabs.e2e.js',
+      isPermanentFailure: false
+    }
+  ]
+}
+17:06:31.240 detox[51014] i broadcasting event to all known sockets listening to  /tmp/detox.primary-51014  :   sessionStateUpdate {
+  testResults: [
+    {
+      success: false,
+      testFilePath: '/Users/coding/Projects/notes_brain/tests/e2e/mobile/specs/auth-and-tabs.e2e.js',
+      isPermanentFailure: false
+    }
+  ]
+}
+17:06:31.240 detox[51015] i dispatching event to  primary-51014 /tmp/detox.primary-51014  :  reportTestResults , {
+  testResults: [
+    {
+      success: false,
+      testFilePath: '/Users/coding/Projects/notes_brain/tests/e2e/mobile/specs/auth-and-tabs.e2e.js',
+      testExecError: undefined,
+      isPermanentFailure: false
+    }
+  ]
+}
+17:06:31.240 detox[51015] i ## received events ##
+17:06:31.240 detox[51015] i detected event reportTestResultsDone {
+  testResults: [
+    {
+      success: false,
+      testFilePath: '/Users/coding/Projects/notes_brain/tests/e2e/mobile/specs/auth-and-tabs.e2e.js',
+      isPermanentFailure: false
+    }
+  ]
+}
+17:06:31.241 detox[51015] i connection closed primary-51014 /tmp/detox.primary-51014 0 tries remaining of 0
+17:06:31.241 detox[51015] i secondary-51015 exceeded connection rety amount of  or stopRetrying flag set.
+17:06:31.242 detox[51014] i socket disconnected secondary-51015
+17:06:31.253 detox[51015] i 
+17:06:31.344 detox[51014] E Command failed with exit code = 1:
+DETOX_AVD_NAME="Pixel_9" jest --config tests/e2e/mobile/jest.config.cjs tests/e2e/mobile/specs/auth-and-tabs.e2e.js
+17:06:31.344 detox[51014] B cleanup
+  args: ()
+17:06:31.345 detox[51014] E cleanup
+17:06:31.345 detox[51014] i Detox server has been closed gracefully
+17:06:31.345 detox[51014] i app exited session 7631ac57-6c56-62cf-1458-1037538c6ae0
+17:06:31.345 detox[51014] E connection :63630<->:63771
+17:06:31.346 detox[51014] E node_modules/.bin/detox test --config-path ./tests/e2e/mobile/detox.config.cjs --configuration android.emu.release tests/e2e/mobile/specs/auth-and-tabs.e2e.js --record-logs failing --take-screenshots failing

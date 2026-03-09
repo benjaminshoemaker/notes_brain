@@ -16,7 +16,11 @@ export function MobileCategoryFilter({
 }: MobileCategoryFilterProps) {
   function handleSelect(value: Category | "all") {
     if (value === selectedCategory) return;
-    try { Haptics.selectionAsync(); } catch {}
+    try {
+      Haptics.selectionAsync();
+    } catch {
+      // Ignore haptics failures (e.g. simulator/device without haptics).
+    }
     onSelectCategory(value);
   }
 

@@ -1,8 +1,11 @@
 module.exports = {
-  testEnvironment: "node",
-  testMatch: ["<rootDir>/tests/e2e/mobile/specs/**/*.e2e.js"],
-  setupFilesAfterEnv: ["<rootDir>/tests/e2e/mobile/setup.cjs"],
+  testMatch: ["<rootDir>/specs/**/*.e2e.js"],
+  testTimeout: 180000,
   verbose: true,
-  maxWorkers: 1
+  maxWorkers: 1,
+  globalSetup: "detox/runners/jest/globalSetup",
+  globalTeardown: "detox/runners/jest/globalTeardown",
+  setupFilesAfterEnv: ["<rootDir>/support/setupAfterEnv.cjs"],
+  reporters: ["detox/runners/jest/reporter"],
+  testEnvironment: "detox/runners/jest/testEnvironment"
 };
-

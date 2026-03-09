@@ -16,6 +16,11 @@ export function sendMagicLink(email: string) {
   return signInWithMagicLink(supabase, { email, emailRedirectTo });
 }
 
+export function sendPasswordResetEmail(email: string) {
+  const redirectTo = "echo://auth/callback";
+  return supabase.auth.resetPasswordForEmail(email, { redirectTo });
+}
+
 export function signOutUser() {
   return signOut(supabase);
 }

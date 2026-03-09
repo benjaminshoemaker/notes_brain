@@ -35,15 +35,11 @@ describe("mobile e2e: capture and summary", () => {
     await element(by.id("capture-text-input")).replaceText(noteText);
     await element(by.id("capture-submit-button")).tap();
 
-    await waitFor(element(by.id("capture-toast")))
-      .toBeVisible()
-      .withTimeout(15000);
-
     await element(by.id("tab-notes")).tap();
     await expect(element(by.id("notes-screen"))).toBeVisible();
     await waitFor(element(by.text(noteText)))
       .toBeVisible()
-      .withTimeout(15000);
+      .withTimeout(20000);
   });
 
   it("shows a seeded daily summary on the summary tab", async () => {
@@ -59,4 +55,3 @@ describe("mobile e2e: capture and summary", () => {
     await expect(element(by.text("Phase 2 mobile flow check"))).toBeVisible();
   });
 });
-

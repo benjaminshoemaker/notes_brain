@@ -38,7 +38,11 @@ export function CaptureInput({ onSubmit, isSubmitting, autoFocus = true }: Captu
     if (!trimmedContent || isSubmitting) return;
 
     await onSubmit(trimmedContent);
-    try { Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success); } catch {}
+    try {
+      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+    } catch {
+      // Haptics can fail on unsupported devices; submission should still succeed.
+    }
     setContent("");
     Keyboard.dismiss();
   }
