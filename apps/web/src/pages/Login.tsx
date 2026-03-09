@@ -2,6 +2,7 @@ import { useState } from "react";
 
 import { Link, useNavigate } from "react-router-dom";
 
+import { AuthShell, authStyles } from "../components/AuthShell";
 import { sendMagicLink, signInWithPassword } from "../lib/authApi";
 
 export default function LoginPage() {
@@ -53,12 +54,24 @@ export default function LoginPage() {
   }
 
   return (
-    <div style={{ maxWidth: 420 }}>
-      <h1>Sign in</h1>
-
-      <form onSubmit={handleSignIn} style={{ display: "grid", gap: 12 }}>
-        <div style={{ display: "grid", gap: 6 }}>
-          <label htmlFor="login-email">Email</label>
+    <AuthShell
+      title="Sign in"
+      error={error}
+      status={status}
+      footer={
+        <span style={authStyles.footerText}>
+          New here?{" "}
+          <Link to="/signup" style={authStyles.link}>
+            Create an account
+          </Link>
+        </span>
+      }
+    >
+      <form onSubmit={handleSignIn} style={authStyles.form}>
+        <div style={authStyles.field}>
+          <label htmlFor="login-email" style={authStyles.label}>
+            Email
+          </label>
           <input
             id="login-email"
             type="email"
@@ -66,11 +79,14 @@ export default function LoginPage() {
             value={email}
             onChange={(event) => setEmail(event.target.value)}
             required
+            style={authStyles.input}
           />
         </div>
 
-        <div style={{ display: "grid", gap: 6 }}>
-          <label htmlFor="login-password">Password</label>
+        <div style={authStyles.field}>
+          <label htmlFor="login-password" style={authStyles.label}>
+            Password
+          </label>
           <input
             id="login-password"
             type="password"
@@ -78,29 +94,35 @@ export default function LoginPage() {
             value={password}
             onChange={(event) => setPassword(event.target.value)}
             required
+            style={authStyles.input}
           />
         </div>
 
-        <button type="submit" disabled={isSubmitting}>
+        <button
+          type="submit"
+          disabled={isSubmitting}
+          style={{
+            ...authStyles.button,
+            ...authStyles.primaryButton,
+            ...(isSubmitting ? authStyles.buttonDisabled : null),
+          }}
+        >
           {isSubmitting ? "Signing in..." : "Sign in"}
         </button>
 
-        <button type="button" onClick={handleMagicLink} disabled={isSubmitting}>
+        <button
+          type="button"
+          onClick={handleMagicLink}
+          disabled={isSubmitting}
+          style={{
+            ...authStyles.button,
+            ...authStyles.secondaryButton,
+            ...(isSubmitting ? authStyles.buttonDisabled : null),
+          }}
+        >
           {isSubmitting ? "Sending link..." : "Sign in with magic link"}
         </button>
       </form>
-
-      {error ? (
-        <p role="alert" style={{ color: "crimson" }}>
-          {error}
-        </p>
-      ) : null}
-
-      {status ? <p>{status}</p> : null}
-
-      <p style={{ marginTop: 12 }}>
-        New here? <Link to="/signup">Create an account</Link>
-      </p>
-    </div>
+    </AuthShell>
   );
 }
