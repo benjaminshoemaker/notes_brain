@@ -1,3 +1,7 @@
+/**
+ * @deprecated Use LensResultCard from ./LensResultCard instead.
+ * This component is kept for reference during migration.
+ */
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
