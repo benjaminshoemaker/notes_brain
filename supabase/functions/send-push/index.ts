@@ -69,6 +69,10 @@ function healthResponse(config: RuntimeConfig) {
   );
 }
 
+// INTERNAL-ONLY: This function is called exclusively by other Edge Functions
+// (e.g. execute-lens, generate-summary) using the service role key. It must
+// NOT be exposed to client-side calls. The caller is trusted, so user_id and
+// result_id are accepted without additional ownership verification.
 Deno.serve(async (req) => {
   const requestId = req.headers.get("x-request-id") ?? crypto.randomUUID();
   const logger = createFunctionLogger("send-push", requestId);

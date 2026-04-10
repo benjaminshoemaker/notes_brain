@@ -1,14 +1,9 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import type { Lens } from "@notesbrain/shared";
-import type { Lens as SourceLens } from "../../../packages/shared/src/types";
 
 import { ensureUserProfile } from "../lib/ensureUserProfile";
 import { supabase } from "../lib/supabaseClient";
 import { useAuth } from "./useAuth";
-
-declare module "@notesbrain/shared" {
-  type Lens = SourceLens;
-}
 
 type CreateLensInput = {
   name: string;

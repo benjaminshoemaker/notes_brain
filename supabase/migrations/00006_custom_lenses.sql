@@ -93,11 +93,14 @@ BEGIN
     RETURN NEW;
   END IF;
 
-  -- Only compute when relevant fields change or on insert
+  -- Only compute when relevant fields change or on insert.
+  -- updated_at is included so that timezone changes (which update
+  -- updated_at on all active lenses) trigger schedule recomputation.
   IF TG_OP = 'INSERT' OR
      OLD.schedule_time IS DISTINCT FROM NEW.schedule_time OR
      OLD.schedule_day IS DISTINCT FROM NEW.schedule_day OR
      OLD.schedule_type IS DISTINCT FROM NEW.schedule_type OR
+     OLD.updated_at IS DISTINCT FROM NEW.updated_at OR
      (OLD.is_active = false AND NEW.is_active = true) THEN
 
     SELECT timezone INTO user_tz FROM users WHERE id = NEW.user_id;

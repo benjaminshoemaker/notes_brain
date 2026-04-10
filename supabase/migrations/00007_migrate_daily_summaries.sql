@@ -36,13 +36,13 @@ SELECT
   l.id,
   ds.user_id,
   '## Today''s Top 3' || E'\n' ||
-    '1. ' || (ds.content->'top_actions'->>0) || E'\n' ||
-    '2. ' || (ds.content->'top_actions'->>1) || E'\n' ||
-    '3. ' || (ds.content->'top_actions'->>2) || E'\n\n' ||
+    '1. ' || COALESCE(ds.content->'top_actions'->>0, '(not recorded)') || E'\n' ||
+    '2. ' || COALESCE(ds.content->'top_actions'->>1, '(not recorded)') || E'\n' ||
+    '3. ' || COALESCE(ds.content->'top_actions'->>2, '(not recorded)') || E'\n\n' ||
   '## Maybe Avoiding...' || E'\n' ||
-    (ds.content->>'avoiding') || E'\n\n' ||
+    COALESCE(ds.content->>'avoiding', '(not recorded)') || E'\n\n' ||
   '## Small Win' || E'\n' ||
-    (ds.content->>'small_win'),
+    COALESCE(ds.content->>'small_win', '(not recorded)'),
   0,
   ds.generated_at,
   ds.sent_at
@@ -71,6 +71,15 @@ CREATE EXTENSION IF NOT EXISTS pg_net;
 -- =====================================================
 -- MANUAL SETUP REQUIRED
 -- =====================================================
+--
+-- IMPORTANT: Both Edge Functions invoked by cron must be deployed
+-- with --no-verify-jwt so pg_net can call them without a user JWT:
+--
+--   supabase functions deploy dispatch-lenses --no-verify-jwt
+--   supabase functions deploy execute-lens --no-verify-jwt
+--
+-- They authenticate via X-Cron-Secret header instead of JWT.
+-- This matches how generate-summary was deployed.
 --
 -- Run this SQL in the Supabase SQL Editor (Dashboard > SQL Editor):
 --
