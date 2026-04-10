@@ -1,0 +1,15 @@
+- generic [ref=e3]:
+  - heading "Sign in" [level=1] [ref=e4]
+  - generic [ref=e5]:
+    - generic [ref=e6]:
+      - generic [ref=e7]: Email
+      - textbox "Email" [ref=e8]
+    - generic [ref=e9]:
+      - generic [ref=e10]: Password
+      - textbox "Password" [ref=e11]
+    - button "Sign in" [ref=e12] [cursor=pointer]
+    - button "Sign in with magic link" [ref=e13] [cursor=pointer]
+  - generic [ref=e15]:
+    - text: New here?
+    - link "Create an account" [ref=e16] [cursor=pointer]:
+      - /url: /signup
