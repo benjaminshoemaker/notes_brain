@@ -49,7 +49,8 @@ const notificationNativeModuleNames = [
 
 export type NotificationData = {
   summary_id?: string;
-  type?: string;
+  lens_result_id?: string;
+  type?: "daily_summary" | "lens_result";
 };
 
 function loadExpoModulesCore(): ExpoModulesCore | null {

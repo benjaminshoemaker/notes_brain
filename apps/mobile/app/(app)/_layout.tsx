@@ -45,7 +45,7 @@ export default function AppLayout() {
   }, []);
 
   function handleNotificationTap(data: NotificationData) {
-    if (data?.type === "daily_summary") {
+    if (data?.type === "daily_summary" || data?.type === "lens_result") {
       router.push("/(app)/summary");
     }
   }
@@ -110,6 +110,14 @@ export default function AppLayout() {
         options={{
           href: null, // Hide from tab bar
         }}
+      />
+      <Tabs.Screen
+        name="lens-form"
+        options={{ href: null, title: "Lens" }}
+      />
+      <Tabs.Screen
+        name="lens-manage"
+        options={{ href: null, title: "Manage Lenses" }}
       />
     </Tabs>
   );
