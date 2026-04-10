@@ -5,6 +5,14 @@ export type OpenAIChatJsonRequest = {
   prompt: string;
 };
 
+export type OpenAIMarkdownRequest = {
+  fetchFn: typeof fetch;
+  apiKey: string;
+  model: string;
+  systemPrompt: string;
+  userPrompt: string;
+};
+
 export type OpenAIWhisperTranscriptionRequest = {
   fetchFn: typeof fetch;
   apiKey: string;
@@ -220,6 +228,51 @@ export async function callOpenAISummary({
   }
 
   return parseSummaryResult(content);
+}
+
+export async function callOpenAIMarkdown({
+  fetchFn,
+  apiKey,
+  model,
+  systemPrompt,
+  userPrompt
+}: OpenAIMarkdownRequest): Promise<string> {
+  const response = await fetchFn("https://api.openai.com/v1/chat/completions", {
+    method: "POST",
+    headers: {
+      authorization: `Bearer ${apiKey}`,
+      "content-type": "application/json"
+    },
+    body: JSON.stringify({
+      model,
+      messages: [
+        {
+          role: "system",
+          content: systemPrompt
+        },
+        {
+          role: "user",
+          content: userPrompt
+        }
+      ]
+    })
+  });
+
+  if (!response.ok) {
+    const text = await response.text().catch(() => "");
+    throw new Error(`OpenAI request failed: ${response.status} ${text}`.trim());
+  }
+
+  const data = (await response.json()) as {
+    choices?: Array<{ message?: { content?: string | null } }>;
+  };
+
+  const content = data.choices?.[0]?.message?.content ?? "";
+  if (!content) {
+    throw new Error("OpenAI response missing content");
+  }
+
+  return content;
 }
 
 export async function callOpenAIWhisperTranscription({
