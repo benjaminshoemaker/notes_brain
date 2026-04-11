@@ -6,6 +6,9 @@
 -- define their own prompt + schedule + data filter combinations.
 --
 
+-- Ensure uuid_generate_v4 is accessible (may live in extensions schema)
+SET search_path = public, extensions;
+
 -- Lens schedule type
 CREATE TYPE lens_schedule_type AS ENUM ('daily', 'weekly');
 
