@@ -69,8 +69,16 @@ export function useUserSettings() {
       }
       return upsertUserTimezone(userId!, userEmail, timezone);
     },
-    onSuccess: (updatedSettings) => {
+    onSuccess: async (updatedSettings) => {
       queryClient.setQueryData(["user-settings", userId], updatedSettings);
+
+      await supabase
+        .from("lenses")
+        .update({ updated_at: new Date().toISOString() })
+        .eq("user_id", userId!)
+        .eq("is_active", true);
+
+      queryClient.invalidateQueries({ queryKey: ["lenses", userId] });
     }
   });
 

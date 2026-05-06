@@ -1,34 +1,105 @@
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import {
   Alert,
+  Pressable,
   RefreshControl,
-  ScrollView,
+  SectionList,
   StyleSheet,
   Text,
   View,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { useQueryClient } from "@tanstack/react-query";
+import { useNavigation } from "@react-navigation/native";
+import { type Href, useRouter } from "expo-router";
+import type { LensResultWithLens } from "@notesbrain/shared";
 
+import { LensResultCard } from "../../components/LensResultCard";
 import { useAuth } from "../../hooks/useAuth";
-import { useDailySummary } from "../../hooks/useDailySummary";
+import { useLensResults } from "../../hooks/useLensResults";
 import { LoadingSpinner } from "../../components/LoadingSpinner";
-import { SummaryCard } from "../../components/SummaryCard";
 import { testIds } from "../../lib/testIds";
-import { colors } from "../../lib/theme";
+import { colors, radii, shadows, spacing } from "../../lib/theme";
+
+type LensResultSection = {
+  title: string;
+  data: LensResultWithLens[];
+};
+
+const LENS_FORM_ROUTE = "/(app)/lens-form" as Href;
+const LENS_MANAGE_ROUTE = "/(app)/lens-manage" as Href;
+
+function groupResultsByDate(results: LensResultWithLens[]): LensResultSection[] {
+  const groups: Map<string, LensResultWithLens[]> = new Map();
+
+  for (const result of results) {
+    const dateKey = new Date(result.generated_at).toLocaleDateString("en-US", {
+      weekday: "long",
+      month: "long",
+      day: "numeric",
+    });
+    const existing = groups.get(dateKey) ?? [];
+    existing.push(result);
+    groups.set(dateKey, existing);
+  }
+
+  return Array.from(groups.entries()).map(([title, data]) => ({ title, data }));
+}
 
 export default function SummaryScreen() {
   const { user } = useAuth();
-  const { data: summary, isLoading, refetch, isRefetching, error } = useDailySummary(
-    user?.id
-  );
+  const navigation = useNavigation();
+  const router = useRouter();
+  const queryClient = useQueryClient();
+  const { data: results = [], isLoading, isRefetching, refetch, error } = useLensResults(user?.id);
   const [hasShownError, setHasShownError] = useState(false);
+  const sections = groupResultsByDate(results);
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <View style={styles.headerActions}>
+          <Pressable
+            accessibilityLabel="Create lens"
+            accessibilityRole="button"
+            hitSlop={8}
+            onPress={() => {
+              router.push(LENS_FORM_ROUTE);
+            }}
+            style={styles.headerButton}
+          >
+            <Ionicons name="add-circle-outline" size={22} color={colors.text} />
+          </Pressable>
+          <Pressable
+            accessibilityLabel="Manage lenses"
+            accessibilityRole="button"
+            hitSlop={8}
+            onPress={() => {
+              router.push(LENS_MANAGE_ROUTE);
+            }}
+            style={styles.headerButton}
+          >
+            <Ionicons name="settings-outline" size={20} color={colors.text} />
+          </Pressable>
+        </View>
+      ),
+    });
+  }, [navigation, router]);
+
+  async function handleRefresh() {
+    if (!user?.id) {
+      return;
+    }
+
+    await queryClient.invalidateQueries({ queryKey: ["lens-results", user.id] });
+  }
 
   useEffect(() => {
     if (error && !hasShownError) {
       setHasShownError(true);
       Alert.alert(
         "Connection issue",
-        "We couldn't load the summary. Check your connection and try again.",
+        "We couldn't load your insights. Check your connection and try again.",
         [
           {
             text: "Retry",
@@ -46,54 +117,70 @@ export default function SummaryScreen() {
     }
   }, [error, hasShownError, refetch]);
 
-  if (isLoading) {
-    return <LoadingSpinner label="Loading summary..." />;
-  }
-
-  if (!summary) {
-    return (
-      <ScrollView
-        testID={testIds.summary.screen}
-        style={styles.container}
-        contentContainerStyle={styles.centered}
-        refreshControl={
-          <RefreshControl refreshing={isRefetching} onRefresh={refetch} tintColor={colors.accent} />
-        }
-      >
-        <View testID={testIds.summary.emptyState} style={styles.emptyState}>
-          <View style={styles.emptyIconCircle}>
-            <Ionicons name="clipboard-outline" size={36} color={colors.accent} />
-          </View>
-          <Text style={styles.emptyTitle}>No Summary Yet</Text>
-          <Text style={styles.emptyText}>
-            Your daily summary will appear here around 8:00 AM local time.
-          </Text>
-          <Text style={styles.emptyHint}>Pull down to refresh</Text>
-        </View>
-      </ScrollView>
-    );
-  }
-
   return (
-    <ScrollView
-      testID={testIds.summary.screen}
-      style={styles.container}
-      refreshControl={
-        <RefreshControl refreshing={isRefetching} onRefresh={refetch} tintColor={colors.accent} />
-      }
-    >
-      <View style={styles.header}>
-        <Text style={styles.headerDate}>
-          {new Date().toLocaleDateString("en-US", {
-            weekday: "long",
-            month: "long",
-            day: "numeric",
-          })}
-        </Text>
-      </View>
+    <View testID={testIds.summary.screen} style={styles.container}>
+      {isLoading ? (
+        <LoadingSpinner label="Loading insights..." />
+      ) : (
+        <SectionList
+          style={styles.list}
+          sections={sections}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item, section, index }) => {
+            const isFirstCard = sections[0]?.title === section.title && index === 0;
 
-      <SummaryCard testID={testIds.summary.card} content={summary.content} />
-    </ScrollView>
+            return (
+              <View style={styles.cardWrap}>
+                <LensResultCard
+                  result={item}
+                  testID={isFirstCard ? testIds.summary.card : undefined}
+                />
+              </View>
+            );
+          }}
+          renderSectionHeader={({ section }) => (
+            <View style={styles.sectionHeader}>
+              <Text style={styles.sectionTitle}>{section.title}</Text>
+            </View>
+          )}
+          ListEmptyComponent={
+            <View testID={testIds.summary.emptyState} style={styles.emptyState}>
+              <View style={styles.emptyIconCircle}>
+                <Ionicons name="sparkles-outline" size={36} color={colors.accent} />
+              </View>
+              <Text style={styles.emptyTitle}>No Insights Yet</Text>
+              <Text style={styles.emptyText}>
+                Create your first lens to get AI insights from your notes.
+              </Text>
+              <Pressable
+                accessibilityRole="button"
+                onPress={() => {
+                  router.push(LENS_FORM_ROUTE);
+                }}
+                style={styles.emptyButton}
+              >
+                <Text style={styles.emptyButtonText}>Create Lens</Text>
+              </Pressable>
+            </View>
+          }
+          contentContainerStyle={[
+            styles.listContent,
+            sections.length === 0 && styles.emptyListContent,
+          ]}
+          refreshControl={
+            <RefreshControl
+              refreshing={isRefetching}
+              onRefresh={() => {
+                void handleRefresh();
+              }}
+              tintColor={colors.accent}
+            />
+          }
+          showsVerticalScrollIndicator={false}
+          stickySectionHeadersEnabled={false}
+        />
+      )}
+    </View>
   );
 }
 
@@ -102,24 +189,48 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.background,
   },
-  centered: {
+  list: {
     flex: 1,
-    justifyContent: "center",
+    backgroundColor: colors.background,
+  },
+  headerActions: {
+    flexDirection: "row",
     alignItems: "center",
-    padding: 24,
+    gap: spacing.sm,
   },
-  header: {
-    padding: 16,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: colors.border,
+  headerButton: {
+    width: 36,
+    height: 36,
+    borderRadius: radii.pill,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: colors.surfaceRaised,
   },
-  headerDate: {
-    fontSize: 16,
+  listContent: {
+    paddingHorizontal: spacing.lg,
+    paddingTop: spacing.md,
+    paddingBottom: spacing.xl,
+  },
+  emptyListContent: {
+    flexGrow: 1,
+    justifyContent: "center",
+  },
+  sectionHeader: {
+    paddingTop: spacing.md,
+    paddingBottom: spacing.sm,
+  },
+  sectionTitle: {
+    fontSize: 15,
+    fontWeight: "600",
     color: colors.textSecondary,
+  },
+  cardWrap: {
+    marginBottom: spacing.md,
   },
   emptyState: {
     alignItems: "center",
-    gap: 8,
+    gap: spacing.sm,
+    paddingHorizontal: spacing.xl,
   },
   emptyIconCircle: {
     width: 72,
@@ -128,22 +239,35 @@ const styles = StyleSheet.create({
     backgroundColor: colors.accentLight,
     alignItems: "center",
     justifyContent: "center",
-    marginBottom: 8,
+    marginBottom: spacing.sm,
   },
   emptyTitle: {
     fontSize: 22,
     fontWeight: "600",
     color: colors.text,
+    textAlign: "center",
   },
   emptyText: {
     fontSize: 16,
     color: colors.textSecondary,
     textAlign: "center",
     maxWidth: 280,
+    lineHeight: 22,
   },
-  emptyHint: {
-    fontSize: 14,
-    color: colors.textMuted,
-    marginTop: 16,
+  emptyButton: {
+    marginTop: spacing.lg,
+    minWidth: 148,
+    borderRadius: radii.md,
+    paddingHorizontal: spacing.lg,
+    paddingVertical: spacing.md,
+    backgroundColor: colors.accent,
+    alignItems: "center",
+    justifyContent: "center",
+    ...shadows.sm,
+  },
+  emptyButtonText: {
+    fontSize: 15,
+    fontWeight: "600",
+    color: colors.textInverse,
   },
 });

@@ -1,3 +1,8 @@
+/**
+ * @deprecated Use useLensResults from ./useLensResults instead.
+ * This hook is kept for reference during migration. Remove after confirming
+ * all daily summary data has been migrated to lens_results.
+ */
 import { useQuery } from "@tanstack/react-query";
 import type { DailySummary } from "@notesbrain/shared";
 

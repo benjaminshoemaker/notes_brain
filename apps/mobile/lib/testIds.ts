@@ -41,6 +41,19 @@ export const testIds = {
     emptyState: "summary-empty-state",
     card: "summary-card",
   },
+  lens: {
+    form: {
+      screen: "lens-form-screen",
+      nameInput: "lens-form-name",
+      promptInput: "lens-form-prompt",
+      saveButton: "lens-form-save",
+    },
+    manage: {
+      screen: "lens-manage-screen",
+      list: "lens-manage-list",
+    },
+    resultCard: "lens-result-card",
+  },
   settings: {
     screen: "settings-screen",
     timezoneSelect: "settings-timezone-select",

@@ -5,6 +5,7 @@ import type {
   ClassificationStatus,
   DailySummaryContent,
   DevicePlatform,
+  LensScheduleType,
   NoteType
 } from "./types.js";
 
@@ -142,6 +143,82 @@ export type Database = {
         };
         Relationships: [];
       };
+      lenses: {
+        Row: {
+          id: string;
+          user_id: string;
+          name: string;
+          prompt: string;
+          schedule_type: LensScheduleType;
+          schedule_time: string;
+          schedule_day: number | null;
+          lookback_hours: number;
+          categories: string[] | null;
+          is_active: boolean;
+          is_default: boolean;
+          next_run_at: string | null;
+          last_run_at: string | null;
+          consecutive_failures: number;
+          last_error: string | null;
+          last_error_at: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          user_id: string;
+          name: string;
+          prompt: string;
+          schedule_type?: LensScheduleType;
+          schedule_time?: string;
+          schedule_day?: number | null;
+          lookback_hours?: number;
+          categories?: string[] | null;
+          is_active?: boolean;
+          is_default?: boolean;
+          next_run_at?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          name?: string;
+          prompt?: string;
+          schedule_type?: LensScheduleType;
+          schedule_time?: string;
+          schedule_day?: number | null;
+          lookback_hours?: number;
+          categories?: string[] | null;
+          is_active?: boolean;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
+      lens_results: {
+        Row: {
+          id: string;
+          lens_id: string;
+          user_id: string;
+          content: string;
+          notes_analyzed: number;
+          generated_at: string;
+          sent_at: string | null;
+        };
+        Insert: {
+          id?: string;
+          lens_id: string;
+          user_id: string;
+          content: string;
+          notes_analyzed?: number;
+          generated_at?: string;
+          sent_at?: string | null;
+        };
+        Update: {
+          content?: string;
+          notes_analyzed?: number;
+          sent_at?: string | null;
+        };
+        Relationships: [];
+      };
     };
     Views: Record<string, never>;
     Functions: Record<string, never>;
@@ -150,6 +227,7 @@ export type Database = {
       note_type: NoteType;
       classification_status: ClassificationStatus;
       device_platform: DevicePlatform;
+      lens_schedule_type: LensScheduleType;
     };
     CompositeTypes: Record<string, never>;
   };

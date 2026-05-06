@@ -17,9 +17,13 @@ const REQUIRED_ENV_KEYS = [
   "FCM_SERVICE_ACCOUNT_KEY"
 ];
 
+const ALLOWED_TABLES = ["daily_summaries", "lens_results"];
+
 type RequestBody = {
   user_id: string;
-  summary_id: string;
+  result_id?: string;
+  result_table?: string; // "daily_summaries" | "lens_results", defaults to "daily_summaries"
+  summary_id?: string; // deprecated, kept for backward compat
   title: string;
   body: string;
   data?: Record<string, string>;
@@ -65,6 +69,10 @@ function healthResponse(config: RuntimeConfig) {
   );
 }
 
+// INTERNAL-ONLY: This function is called exclusively by other Edge Functions
+// (e.g. execute-lens, generate-summary) using the service role key. It must
+// NOT be exposed to client-side calls. The caller is trusted, so user_id and
+// result_id are accepted without additional ownership verification.
 Deno.serve(async (req) => {
   const requestId = req.headers.get("x-request-id") ?? crypto.randomUUID();
   const logger = createFunctionLogger("send-push", requestId);
@@ -106,11 +114,27 @@ Deno.serve(async (req) => {
     );
   }
 
-  const { user_id, summary_id, title, body: messageBody, data } = body;
+  const { user_id, title, body: messageBody, data } = body;
+  const resultTable = body.result_table ?? "daily_summaries";
+  const resultId = body.result_id ?? body.summary_id;
 
-  if (!user_id || !summary_id || !title || !messageBody) {
+  if (!resultId) {
     return new Response(
-      JSON.stringify({ error: "Missing required fields: user_id, summary_id, title, body" }),
+      JSON.stringify({ error: "Missing result_id" }),
+      { status: 400, headers: { "Content-Type": "application/json" } }
+    );
+  }
+
+  if (!ALLOWED_TABLES.includes(resultTable)) {
+    return new Response(
+      JSON.stringify({ error: "Invalid result_table" }),
+      { status: 400, headers: { "Content-Type": "application/json" } }
+    );
+  }
+
+  if (!user_id || !title || !messageBody) {
+    return new Response(
+      JSON.stringify({ error: "Missing required fields: user_id, result_id, title, body" }),
       { status: 400, headers: { "Content-Type": "application/json" } }
     );
   }
@@ -193,9 +217,9 @@ Deno.serve(async (req) => {
   // Update sent_at if at least one push was sent successfully
   if (tokensSent > 0) {
     const { error: updateError } = await supabase
-      .from("daily_summaries")
+      .from(resultTable)
       .update({ sent_at: new Date().toISOString() })
-      .eq("id", summary_id);
+      .eq("id", resultId);
 
     if (updateError) {
       logger.error("Failed to update sent_at", updateError);

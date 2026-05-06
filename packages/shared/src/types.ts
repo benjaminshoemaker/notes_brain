@@ -57,6 +57,43 @@ export interface DailySummary {
 
 export type DevicePlatform = "android" | "web";
 
+export type LensScheduleType = "daily" | "weekly";
+
+export interface Lens {
+  id: string;
+  user_id: string;
+  name: string;
+  prompt: string;
+  schedule_type: LensScheduleType;
+  schedule_time: string;
+  schedule_day: number | null;
+  lookback_hours: number;
+  categories: string[] | null;
+  is_active: boolean;
+  is_default: boolean;
+  next_run_at: string | null;
+  last_run_at: string | null;
+  consecutive_failures: number;
+  last_error: string | null;
+  last_error_at: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface LensResult {
+  id: string;
+  lens_id: string;
+  user_id: string;
+  content: string;
+  notes_analyzed: number;
+  generated_at: string;
+  sent_at: string | null;
+}
+
+export interface LensResultWithLens extends LensResult {
+  lens: Pick<Lens, "name" | "schedule_type" | "schedule_time" | "schedule_day">;
+}
+
 export interface Device {
   id: string;
   user_id: string;
