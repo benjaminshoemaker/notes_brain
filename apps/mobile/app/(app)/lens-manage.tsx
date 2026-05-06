@@ -15,6 +15,7 @@ import type { Lens } from "@notesbrain/shared";
 import { LoadingSpinner } from "../../components/LoadingSpinner";
 import { useLenses } from "../../hooks/useLenses";
 import { useRunLensNow } from "../../hooks/useRunLensNow";
+import { testIds } from "../../lib/testIds";
 import { colors, radii, shadows, spacing } from "../../lib/theme";
 
 const WEEKDAY_LABELS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
@@ -245,11 +246,14 @@ export default function LensManageScreen() {
   }
 
   function buildLensFormRoute(lensId: string): Href {
-    return `/(app)/lens-form?lensId=${encodeURIComponent(lensId)}` as Href;
+    return {
+      pathname: "/(app)/lens-form",
+      params: { lensId },
+    } as Href;
   }
 
   return (
-    <View style={styles.container}>
+    <View testID={testIds.lens.manage.screen} style={styles.container}>
       <Stack.Screen
         options={{
           title: "Manage Lenses",
@@ -286,6 +290,7 @@ export default function LensManageScreen() {
         </View>
       ) : (
         <FlatList
+          testID={testIds.lens.manage.list}
           data={lenses}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => {

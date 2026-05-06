@@ -116,7 +116,7 @@ export default function LensFormScreen() {
   const [lookbackHours, setLookbackHours] = useState(24);
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [showTimePicker, setShowTimePicker] = useState(false);
-  const [didHydrateEditForm, setDidHydrateEditForm] = useState(false);
+  const [hydratedLensId, setHydratedLensId] = useState<string | null>(null);
 
   const lens = useMemo(
     () => lenses.find((item) => item.id === lensId) ?? null,
@@ -124,7 +124,22 @@ export default function LensFormScreen() {
   );
 
   useEffect(() => {
-    if (!isEditMode || !lens || didHydrateEditForm) {
+    if (!isEditMode) {
+      if (hydratedLensId !== null) {
+        setName("");
+        setPrompt("");
+        setScheduleType("daily");
+        setScheduleTime("08:00");
+        setScheduleDay(1);
+        setLookbackHours(24);
+        setSelectedCategories([]);
+        setHydratedLensId(null);
+      }
+
+      return;
+    }
+
+    if (!lens || hydratedLensId === lens.id) {
       return;
     }
 
@@ -136,8 +151,8 @@ export default function LensFormScreen() {
     setScheduleDay(nextState.scheduleDay);
     setLookbackHours(nextState.lookbackHours);
     setSelectedCategories(nextState.selectedCategories);
-    setDidHydrateEditForm(true);
-  }, [didHydrateEditForm, isEditMode, lens]);
+    setHydratedLensId(lens.id);
+  }, [hydratedLensId, isEditMode, lens]);
 
   const promptLength = prompt.length;
   const promptIsValid = promptLength >= 20 && promptLength <= 2000;
@@ -207,7 +222,7 @@ export default function LensFormScreen() {
         }}
       />
 
-      {isEditMode && isLoading && !didHydrateEditForm ? (
+      {isEditMode && isLoading && !lens ? (
         <LoadingSpinner label="Loading lens..." />
       ) : (
         <ScrollView

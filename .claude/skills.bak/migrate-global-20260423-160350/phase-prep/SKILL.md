@@ -397,7 +397,8 @@ Auto-advance to `/phase-start $1` ONLY if ALL of these are true:
 
 3. **Execute immediately:**
    - Track this command in auto-advance session log
-   - Invoke `/phase-start $1` using the Skill tool
+   - Read `executionMode` from `.claude/settings.local.json`. If `"codex"`, pass `--codex`.
+   - Invoke `/phase-start $1 [--codex]` using the Skill tool
    - Phase-start will continue, and its checkpoint will continue the chain
 
 ### If Auto-Advance Conditions NOT Met

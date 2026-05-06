@@ -19,6 +19,9 @@ config.resolver.nodeModulesPaths = [
   // Ensure Expo's internal `whatwg-url-without-unicode` resolves its compatible
   // `webidl-conversions@5` dependency when hierarchical lookup is disabled.
   path.resolve(monorepoRoot, "node_modules/whatwg-url-without-unicode/node_modules"),
+  // Ensure markdown-it resolves its compatible `entities@2` package rather than
+  // a hoisted `entities@6` that restricts deep JSON subpath imports.
+  path.resolve(monorepoRoot, "node_modules/markdown-it/node_modules"),
   path.resolve(monorepoRoot, "node_modules"),
 ];
 
