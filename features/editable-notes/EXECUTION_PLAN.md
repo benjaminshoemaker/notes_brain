@@ -644,17 +644,17 @@ Run the full automated verification set and, when an emulator or device is avail
 ### Phase 4 Checkpoint
 
 **Automated Checks:**
-- [ ] Full mobile smoke suite passes.
+- [x] Full mobile smoke suite passes.
   - Verify: `cd apps/mobile && npm test -- test/smoke`
-- [ ] Mobile type checking passes.
+- [x] Mobile type checking passes.
   - Verify: `cd apps/mobile && npm run typecheck`
-- [ ] Flow verification artifacts exist and reference setup, driver, assertions, evidence, and teardown.
+- [x] Flow verification artifacts exist and reference setup, driver, assertions, evidence, and teardown.
   - Verify: `rg "setup|driver|assertions|evidence|teardown" tests/e2e/mobile/editable-notes-flow.md features/editable-notes/FLOW_VERIFICATION_EVIDENCE.md`
 
 **Regression Verification:**
-- [ ] Existing capture and Notes screen smoke tests pass after the final flow harness changes.
+- [x] Existing capture and Notes screen smoke tests pass after the final flow harness changes.
   - Verify: `cd apps/mobile && npm test -- test/smoke/capture-screen.test.tsx test/smoke/notes-screen.test.tsx`
-- [ ] The working tree has no unintended schema, category, route, or attachment-metadata changes for editable notes.
+- [x] The working tree has no unintended schema, category, route, or attachment-metadata changes for editable notes.
   - Verify: `git diff --name-only | rg "supabase/migrations|packages/shared/src/constants.ts|attachment|apps/mobile/app/.*/edit" || true`
 
 ---

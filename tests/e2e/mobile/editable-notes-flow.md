@@ -2,6 +2,8 @@
 
 This runbook verifies the seeded editable-notes flow through the mobile UI and Supabase row state.
 
+Coverage map: setup, driver, assertions, evidence, teardown.
+
 ## Setup
 
 1. Start or refresh local Supabase from the repo root.
