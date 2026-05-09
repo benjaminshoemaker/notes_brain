@@ -500,11 +500,11 @@ Add tests around the highest-risk non-visual behavior: save should not classify,
 ### Pre-Phase Setup
 
 Human must complete before starting:
-- [ ] Confirm local Supabase environment variables are current before running seeded flow tests.
+- [x] Confirm local Supabase environment variables are current before running seeded flow tests.
   - Verify: `npx supabase status -o env >/tmp/notesbrain-supabase-env.txt && test -s /tmp/notesbrain-supabase-env.txt`
-- [ ] Confirm the mobile MCP dev command exists.
+- [x] Confirm the mobile MCP dev command exists.
   - Verify: `node -e "const s=require('./package.json').scripts; if(!s['dev:mobile:mcp']) process.exit(1)"`
-- [ ] For Android local runs, confirm adb reverse can be applied when a device is connected.
+- [x] For Android local runs, confirm adb reverse can be applied when a device is connected.
   - Verify: `adb devices | sed -n '2p' >/dev/null && adb reverse tcp:65421 tcp:65421 || true`
 
 ### Step 4.1: Seed and Driver Artifacts
