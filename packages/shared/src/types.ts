@@ -59,6 +59,38 @@ export type DevicePlatform = "android" | "web";
 
 export type LensScheduleType = "daily" | "weekly";
 
+export type LensTemplateAuthorType = "curated" | "community";
+
+export interface LensTemplateSnapshot {
+  template_id: string;
+  version: number;
+  name: string;
+  description: string;
+  category: string;
+  author_type: LensTemplateAuthorType;
+  author_name: string;
+}
+
+export interface LensTemplate {
+  template_id: string;
+  version: number;
+  name: string;
+  description: string;
+  focus: string;
+  prompt: string;
+  schedule_type: LensScheduleType;
+  schedule_time: string;
+  schedule_day: number | null;
+  lookback_hours: number;
+  categories: string[] | null;
+  category: string;
+  author_type: LensTemplateAuthorType;
+  author_name: string;
+  updated_at: string;
+  changelog: string[];
+  example_output?: string;
+}
+
 export interface Lens {
   id: string;
   user_id: string;
@@ -76,6 +108,10 @@ export interface Lens {
   consecutive_failures: number;
   last_error: string | null;
   last_error_at: string | null;
+  source_template_id: string | null;
+  source_template_version: number | null;
+  installed_from_library_at: string | null;
+  template_snapshot: LensTemplateSnapshot | null;
   created_at: string;
   updated_at: string;
 }
@@ -114,4 +150,3 @@ export interface ClassificationResult {
   category: Category;
   confidence: number;
 }
-
