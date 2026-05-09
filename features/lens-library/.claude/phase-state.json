@@ -1,9 +1,9 @@
 {
   "main": {
     "current_phase": 3,
-    "status": "CHECKPOINTED",
+    "status": "IN_PROGRESS",
     "started_at": "2026-05-09T07:50:35Z",
-    "updated_at": "2026-05-09T08:10:34Z",
+    "updated_at": "2026-05-09T08:12:23Z",
     "execution_mode": "default",
     "phases": [
       {
@@ -129,6 +129,23 @@
             "id": "3.2.B",
             "status": "COMPLETE",
             "commit": "613982c"
+          }
+        ],
+        "failures": {
+          "consecutive": 0,
+          "verification_attempts": {},
+          "last_errors": []
+        }
+      },
+      {
+        "phase": 4,
+        "status": "IN_PROGRESS",
+        "started_at": "2026-05-09T08:12:23Z",
+        "tasks": [
+          {
+            "id": "4.1.A",
+            "status": "COMPLETE",
+            "commit": "9bc7235"
           }
         ],
         "failures": {

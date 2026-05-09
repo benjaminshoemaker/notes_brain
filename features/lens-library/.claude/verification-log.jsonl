@@ -15,3 +15,7 @@
 {"timestamp":"2026-05-09T08:10:34Z","scope":"phase-checkpoint","phase":3,"check":"mobile-typecheck","status":"PASS","evidence":"features/lens-library/.claude/verification/phase-3.md"}
 {"timestamp":"2026-05-09T08:10:34Z","scope":"phase-checkpoint","phase":3,"check":"mobile-lint","status":"PASS","evidence":"features/lens-library/.claude/verification/phase-3.md"}
 {"timestamp":"2026-05-09T08:10:34Z","scope":"phase-checkpoint","phase":3,"check":"regression","status":"PASS","evidence":"features/lens-library/.claude/verification/phase-3.md"}
+{"timestamp":"2026-05-09T08:12:23Z","scope":"phase-prep","phase":4,"check":"pre-phase-setup","status":"PASS","evidence":"features/lens-library/EXECUTION_PLAN.md"}
+{"timestamp":"2026-05-09T08:12:23Z","scope":"phase-start","phase":4,"check":"task-4.1.A-static","status":"PASS","evidence":"apps/mobile/test/smoke"}
+{"timestamp":"2026-05-09T08:12:23Z","scope":"phase-start","phase":4,"check":"task-4.1.A-mobile-test","status":"PASS","evidence":"npm run test -w @notesbrain/mobile"}
+{"timestamp":"2026-05-09T08:12:23Z","scope":"phase-start","phase":4,"check":"task-4.1.A-root-test","status":"PASS","evidence":"npm run test:root"}
