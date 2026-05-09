@@ -101,15 +101,15 @@ Create `useUpdateNote` for authenticated Supabase note updates. The hook updates
 **Requirement:** FEATURE_SPEC Acceptance Criteria 5, 6, 9, 10, 11; FEATURE_TECHNICAL_SPEC "Mutation Hook Design"
 
 **Acceptance Criteria:**
-- [ ] (TEST) Successful saves update `content` and/or `category` in the existing cached row without moving the note.
+- [x] (TEST) Successful saves update `content` and/or `category` in the existing cached row without moving the note.
   - Verify: `cd apps/mobile && npm test -- test/smoke/use-update-note.test.ts`
-- [ ] (TEST) Conflict, not-found, unauthenticated, and Supabase failure paths throw typed error codes and leave the notes cache unchanged.
+- [x] (TEST) Conflict, not-found, unauthenticated, and Supabase failure paths throw typed error codes and leave the notes cache unchanged.
   - Verify: `cd apps/mobile && npm test -- test/smoke/use-update-note.test.ts`
-- [ ] (TEST) The mutation payload never includes `classification_status`, `classification_confidence`, or a `classify-note` invocation.
+- [x] (TEST) The mutation payload never includes `classification_status`, `classification_confidence`, or a `classify-note` invocation.
   - Verify: `cd apps/mobile && npm test -- test/smoke/use-update-note.test.ts`
-- [ ] (CODE) The Supabase update filters by `id`, `user_id`, and `updated_at` and selects attachments in the returned row.
+- [x] (CODE) The Supabase update filters by `id`, `user_id`, and `updated_at` and selects attachments in the returned row.
   - Verify: `rg "\\.eq\\(\"id\"|\\.eq\\(\"user_id\"|\\.eq\\(\"updated_at\"|attachments" apps/mobile/hooks/useUpdateNote.ts`
-- [ ] (TYPE) The new hook compiles with existing mobile types.
+- [x] (TYPE) The new hook compiles with existing mobile types.
   - Verify: `cd apps/mobile && npm run typecheck`
 
 **Files to Create:**
