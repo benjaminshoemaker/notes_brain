@@ -47,7 +47,7 @@ describe("lens library screen", () => {
       await Promise.resolve();
     });
 
-    expect(tree.root.findByType("StackScreen").props.options.title).toBe("Browse Lens Library");
+    expect(tree.root.find((node) => String(node.type) === "StackScreen").props.options.title).toBe("Browse Lens Library");
     expect(tree.root.findByProps({ children: "Weekly Project Pulse" })).toBeTruthy();
     expect(tree.root.findByProps({ children: "Installed" })).toBeTruthy();
 

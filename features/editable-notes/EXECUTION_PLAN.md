@@ -62,13 +62,13 @@ Add a small validation helper for note edit drafts and extend centralized mobile
 **Requirement:** FEATURE_SPEC Acceptance Criteria 1, 4, 8, 14; FEATURE_TECHNICAL_SPEC "Test IDs" and "Validation Helper"
 
 **Acceptance Criteria:**
-- [ ] (TEST) Draft validation allows body/category saves, rejects no-change saves, rejects blank editable bodies, and allows category-only saves for null or empty original content.
+- [x] (TEST) Draft validation allows body/category saves, rejects no-change saves, rejects blank editable bodies, and allows category-only saves for null or empty original content.
   - Verify: `cd apps/mobile && npm test -- test/smoke/note-edit-validation.test.ts`
-- [ ] (CODE) `apps/mobile/lib/noteEditValidation.ts` exports a typed validation helper that receives original content/category and draft content/category.
+- [x] (CODE) `apps/mobile/lib/noteEditValidation.ts` exports a typed validation helper that receives original content/category and draft content/category.
   - Verify: `rg "export .*validate.*Note.*Edit|export .*get.*Note.*Edit" apps/mobile/lib/noteEditValidation.ts`
-- [ ] (CODE) `apps/mobile/lib/testIds.ts` exposes `editButton`, `editInput`, `categoryOption`, `saveButton`, `cancelButton`, `editError`, and `editConflict` under `testIds.notes`.
+- [x] (CODE) `apps/mobile/lib/testIds.ts` exposes `editButton`, `editInput`, `categoryOption`, `saveButton`, `cancelButton`, `editError`, and `editConflict` under `testIds.notes`.
   - Verify: `rg "editButton|editInput|categoryOption|saveButton|cancelButton|editError|editConflict" apps/mobile/lib/testIds.ts`
-- [ ] (TYPE) New helper and selectors typecheck with the mobile app.
+- [x] (TYPE) New helper and selectors typecheck with the mobile app.
   - Verify: `cd apps/mobile && npm run typecheck`
 
 **Files to Create:**

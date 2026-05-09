@@ -50,13 +50,15 @@ const SectionList = ({ sections = [], renderItem, renderSectionHeader, ListEmpty
 
   if (children.length === 0 && ListEmptyComponent) {
     const EmptyComponent = ListEmptyComponent as React.ComponentType;
+    const emptyContent = typeof ListEmptyComponent === "function"
+      ? React.createElement(EmptyComponent)
+      : ListEmptyComponent as React.ReactNode;
+
     children.push(
       React.createElement(
         React.Fragment,
         { key: "empty" },
-        typeof ListEmptyComponent === "function"
-          ? React.createElement(EmptyComponent)
-          : ListEmptyComponent
+        emptyContent
       )
     );
   }

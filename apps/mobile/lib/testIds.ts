@@ -40,6 +40,13 @@ export const testIds = {
     filterAll: "notes-filter-all",
     filterCategory: (category: string) => `notes-filter-${category}`,
     card: (noteId: string) => `notes-card-${noteId}`,
+    editButton: (noteId: string) => `notes-edit-${noteId}`,
+    editInput: (noteId: string) => `notes-edit-input-${noteId}`,
+    categoryOption: (noteId: string, category: string) => `notes-edit-category-${noteId}-${category}`,
+    saveButton: (noteId: string) => `notes-edit-save-${noteId}`,
+    cancelButton: (noteId: string) => `notes-edit-cancel-${noteId}`,
+    editError: (noteId: string) => `notes-edit-error-${noteId}`,
+    editConflict: (noteId: string) => `notes-edit-conflict-${noteId}`,
   },
   summary: {
     screen: "summary-screen",
