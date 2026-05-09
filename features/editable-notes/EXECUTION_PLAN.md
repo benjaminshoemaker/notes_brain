@@ -477,17 +477,17 @@ Add tests around the highest-risk non-visual behavior: save should not classify,
 ### Phase 3 Checkpoint
 
 **Automated Checks:**
-- [ ] Full mobile smoke suite passes.
+- [x] Full mobile smoke suite passes.
   - Verify: `cd apps/mobile && npm test -- test/smoke`
-- [ ] Mobile type checking passes.
+- [x] Mobile type checking passes.
   - Verify: `cd apps/mobile && npm run typecheck`
-- [ ] Root test command still passes if configured.
+- [x] Root test command still passes if configured.
   - Verify: `npm test -- --runInBand || npm test`
 
 **Regression Verification:**
-- [ ] Editable notes did not add a route or database migration.
+- [x] Editable notes did not add a route or database migration.
   - Verify: `git diff --name-only | rg "apps/mobile/app/.*/edit|supabase/migrations" || true`
-- [ ] Editable notes did not add new categories.
+- [x] Editable notes did not add new categories.
   - Verify: `git diff -- packages/shared/src/constants.ts apps/mobile | rg "ideas|projects|family|friends|health|admin|uncategorized"`
 
 ---
