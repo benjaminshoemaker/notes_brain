@@ -13,13 +13,13 @@ them.
 ## Current Scope
 
 - `features/lens-library/`: Lens Library execution plan is drafted; next command is `cd features/lens-library && /fresh-start`.
-- `features/editable-notes/`: Technical spec drafted; next command is `/feature-plan editable-notes`.
+- `features/editable-notes/`: Execution plan drafted; next command is `cd features/editable-notes && /fresh-start`.
 
 ## History
 
 | Path | Type | Status | Superseded By | Updated | Notes |
 |------|------|--------|---------------|---------|-------|
 | `features/lens-library/` | feature | active |  | 2026-05-09 | Feature spec, technical spec, flow verification plan, and execution plan drafted |
-| `features/editable-notes/` | feature | active |  | 2026-05-09 | Technical spec and flow verification plan drafted; ready for feature plan |
+| `features/editable-notes/` | feature | active |  | 2026-05-09 | Feature spec, technical spec, flow verification plan, and execution plan drafted |
 | `features/custom-lenses/` | feature | completed |  | 2026-05-05 | All execution-plan checkboxes complete; physical Android push verified |
 | `plans/greenfield/` | greenfield | completed |  | 2026-05-05 | Existing app baseline, not current feature work |
