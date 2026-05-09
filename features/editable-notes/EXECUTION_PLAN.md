@@ -398,15 +398,15 @@ Broaden component/list tests so the accepted mobile behavior is difficult to reg
 **Requirement:** FEATURE_SPEC Acceptance Criteria 2, 3, 4, 5, 6, 7, 8, 9
 
 **Acceptance Criteria:**
-- [ ] (TEST) Text, voice, and file notes with saved content can enter edit mode and save changed body text.
+- [x] (TEST) Text, voice, and file notes with saved content can enter edit mode and save changed body text.
   - Verify: `cd apps/mobile && npm test -- test/smoke/mobile-note-card-edit.test.tsx`
-- [ ] (TEST) Category changes update the card state and the list/category filter behavior reflects the new category.
+- [x] (TEST) Category changes update the card state and the list/category filter behavior reflects the new category.
   - Verify: `cd apps/mobile && npm test -- test/smoke/notes-list-edit.test.tsx`
-- [ ] (TEST) Failed notes with saved text are editable, while pending notes remain non-editable.
+- [x] (TEST) Failed notes with saved text are editable, while pending notes remain non-editable.
   - Verify: `cd apps/mobile && npm test -- test/smoke/mobile-note-card-edit.test.tsx`
-- [ ] (TEST) Voice/file source labels and file attachment count remain visible after the save path returns to read mode.
+- [x] (TEST) Voice/file source labels and file attachment count remain visible after the save path returns to read mode.
   - Verify: `cd apps/mobile && npm test -- test/smoke/mobile-note-card-edit.test.tsx`
-- [ ] (TEST) Save failure and empty-body validation preserve local draft text and selected category.
+- [x] (TEST) Save failure and empty-body validation preserve local draft text and selected category.
   - Verify: `cd apps/mobile && npm test -- test/smoke/mobile-note-card-edit.test.tsx`
 
 **Files to Create:**

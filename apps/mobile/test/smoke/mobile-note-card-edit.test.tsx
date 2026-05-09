@@ -198,6 +198,38 @@ describe("MobileNoteCard edit state", () => {
     expect(voiceTree.root.findByProps({ accessibilityLabel: "Voice note" })).toBeTruthy();
   });
 
+  it("saves changed body text for text, voice, and file notes with saved content", async () => {
+    const notes = [
+      makeNote({ id: "text-note", type: "text", content: "Text body" }),
+      makeNote({ id: "voice-note", type: "voice", content: "Voice body" }),
+      makeNote({ id: "file-note", type: "file", content: "File body" }),
+    ];
+
+    for (const note of notes) {
+      const onSaveEdit = vi.fn().mockResolvedValue(undefined);
+      let tree!: ReactTestRenderer;
+
+      await act(async () => {
+        tree = create(<CardHarness initialNote={note} onSaveEdit={onSaveEdit} />);
+        await Promise.resolve();
+      });
+
+      await openEditor(tree, note.id);
+      await act(async () => {
+        findByTestId(tree, testIds.notes.editInput(note.id)).props.onChangeText(`${note.type} edited body`);
+        await Promise.resolve();
+      });
+      await pressSave(tree, note.id);
+
+      expect(onSaveEdit).toHaveBeenCalledWith({
+        id: note.id,
+        content: `${note.type} edited body`,
+        expectedUpdatedAt: note.updated_at,
+      });
+      expect(textContent(tree)).toContain(`${note.type} edited body`);
+    }
+  });
+
   it("shows empty-body validation and disables Save for editable notes", async () => {
     const note = makeNote({});
     const onSaveEdit = vi.fn();
@@ -299,11 +331,15 @@ describe("MobileNoteCard edit state", () => {
 
     await act(async () => {
       findByTestId(tree, testIds.notes.editInput(note.id)).props.onChangeText("Keep this draft");
+      findByTestId(tree, testIds.notes.categoryOption(note.id, "admin")).props.onPress();
       await Promise.resolve();
     });
     await pressSave(tree, note.id);
 
     expect(findByTestId(tree, testIds.notes.editInput(note.id)).props.value).toBe("Keep this draft");
+    expect(findByTestId(tree, testIds.notes.categoryOption(note.id, "admin")).props.accessibilityState).toEqual({
+      selected: true,
+    });
     expect(textContent(tree)).toContain("Couldn't save changes");
   });
 

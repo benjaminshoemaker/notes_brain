@@ -136,4 +136,48 @@ describe("NotesList edit coordination", () => {
 
     expect(tree.root.find((node) => String(node.type) === "FlatList").props.refreshControl).toBeTruthy();
   });
+
+  it("reflects category changes when the notes array updates", async () => {
+    let tree!: ReactTestRenderer;
+
+    await act(async () => {
+      tree = create(
+        <NotesList
+          notes={notes}
+          isLoading={false}
+          isRefetching={false}
+          onRefresh={vi.fn()}
+          selectedCategory="projects"
+          activeEditState={null}
+          onStartEdit={vi.fn()}
+          onCancelEdit={vi.fn()}
+          onSaveEdit={vi.fn()}
+        />
+      );
+      await Promise.resolve();
+    });
+
+    expect(textContent(tree)).not.toContain("note-1:false:false:clean");
+    expect(textContent(tree)).toContain("note-2:false:false:clean");
+
+    await act(async () => {
+      tree.update(
+        <NotesList
+          notes={[{ ...notes[0], category: "projects" }, notes[1]]}
+          isLoading={false}
+          isRefetching={false}
+          onRefresh={vi.fn()}
+          selectedCategory="projects"
+          activeEditState={null}
+          onStartEdit={vi.fn()}
+          onCancelEdit={vi.fn()}
+          onSaveEdit={vi.fn()}
+        />
+      );
+      await Promise.resolve();
+    });
+
+    expect(textContent(tree)).toContain("note-1:false:false:clean");
+    expect(textContent(tree)).toContain("note-2:false:false:clean");
+  });
 });
