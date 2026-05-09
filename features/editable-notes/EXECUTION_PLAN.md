@@ -319,17 +319,17 @@ Complete the edge-state behavior inside the inline editor. Pending notes should 
 **Requirement:** FEATURE_SPEC Acceptance Criteria 8, 9, 12, 13, 14; FEATURE_TECHNICAL_SPEC "UI Component Design"
 
 **Acceptance Criteria:**
-- [ ] (TEST) Editable notes with blank draft body show inline validation and keep Save disabled until valid.
+- [x] (TEST) Editable notes with blank draft body show inline validation and keep Save disabled until valid.
   - Verify: `cd apps/mobile && npm test -- test/smoke/mobile-note-card-edit.test.tsx`
-- [ ] (TEST) Null or empty-content notes display body-unavailable state and allow category-only saves when the category changes.
+- [x] (TEST) Null or empty-content notes display body-unavailable state and allow category-only saves when the category changes.
   - Verify: `cd apps/mobile && npm test -- test/smoke/mobile-note-card-edit.test.tsx`
-- [ ] (TEST) Pending notes expose a disabled edit control with disabled accessibility state and do not enter edit mode when pressed.
+- [x] (TEST) Pending notes expose a disabled edit control with disabled accessibility state and do not enter edit mode when pressed.
   - Verify: `cd apps/mobile && npm test -- test/smoke/mobile-note-card-edit.test.tsx`
-- [ ] (TEST) Save failure keeps the draft visible, shows an inline error, and allows retry or cancel.
+- [x] (TEST) Save failure keeps the draft visible, shows an inline error, and allows retry or cancel.
   - Verify: `cd apps/mobile && npm test -- test/smoke/mobile-note-card-edit.test.tsx`
-- [ ] (TEST) Remote updated/deleted states show inline messages, preserve the draft, disable Save, and require Cancel to reload or clear the card.
+- [x] (TEST) Remote updated/deleted states show inline messages, preserve the draft, disable Save, and require Cancel to reload or clear the card.
   - Verify: `cd apps/mobile && npm test -- test/smoke/mobile-note-card-edit.test.tsx`
-- [ ] (CODE) Edit, Save, Cancel, input, category option, disabled, validation, and conflict controls include accessibility labels/states.
+- [x] (CODE) Edit, Save, Cancel, input, category option, disabled, validation, and conflict controls include accessibility labels/states.
   - Verify: `rg "accessibilityLabel|accessibilityState|accessibilityRole" apps/mobile/components/MobileNoteCard.tsx`
 
 **Files to Create:**

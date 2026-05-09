@@ -265,6 +265,26 @@ describe("MobileNoteCard edit state", () => {
     expect(onStartEdit).not.toHaveBeenCalled();
   });
 
+  it("allows failed notes with saved text to enter edit mode", async () => {
+    const note = makeNote({
+      classification_status: "failed",
+      content: "Recovered transcript",
+    });
+    let tree!: ReactTestRenderer;
+
+    await act(async () => {
+      tree = create(<CardHarness initialNote={note} onSaveEdit={vi.fn()} />);
+      await Promise.resolve();
+    });
+
+    const editButton = findByTestId(tree, testIds.notes.editButton(note.id));
+    expect(editButton.props.disabled).toBe(false);
+
+    await openEditor(tree, note.id);
+
+    expect(findByTestId(tree, testIds.notes.editInput(note.id)).props.value).toBe("Recovered transcript");
+  });
+
   it("preserves draft and shows an inline error after save failure", async () => {
     const note = makeNote({});
     const onSaveEdit = vi.fn().mockRejectedValue(new Error("failed"));
