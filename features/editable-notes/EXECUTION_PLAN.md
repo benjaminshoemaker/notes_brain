@@ -356,17 +356,17 @@ Complete the edge-state behavior inside the inline editor. Pending notes should 
 ### Phase 2 Checkpoint
 
 **Automated Checks:**
-- [ ] Mobile card/list/screen edit tests pass.
+- [x] Mobile card/list/screen edit tests pass.
   - Verify: `cd apps/mobile && npm test -- test/smoke/mobile-note-card-edit.test.tsx test/smoke/notes-list-edit.test.tsx test/smoke/notes-screen-edit-state.test.tsx`
-- [ ] Mobile type checking passes.
+- [x] Mobile type checking passes.
   - Verify: `cd apps/mobile && npm run typecheck`
-- [ ] Existing Notes screen smoke test still passes.
+- [x] Existing Notes screen smoke test still passes.
   - Verify: `cd apps/mobile && npm test -- test/smoke/notes-screen.test.tsx`
 
 **Regression Verification:**
-- [ ] Capture screen smoke test still passes after shared note card/test setup changes.
+- [x] Capture screen smoke test still passes after shared note card/test setup changes.
   - Verify: `cd apps/mobile && npm test -- test/smoke/capture-screen.test.tsx`
-- [ ] Mobile UI changes use theme tokens rather than hardcoded Warm Ink colors in edited components.
+- [x] Mobile UI changes use theme tokens rather than hardcoded Warm Ink colors in edited components.
   - Verify: `rg "#FAF8F5|#4F46E5|#1C1917|#57534E|#A8A29E" apps/mobile/components/MobileNoteCard.tsx apps/mobile/components/NotesList.tsx apps/mobile/app/\\(app\\)/notes.tsx`
 
 ---
