@@ -63,11 +63,11 @@
 
 ### Pre-Phase Setup
 
-- [ ] (CODE) Supabase migration directory is present.
+- [x] (CODE) Supabase migration directory is present.
   - Verify: `test -d supabase/migrations`
-- [ ] (CODE) Shared package is available for type updates.
+- [x] (CODE) Shared package is available for type updates.
   - Verify: `test -f packages/shared/src/types.ts && test -f packages/shared/src/supabase.ts`
-- [ ] (CODE) Existing custom-lens migration exists for trigger/backfill reference.
+- [x] (CODE) Existing custom-lens migration exists for trigger/backfill reference.
   - Verify: `test -f supabase/migrations/00006_custom_lenses.sql`
 
 ### Step 1.1: Database Migration
@@ -84,15 +84,15 @@ Create `00008_lens_library.sql` to add nullable source metadata columns to `lens
 **Requirement:** FEATURE_TECHNICAL_SPEC.md > Data Model Changes; FEATURE_TECHNICAL_SPEC.md > Morning Briefing Backfill
 
 **Acceptance Criteria:**
-- [ ] (CODE) Migration adds `source_template_id`, `source_template_version`, `installed_from_library_at`, and `template_snapshot` to `lenses`.
+- [x] (CODE) Migration adds `source_template_id`, `source_template_version`, `installed_from_library_at`, and `template_snapshot` to `lenses`.
   - Verify: `grep -q "ADD COLUMN source_template_id" supabase/migrations/00008_lens_library.sql && grep -q "ADD COLUMN source_template_version" supabase/migrations/00008_lens_library.sql && grep -q "ADD COLUMN installed_from_library_at" supabase/migrations/00008_lens_library.sql && grep -q "ADD COLUMN template_snapshot" supabase/migrations/00008_lens_library.sql`
-- [ ] (CODE) Migration creates `idx_lenses_source_template` on `(user_id, source_template_id)` with a non-null source-template predicate.
+- [x] (CODE) Migration creates `idx_lenses_source_template` on `(user_id, source_template_id)` with a non-null source-template predicate.
   - Verify: `grep -q "idx_lenses_source_template" supabase/migrations/00008_lens_library.sql && grep -q "source_template_id IS NOT NULL" supabase/migrations/00008_lens_library.sql`
-- [ ] (CODE) Migration backfills only existing default Morning Briefing rows with `source_template_id = 'morning-briefing'`.
+- [x] (CODE) Migration backfills only existing default Morning Briefing rows with `source_template_id = 'morning-briefing'`.
   - Verify: `grep -q "source_template_id = 'morning-briefing'" supabase/migrations/00008_lens_library.sql && grep -q "is_default = true" supabase/migrations/00008_lens_library.sql && grep -q "name = 'Morning Briefing'" supabase/migrations/00008_lens_library.sql`
-- [ ] (CODE) Migration replaces `create_default_lens()` and inserts new Morning Briefing rows with source metadata.
+- [x] (CODE) Migration replaces `create_default_lens()` and inserts new Morning Briefing rows with source metadata.
   - Verify: `grep -q "CREATE OR REPLACE FUNCTION create_default_lens" supabase/migrations/00008_lens_library.sql && grep -q "source_template_version" supabase/migrations/00008_lens_library.sql`
-- [ ] (CODE) Rollback SQL comments or statements cover dropping the index and metadata columns.
+- [x] (CODE) Rollback SQL comments or statements cover dropping the index and metadata columns.
   - Verify: `grep -q "DROP INDEX IF EXISTS idx_lenses_source_template" supabase/migrations/00008_lens_library.sql && grep -q "DROP COLUMN IF EXISTS source_template_id" supabase/migrations/00008_lens_library.sql`
 
 **Files to Create:**
@@ -123,15 +123,15 @@ Add a root `node --test` contract test that prevents schema/type drift for the L
 **Requirement:** FEATURE_TECHNICAL_SPEC.md > Testing Plan
 
 **Acceptance Criteria:**
-- [ ] (TEST) Root test file exists for Lens Library migration contracts.
+- [x] (TEST) Root test file exists for Lens Library migration contracts.
   - Verify: `test -f tests/task-lens-library-metadata.test.js`
-- [ ] (TEST) Test asserts all four metadata columns exist in `00008_lens_library.sql`.
+- [x] (TEST) Test asserts all four metadata columns exist in `00008_lens_library.sql`.
   - Verify: `grep -q "source_template_id" tests/task-lens-library-metadata.test.js && grep -q "template_snapshot" tests/task-lens-library-metadata.test.js`
-- [ ] (TEST) Test asserts the migration backfills default Morning Briefing with `morning-briefing`.
+- [x] (TEST) Test asserts the migration backfills default Morning Briefing with `morning-briefing`.
   - Verify: `grep -q "morning-briefing" tests/task-lens-library-metadata.test.js && grep -q "is_default" tests/task-lens-library-metadata.test.js`
-- [ ] (TEST) Test asserts the migration updates `create_default_lens()`.
+- [x] (TEST) Test asserts the migration updates `create_default_lens()`.
   - Verify: `grep -q "create_default_lens" tests/task-lens-library-metadata.test.js`
-- [ ] (TEST) Root tests pass.
+- [x] (TEST) Root tests pass.
   - Verify: `npm run test:root`
 
 **Files to Create:**
@@ -168,13 +168,13 @@ Update shared TypeScript types to represent installed source metadata and bundle
 **Requirement:** FEATURE_TECHNICAL_SPEC.md > Update Shared Types
 
 **Acceptance Criteria:**
-- [ ] (CODE) `Lens` includes `source_template_id`, `source_template_version`, `installed_from_library_at`, and `template_snapshot`.
+- [x] (CODE) `Lens` includes `source_template_id`, `source_template_version`, `installed_from_library_at`, and `template_snapshot`.
   - Verify: `grep -q "source_template_id" packages/shared/src/types.ts && grep -q "installed_from_library_at" packages/shared/src/types.ts && grep -q "template_snapshot" packages/shared/src/types.ts`
-- [ ] (CODE) `LensTemplate`, `LensTemplateSnapshot`, and `LensTemplateAuthorType` are exported from `packages/shared/src/types.ts`.
+- [x] (CODE) `LensTemplate`, `LensTemplateSnapshot`, and `LensTemplateAuthorType` are exported from `packages/shared/src/types.ts`.
   - Verify: `grep -q "export interface LensTemplate" packages/shared/src/types.ts && grep -q "export interface LensTemplateSnapshot" packages/shared/src/types.ts && grep -q "export type LensTemplateAuthorType" packages/shared/src/types.ts`
-- [ ] (CODE) `packages/shared/src/index.ts` exports the new template types.
+- [x] (CODE) `packages/shared/src/index.ts` exports the new template types.
   - Verify: `grep -q "LensTemplate" packages/shared/src/index.ts && grep -q "LensTemplateSnapshot" packages/shared/src/index.ts`
-- [ ] (TYPE) Shared package typecheck passes.
+- [x] (TYPE) Shared package typecheck passes.
   - Verify: `npm run typecheck -w @notesbrain/shared`
 
 **Files to Create:**
@@ -206,15 +206,15 @@ Update the manual `Database` type for the `lenses` table so row, insert, and upd
 **Requirement:** FEATURE_TECHNICAL_SPEC.md > Update Shared Types
 
 **Acceptance Criteria:**
-- [ ] (CODE) `lenses.Row` includes all four source metadata columns.
+- [x] (CODE) `lenses.Row` includes all four source metadata columns.
   - Verify: `grep -A35 "lenses:" packages/shared/src/supabase.ts | grep -q "source_template_id" && grep -A35 "lenses:" packages/shared/src/supabase.ts | grep -q "template_snapshot"`
-- [ ] (CODE) `lenses.Insert` includes optional source metadata columns.
+- [x] (CODE) `lenses.Insert` includes optional source metadata columns.
   - Verify: `grep -A70 "Insert:" packages/shared/src/supabase.ts | grep -q "source_template_version" && grep -A70 "Insert:" packages/shared/src/supabase.ts | grep -q "installed_from_library_at"`
-- [ ] (CODE) `lenses.Update` includes source metadata only if needed for future migration/admin changes.
+- [x] (CODE) `lenses.Update` includes source metadata only if needed for future migration/admin changes.
   - Verify: `grep -A95 "Update:" packages/shared/src/supabase.ts | grep -q "source_template_id"`
-- [ ] (TEST) Root metadata test asserts shared type/schema alignment.
+- [x] (TEST) Root metadata test asserts shared type/schema alignment.
   - Verify: `npm run test:root`
-- [ ] (TYPE) Shared package typecheck passes.
+- [x] (TYPE) Shared package typecheck passes.
   - Verify: `npm run typecheck -w @notesbrain/shared`
 
 **Files to Create:**
@@ -241,17 +241,17 @@ Update the manual `Database` type for the `lenses` table so row, insert, and upd
 ### Phase 1 Checkpoint
 
 **Automated Checks:**
-- [ ] (TEST) Metadata migration contract tests pass.
+- [x] (TEST) Metadata migration contract tests pass.
   - Verify: `npm run test:root`
-- [ ] (TYPE) Shared package typecheck passes.
+- [x] (TYPE) Shared package typecheck passes.
   - Verify: `npm run typecheck -w @notesbrain/shared`
-- [ ] (CODE) Migration and shared type files contain the same metadata field names.
+- [x] (CODE) Migration and shared type files contain the same metadata field names.
   - Verify: `for f in source_template_id source_template_version installed_from_library_at template_snapshot; do grep -q "$f" supabase/migrations/00008_lens_library.sql && grep -q "$f" packages/shared/src/types.ts && grep -q "$f" packages/shared/src/supabase.ts || exit 1; done`
 
 **Regression Verification:**
-- [ ] (CODE) Existing custom lens migration remains present and unchanged in filename.
+- [x] (CODE) Existing custom lens migration remains present and unchanged in filename.
   - Verify: `test -f supabase/migrations/00006_custom_lenses.sql`
-- [ ] (CODE) Existing lens execution function still selects installed lens prompt/schedule/filter fields.
+- [x] (CODE) Existing lens execution function still selects installed lens prompt/schedule/filter fields.
   - Verify: `grep -q "prompt, schedule_type, schedule_time, schedule_day, lookback_hours, categories" supabase/functions/execute-lens/index.ts`
 
 ---
