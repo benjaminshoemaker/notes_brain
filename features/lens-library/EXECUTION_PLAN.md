@@ -745,13 +745,13 @@ Add a concise verification note for the agent-runnable mobile flow, then run the
 **Requirement:** FLOW_VERIFICATION_PLAN.md > Driver; FLOW_VERIFICATION_PLAN.md > Evidence; FLOW_VERIFICATION_PLAN.md > Teardown / Rerun
 
 **Acceptance Criteria:**
-- [ ] (CODE) Feature verification note exists with driver, assertions, evidence, and teardown commands.
+- [x] (CODE) Feature verification note exists with driver, assertions, evidence, and teardown commands.
   - Verify: `test -f features/lens-library/VERIFICATION_NOTES.md && grep -q "npm run dev:mobile:mcp" features/lens-library/VERIFICATION_NOTES.md && grep -q "Teardown" features/lens-library/VERIFICATION_NOTES.md`
-- [ ] (CODE) Verification note includes the exact user flow from Summary `+` through edit form.
+- [x] (CODE) Verification note includes the exact user flow from Summary `+` through edit form.
   - Verify: `grep -q "Browse Lens Library" features/lens-library/VERIFICATION_NOTES.md && grep -q "Add to My Lenses" features/lens-library/VERIFICATION_NOTES.md && grep -q "lens-form" features/lens-library/VERIFICATION_NOTES.md`
-- [ ] (CODE) Verification note records expected evidence artifacts or paths for screenshots/SQL output.
+- [x] (CODE) Verification note records expected evidence artifacts or paths for screenshots/SQL output.
   - Verify: `grep -q "screenshots" features/lens-library/VERIFICATION_NOTES.md && grep -q "source_template_id" features/lens-library/VERIFICATION_NOTES.md`
-- [ ] (BROWSER:DOM) Emulator flow shows `Create your own` and `Browse Lens Library` after tapping Summary `+`.
+- [x] (BROWSER:DOM) Emulator flow shows `Create your own` and `Browse Lens Library` after tapping Summary `+`.
   - Verify: platform=`ios|android`, route=`Summary tab`, selector=`text=Browse Lens Library`, expect=`visible`
 - [ ] (BROWSER:DOM) Emulator flow shows installed lens editable in the existing lens form after `Add to My Lenses`.
   - Verify: platform=`ios|android`, route=`Manage Lenses -> Edit installed lens`, selector=`lens-form-screen`, expect=`visible`
