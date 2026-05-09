@@ -263,11 +263,11 @@ Update the manual `Database` type for the `lenses` table so row, insert, and upd
 
 ### Pre-Phase Setup
 
-- [ ] (CODE) Mobile app source directories exist.
+- [x] (CODE) Mobile app source directories exist.
   - Verify: `test -d apps/mobile/lib && test -d apps/mobile/hooks`
-- [ ] (CODE) Existing lens CRUD hook exists.
+- [x] (CODE) Existing lens CRUD hook exists.
   - Verify: `test -f apps/mobile/hooks/useLenses.ts`
-- [ ] (CODE) Existing mobile test setup exists.
+- [x] (CODE) Existing mobile test setup exists.
   - Verify: `test -f apps/mobile/test/setup.ts`
 
 ### Step 2.1: Curated Catalog
@@ -284,15 +284,15 @@ Create `apps/mobile/lib/lensLibrary.ts` with the curated v1 seed templates and h
 **Requirement:** FEATURE_SPEC.md > Initial Library Seeds; FEATURE_TECHNICAL_SPEC.md > Curated Template Storage
 
 **Acceptance Criteria:**
-- [ ] (CODE) `lensLibrary.ts` exports a typed curated template array.
+- [x] (CODE) `lensLibrary.ts` exports a typed curated template array.
   - Verify: `grep -q "LensTemplate" apps/mobile/lib/lensLibrary.ts && grep -q "export const" apps/mobile/lib/lensLibrary.ts`
-- [ ] (CODE) Catalog includes all ten initial seed lens names from the feature spec.
+- [x] (CODE) Catalog includes all ten initial seed lens names from the feature spec.
   - Verify: `for name in "Morning Briefing" "Tomorrow Planner" "Weekly Project Pulse" "Health Pattern Check" "Relationship Reminders" "Errands & Admin Sweep" "Idea Incubator" "Decision Log" "Friction Finder" "Gratitude & Wins"; do grep -q "$name" apps/mobile/lib/lensLibrary.ts || exit 1; done`
-- [ ] (CODE) `morning-briefing` template uses `version: 1` and stable `template_id`.
+- [x] (CODE) `morning-briefing` template uses `version: 1` and stable `template_id`.
   - Verify: `grep -q "morning-briefing" apps/mobile/lib/lensLibrary.ts && grep -q "version: 1" apps/mobile/lib/lensLibrary.ts`
-- [ ] (CODE) Helper exports exist for template lookup, install input creation, and snapshot creation.
+- [x] (CODE) Helper exports exist for template lookup, install input creation, and snapshot creation.
   - Verify: `grep -q "getLensTemplateById" apps/mobile/lib/lensLibrary.ts && grep -q "createLensInputFromTemplate" apps/mobile/lib/lensLibrary.ts && grep -q "createTemplateSnapshot" apps/mobile/lib/lensLibrary.ts`
-- [ ] (TYPE) Mobile package typecheck passes with the catalog.
+- [x] (TYPE) Mobile package typecheck passes with the catalog.
   - Verify: `npm run typecheck -w @notesbrain/mobile`
 
 **Files to Create:**
@@ -323,15 +323,15 @@ Add mobile tests that validate the bundled catalog shape, template IDs, prompt l
 **Requirement:** FEATURE_TECHNICAL_SPEC.md > Testing Plan
 
 **Acceptance Criteria:**
-- [ ] (TEST) Mobile catalog test file exists.
+- [x] (TEST) Mobile catalog test file exists.
   - Verify: `test -f apps/mobile/test/smoke/lens-library-catalog.test.ts`
-- [ ] (TEST) Test asserts every template prompt is between 20 and 2000 characters.
+- [x] (TEST) Test asserts every template prompt is between 20 and 2000 characters.
   - Verify: `grep -q "2000" apps/mobile/test/smoke/lens-library-catalog.test.ts && grep -q "20" apps/mobile/test/smoke/lens-library-catalog.test.ts`
-- [ ] (TEST) Test asserts template IDs are unique.
+- [x] (TEST) Test asserts template IDs are unique.
   - Verify: `grep -q "template_id" apps/mobile/test/smoke/lens-library-catalog.test.ts && grep -q "Set" apps/mobile/test/smoke/lens-library-catalog.test.ts`
-- [ ] (TEST) Test asserts `createLensInputFromTemplate` includes source metadata and copied prompt/schedule/filter fields.
+- [x] (TEST) Test asserts `createLensInputFromTemplate` includes source metadata and copied prompt/schedule/filter fields.
   - Verify: `grep -q "createLensInputFromTemplate" apps/mobile/test/smoke/lens-library-catalog.test.ts && grep -q "source_template_id" apps/mobile/test/smoke/lens-library-catalog.test.ts`
-- [ ] (TEST) Mobile tests pass.
+- [x] (TEST) Mobile tests pass.
   - Verify: `npm run test -w @notesbrain/mobile`
 
 **Files to Create:**
@@ -368,15 +368,15 @@ Update `useLenses` so library installs can create normal user-owned lens rows wi
 **Requirement:** FEATURE_TECHNICAL_SPEC.md > Extend `useLenses`; FEATURE_TECHNICAL_SPEC.md > Editing Installed Lenses
 
 **Acceptance Criteria:**
-- [ ] (CODE) `CreateLensInput` is exported from `useLenses.ts`.
+- [x] (CODE) `CreateLensInput` is exported from `useLenses.ts`.
   - Verify: `grep -q "export type CreateLensInput" apps/mobile/hooks/useLenses.ts`
-- [ ] (CODE) `CreateLensInput` includes all source metadata fields.
+- [x] (CODE) `CreateLensInput` includes all source metadata fields.
   - Verify: `grep -q "source_template_id" apps/mobile/hooks/useLenses.ts && grep -q "source_template_version" apps/mobile/hooks/useLenses.ts && grep -q "template_snapshot" apps/mobile/hooks/useLenses.ts`
-- [ ] (CODE) `createLens` insert payload writes source metadata fields.
+- [x] (CODE) `createLens` insert payload writes source metadata fields.
   - Verify: `grep -A25 ".insert" apps/mobile/hooks/useLenses.ts | grep -q "source_template_id" && grep -A25 ".insert" apps/mobile/hooks/useLenses.ts | grep -q "template_snapshot"`
-- [ ] (CODE) `UpdateLensInput` remains restricted to user-editable fields and `is_active`, not template metadata.
+- [x] (CODE) `UpdateLensInput` remains restricted to user-editable fields and `is_active`, not template metadata.
   - Verify: `grep -A12 "type UpdateLensInput" apps/mobile/hooks/useLenses.ts | grep -q "is_active" && ! grep -A12 "type UpdateLensInput" apps/mobile/hooks/useLenses.ts | grep -q "source_template_id"`
-- [ ] (TYPE) Mobile package typecheck passes.
+- [x] (TYPE) Mobile package typecheck passes.
   - Verify: `npm run typecheck -w @notesbrain/mobile`
 
 **Files to Create:**
@@ -406,15 +406,15 @@ Create `useLensLibrary` to combine bundled templates with installed user lenses,
 **Requirement:** FEATURE_TECHNICAL_SPEC.md > Add `useLensLibrary`; FLOW_VERIFICATION_PLAN.md > Assertions
 
 **Acceptance Criteria:**
-- [ ] (CODE) `apps/mobile/hooks/useLensLibrary.ts` exports `useLensLibrary`.
+- [x] (CODE) `apps/mobile/hooks/useLensLibrary.ts` exports `useLensLibrary`.
   - Verify: `test -f apps/mobile/hooks/useLensLibrary.ts && grep -q "export function useLensLibrary" apps/mobile/hooks/useLensLibrary.ts`
-- [ ] (CODE) Hook derives `Installed` from matching `source_template_id` and current `source_template_version`.
+- [x] (CODE) Hook derives `Installed` from matching `source_template_id` and current `source_template_version`.
   - Verify: `grep -q "source_template_id" apps/mobile/hooks/useLensLibrary.ts && grep -q "source_template_version" apps/mobile/hooks/useLensLibrary.ts && grep -q "Installed" apps/mobile/hooks/useLensLibrary.ts`
-- [ ] (CODE) Hook exposes install behavior that calls the existing `create` mutation with `createLensInputFromTemplate`.
+- [x] (CODE) Hook exposes install behavior that calls the existing `create` mutation with `createLensInputFromTemplate`.
   - Verify: `grep -q "createLensInputFromTemplate" apps/mobile/hooks/useLensLibrary.ts && grep -q "create.mutateAsync" apps/mobile/hooks/useLensLibrary.ts`
-- [ ] (TEST) Mobile tests cover installed-state derivation including Morning Briefing metadata.
+- [x] (TEST) Mobile tests cover installed-state derivation including Morning Briefing metadata.
   - Verify: `grep -q "morning-briefing" apps/mobile/test/smoke/lens-library-catalog.test.ts && npm run test -w @notesbrain/mobile`
-- [ ] (TYPE) Mobile package typecheck passes.
+- [x] (TYPE) Mobile package typecheck passes.
   - Verify: `npm run typecheck -w @notesbrain/mobile`
 
 **Files to Create:**
@@ -440,17 +440,17 @@ Create `useLensLibrary` to combine bundled templates with installed user lenses,
 ### Phase 2 Checkpoint
 
 **Automated Checks:**
-- [ ] (TEST) Mobile catalog and hook tests pass.
+- [x] (TEST) Mobile catalog and hook tests pass.
   - Verify: `npm run test -w @notesbrain/mobile`
-- [ ] (TYPE) Mobile package typecheck passes.
+- [x] (TYPE) Mobile package typecheck passes.
   - Verify: `npm run typecheck -w @notesbrain/mobile`
-- [ ] (TEST) Root metadata tests still pass.
+- [x] (TEST) Root metadata tests still pass.
   - Verify: `npm run test:root`
 
 **Regression Verification:**
-- [ ] (CODE) Existing `useLenses` fetch/update/delete/toggle functions still exist.
+- [x] (CODE) Existing `useLenses` fetch/update/delete/toggle functions still exist.
   - Verify: `grep -q "function fetchLenses" apps/mobile/hooks/useLenses.ts && grep -q "function updateLens" apps/mobile/hooks/useLenses.ts && grep -q "function deleteLens" apps/mobile/hooks/useLenses.ts && grep -q "function toggleLensActive" apps/mobile/hooks/useLenses.ts`
-- [ ] (CODE) `execute-lens` still reads installed lens fields only.
+- [x] (CODE) `execute-lens` still reads installed lens fields only.
   - Verify: `grep -q "lens.prompt" supabase/functions/execute-lens/index.ts && ! grep -q "lensLibrary" supabase/functions/execute-lens/index.ts`
 
 ---
