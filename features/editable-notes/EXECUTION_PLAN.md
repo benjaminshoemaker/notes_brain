@@ -521,15 +521,15 @@ Create a small local Supabase seed/cleanup script for the flow plan's test user 
 **Requirement:** FLOW_VERIFICATION_PLAN "Setup/State" and "Teardown/Rerun"
 
 **Acceptance Criteria:**
-- [ ] (CODE) A seed script exists and documents required environment variables or derives them from local Supabase status.
+- [x] (CODE) A seed script exists and documents required environment variables or derives them from local Supabase status.
   - Verify: `test -f scripts/e2e/seed-editable-notes-flow.mjs && rg "SUPABASE|seed|cleanup|editable-notes" scripts/e2e/seed-editable-notes-flow.mjs`
-- [ ] (CODE) The seed data includes completed text, completed voice, completed file with attachment, pending, and null/empty-content category-only notes.
+- [x] (CODE) The seed data includes completed text, completed voice, completed file with attachment, pending, and null/empty-content category-only notes.
   - Verify: `rg "text|voice|file|pending|null|empty|attachment" scripts/e2e/seed-editable-notes-flow.mjs`
-- [ ] (CODE) The script supports cleanup by deterministic content prefix or deterministic test user scope.
+- [x] (CODE) The script supports cleanup by deterministic content prefix or deterministic test user scope.
   - Verify: `rg "cleanup|delete|prefix|test user|testUser" scripts/e2e/seed-editable-notes-flow.mjs`
-- [ ] (TEST) The script can run a dry-run or help mode without mutating the database.
+- [x] (TEST) The script can run a dry-run or help mode without mutating the database.
   - Verify: `node scripts/e2e/seed-editable-notes-flow.mjs --help`
-- [ ] (CODE) The seeded notes use distinct `created_at` values for stable ordering assertions.
+- [x] (CODE) The seeded notes use distinct `created_at` values for stable ordering assertions.
   - Verify: `rg "created_at|createdAt" scripts/e2e/seed-editable-notes-flow.mjs`
 
 **Files to Create:**
