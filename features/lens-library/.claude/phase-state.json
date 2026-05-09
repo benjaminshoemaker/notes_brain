@@ -3,7 +3,7 @@
     "current_phase": 3,
     "status": "IN_PROGRESS",
     "started_at": "2026-05-09T07:50:35Z",
-    "updated_at": "2026-05-09T08:12:23Z",
+    "updated_at": "2026-05-09T08:19:03Z",
     "execution_mode": "default",
     "phases": [
       {
@@ -146,12 +146,20 @@
             "id": "4.1.A",
             "status": "COMPLETE",
             "commit": "9bc7235"
+          },
+          {
+            "id": "4.1.B",
+            "status": "BLOCKED",
+            "commit": "dd285e0",
+            "reason": "iOS emulator reached preview, but Add to My Lenses returned the app alert Couldn't add lens / Please try again before installed-lens edit evidence could be captured."
           }
         ],
         "failures": {
-          "consecutive": 0,
+          "consecutive": 1,
           "verification_attempts": {},
-          "last_errors": []
+          "last_errors": [
+            "Task 4.1.B browser verification blocked by install failure in signed-in test account."
+          ]
         }
       }
     ]

@@ -19,3 +19,5 @@
 {"timestamp":"2026-05-09T08:12:23Z","scope":"phase-start","phase":4,"check":"task-4.1.A-static","status":"PASS","evidence":"apps/mobile/test/smoke"}
 {"timestamp":"2026-05-09T08:12:23Z","scope":"phase-start","phase":4,"check":"task-4.1.A-mobile-test","status":"PASS","evidence":"npm run test -w @notesbrain/mobile"}
 {"timestamp":"2026-05-09T08:12:23Z","scope":"phase-start","phase":4,"check":"task-4.1.A-root-test","status":"PASS","evidence":"npm run test:root"}
+{"timestamp":"2026-05-09T08:19:03Z","scope":"phase-start","phase":4,"check":"task-4.1.B-choice-and-preview","status":"PASS","evidence":"features/lens-library/VERIFICATION_NOTES.md"}
+{"timestamp":"2026-05-09T08:19:03Z","scope":"phase-start","phase":4,"check":"task-4.1.B-install-to-edit","status":"BLOCKED","evidence":"features/lens-library/evidence/screenshots/ios-install-failure.png"}
