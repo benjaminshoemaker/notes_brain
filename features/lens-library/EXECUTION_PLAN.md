@@ -462,11 +462,11 @@ Create `useLensLibrary` to combine bundled templates with installed user lenses,
 
 ### Pre-Phase Setup
 
-- [ ] (CODE) Expo Router app group exists.
+- [x] (CODE) Expo Router app group exists.
   - Verify: `test -d 'apps/mobile/app/(app)'`
-- [ ] (CODE) Warm Ink theme tokens are available.
+- [x] (CODE) Warm Ink theme tokens are available.
   - Verify: `test -f apps/mobile/lib/theme.ts`
-- [ ] (CODE) Test ID registry exists.
+- [x] (CODE) Test ID registry exists.
   - Verify: `test -f apps/mobile/lib/testIds.ts`
 
 ### Step 3.1: Creation Choice Entry Point
@@ -483,15 +483,15 @@ Create the `lens-create` route with two clear paths: `Create your own` and `Brow
 **Requirement:** FEATURE_SPEC.md > Entry Point; FEATURE_TECHNICAL_SPEC.md > `lens-create.tsx`
 
 **Acceptance Criteria:**
-- [ ] (CODE) `apps/mobile/app/(app)/lens-create.tsx` exists and renders `Create your own`.
+- [x] (CODE) `apps/mobile/app/(app)/lens-create.tsx` exists and renders `Create your own`.
   - Verify: `test -f 'apps/mobile/app/(app)/lens-create.tsx' && grep -q "Create your own" 'apps/mobile/app/(app)/lens-create.tsx'`
-- [ ] (CODE) Screen renders `Browse Lens Library`.
+- [x] (CODE) Screen renders `Browse Lens Library`.
   - Verify: `grep -q "Browse Lens Library" 'apps/mobile/app/(app)/lens-create.tsx'`
-- [ ] (CODE) `Create your own` routes to `/(app)/lens-form`.
+- [x] (CODE) `Create your own` routes to `/(app)/lens-form`.
   - Verify: `grep -q "/(app)/lens-form" 'apps/mobile/app/(app)/lens-create.tsx'`
-- [ ] (CODE) `Browse Lens Library` routes to `/(app)/lens-library`.
+- [x] (CODE) `Browse Lens Library` routes to `/(app)/lens-library`.
   - Verify: `grep -q "/(app)/lens-library" 'apps/mobile/app/(app)/lens-create.tsx'`
-- [ ] (CODE) Screen imports Warm Ink tokens and Ionicons.
+- [x] (CODE) Screen imports Warm Ink tokens and Ionicons.
   - Verify: `grep -q "from \"../../lib/theme\"" 'apps/mobile/app/(app)/lens-create.tsx' && grep -q "@expo/vector-icons" 'apps/mobile/app/(app)/lens-create.tsx'`
 
 **Files to Create:**
@@ -522,15 +522,15 @@ Update Summary tab create entry points so tapping `+` and the empty-state CTA op
 **Requirement:** FEATURE_SPEC.md > Acceptance Criteria Draft; FEATURE_TECHNICAL_SPEC.md > Routes
 
 **Acceptance Criteria:**
-- [ ] (CODE) `summary.tsx` defines or uses a `/(app)/lens-create` route constant.
+- [x] (CODE) `summary.tsx` defines or uses a `/(app)/lens-create` route constant.
   - Verify: `grep -q "/(app)/lens-create" 'apps/mobile/app/(app)/summary.tsx'`
-- [ ] (CODE) Summary header `+` action pushes the lens-create route.
+- [x] (CODE) Summary header `+` action pushes the lens-create route.
   - Verify: `grep -n "accessibilityLabel=\"Create lens\"" 'apps/mobile/app/(app)/summary.tsx' && grep -A8 "accessibilityLabel=\"Create lens\"" 'apps/mobile/app/(app)/summary.tsx' | grep -q "lens-create"`
-- [ ] (CODE) Summary empty-state CTA pushes the lens-create route.
+- [x] (CODE) Summary empty-state CTA pushes the lens-create route.
   - Verify: `grep -A12 "Create Lens" 'apps/mobile/app/(app)/summary.tsx' | grep -q "lens-create"`
-- [ ] (TEST) Mobile smoke test covers Summary create routing to lens-create.
+- [x] (TEST) Mobile smoke test covers Summary create routing to lens-create.
   - Verify: `grep -q "lens-create" apps/mobile/test/smoke/summary-screen.test.tsx && npm run test -w @notesbrain/mobile`
-- [ ] (TYPE) Mobile typecheck passes.
+- [x] (TYPE) Mobile typecheck passes.
   - Verify: `npm run typecheck -w @notesbrain/mobile`
 
 **Files to Create:**
@@ -568,15 +568,15 @@ Create the `lens-library` route that lists curated templates with name, outcome-
 **Requirement:** FEATURE_SPEC.md > Browse Lens Library; FEATURE_TECHNICAL_SPEC.md > `lens-library.tsx`
 
 **Acceptance Criteria:**
-- [ ] (CODE) `apps/mobile/app/(app)/lens-library.tsx` exists and imports `useLensLibrary`.
+- [x] (CODE) `apps/mobile/app/(app)/lens-library.tsx` exists and imports `useLensLibrary`.
   - Verify: `test -f 'apps/mobile/app/(app)/lens-library.tsx' && grep -q "useLensLibrary" 'apps/mobile/app/(app)/lens-library.tsx'`
-- [ ] (CODE) Browse screen renders a list using curated template data.
+- [x] (CODE) Browse screen renders a list using curated template data.
   - Verify: `grep -q "FlatList" 'apps/mobile/app/(app)/lens-library.tsx' && grep -q "template" 'apps/mobile/app/(app)/lens-library.tsx'`
-- [ ] (CODE) Cards render install state text including `Installed`.
+- [x] (CODE) Cards render install state text including `Installed`.
   - Verify: `grep -q "Installed" 'apps/mobile/app/(app)/lens-library.tsx'`
-- [ ] (CODE) Pressing a template routes to `/(app)/lens-library-preview` with `templateId`.
+- [x] (CODE) Pressing a template routes to `/(app)/lens-library-preview` with `templateId`.
   - Verify: `grep -q "/(app)/lens-library-preview" 'apps/mobile/app/(app)/lens-library.tsx' && grep -q "templateId" 'apps/mobile/app/(app)/lens-library.tsx'`
-- [ ] (TEST) Mobile smoke test verifies seeded templates render.
+- [x] (TEST) Mobile smoke test verifies seeded templates render.
   - Verify: `grep -q "Weekly Project Pulse" apps/mobile/test/smoke/lens-library-screen.test.tsx && npm run test -w @notesbrain/mobile`
 
 **Files to Create:**
@@ -609,23 +609,23 @@ Create the `lens-library-preview` route that shows template details, reads the t
 **Requirement:** FEATURE_SPEC.md > Preview; FEATURE_SPEC.md > Installed Lens Behavior; FEATURE_TECHNICAL_SPEC.md > `lens-library-preview.tsx`
 
 **Acceptance Criteria:**
-- [ ] (CODE) `apps/mobile/app/(app)/lens-library-preview.tsx` exists and reads `templateId` route param.
+- [x] (CODE) `apps/mobile/app/(app)/lens-library-preview.tsx` exists and reads `templateId` route param.
   - Verify: `test -f 'apps/mobile/app/(app)/lens-library-preview.tsx' && grep -q "templateId" 'apps/mobile/app/(app)/lens-library-preview.tsx'`
-- [ ] (CODE) Preview renders template name, description, cadence, categories, lookback, and prompt/details text.
+- [x] (CODE) Preview renders template name, description, cadence, categories, lookback, and prompt/details text.
   - Verify: `grep -q "lookback" 'apps/mobile/app/(app)/lens-library-preview.tsx' && grep -q "prompt" 'apps/mobile/app/(app)/lens-library-preview.tsx' && grep -q "categories" 'apps/mobile/app/(app)/lens-library-preview.tsx'`
-- [ ] (CODE) Primary action text includes `Add to My Lenses`.
+- [x] (CODE) Primary action text includes `Add to My Lenses`.
   - Verify: `grep -q "Add to My Lenses" 'apps/mobile/app/(app)/lens-library-preview.tsx'`
-- [ ] (CODE) Preview consumes library install state and renders `Installed` for already-installed templates.
+- [x] (CODE) Preview consumes library install state and renders `Installed` for already-installed templates.
   - Verify: `grep -q "installState" 'apps/mobile/app/(app)/lens-library-preview.tsx' && grep -q "Installed" 'apps/mobile/app/(app)/lens-library-preview.tsx'`
-- [ ] (CODE) Already-installed templates do not show a misleading uninstalled primary action; either disable install or intentionally label an extra-copy action as `Add Another Copy`.
+- [x] (CODE) Already-installed templates do not show a misleading uninstalled primary action; either disable install or intentionally label an extra-copy action as `Add Another Copy`.
   - Verify: `grep -q "Add Another Copy\\|disabled" 'apps/mobile/app/(app)/lens-library-preview.tsx'`
-- [ ] (CODE) Install action calls library install mutation and routes to `/(app)/lens-manage` on success.
+- [x] (CODE) Install action calls library install mutation and routes to `/(app)/lens-manage` on success.
   - Verify: `grep -q "install" 'apps/mobile/app/(app)/lens-library-preview.tsx' && grep -q "/(app)/lens-manage" 'apps/mobile/app/(app)/lens-library-preview.tsx'`
-- [ ] (TEST) Mobile smoke test verifies install payload includes copied fields and source metadata.
+- [x] (TEST) Mobile smoke test verifies install payload includes copied fields and source metadata.
   - Verify: `grep -q "source_template_id" apps/mobile/test/smoke/lens-library-preview.test.tsx && npm run test -w @notesbrain/mobile`
-- [ ] (TEST) Mobile smoke test verifies Morning Briefing preview renders as already installed when source metadata is present.
+- [x] (TEST) Mobile smoke test verifies Morning Briefing preview renders as already installed when source metadata is present.
   - Verify: `grep -q "morning-briefing" apps/mobile/test/smoke/lens-library-preview.test.tsx && grep -q "Installed" apps/mobile/test/smoke/lens-library-preview.test.tsx && npm run test -w @notesbrain/mobile`
-- [ ] (TYPE) Mobile typecheck passes.
+- [x] (TYPE) Mobile typecheck passes.
   - Verify: `npm run typecheck -w @notesbrain/mobile`
 
 **Files to Create:**
@@ -653,23 +653,23 @@ Create the `lens-library-preview` route that shows template details, reads the t
 ### Phase 3 Checkpoint
 
 **Automated Checks:**
-- [ ] (TEST) Mobile smoke tests pass.
+- [x] (TEST) Mobile smoke tests pass.
   - Verify: `npm run test -w @notesbrain/mobile`
-- [ ] (TYPE) Mobile typecheck passes.
+- [x] (TYPE) Mobile typecheck passes.
   - Verify: `npm run typecheck -w @notesbrain/mobile`
-- [ ] (LINT) Mobile lint passes.
+- [x] (LINT) Mobile lint passes.
   - Verify: `npm run lint -w @notesbrain/mobile`
 
 **Regression Verification:**
-- [ ] (CODE) Existing blank lens form route still exists for `Create your own`.
+- [x] (CODE) Existing blank lens form route still exists for `Create your own`.
   - Verify: `test -f 'apps/mobile/app/(app)/lens-form.tsx' && grep -q "/(app)/lens-form" 'apps/mobile/app/(app)/lens-create.tsx'`
-- [ ] (CODE) Existing lens management edit path still routes to `lens-form`.
+- [x] (CODE) Existing lens management edit path still routes to `lens-form`.
   - Verify: `grep -q "/(app)/lens-form" 'apps/mobile/app/(app)/lens-manage.tsx'`
-- [ ] (CODE) Normal lens execution path remains unchanged by library screens.
+- [x] (CODE) Normal lens execution path remains unchanged by library screens.
   - Verify: `! grep -R "lensLibrary" supabase/functions/execute-lens supabase/functions/dispatch-lenses`
 
 **Browser Verification:**
-- [ ] (TEST) Mobile route smoke tests cover the choice, browse, and preview surfaces.
+- [x] (TEST) Mobile route smoke tests cover the choice, browse, and preview surfaces.
   - Verify: `npm run test -w @notesbrain/mobile`
 
 ---
