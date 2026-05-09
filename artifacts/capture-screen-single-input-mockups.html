@@ -1,0 +1,713 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Capture Screen Single Input Mockups</title>
+    <style>
+      :root {
+        --background: #faf8f5;
+        --surface: #ffffff;
+        --surface-raised: #f5f2ee;
+        --border: #e8e4df;
+        --border-subtle: #f0ece7;
+        --text: #1c1917;
+        --secondary: #57534e;
+        --muted: #a8a29e;
+        --accent: #4f46e5;
+        --accent-light: #eef2ff;
+        --accent-hover: #4338ca;
+        --success: #16a34a;
+        --error: #dc2626;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background: #ede9e2;
+        color: var(--text);
+        font-family:
+          -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif;
+      }
+
+      .page {
+        max-width: 1500px;
+        margin: 0 auto;
+        padding: 32px;
+      }
+
+      .header {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 24px;
+        margin-bottom: 24px;
+      }
+
+      h1,
+      h2,
+      p {
+        margin: 0;
+      }
+
+      h1 {
+        font-size: 28px;
+        line-height: 1.15;
+        letter-spacing: 0;
+      }
+
+      .subtitle {
+        max-width: 760px;
+        color: var(--secondary);
+        font-size: 15px;
+        line-height: 1.45;
+        margin-top: 8px;
+      }
+
+      .legend {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: var(--secondary);
+        font-size: 13px;
+        white-space: nowrap;
+      }
+
+      .dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--accent);
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(260px, 1fr));
+        gap: 18px;
+      }
+
+      .mock {
+        display: grid;
+        gap: 10px;
+      }
+
+      .mock h2 {
+        font-size: 15px;
+        line-height: 1.2;
+      }
+
+      .note {
+        color: var(--secondary);
+        font-size: 12px;
+        line-height: 1.35;
+        min-height: 48px;
+      }
+
+      .phone {
+        position: relative;
+        width: 100%;
+        max-width: 330px;
+        min-height: 690px;
+        margin: 0 auto;
+        overflow: hidden;
+        border-radius: 34px;
+        background: var(--background);
+        border: 8px solid #1c1917;
+        box-shadow: 0 22px 54px rgba(28, 25, 23, 0.24);
+      }
+
+      .status {
+        height: 34px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 22px;
+        font-size: 12px;
+        font-weight: 600;
+      }
+
+      .status-icons {
+        display: flex;
+        gap: 5px;
+        align-items: center;
+      }
+
+      .pill {
+        width: 20px;
+        height: 8px;
+        border-radius: 10px;
+        border: 1.5px solid var(--text);
+      }
+
+      .bar {
+        width: 14px;
+        height: 8px;
+        border-radius: 2px;
+        background: var(--text);
+      }
+
+      .screen-title {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 44px;
+        border-bottom: 1px solid var(--border-subtle);
+        font-size: 17px;
+        font-weight: 700;
+      }
+
+      .content {
+        padding: 18px 16px 86px;
+      }
+
+      .greeting {
+        color: var(--secondary);
+        font-size: 15px;
+        margin-bottom: 8px;
+      }
+
+      .label {
+        margin: 0 0 8px;
+        color: var(--muted);
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+      }
+
+      .card {
+        background: var(--surface);
+        border-radius: 10px;
+        box-shadow: 0 2px 6px rgba(28, 25, 23, 0.08);
+      }
+
+      .current-input {
+        min-height: 168px;
+        padding: 16px;
+      }
+
+      .placeholder {
+        color: var(--muted);
+        font-size: 16px;
+        line-height: 24px;
+      }
+
+      .button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        min-height: 46px;
+        padding: 0 18px;
+        border-radius: 8px;
+        background: var(--accent);
+        color: white;
+        font-size: 16px;
+        font-weight: 700;
+        white-space: nowrap;
+      }
+
+      .button.disabled {
+        background: var(--border);
+        color: var(--muted);
+      }
+
+      .divider {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        margin: 24px 0;
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      .divider::before,
+      .divider::after {
+        content: "";
+        height: 1px;
+        flex: 1;
+        background: var(--border);
+      }
+
+      .voice-area {
+        display: grid;
+        justify-items: center;
+        gap: 8px;
+        padding: 16px;
+      }
+
+      .hint {
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .composer-shell {
+        display: grid;
+        min-height: 420px;
+        align-content: end;
+        padding-top: 24px;
+      }
+
+      .prompt {
+        margin-bottom: 18px;
+      }
+
+      .prompt h3 {
+        margin: 0 0 7px;
+        font-size: 24px;
+        line-height: 1.1;
+        letter-spacing: 0;
+      }
+
+      .prompt p {
+        color: var(--secondary);
+        font-size: 14px;
+        line-height: 1.4;
+      }
+
+      .recent {
+        display: grid;
+        gap: 8px;
+        margin-bottom: 18px;
+      }
+
+      .chip-row {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+
+      .chip {
+        padding: 8px 10px;
+        border-radius: 20px;
+        background: var(--surface-raised);
+        color: var(--secondary);
+        font-size: 12px;
+        font-weight: 600;
+      }
+
+      .composer {
+        display: grid;
+        gap: 12px;
+        padding: 12px;
+        border-radius: 18px;
+        background: var(--surface);
+        box-shadow: 0 2px 6px rgba(28, 25, 23, 0.08);
+      }
+
+      .composer.texting {
+        box-shadow:
+          0 0 0 2px rgba(79, 70, 229, 0.14),
+          0 8px 24px rgba(28, 25, 23, 0.12);
+      }
+
+      .composer textarea,
+      .composer .input-copy {
+        width: 100%;
+        min-height: 64px;
+        border: 0;
+        outline: 0;
+        resize: none;
+        background: transparent;
+        color: var(--text);
+        font: inherit;
+        font-size: 16px;
+        line-height: 23px;
+      }
+
+      .composer textarea::placeholder {
+        color: var(--muted);
+      }
+
+      .actions {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .icon-actions {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .icon-button {
+        width: 38px;
+        height: 38px;
+        display: grid;
+        place-items: center;
+        border-radius: 20px;
+        background: var(--surface-raised);
+        color: var(--secondary);
+        font-size: 18px;
+        font-weight: 700;
+      }
+
+      .mic {
+        background: var(--accent-light);
+        color: var(--accent);
+      }
+
+      .mic svg {
+        width: 20px;
+        height: 20px;
+        stroke: currentColor;
+      }
+
+      .save {
+        min-width: 72px;
+        height: 38px;
+        border-radius: 20px;
+        display: grid;
+        place-items: center;
+        background: var(--accent);
+        color: white;
+        font-size: 14px;
+        font-weight: 700;
+      }
+
+      .save.disabled {
+        background: var(--surface-raised);
+        color: var(--muted);
+      }
+
+      .recording-card {
+        padding: 14px;
+        border-radius: 18px;
+        background: var(--accent-light);
+        border: 1px solid rgba(79, 70, 229, 0.26);
+      }
+
+      .recording-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 12px;
+      }
+
+      .timer {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        font-size: 26px;
+        font-weight: 800;
+        font-variant-numeric: tabular-nums;
+      }
+
+      .rec-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: var(--error);
+      }
+
+      .meter {
+        height: 5px;
+        overflow: hidden;
+        border-radius: 10px;
+        background: rgba(79, 70, 229, 0.16);
+        margin-bottom: 14px;
+      }
+
+      .meter-fill {
+        width: 32%;
+        height: 100%;
+        background: var(--accent);
+      }
+
+      .recording-actions {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+
+      .secondary-button,
+      .danger-button {
+        display: grid;
+        place-items: center;
+        height: 42px;
+        border-radius: 20px;
+        font-size: 14px;
+        font-weight: 700;
+      }
+
+      .secondary-button {
+        background: var(--surface);
+        color: var(--secondary);
+        border: 1px solid var(--border);
+      }
+
+      .danger-button {
+        background: var(--error);
+        color: white;
+      }
+
+      .saved-strip {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 12px;
+        border-radius: 14px;
+        background: #f0fdf4;
+        color: var(--success);
+        font-size: 13px;
+        font-weight: 700;
+      }
+
+      .bottom-tabs {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 72px;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        align-items: center;
+        background: var(--surface);
+        border-top: 1px solid var(--border-subtle);
+      }
+
+      .tab {
+        display: grid;
+        justify-items: center;
+        gap: 4px;
+        color: var(--muted);
+        font-size: 11px;
+        font-weight: 600;
+      }
+
+      .tab.active {
+        color: var(--accent);
+      }
+
+      .tab-icon {
+        font-size: 20px;
+        line-height: 1;
+      }
+
+      @media (max-width: 1180px) {
+        .grid {
+          grid-template-columns: repeat(2, minmax(260px, 1fr));
+        }
+      }
+
+      @media (max-width: 680px) {
+        .page {
+          padding: 20px 14px;
+        }
+
+        .header {
+          display: block;
+        }
+
+        .legend {
+          margin-top: 14px;
+        }
+
+        .grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <header class="header">
+        <div>
+          <h1>Capture screen redesign mockups</h1>
+          <p class="subtitle">
+            Comparison of the current two-mode capture screen against a ChatGPT/Claude-style
+            single composer with explicit save and microphone actions.
+          </p>
+        </div>
+        <div class="legend"><span class="dot"></span> Uses existing Warm Ink tokens</div>
+      </header>
+
+      <section class="grid">
+        <article class="mock">
+          <h2>Current UI</h2>
+          <p class="note">
+            Text and voice are separate tasks, which makes the first decision heavier and pushes
+            recording below the fold on smaller screens.
+          </p>
+          <div class="phone">
+            <div class="status">
+              <span>9:41</span>
+              <span class="status-icons"><span class="bar"></span><span class="pill"></span></span>
+            </div>
+            <div class="screen-title">Capture</div>
+            <div class="content">
+              <p class="greeting">Good afternoon</p>
+              <p class="label">Text Note</p>
+              <div class="card current-input">
+                <p class="placeholder">What's on your mind?</p>
+                <div style="height: 80px"></div>
+                <div class="button disabled">Save</div>
+              </div>
+              <div class="divider">or</div>
+              <p class="label">Voice Note</p>
+              <div class="voice-area">
+                <div class="button" style="font-size: 14px">Record Voice Note</div>
+                <p class="hint">Max 5 minutes</p>
+              </div>
+            </div>
+            <nav class="bottom-tabs">
+              <div class="tab active"><span class="tab-icon">✎</span><span>Capture</span></div>
+              <div class="tab"><span class="tab-icon">▤</span><span>Notes</span></div>
+              <div class="tab"><span class="tab-icon">◌</span><span>Summary</span></div>
+              <div class="tab"><span class="tab-icon">⚙</span><span>Settings</span></div>
+            </nav>
+          </div>
+        </article>
+
+        <article class="mock">
+          <h2>Option A: Single Composer</h2>
+          <p class="note">
+            Closest to ChatGPT and Claude: one input surface, mic on the left, save on the right.
+            The user writes or records without choosing a mode first.
+          </p>
+          <div class="phone">
+            <div class="status">
+              <span>9:41</span>
+              <span class="status-icons"><span class="bar"></span><span class="pill"></span></span>
+            </div>
+            <div class="screen-title">Capture</div>
+            <div class="content">
+              <div class="composer-shell">
+                <div class="prompt">
+                  <p class="greeting">Good afternoon</p>
+                  <h3>What should Echo remember?</h3>
+                  <p>Type a thought or tap the microphone to capture it out loud.</p>
+                </div>
+                <div class="recent">
+                  <div class="chip-row">
+                    <span class="chip">Idea</span>
+                    <span class="chip">Task</span>
+                    <span class="chip">Journal</span>
+                  </div>
+                </div>
+                <div class="composer">
+                  <textarea placeholder="Message Echo..."></textarea>
+                  <div class="actions">
+                    <div class="icon-actions">
+                      <div class="icon-button mic" aria-label="Record voice note">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                          <path d="M12 3a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V6a3 3 0 0 0-3-3Z"></path>
+                          <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                          <path d="M12 19v3"></path>
+                          <path d="M8 22h8"></path>
+                        </svg>
+                      </div>
+                    </div>
+                    <div class="save disabled">Save</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <nav class="bottom-tabs">
+              <div class="tab active"><span class="tab-icon">✎</span><span>Capture</span></div>
+              <div class="tab"><span class="tab-icon">▤</span><span>Notes</span></div>
+              <div class="tab"><span class="tab-icon">◌</span><span>Summary</span></div>
+              <div class="tab"><span class="tab-icon">⚙</span><span>Settings</span></div>
+            </nav>
+          </div>
+        </article>
+
+        <article class="mock">
+          <h2>Option A: Text Ready</h2>
+          <p class="note">
+            When text exists, Save becomes active. The mic remains available, so a user can add
+            thoughts by voice or pivot to recording without leaving the composer.
+          </p>
+          <div class="phone">
+            <div class="status">
+              <span>9:41</span>
+              <span class="status-icons"><span class="bar"></span><span class="pill"></span></span>
+            </div>
+            <div class="screen-title">Capture</div>
+            <div class="content">
+              <div class="composer-shell">
+                <div class="prompt">
+                  <p class="greeting">Good afternoon</p>
+                  <h3>What should Echo remember?</h3>
+                  <p>Keep capture lightweight; classification can happen after save.</p>
+                </div>
+                <div class="composer texting">
+                  <div class="input-copy">
+                    Follow up with Maya about the roadmap notes and turn the pricing question into
+                    a task for tomorrow.
+                  </div>
+                  <div class="actions">
+                    <div class="icon-actions">
+                      <div class="icon-button mic" aria-label="Record voice note">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                          <path d="M12 3a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V6a3 3 0 0 0-3-3Z"></path>
+                          <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                          <path d="M12 19v3"></path>
+                          <path d="M8 22h8"></path>
+                        </svg>
+                      </div>
+                    </div>
+                    <div class="save">Save</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <nav class="bottom-tabs">
+              <div class="tab active"><span class="tab-icon">✎</span><span>Capture</span></div>
+              <div class="tab"><span class="tab-icon">▤</span><span>Notes</span></div>
+              <div class="tab"><span class="tab-icon">◌</span><span>Summary</span></div>
+              <div class="tab"><span class="tab-icon">⚙</span><span>Settings</span></div>
+            </nav>
+          </div>
+        </article>
+
+        <article class="mock">
+          <h2>Option A: Recording</h2>
+          <p class="note">
+            Recording replaces the composer body with a focused state. The primary action is still
+            saving the capture, so it feels like one workflow instead of two screens.
+          </p>
+          <div class="phone">
+            <div class="status">
+              <span>9:41</span>
+              <span class="status-icons"><span class="bar"></span><span class="pill"></span></span>
+            </div>
+            <div class="screen-title">Capture</div>
+            <div class="content">
+              <div class="composer-shell">
+                <div class="prompt">
+                  <p class="greeting">Good afternoon</p>
+                  <h3>Listening</h3>
+                  <p>Tap save when the thought is complete.</p>
+                </div>
+                <div class="recording-card">
+                  <div class="recording-top">
+                    <div class="timer"><span class="rec-dot"></span><span>0:17</span></div>
+                    <p class="hint">4:43 left</p>
+                  </div>
+                  <div class="meter"><div class="meter-fill"></div></div>
+                  <div class="recording-actions">
+                    <div class="secondary-button">Cancel</div>
+                    <div class="danger-button">Stop &amp; Save</div>
+                  </div>
+                </div>
+                <div style="height: 12px"></div>
+                <div class="saved-strip">✓ Last note saved just now</div>
+              </div>
+            </div>
+            <nav class="bottom-tabs">
+              <div class="tab active"><span class="tab-icon">✎</span><span>Capture</span></div>
+              <div class="tab"><span class="tab-icon">▤</span><span>Notes</span></div>
+              <div class="tab"><span class="tab-icon">◌</span><span>Summary</span></div>
+              <div class="tab"><span class="tab-icon">⚙</span><span>Settings</span></div>
+            </nav>
+          </div>
+        </article>
+      </section>
+    </main>
+  </body>
+</html>

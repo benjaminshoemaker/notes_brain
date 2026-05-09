@@ -30,10 +30,6 @@ vi.mock("../../components/CaptureInput", () => ({
   CaptureInput: () => React.createElement("Text", null, "Capture Input")
 }));
 
-vi.mock("../../components/VoiceRecorder", () => ({
-  VoiceRecorder: () => React.createElement("Text", null, "Voice Recorder")
-}));
-
 vi.mock("../../components/Toast", () => ({
   Toast: ({ message }: { message: string }) => React.createElement("Text", null, message)
 }));
@@ -48,7 +44,7 @@ function collectText(node: ReactTestRenderer) {
 }
 
 describe("mobile capture screen smoke", () => {
-  it("should render capture and voice sections", async () => {
+  it("should render the single capture composer", async () => {
     let tree!: ReactTestRenderer;
     await act(async () => {
       tree = create(<CaptureScreen />);
@@ -56,9 +52,8 @@ describe("mobile capture screen smoke", () => {
     });
     const text = collectText(tree);
 
-    expect(text).toContain("Text Note");
-    expect(text).toContain("Voice Note");
+    expect(text).toContain("What should Echo remember?");
+    expect(text).toContain("Type a thought or tap the microphone to capture it out loud.");
     expect(text).toContain("Capture Input");
-    expect(text).toContain("Voice Recorder");
   });
 });

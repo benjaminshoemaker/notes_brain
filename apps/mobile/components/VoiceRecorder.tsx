@@ -6,7 +6,7 @@ import { MAX_VOICE_SECONDS } from "@notesbrain/shared";
 
 import { useVoiceRecording } from "../hooks/useVoiceRecording";
 import { testIds } from "../lib/testIds";
-import { colors, radii, shadows } from "../lib/theme";
+import { colors, radii } from "../lib/theme";
 
 type VoiceRecorderProps = {
   onRecordingComplete: (uri: string) => Promise<void>;

@@ -11,12 +11,11 @@ import {
 import { useFocusEffect } from "expo-router";
 
 import { CaptureInput } from "../../components/CaptureInput";
-import { VoiceRecorder } from "../../components/VoiceRecorder";
 import { Toast } from "../../components/Toast";
 import { useCreateNote } from "../../hooks/useCreateNote";
 import { useUploadVoiceNote } from "../../hooks/useUploadVoiceNote";
 import { testIds } from "../../lib/testIds";
-import { colors } from "../../lib/theme";
+import { colors, spacing } from "../../lib/theme";
 
 function getGreeting(): string {
   const hour = new Date().getHours();
@@ -49,7 +48,7 @@ export default function CaptureScreen() {
     try {
       await createNote.mutateAsync({ content: trimmedContent, type: "text" });
       setToast({ message: "Note saved!", type: "success" });
-    } catch (error) {
+    } catch {
       const message = "Couldn't save your note. Check your connection and try again.";
       setToast({ message, type: "error" });
       Alert.alert("Save failed", message, [
@@ -68,7 +67,7 @@ export default function CaptureScreen() {
     try {
       await uploadVoiceNote.mutateAsync({ uri });
       setToast({ message: "Voice note saved!", type: "success" });
-    } catch (error) {
+    } catch {
       const message = "Couldn't save your voice note. Check your connection and try again.";
       setToast({ message, type: "error" });
       Alert.alert("Upload failed", message, [
@@ -87,8 +86,6 @@ export default function CaptureScreen() {
     setToast(null);
   }
 
-  const isSubmitting = createNote.isPending || uploadVoiceNote.isPending;
-
   return (
     <KeyboardAvoidingView
       testID={testIds.capture.screen}
@@ -101,27 +98,21 @@ export default function CaptureScreen() {
         contentContainerStyle={styles.scrollContent}
         keyboardShouldPersistTaps="handled"
       >
-        <View style={styles.section}>
+        <View style={styles.prompt}>
           <Text style={styles.greeting}>{getGreeting()}</Text>
-          <Text style={styles.sectionTitle}>Text Note</Text>
+          <Text style={styles.title}>What should Echo remember?</Text>
+          <Text style={styles.subtitle}>
+            Type a thought or tap the microphone to capture it out loud.
+          </Text>
+        </View>
+
+        <View style={styles.composerSection}>
           <CaptureInput
             onSubmit={handleTextSubmit}
-            isSubmitting={isSubmitting}
+            onVoiceRecordingComplete={handleVoiceRecordingComplete}
+            isSubmitting={createNote.isPending}
+            isVoiceUploading={uploadVoiceNote.isPending}
             autoFocus={shouldFocus}
-          />
-        </View>
-
-        <View style={styles.divider}>
-          <View style={styles.dividerLine} />
-          <Text style={styles.dividerText}>or</Text>
-          <View style={styles.dividerLine} />
-        </View>
-
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Voice Note</Text>
-          <VoiceRecorder
-            onRecordingComplete={handleVoiceRecordingComplete}
-            isUploading={uploadVoiceNote.isPending}
           />
         </View>
       </ScrollView>
@@ -148,38 +139,33 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   scrollContent: {
-    padding: 16,
-    paddingTop: 24,
+    flexGrow: 1,
+    justifyContent: "center",
+    padding: spacing.lg,
+    paddingTop: spacing.xl,
+    paddingBottom: 96,
   },
-  section: {
-    marginBottom: 8,
+  prompt: {
+    marginBottom: spacing.lg,
   },
   greeting: {
     fontSize: 15,
     color: colors.textSecondary,
-    marginBottom: 8,
+    marginBottom: spacing.sm,
   },
-  sectionTitle: {
+  title: {
+    fontSize: 26,
+    lineHeight: 30,
+    fontWeight: "700",
+    color: colors.text,
+    marginBottom: spacing.sm,
+  },
+  subtitle: {
     fontSize: 14,
-    fontWeight: "600",
-    color: colors.textMuted,
-    marginBottom: 8,
-    textTransform: "uppercase",
-    letterSpacing: 0.5,
+    lineHeight: 20,
+    color: colors.textSecondary,
   },
-  divider: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginVertical: 24,
-  },
-  dividerLine: {
-    flex: 1,
-    height: StyleSheet.hairlineWidth,
-    backgroundColor: colors.border,
-  },
-  dividerText: {
-    marginHorizontal: 16,
-    color: colors.textMuted,
-    fontSize: 14,
+  composerSection: {
+    marginBottom: spacing.md,
   },
 });
