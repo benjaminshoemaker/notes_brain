@@ -2,12 +2,19 @@ import { useEffect, useRef, useState } from "react";
 import { View, Text, StyleSheet, Animated } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import type { NoteWithAttachments } from "@notesbrain/shared";
+import type { UpdateNoteInput } from "../hooks/useUpdateNote";
 
 import { testIds } from "../lib/testIds";
 import { colors, radii, shadows, getCategoryTint } from "../lib/theme";
 
 type MobileNoteCardProps = {
   note: NoteWithAttachments;
+  isEditing?: boolean;
+  isEditDisabled?: boolean;
+  remoteState?: "clean" | "updated" | "deleted";
+  onStartEdit?: (note: NoteWithAttachments) => void;
+  onCancelEdit?: (noteId: string) => void;
+  onSaveEdit?: (input: UpdateNoteInput) => Promise<void>;
 };
 
 const PREVIEW_LENGTH = 150;

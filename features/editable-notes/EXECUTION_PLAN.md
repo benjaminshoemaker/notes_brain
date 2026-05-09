@@ -226,17 +226,17 @@ Add `ActiveEditState` near the Notes screen/list layer and pass editing props th
 **Requirement:** FEATURE_SPEC Acceptance Criteria 1, 7, 12, 13; FEATURE_TECHNICAL_SPEC "Notes Screen/List State"
 
 **Acceptance Criteria:**
-- [ ] (TEST) Starting one edit disables edit controls on other notes and prevents starting a second editor.
+- [x] (TEST) Starting one edit disables edit controls on other notes and prevents starting a second editor.
   - Verify: `cd apps/mobile && npm test -- test/smoke/notes-list-edit.test.tsx`
-- [ ] (TEST) Category filters and pull-to-refresh are disabled or omitted while a draft is active, then restored after save or cancel.
+- [x] (TEST) Category filters and pull-to-refresh are disabled or omitted while a draft is active, then restored after save or cancel.
   - Verify: `cd apps/mobile && npm test -- test/smoke/notes-list-edit.test.tsx`
-- [ ] (TEST) Notes tab focus loss and sign-out clear active draft state without saving changes.
+- [x] (TEST) Notes tab focus loss and sign-out clear active draft state without saving changes.
   - Verify: `cd apps/mobile && npm test -- test/smoke/notes-screen-edit-state.test.tsx`
-- [ ] (TEST) Realtime update/delete callbacks for the active note set `remoteState` to `updated` or `deleted` and keep the draft visible.
+- [x] (TEST) Realtime update/delete callbacks for the active note set `remoteState` to `updated` or `deleted` and keep the draft visible.
   - Verify: `cd apps/mobile && npm test -- test/smoke/notes-screen-edit-state.test.tsx`
-- [ ] (TEST) Cancel after a remote update refetches the server row, and Cancel after a remote delete refetches or removes the deleted card from cache.
+- [x] (TEST) Cancel after a remote update refetches the server row, and Cancel after a remote delete refetches or removes the deleted card from cache.
   - Verify: `cd apps/mobile && npm test -- test/smoke/notes-screen-edit-state.test.tsx`
-- [ ] (TYPE) Notes screen/list/card prop wiring compiles.
+- [x] (TYPE) Notes screen/list/card prop wiring compiles.
   - Verify: `cd apps/mobile && npm run typecheck`
 
 **Files to Create:**

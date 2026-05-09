@@ -4,6 +4,8 @@ import type { NoteWithAttachments, Category } from "@notesbrain/shared";
 
 import { LoadingSpinner } from "./LoadingSpinner";
 import { MobileNoteCard } from "./MobileNoteCard";
+import type { ActiveEditState } from "../app/(app)/notes";
+import type { UpdateNoteInput } from "../hooks/useUpdateNote";
 import { testIds } from "../lib/testIds";
 import { colors } from "../lib/theme";
 
@@ -13,6 +15,10 @@ type NotesListProps = {
   isRefetching: boolean;
   onRefresh: () => void;
   selectedCategory: Category | "all";
+  activeEditState?: ActiveEditState;
+  onStartEdit?: (note: NoteWithAttachments) => void;
+  onCancelEdit?: (noteId: string) => void;
+  onSaveEdit?: (input: UpdateNoteInput) => Promise<void>;
 };
 
 export function NotesList({
@@ -21,6 +27,10 @@ export function NotesList({
   isRefetching,
   onRefresh,
   selectedCategory,
+  activeEditState = null,
+  onStartEdit,
+  onCancelEdit,
+  onSaveEdit,
 }: NotesListProps) {
   const filteredNotes =
     selectedCategory === "all"
@@ -56,11 +66,21 @@ export function NotesList({
       testID={testIds.notes.list}
       data={filteredNotes}
       keyExtractor={(item) => item.id}
-      renderItem={({ item }) => <MobileNoteCard note={item} />}
+      renderItem={({ item }) => (
+        <MobileNoteCard
+          note={item}
+          isEditing={activeEditState?.noteId === item.id}
+          isEditDisabled={activeEditState !== null && activeEditState.noteId !== item.id}
+          remoteState={activeEditState?.noteId === item.id ? activeEditState.remoteState : "clean"}
+          onStartEdit={onStartEdit}
+          onCancelEdit={onCancelEdit}
+          onSaveEdit={onSaveEdit}
+        />
+      )}
       contentContainerStyle={styles.listContent}
-      refreshControl={
-        <RefreshControl refreshing={isRefetching} onRefresh={onRefresh} tintColor={colors.accent} />
-      }
+      refreshControl={activeEditState === null
+        ? <RefreshControl refreshing={isRefetching} onRefresh={onRefresh} tintColor={colors.accent} />
+        : undefined}
       showsVerticalScrollIndicator={false}
     />
   );

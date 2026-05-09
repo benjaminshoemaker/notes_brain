@@ -19,7 +19,17 @@ vi.mock("../../hooks/useNotes", () => ({
 }));
 
 vi.mock("../../hooks/useRealtimeNotes", () => ({
-  useRealtimeNotes: (userId: string | undefined) => useRealtimeNotesMock(userId)
+  useRealtimeNotes: (userId: string | undefined, callbacks?: unknown) => useRealtimeNotesMock(userId, callbacks)
+}));
+
+vi.mock("../../hooks/useUpdateNote", () => ({
+  useUpdateNote: () => ({
+    mutateAsync: vi.fn()
+  })
+}));
+
+vi.mock("expo-router", () => ({
+  useFocusEffect: () => {}
 }));
 
 vi.mock("../../components/MobileCategoryFilter", () => ({
@@ -83,6 +93,6 @@ describe("mobile notes screen smoke", () => {
 
     expect(text).toContain("Category Filter");
     expect(text).toContain("Notes count: 2");
-    expect(useRealtimeNotesMock).toHaveBeenCalledWith("user-1");
+    expect(useRealtimeNotesMock).toHaveBeenCalledWith("user-1", expect.any(Object));
   });
 });

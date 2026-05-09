@@ -8,13 +8,16 @@ import { colors, radii } from "../lib/theme";
 type MobileCategoryFilterProps = {
   selectedCategory: Category | "all";
   onSelectCategory: (category: Category | "all") => void;
+  disabled?: boolean;
 };
 
 export function MobileCategoryFilter({
   selectedCategory,
   onSelectCategory,
+  disabled = false,
 }: MobileCategoryFilterProps) {
   function handleSelect(value: Category | "all") {
+    if (disabled) return;
     if (value === selectedCategory) return;
     try {
       Haptics.selectionAsync();
@@ -35,8 +38,13 @@ export function MobileCategoryFilter({
         testID={testIds.notes.filterAll}
         accessibilityRole="button"
         accessibilityLabel="Filter: All notes"
-        accessibilityState={{ selected: selectedCategory === "all" }}
-        style={[styles.filterButton, selectedCategory === "all" && styles.filterButtonSelected]}
+        accessibilityState={{ selected: selectedCategory === "all", disabled }}
+        disabled={disabled}
+        style={[
+          styles.filterButton,
+          selectedCategory === "all" && styles.filterButtonSelected,
+          disabled && styles.filterButtonDisabled,
+        ]}
         onPress={() => handleSelect("all")}
       >
         <Text
@@ -52,10 +60,12 @@ export function MobileCategoryFilter({
           testID={testIds.notes.filterCategory(category)}
           accessibilityRole="button"
           accessibilityLabel={`Filter: ${formatCategoryLabel(category)} notes`}
-          accessibilityState={{ selected: selectedCategory === category }}
+          accessibilityState={{ selected: selectedCategory === category, disabled }}
+          disabled={disabled}
           style={[
             styles.filterButton,
             selectedCategory === category && styles.filterButtonSelected,
+            disabled && styles.filterButtonDisabled,
           ]}
           onPress={() => handleSelect(category)}
         >
@@ -97,6 +107,9 @@ const styles = StyleSheet.create({
   },
   filterButtonSelected: {
     backgroundColor: colors.accentLight,
+  },
+  filterButtonDisabled: {
+    opacity: 0.5,
   },
   filterText: {
     fontSize: 14,
