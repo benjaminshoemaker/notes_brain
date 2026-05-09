@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import type { NoteWithAttachments } from "@notesbrain/shared";
 
@@ -66,6 +66,11 @@ export function applyRealtimeNoteDelete(
 
 export function useRealtimeNotes(userId: string | undefined, callbacks?: RealtimeNoteCallbacks) {
   const queryClient = useQueryClient();
+  const callbacksRef = useRef(callbacks);
+
+  useEffect(() => {
+    callbacksRef.current = callbacks;
+  }, [callbacks]);
 
   useEffect(() => {
     if (!userId) return;
@@ -84,7 +89,7 @@ export function useRealtimeNotes(userId: string | undefined, callbacks?: Realtim
           const updatedNote = payload.new as NoteWithAttachments;
 
           queryClient.setQueryData<NoteWithAttachments[]>(["notes"], (old) => {
-            return applyRealtimeNoteUpdate(old, updatedNote, callbacks);
+            return applyRealtimeNoteUpdate(old, updatedNote, callbacksRef.current);
           });
         }
       )
@@ -116,7 +121,7 @@ export function useRealtimeNotes(userId: string | undefined, callbacks?: Realtim
           const deletedNote = payload.old as { id: string };
 
           queryClient.setQueryData<NoteWithAttachments[]>(["notes"], (old) => {
-            return applyRealtimeNoteDelete(old, deletedNote, callbacks);
+            return applyRealtimeNoteDelete(old, deletedNote, callbacksRef.current);
           });
         }
       )
@@ -125,5 +130,5 @@ export function useRealtimeNotes(userId: string | undefined, callbacks?: Realtim
     return () => {
       supabase.removeChannel(channel);
     };
-  }, [userId, queryClient, callbacks]);
+  }, [userId, queryClient]);
 }
