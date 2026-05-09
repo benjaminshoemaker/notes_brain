@@ -149,15 +149,15 @@ Extend `useRealtimeNotes` so active edit rows can opt out of immediate cache ove
 **Requirement:** FEATURE_SPEC Acceptance Criteria 9, 13; FEATURE_TECHNICAL_SPEC "Realtime Coordination"
 
 **Acceptance Criteria:**
-- [ ] (TEST) UPDATE events for read-mode notes still update the `["notes"]` cache.
+- [x] (TEST) UPDATE events for read-mode notes still update the `["notes"]` cache.
   - Verify: `cd apps/mobile && npm test -- test/smoke/realtime-notes.test.ts`
-- [ ] (TEST) UPDATE events where `onRemoteUpdate` returns true skip cache replacement and invoke the active-edit callback path.
+- [x] (TEST) UPDATE events where `onRemoteUpdate` returns true skip cache replacement and invoke the active-edit callback path.
   - Verify: `cd apps/mobile && npm test -- test/smoke/realtime-notes.test.ts`
-- [ ] (TEST) DELETE events where `onRemoteDelete` returns true skip immediate cache removal and invoke the active-edit callback path.
+- [x] (TEST) DELETE events where `onRemoteDelete` returns true skip immediate cache removal and invoke the active-edit callback path.
   - Verify: `cd apps/mobile && npm test -- test/smoke/realtime-notes.test.ts`
-- [ ] (CODE) `useRealtimeNotes` accepts an optional callbacks object with `onRemoteUpdate` and `onRemoteDelete`.
+- [x] (CODE) `useRealtimeNotes` accepts an optional callbacks object with `onRemoteUpdate` and `onRemoteDelete`.
   - Verify: `rg "onRemoteUpdate|onRemoteDelete|RealtimeNoteCallbacks" apps/mobile/hooks/useRealtimeNotes.ts`
-- [ ] (TYPE) Existing `useRealtimeNotes(userId)` callers remain valid.
+- [x] (TYPE) Existing `useRealtimeNotes(userId)` callers remain valid.
   - Verify: `cd apps/mobile && npm run typecheck`
 
 **Files to Create:**

@@ -4,7 +4,67 @@ import type { NoteWithAttachments } from "@notesbrain/shared";
 
 import { supabase } from "../lib/supabaseClient";
 
-export function useRealtimeNotes(userId: string | undefined) {
+export type RealtimeNoteCallbacks = {
+  onRemoteUpdate?: (noteId: string) => boolean;
+  onRemoteDelete?: (noteId: string) => boolean;
+};
+
+export function applyRealtimeNoteUpdate(
+  old: NoteWithAttachments[] | undefined,
+  updatedNote: NoteWithAttachments,
+  callbacks?: RealtimeNoteCallbacks
+) {
+  if (callbacks?.onRemoteUpdate?.(updatedNote.id)) {
+    return old;
+  }
+
+  if (!old) return old;
+
+  return old.map((note) => {
+    if (note.id === updatedNote.id) {
+      return {
+        ...note,
+        ...updatedNote,
+        attachments: Array.isArray(updatedNote.attachments)
+          ? updatedNote.attachments
+          : note.attachments,
+      };
+    }
+    return note;
+  });
+}
+
+export function applyRealtimeNoteInsert(
+  old: NoteWithAttachments[] | undefined,
+  newNote: NoteWithAttachments
+) {
+  const noteWithAttachments = {
+    ...newNote,
+    attachments: Array.isArray(newNote.attachments) ? newNote.attachments : [],
+  };
+
+  if (!old) return [noteWithAttachments];
+
+  const exists = old.some((note) => note.id === newNote.id);
+  if (exists) return old;
+
+  return [noteWithAttachments, ...old];
+}
+
+export function applyRealtimeNoteDelete(
+  old: NoteWithAttachments[] | undefined,
+  deletedNote: { id: string },
+  callbacks?: RealtimeNoteCallbacks
+) {
+  if (callbacks?.onRemoteDelete?.(deletedNote.id)) {
+    return old;
+  }
+
+  if (!old) return old;
+  return old.filter((note) => note.id !== deletedNote.id);
+}
+
+export function useRealtimeNotes(userId: string | undefined, callbacks?: RealtimeNoteCallbacks) {
   const queryClient = useQueryClient();
 
   useEffect(() => {
@@ -24,14 +84,7 @@ export function useRealtimeNotes(userId: string | undefined) {
           const updatedNote = payload.new as NoteWithAttachments;
 
           queryClient.setQueryData<NoteWithAttachments[]>(["notes"], (old) => {
-            if (!old) return old;
-
-            return old.map((note) => {
-              if (note.id === updatedNote.id) {
-                return { ...note, ...updatedNote };
-              }
-              return note;
-            });
+            return applyRealtimeNoteUpdate(old, updatedNote, callbacks);
           });
         }
       )
@@ -47,12 +100,7 @@ export function useRealtimeNotes(userId: string | undefined) {
           const newNote = payload.new as NoteWithAttachments;
 
           queryClient.setQueryData<NoteWithAttachments[]>(["notes"], (old) => {
-            if (!old) return [{ ...newNote, attachments: [] }];
-
-            const exists = old.some((note) => note.id === newNote.id);
-            if (exists) return old;
-
-            return [{ ...newNote, attachments: [] }, ...old];
+            return applyRealtimeNoteInsert(old, newNote);
           });
         }
       )
@@ -68,8 +116,7 @@ export function useRealtimeNotes(userId: string | undefined) {
           const deletedNote = payload.old as { id: string };
 
           queryClient.setQueryData<NoteWithAttachments[]>(["notes"], (old) => {
-            if (!old) return old;
-            return old.filter((note) => note.id !== deletedNote.id);
+            return applyRealtimeNoteDelete(old, deletedNote, callbacks);
           });
         }
       )
@@ -78,5 +125,5 @@ export function useRealtimeNotes(userId: string | undefined) {
     return () => {
       supabase.removeChannel(channel);
     };
-  }, [userId, queryClient]);
+  }, [userId, queryClient, callbacks]);
 }
