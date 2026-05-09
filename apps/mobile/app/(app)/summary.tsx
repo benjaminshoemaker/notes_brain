@@ -26,7 +26,6 @@ type LensResultSection = {
   data: LensResultWithLens[];
 };
 
-const LENS_FORM_ROUTE = "/(app)/lens-form" as Href;
 const LENS_MANAGE_ROUTE = "/(app)/lens-manage" as Href;
 
 function groupResultsByDate(results: LensResultWithLens[]): LensResultSection[] {
@@ -64,7 +63,7 @@ export default function SummaryScreen() {
             accessibilityRole="button"
             hitSlop={8}
             onPress={() => {
-              router.push(LENS_FORM_ROUTE);
+              router.push("/(app)/lens-create" as Href);
             }}
             style={styles.headerButton}
           >
@@ -154,12 +153,14 @@ export default function SummaryScreen() {
               </Text>
               <Pressable
                 accessibilityRole="button"
+                testID={testIds.summary.createButton}
                 onPress={() => {
-                  router.push(LENS_FORM_ROUTE);
+                  router.push("/(app)/lens-create" as Href);
                 }}
                 style={styles.emptyButton}
               >
                 <Text style={styles.emptyButtonText}>Create Lens</Text>
+                {/* lens-create route */}
               </Pressable>
             </View>
           }
