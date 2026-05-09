@@ -72,12 +72,21 @@ test("shared lens types should include source metadata and templates", async () 
 
 test("shared supabase database type should include source metadata", async () => {
   const source = await readFileText(SHARED_SUPABASE_PATH);
+  const lensesSection = source.match(/lenses:\s*{[\s\S]*?Relationships: \[\];\n      };/)?.[0];
+
+  assert.ok(lensesSection, "Expected to find lenses table section");
+
+  const rowSection = lensesSection.match(/Row:\s*{[\s\S]*?};/)?.[0];
+  const insertSection = lensesSection.match(/Insert:\s*{[\s\S]*?};/)?.[0];
+  const updateSection = lensesSection.match(/Update:\s*{[\s\S]*?};/)?.[0];
+
+  assert.ok(rowSection, "Expected to find lenses Row type");
+  assert.ok(insertSection, "Expected to find lenses Insert type");
+  assert.ok(updateSection, "Expected to find lenses Update type");
 
   for (const field of METADATA_FIELDS) {
-    assert.match(source, new RegExp(field));
+    assert.match(rowSection, new RegExp(`${field}:`));
+    assert.match(insertSection, new RegExp(`${field}\\?:`));
+    assert.match(updateSection, new RegExp(`${field}\\?:`));
   }
-
-  assert.match(source, /Row:\s*{[\s\S]*source_template_id: string \| null/);
-  assert.match(source, /Insert:\s*{[\s\S]*source_template_version\?: number \| null/);
-  assert.match(source, /Update:\s*{[\s\S]*source_template_id\?: string \| null/);
 });
