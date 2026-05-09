@@ -224,15 +224,18 @@ export function getTemplateInstallState(
   template: LensTemplate,
   lenses: Lens[]
 ): { installState: LensLibraryInstallState; installedLens: Lens | null } {
-  const installedLens = lenses.find((lens) => lens.source_template_id === template.template_id) ?? null;
+  const installedLenses = lenses.filter((lens) => lens.source_template_id === template.template_id);
 
-  if (!installedLens) {
+  if (installedLenses.length === 0) {
     return { installState: "Not installed", installedLens: null };
   }
 
-  if ((installedLens.source_template_version ?? 0) < template.version) {
-    return { installState: "Update available", installedLens };
+  const currentVersionLens =
+    installedLenses.find((lens) => (lens.source_template_version ?? 0) >= template.version) ?? null;
+
+  if (currentVersionLens) {
+    return { installState: "Installed", installedLens: currentVersionLens };
   }
 
-  return { installState: "Installed", installedLens };
+  return { installState: "Update available", installedLens: installedLenses[0] };
 }

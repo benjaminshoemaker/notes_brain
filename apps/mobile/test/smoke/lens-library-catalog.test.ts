@@ -112,4 +112,23 @@ describe("lens library catalog", () => {
 
     expect(getTemplateInstallState(template, [lens]).installState).toBe("Update available");
   });
+
+  it("treats a template as Installed when any matching copy has the current version", () => {
+    const template = { ...curatedLensTemplates[0], version: 2 };
+    const olderLens = createLens({
+      id: "older-lens",
+      source_template_id: "morning-briefing",
+      source_template_version: 1
+    });
+    const currentLens = createLens({
+      id: "current-lens",
+      source_template_id: "morning-briefing",
+      source_template_version: 2
+    });
+
+    expect(getTemplateInstallState(template, [olderLens, currentLens])).toMatchObject({
+      installState: "Installed",
+      installedLens: currentLens
+    });
+  });
 });
