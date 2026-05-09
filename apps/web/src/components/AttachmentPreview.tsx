@@ -44,7 +44,7 @@ export function AttachmentPreview({ attachment }: Props) {
             height: 72,
             objectFit: "cover",
             borderRadius: 8,
-            border: "1px solid #ddd"
+            border: "1px solid var(--color-border)"
           }}
         />
       </a>
@@ -53,15 +53,15 @@ export function AttachmentPreview({ attachment }: Props) {
 
   if (isPdfAttachment(attachment)) {
     return (
-      <a href={url} target="_blank" rel="noreferrer">
-        <span style={{ fontWeight: 600, marginRight: 6 }}>PDF</span>
+      <a href={url} target="_blank" rel="noreferrer" className="badge">
+        <span style={{ fontWeight: 700, marginRight: 6 }}>PDF</span>
         {attachment.filename}
       </a>
     );
   }
 
   return (
-    <a href={url} target="_blank" rel="noreferrer">
+    <a href={url} target="_blank" rel="noreferrer" className="badge">
       {attachment.filename}
     </a>
   );

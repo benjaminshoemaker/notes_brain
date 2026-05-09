@@ -67,23 +67,9 @@ export function FileDropZone({ children, onFilesDropped }: Props) {
       {isActive ? (
         <div
           data-testid="file-drop-overlay"
-          style={{
-            position: "fixed",
-            inset: 0,
-            background: "rgba(0,0,0,0.08)",
-            display: "grid",
-            placeItems: "center",
-            zIndex: 40
-          }}
+          className="drop-overlay"
         >
-          <div
-            style={{
-              background: "white",
-              border: "1px dashed #999",
-              padding: 24,
-              borderRadius: 12
-            }}
-          >
+          <div className="drop-card">
             Drop files to upload
           </div>
         </div>
@@ -91,4 +77,3 @@ export function FileDropZone({ children, onFilesDropped }: Props) {
     </div>
   );
 }
-

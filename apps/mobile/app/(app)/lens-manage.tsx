@@ -458,7 +458,7 @@ export default function LensManageScreen() {
               </View>
               <Text style={styles.stateTitle}>No lenses yet</Text>
               <Text style={styles.stateText}>
-                No lenses yet. Create one from the Summary tab.
+                No lenses yet. Create one from the Lenses tab.
               </Text>
             </View>
           }
@@ -630,6 +630,7 @@ const styles = StyleSheet.create({
     gap: spacing.sm,
   },
   actionButton: {
+    minHeight: 48,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",

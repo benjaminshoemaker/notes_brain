@@ -89,25 +89,26 @@ export default function SettingsPage() {
   }
 
   return (
-    <div style={{ display: "grid", gap: 16, maxWidth: 520 }}>
+    <main className="app-shell">
+    <div className="notes-layout" style={{ maxWidth: 560 }}>
       <header>
-        <h1 style={{ marginBottom: 4 }}>Settings</h1>
-        <p style={{ margin: 0, color: "#4b5563" }}>
+        <h1 className="page-title">Settings</h1>
+        <p className="muted" style={{ margin: "4px 0 0" }}>
           Daily summaries are delivered at 8:00 AM in your selected timezone.
         </p>
       </header>
 
       {isLoading ? <LoadingSpinner label="Loading settings…" /> : null}
-      {error ? <p role="alert">Failed to load settings.</p> : null}
+      {error ? <p role="alert" className="alert alert-error">Failed to load settings.</p> : null}
 
       {!isLoading && !error ? (
-        <label style={{ display: "grid", gap: 6 }}>
+        <label className="panel">
           <span style={{ fontWeight: 600 }}>Timezone</span>
           <select
+            className="select"
             value={selectedTimezone}
             onChange={handleTimezoneChange}
             disabled={updateTimezone.isPending}
-            style={{ padding: "8px 10px", borderRadius: 6, borderColor: "#d1d5db" }}
           >
             {timezones.map((timezone) => (
               <option key={timezone} value={timezone}>
@@ -116,10 +117,11 @@ export default function SettingsPage() {
             ))}
           </select>
           {updateTimezone.isPending ? (
-            <span style={{ fontSize: 12, color: "#6b7280" }}>Saving...</span>
+            <span className="helper-text" style={{ fontSize: 12 }}>Saving...</span>
           ) : null}
         </label>
       ) : null}
     </div>
+    </main>
   );
 }

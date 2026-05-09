@@ -18,7 +18,7 @@ export const colors = {
   // Text
   text: "#1C1917",
   textSecondary: "#57534E",
-  textMuted: "#A8A29E",
+  textMuted: "#6B625C",
   textInverse: "#FFFFFF",
 
   // Accent
@@ -27,23 +27,25 @@ export const colors = {
   accentHover: "#4338CA",
 
   // Semantic
-  success: "#16A34A",
+  success: "#15803D",
   successLight: "#F0FDF4",
-  error: "#DC2626",
+  error: "#B91C1C",
   errorLight: "#FEF2F2",
-  warning: "#D97706",
+  warning: "#B45309",
   warningLight: "#FFFBEB",
 } as const;
 
 export type CategoryTint = { bg: string; text: string };
 
 export const categoryTints: Record<string, CategoryTint> = {
-  task: { bg: "#EFF6FF", text: "#2563EB" },
-  idea: { bg: "#F5F3FF", text: "#7C3AED" },
-  journal: { bg: "#F0FDF4", text: "#16A34A" },
-  reference: { bg: "#FFFBEB", text: "#D97706" },
-  uncategorized: { bg: "#F5F5F4", text: "#78716C" },
-  pending: { bg: "#F5F5F4", text: "#78716C" },
+  ideas: { bg: "#F5F3FF", text: "#6D28D9" },
+  projects: { bg: "#EFF6FF", text: "#1D4ED8" },
+  family: { bg: "#FFF7ED", text: "#9A3412" },
+  friends: { bg: "#FDF2F8", text: "#BE185D" },
+  health: { bg: "#F0FDF4", text: "#15803D" },
+  admin: { bg: "#FFFBEB", text: "#92400E" },
+  uncategorized: { bg: "#F5F5F4", text: "#57534E" },
+  pending: { bg: "#F5F5F4", text: "#57534E" },
 };
 
 export function getCategoryTint(category: string): CategoryTint {

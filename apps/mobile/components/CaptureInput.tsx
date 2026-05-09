@@ -14,7 +14,7 @@ import * as Haptics from "expo-haptics";
 import { MAX_VOICE_SECONDS } from "@notesbrain/shared";
 
 import { testIds } from "../lib/testIds";
-import { colors, radii, shadows } from "../lib/theme";
+import { colors, radii, shadows, spacing } from "../lib/theme";
 import { useVoiceRecording } from "../hooks/useVoiceRecording";
 
 type CaptureInputProps = {
@@ -170,13 +170,17 @@ export function CaptureInput({
         </View>
       ) : (
         <>
+          <View style={styles.composerHeader}>
+            <Ionicons name="create-outline" size={18} color={colors.accent} />
+            <Text style={styles.composerTitle}>Quick capture</Text>
+          </View>
           <TextInput
             ref={inputRef}
             testID={testIds.capture.textInput}
             style={styles.input}
             value={content}
             onChangeText={setContent}
-            placeholder="Message Echo..."
+            placeholder="Type a thought, task, link, or idea..."
             placeholderTextColor={colors.textMuted}
             multiline
             maxLength={5000}
@@ -233,10 +237,21 @@ const styles = StyleSheet.create({
     padding: 12,
     ...shadows.md,
   },
+  composerHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: spacing.sm,
+    marginBottom: spacing.sm,
+  },
+  composerTitle: {
+    fontSize: 14,
+    fontWeight: "600",
+    color: colors.textSecondary,
+  },
   input: {
     fontSize: 16,
     lineHeight: 23,
-    minHeight: 64,
+    minHeight: 92,
     maxHeight: 200,
     textAlignVertical: "top",
     color: colors.text,
@@ -248,16 +263,16 @@ const styles = StyleSheet.create({
     marginTop: 12,
   },
   micButton: {
-    width: 38,
-    height: 38,
+    width: 48,
+    height: 48,
     borderRadius: radii.pill,
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: colors.accentLight,
   },
   submitButton: {
-    minWidth: 72,
-    minHeight: 38,
+    minWidth: 88,
+    minHeight: 48,
     backgroundColor: colors.accent,
     borderRadius: radii.pill,
     paddingHorizontal: 18,
@@ -329,7 +344,7 @@ const styles = StyleSheet.create({
   },
   cancelButton: {
     flex: 1,
-    minHeight: 42,
+    minHeight: 48,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
@@ -346,7 +361,7 @@ const styles = StyleSheet.create({
   },
   stopButton: {
     flex: 1,
-    minHeight: 42,
+    minHeight: 48,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",

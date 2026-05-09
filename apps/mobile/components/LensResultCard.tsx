@@ -1,4 +1,6 @@
-import { StyleSheet, Text, View } from "react-native";
+import { useState } from "react";
+import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 import Markdown, { MarkdownIt, type RenderRules } from "react-native-markdown-display";
 import type { LensResultWithLens } from "@notesbrain/shared";
 
@@ -21,6 +23,9 @@ const LENS_COLORS = [
 ];
 
 const WEEKDAY_LABELS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+const COLLAPSED_CONTENT_HEIGHT = 132;
+const COLLAPSE_CHARACTER_THRESHOLD = 240;
+const COLLAPSE_LINE_THRESHOLD = 6;
 
 const markdownParser = new MarkdownIt({
   typographer: true,
@@ -93,10 +98,18 @@ function childTestID(testID: string | undefined, suffix: string) {
   return testID ? `${testID}-${suffix}` : undefined;
 }
 
+function shouldShowCollapseControl(content: string) {
+  const lineCount = content.split(/\r?\n/).filter((line) => line.trim().length > 0).length;
+  return content.length > COLLAPSE_CHARACTER_THRESHOLD || lineCount > COLLAPSE_LINE_THRESHOLD;
+}
+
 export function LensResultCard({ result, testID }: LensResultCardProps) {
+  const [isExpanded, setIsExpanded] = useState(false);
   const lensColor = getLensColor(result.lens.name);
   const scheduleLabel = formatSchedule(result);
   const timestampLabel = formatTimestamp(result.generated_at);
+  const canCollapse = shouldShowCollapseControl(result.content);
+  const isCollapsed = canCollapse && !isExpanded;
 
   return (
     <View testID={testID} style={styles.container}>
@@ -136,7 +149,10 @@ export function LensResultCard({ result, testID }: LensResultCardProps) {
 
       <View style={styles.separator} />
 
-      <View testID={childTestID(testID, "content")} style={styles.content}>
+      <View
+        testID={childTestID(testID, "content")}
+        style={[styles.content, isCollapsed && styles.contentCollapsed]}
+      >
         <Markdown
           markdownit={markdownParser}
           onLinkPress={() => false}
@@ -146,6 +162,22 @@ export function LensResultCard({ result, testID }: LensResultCardProps) {
           {result.content}
         </Markdown>
       </View>
+
+      {canCollapse && (
+        <Pressable
+          accessibilityRole="button"
+          accessibilityLabel={isExpanded ? "Collapse lens result" : "Expand lens result"}
+          onPress={() => setIsExpanded((value) => !value)}
+          style={styles.expandButton}
+        >
+          <Text style={styles.expandText}>{isExpanded ? "Show less" : "Show more"}</Text>
+          <Ionicons
+            name={isExpanded ? "chevron-up" : "chevron-down"}
+            size={16}
+            color={colors.accent}
+          />
+        </Pressable>
+      )}
     </View>
   );
 }
@@ -208,6 +240,26 @@ const styles = StyleSheet.create({
   },
   content: {
     minWidth: 0,
+  },
+  contentCollapsed: {
+    maxHeight: COLLAPSED_CONTENT_HEIGHT,
+    overflow: "hidden",
+  },
+  expandButton: {
+    minHeight: 48,
+    alignSelf: "flex-start",
+    flexDirection: "row",
+    alignItems: "center",
+    gap: spacing.xs,
+    borderRadius: radii.pill,
+    backgroundColor: colors.accentLight,
+    paddingHorizontal: spacing.sm,
+    paddingVertical: spacing.sm,
+  },
+  expandText: {
+    fontSize: 13,
+    fontWeight: "600",
+    color: colors.accent,
   },
 });
 

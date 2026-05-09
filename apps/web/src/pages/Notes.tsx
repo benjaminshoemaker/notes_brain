@@ -113,19 +113,20 @@ export default function NotesPage() {
 
   return (
     <FileDropZone onFilesDropped={handleFilesDropped}>
-      <div style={{ display: "grid", gap: 16 }}>
-        <header style={{ display: "flex", alignItems: "center", gap: 12 }}>
-          <h1 style={{ margin: 0 }}>Notes</h1>
+      <main className="app-shell">
+        <div className="notes-layout">
+        <header className="page-header">
+          <h1 className="page-title">Notes</h1>
 
-          <div style={{ flex: 1 }}>
+          <div style={{ flex: 1, minWidth: 220 }}>
             <SearchInput value={searchQuery} onChange={setSearchQuery} />
           </div>
 
-          <div style={{ marginLeft: "auto", display: "flex", gap: 8 }}>
+          <div className="row" style={{ marginLeft: "auto" }}>
             <Link to="/settings">
-              <button type="button">Settings</button>
+              <button className="button button-neutral" type="button">Settings</button>
             </Link>
-            <button type="button" onClick={handleLogout}>
+            <button className="button button-danger" type="button" onClick={handleLogout}>
               Logout
             </button>
           </div>
@@ -135,13 +136,7 @@ export default function NotesPage() {
 
         {pendingFile ? (
           <div
-            style={{
-              border: "1px solid #ddd",
-              borderRadius: 10,
-              padding: 12,
-              display: "grid",
-              gap: 10
-            }}
+            className="panel"
           >
             <div>
               <strong>Upload:</strong> {pendingFile.name}
@@ -149,11 +144,21 @@ export default function NotesPage() {
 
             <CategorySelect value={pendingFileCategory} onChange={setPendingFileCategory} />
 
-            <div style={{ display: "flex", gap: 8 }}>
-              <button type="button" onClick={handleUploadPendingFile} disabled={uploadFile.isPending}>
+            <div className="row">
+              <button
+                className="button button-primary"
+                type="button"
+                onClick={handleUploadPendingFile}
+                disabled={uploadFile.isPending}
+              >
                 {uploadFile.isPending ? "Uploading..." : "Upload file"}
               </button>
-              <button type="button" onClick={() => setPendingFile(null)} disabled={uploadFile.isPending}>
+              <button
+                className="button button-neutral"
+                type="button"
+                onClick={() => setPendingFile(null)}
+                disabled={uploadFile.isPending}
+              >
                 Cancel
               </button>
             </div>
@@ -163,7 +168,7 @@ export default function NotesPage() {
         <CategoryFilter selectedCategory={selectedCategory} onSelectCategory={setSelectedCategory} />
 
         {isLoading ? <LoadingSpinner label="Loading notes…" /> : null}
-        {error ? <p role="alert">Failed to load notes.</p> : null}
+        {error ? <p role="alert" className="alert alert-error">Failed to load notes.</p> : null}
         {isSearchMode && (isSearchLoading || isSearchFetching) ? (
           <LoadingSpinner label="Searching…" />
         ) : null}
@@ -172,12 +177,13 @@ export default function NotesPage() {
 
         {!isLoading && !error && isSearchMode ? (
           filteredNotes.length === 0 && !isSearchLoading ? (
-            <p>No matching notes.</p>
+	            <p className="muted">No matching notes.</p>
           ) : (
             <NoteList notes={filteredNotes} />
           )
         ) : null}
-      </div>
+        </div>
+      </main>
     </FileDropZone>
   );
 }

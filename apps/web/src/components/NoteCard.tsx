@@ -44,15 +44,9 @@ export function NoteCard({ note }: Props) {
   return (
     <article
       data-testid="note-card"
-      style={{
-        border: "1px solid #ddd",
-        borderRadius: 8,
-        padding: 12,
-        display: "grid",
-        gap: 8
-      }}
+      className="note-card"
     >
-      <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+      <div className="note-card__header">
         {isEditingCategory ? (
           <CategoryEditor
             noteId={note.id}
@@ -62,18 +56,9 @@ export function NoteCard({ note }: Props) {
         ) : (
           <button
             type="button"
+            className="badge badge-button"
             data-highlighted={isCategoryHighlighted ? "true" : undefined}
             onClick={() => setIsEditingCategory(true)}
-            style={{
-              fontSize: 12,
-              fontWeight: 600,
-              border: "1px solid #ddd",
-              background: isCategoryHighlighted ? "#fff7cc" : "white",
-              transition: "background 200ms ease",
-              borderRadius: 999,
-              padding: "2px 8px",
-              cursor: "pointer"
-            }}
           >
             {note.category}
           </button>
@@ -81,29 +66,24 @@ export function NoteCard({ note }: Props) {
         <time
           data-testid="note-timestamp"
           dateTime={note.created_at}
-          style={{ marginLeft: "auto", fontSize: 12, color: "#555" }}
+          className="note-card__time"
         >
           {new Date(note.created_at).toLocaleString()}
         </time>
         {attachmentCount > 0 ? (
           <span
             data-testid="attachment-count"
-            style={{
-              fontSize: 12,
-              border: "1px solid #ddd",
-              borderRadius: 999,
-              padding: "2px 8px"
-            }}
+            className="badge"
           >
             {attachmentCount}
           </span>
         ) : null}
       </div>
 
-      <p style={{ margin: 0, whiteSpace: "pre-wrap" }}>{preview}</p>
+      <p className="note-card__content">{preview}</p>
 
       {attachmentCount > 0 ? (
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+        <div className="filter-row">
           {note.attachments.map((attachment) => (
             <AttachmentPreview key={attachment.id} attachment={attachment} />
           ))}

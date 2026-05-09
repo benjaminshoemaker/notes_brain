@@ -24,11 +24,12 @@ export function NoteInput() {
   }
 
   return (
-    <div style={{ display: "grid", gap: 8 }}>
+    <div className="panel">
       <textarea
         ref={textareaRef}
+        className="textarea"
         aria-label="New note"
-        placeholder="Type a note…"
+        placeholder="Type a thought, task, link, or idea..."
         rows={3}
         value={value}
         onChange={(event) => setValue(event.target.value)}
@@ -39,8 +40,13 @@ export function NoteInput() {
           }
         }}
       />
-      <div>
-        <button type="button" onClick={submit} disabled={createNote.isPending}>
+      <div className="row" style={{ justifyContent: "flex-end" }}>
+        <button
+          className="button button-primary"
+          type="button"
+          onClick={submit}
+          disabled={createNote.isPending}
+        >
           {createNote.isPending ? "Saving..." : "Add note"}
         </button>
       </div>

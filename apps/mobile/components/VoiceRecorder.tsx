@@ -139,6 +139,7 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   micButton: {
+    minHeight: 48,
     flexDirection: "row",
     alignItems: "center",
     backgroundColor: colors.accent,
@@ -207,6 +208,7 @@ const styles = StyleSheet.create({
     gap: 12,
   },
   cancelButton: {
+    minHeight: 48,
     flexDirection: "row",
     alignItems: "center",
     gap: 6,
@@ -223,6 +225,7 @@ const styles = StyleSheet.create({
     fontWeight: "600",
   },
   stopButton: {
+    minHeight: 48,
     flexDirection: "row",
     alignItems: "center",
     gap: 6,

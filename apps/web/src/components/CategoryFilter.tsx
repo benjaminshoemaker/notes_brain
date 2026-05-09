@@ -11,8 +11,9 @@ function formatLabel(category: string) {
 
 export function CategoryFilter({ selectedCategory, onSelectCategory }: Props) {
   return (
-    <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+    <div className="filter-row">
       <button
+        className="filter-pill"
         type="button"
         aria-pressed={selectedCategory === null}
         onClick={() => onSelectCategory(null)}
@@ -23,6 +24,7 @@ export function CategoryFilter({ selectedCategory, onSelectCategory }: Props) {
       {CATEGORIES.map((category) => (
         <button
           key={category}
+          className="filter-pill"
           type="button"
           aria-pressed={selectedCategory === category}
           onClick={() => onSelectCategory(category)}
@@ -33,4 +35,3 @@ export function CategoryFilter({ selectedCategory, onSelectCategory }: Props) {
     </div>
   );
 }
-

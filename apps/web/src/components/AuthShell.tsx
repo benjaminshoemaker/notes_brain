@@ -1,12 +1,5 @@
 import type { ReactNode } from "react";
 
-const baseInput: React.CSSProperties = {
-  width: "100%",
-  padding: "10px 12px",
-  borderRadius: 6,
-  border: "1px solid #d0d7de",
-};
-
 type AuthShellProps = {
   title: string;
   subtitle?: string;
@@ -25,35 +18,30 @@ export function AuthShell({
   footer,
 }: AuthShellProps) {
   return (
-    <div style={authStyles.container}>
-      <h1 style={authStyles.title}>{title}</h1>
-      {subtitle ? <p style={authStyles.subtitle}>{subtitle}</p> : null}
+    <main className="auth-page">
+      <div className="auth-card">
+        <h1 className="auth-title">{title}</h1>
+        {subtitle ? <p className="muted" style={authStyles.subtitle}>{subtitle}</p> : null}
 
-      {children}
+        {children}
 
-      {error ? (
-        <p role="alert" style={authStyles.error}>
-          {error}
-        </p>
-      ) : null}
+        {error ? (
+          <p role="alert" className="alert alert-error" style={authStyles.message}>
+            {error}
+          </p>
+        ) : null}
 
-      {status ? <p style={authStyles.status}>{status}</p> : null}
+        {status ? <p className="alert alert-success" style={authStyles.message}>{status}</p> : null}
 
-      {footer ? <div style={authStyles.footer}>{footer}</div> : null}
-    </div>
+        {footer ? <div style={authStyles.footer}>{footer}</div> : null}
+      </div>
+    </main>
   );
 }
 
 export const authStyles: Record<string, React.CSSProperties> = {
-  container: {
-    maxWidth: 420,
-  },
-  title: {
-    margin: "0 0 8px",
-  },
   subtitle: {
-    margin: "0 0 20px",
-    color: "#57606a",
+    margin: "6px 0 20px",
   },
   form: {
     display: "grid",
@@ -66,40 +54,17 @@ export const authStyles: Record<string, React.CSSProperties> = {
   label: {
     fontWeight: 600,
   },
-  input: baseInput,
-  button: {
-    padding: "10px 12px",
-    borderRadius: 6,
-    border: "1px solid transparent",
-    cursor: "pointer",
-  },
-  primaryButton: {
-    backgroundColor: "#1f6feb",
-    color: "#ffffff",
-  },
-  secondaryButton: {
-    backgroundColor: "transparent",
-    color: "#1f6feb",
-    borderColor: "#1f6feb",
-  },
-  buttonDisabled: {
-    opacity: 0.6,
-    cursor: "not-allowed",
-  },
-  error: {
-    color: "crimson",
-    marginTop: 12,
-  },
-  status: {
+  input: {},
+  message: {
     marginTop: 12,
   },
   footer: {
     marginTop: 12,
   },
   footerText: {
-    color: "#57606a",
+    color: "var(--color-text-secondary)",
   },
   link: {
-    color: "#1f6feb",
+    color: "var(--color-accent)",
   },
 };

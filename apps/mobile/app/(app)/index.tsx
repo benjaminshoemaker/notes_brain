@@ -140,13 +140,13 @@ const styles = StyleSheet.create({
   },
   scrollContent: {
     flexGrow: 1,
-    justifyContent: "center",
+    justifyContent: "flex-start",
     padding: spacing.lg,
-    paddingTop: spacing.xl,
+    paddingTop: spacing.xxl,
     paddingBottom: 96,
   },
   prompt: {
-    marginBottom: spacing.lg,
+    marginBottom: spacing.md,
   },
   greeting: {
     fontSize: 15,
@@ -158,7 +158,7 @@ const styles = StyleSheet.create({
     lineHeight: 30,
     fontWeight: "700",
     color: colors.text,
-    marginBottom: spacing.sm,
+    marginBottom: spacing.xs,
   },
   subtitle: {
     fontSize: 14,

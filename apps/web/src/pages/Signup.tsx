@@ -49,12 +49,12 @@ export default function SignupPage() {
           </label>
           <input
             id="signup-email"
+            className="input"
             type="email"
             autoComplete="email"
             value={email}
             onChange={(event) => setEmail(event.target.value)}
             required
-            style={authStyles.input}
           />
         </div>
 
@@ -64,23 +64,19 @@ export default function SignupPage() {
           </label>
           <input
             id="signup-password"
+            className="input"
             type="password"
             autoComplete="new-password"
             value={password}
             onChange={(event) => setPassword(event.target.value)}
             required
-            style={authStyles.input}
           />
         </div>
 
         <button
           type="submit"
           disabled={isSubmitting}
-          style={{
-            ...authStyles.button,
-            ...authStyles.primaryButton,
-            ...(isSubmitting ? authStyles.buttonDisabled : null),
-          }}
+          className="button button-primary"
         >
           {isSubmitting ? "Creating account..." : "Sign up"}
         </button>

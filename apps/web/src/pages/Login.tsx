@@ -74,12 +74,12 @@ export default function LoginPage() {
           </label>
           <input
             id="login-email"
+            className="input"
             type="email"
             autoComplete="email"
             value={email}
             onChange={(event) => setEmail(event.target.value)}
             required
-            style={authStyles.input}
           />
         </div>
 
@@ -89,23 +89,19 @@ export default function LoginPage() {
           </label>
           <input
             id="login-password"
+            className="input"
             type="password"
             autoComplete="current-password"
             value={password}
             onChange={(event) => setPassword(event.target.value)}
             required
-            style={authStyles.input}
           />
         </div>
 
         <button
           type="submit"
           disabled={isSubmitting}
-          style={{
-            ...authStyles.button,
-            ...authStyles.primaryButton,
-            ...(isSubmitting ? authStyles.buttonDisabled : null),
-          }}
+          className="button button-primary"
         >
           {isSubmitting ? "Signing in..." : "Sign in"}
         </button>
@@ -114,11 +110,7 @@ export default function LoginPage() {
           type="button"
           onClick={handleMagicLink}
           disabled={isSubmitting}
-          style={{
-            ...authStyles.button,
-            ...authStyles.secondaryButton,
-            ...(isSubmitting ? authStyles.buttonDisabled : null),
-          }}
+          className="button button-secondary"
         >
           {isSubmitting ? "Sending link..." : "Sign in with magic link"}
         </button>

@@ -8,15 +8,14 @@ type Props = {
 
 export function NoteList({ notes }: Props) {
   if (notes.length === 0) {
-    return <p>No notes yet.</p>;
+    return <p className="muted">No notes yet.</p>;
   }
 
   return (
-    <div style={{ display: "grid", gap: 12 }}>
+    <div className="note-list">
       {notes.map((note) => (
         <NoteCard key={note.id} note={note} />
       ))}
     </div>
   );
 }
-

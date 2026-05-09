@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
   filterButton: {
     paddingVertical: 8,
     paddingHorizontal: 16,
-    minHeight: 44,
+    minHeight: 48,
     justifyContent: "center" as const,
     borderRadius: radii.pill,
     backgroundColor: colors.surfaceRaised,

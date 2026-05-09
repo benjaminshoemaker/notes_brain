@@ -9,10 +9,11 @@ type Props = {
 
 export function CategorySelect({ value, onChange, label = "Category (optional)" }: Props) {
   return (
-    <label style={{ display: "grid", gap: 6 }}>
-      <span>{label}</span>
+    <label className="form-grid">
+      <span style={{ fontWeight: 600 }}>{label}</span>
       <select
         aria-label="Category"
+        className="select"
         value={value}
         onChange={(event) => onChange(event.target.value as Category | "")}
       >
@@ -26,4 +27,3 @@ export function CategorySelect({ value, onChange, label = "Category (optional)" 
     </label>
   );
 }
-

@@ -19,6 +19,7 @@ export function CategoryEditor({ noteId, value, onClose }: Props) {
   return (
     <select
       aria-label="Edit note category"
+      className="select"
       value={value}
       onChange={(event) => handleChange(event.target.value as Category)}
       autoFocus

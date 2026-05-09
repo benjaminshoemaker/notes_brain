@@ -46,6 +46,30 @@ const LOOKBACK_OPTIONS = [
   { label: "Last 30 days", value: 720 },
 ] as const;
 
+const LENS_PRESETS = [
+  {
+    name: "Daily Actions",
+    prompt:
+      "Review my recent notes and extract the top three concrete actions I should take next. Keep each action specific and executable.",
+    lookbackHours: 48,
+    scheduleType: "daily" as const,
+  },
+  {
+    name: "Avoidance Watch",
+    prompt:
+      "Find one thing I may be avoiding based on repeated or unresolved notes. Explain the pattern briefly and suggest a small next step.",
+    lookbackHours: 168,
+    scheduleType: "daily" as const,
+  },
+  {
+    name: "Weekly Health Review",
+    prompt:
+      "Summarize my health-related notes from the last week. Highlight sleep, exercise, mood, and any pattern worth changing next week.",
+    lookbackHours: 168,
+    scheduleType: "weekly" as const,
+  },
+] as const;
+
 function getLensId(value: string | string[] | undefined): string | null {
   if (Array.isArray(value)) {
     return value[0] ?? null;
@@ -176,6 +200,18 @@ export default function LensFormScreen() {
     });
   }
 
+  function applyPreset(preset: (typeof LENS_PRESETS)[number]) {
+    setName(preset.name);
+    setPrompt(preset.prompt);
+    setLookbackHours(preset.lookbackHours);
+    setScheduleType(preset.scheduleType);
+    setScheduleTime("08:00");
+    setScheduleDay(1);
+    if (preset.name === "Weekly Health Review") {
+      setSelectedCategories(["health"]);
+    }
+  }
+
   async function handleSave() {
     if (!canSave) {
       return;
@@ -242,6 +278,39 @@ export default function LensFormScreen() {
           {editLensMissing ? (
             <View style={[styles.section, styles.statusSection]}>
               <Text style={styles.errorText}>This lens could not be found.</Text>
+            </View>
+          ) : null}
+
+          {!isEditMode ? (
+            <View style={styles.section}>
+              <View style={styles.sectionHeader}>
+                <View style={styles.iconCircle}>
+                  <Ionicons name="sparkles-outline" size={18} color={colors.accent} />
+                </View>
+                <View style={styles.sectionHeaderText}>
+                  <Text style={styles.sectionTitle}>Start From a Preset</Text>
+                  <Text style={styles.sectionHelper}>
+                    Pick a useful lens shape, then tune the details.
+                  </Text>
+                </View>
+              </View>
+
+              <View style={styles.presetList}>
+                {LENS_PRESETS.map((preset) => (
+                  <Pressable
+                    key={preset.name}
+                    accessibilityRole="button"
+                    accessibilityLabel={`Use ${preset.name} preset`}
+                    onPress={() => applyPreset(preset)}
+                    style={styles.presetButton}
+                  >
+                    <Text style={styles.presetTitle}>{preset.name}</Text>
+                    <Text style={styles.presetText} numberOfLines={2}>
+                      {preset.prompt}
+                    </Text>
+                  </Pressable>
+                ))}
+              </View>
             </View>
           ) : null}
 
@@ -594,6 +663,7 @@ const styles = StyleSheet.create({
   },
   segmentButton: {
     flex: 1,
+    minHeight: 48,
     borderRadius: radii.md,
     borderWidth: 1,
     borderColor: colors.border,
@@ -619,6 +689,7 @@ const styles = StyleSheet.create({
     gap: spacing.sm,
   },
   pill: {
+    minHeight: 48,
     borderRadius: radii.pill,
     borderWidth: 1,
     borderColor: colors.border,
@@ -639,6 +710,7 @@ const styles = StyleSheet.create({
     color: colors.accent,
   },
   timeDisplay: {
+    minHeight: 48,
     borderWidth: 1,
     borderColor: colors.border,
     borderRadius: radii.md,
@@ -679,6 +751,28 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     ...shadows.sm,
+  },
+  presetList: {
+    gap: spacing.sm,
+  },
+  presetButton: {
+    minHeight: 64,
+    borderRadius: radii.md,
+    borderWidth: 1,
+    borderColor: colors.border,
+    backgroundColor: colors.surfaceRaised,
+    padding: spacing.md,
+    gap: spacing.xs,
+  },
+  presetTitle: {
+    fontSize: 15,
+    fontWeight: "600",
+    color: colors.text,
+  },
+  presetText: {
+    fontSize: 13,
+    lineHeight: 18,
+    color: colors.textSecondary,
   },
   saveButtonDisabled: {
     backgroundColor: colors.border,
