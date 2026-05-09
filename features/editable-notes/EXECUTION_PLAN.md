@@ -44,7 +44,7 @@ Phase 1: Data and Realtime Contracts
 
 Human must complete before starting:
 - [ ] Confirm mobile test dependencies install from the current workspace.
-  - Verify: `cd apps/mobile && npm test -- --run apps/mobile/test/smoke/notes-screen.test.tsx`
+  - Verify: `cd apps/mobile && npm test -- test/smoke/notes-screen.test.tsx`
 - [ ] Confirm the shared category source is available.
   - Verify: `rg "export const CATEGORIES" packages/shared/src/constants.ts`
 
@@ -63,7 +63,7 @@ Add a small validation helper for note edit drafts and extend centralized mobile
 
 **Acceptance Criteria:**
 - [ ] (TEST) Draft validation allows body/category saves, rejects no-change saves, rejects blank editable bodies, and allows category-only saves for null or empty original content.
-  - Verify: `cd apps/mobile && npm test -- --run apps/mobile/test/smoke/note-edit-validation.test.ts`
+  - Verify: `cd apps/mobile && npm test -- test/smoke/note-edit-validation.test.ts`
 - [ ] (CODE) `apps/mobile/lib/noteEditValidation.ts` exports a typed validation helper that receives original content/category and draft content/category.
   - Verify: `rg "export .*validate.*Note.*Edit|export .*get.*Note.*Edit" apps/mobile/lib/noteEditValidation.ts`
 - [ ] (CODE) `apps/mobile/lib/testIds.ts` exposes `editButton`, `editInput`, `categoryOption`, `saveButton`, `cancelButton`, `editError`, and `editConflict` under `testIds.notes`.
@@ -102,11 +102,11 @@ Create `useUpdateNote` for authenticated Supabase note updates. The hook updates
 
 **Acceptance Criteria:**
 - [ ] (TEST) Successful saves update `content` and/or `category` in the existing cached row without moving the note.
-  - Verify: `cd apps/mobile && npm test -- --run apps/mobile/test/smoke/use-update-note.test.ts`
+  - Verify: `cd apps/mobile && npm test -- test/smoke/use-update-note.test.ts`
 - [ ] (TEST) Conflict, not-found, unauthenticated, and Supabase failure paths throw typed error codes and leave the notes cache unchanged.
-  - Verify: `cd apps/mobile && npm test -- --run apps/mobile/test/smoke/use-update-note.test.ts`
+  - Verify: `cd apps/mobile && npm test -- test/smoke/use-update-note.test.ts`
 - [ ] (TEST) The mutation payload never includes `classification_status`, `classification_confidence`, or a `classify-note` invocation.
-  - Verify: `cd apps/mobile && npm test -- --run apps/mobile/test/smoke/use-update-note.test.ts`
+  - Verify: `cd apps/mobile && npm test -- test/smoke/use-update-note.test.ts`
 - [ ] (CODE) The Supabase update filters by `id`, `user_id`, and `updated_at` and selects attachments in the returned row.
   - Verify: `rg "\\.eq\\(\"id\"|\\.eq\\(\"user_id\"|\\.eq\\(\"updated_at\"|attachments" apps/mobile/hooks/useUpdateNote.ts`
 - [ ] (TYPE) The new hook compiles with existing mobile types.
@@ -150,11 +150,11 @@ Extend `useRealtimeNotes` so active edit rows can opt out of immediate cache ove
 
 **Acceptance Criteria:**
 - [ ] (TEST) UPDATE events for read-mode notes still update the `["notes"]` cache.
-  - Verify: `cd apps/mobile && npm test -- --run apps/mobile/test/smoke/realtime-notes.test.ts`
+  - Verify: `cd apps/mobile && npm test -- test/smoke/realtime-notes.test.ts`
 - [ ] (TEST) UPDATE events where `onRemoteUpdate` returns true skip cache replacement and invoke the active-edit callback path.
-  - Verify: `cd apps/mobile && npm test -- --run apps/mobile/test/smoke/realtime-notes.test.ts`
+  - Verify: `cd apps/mobile && npm test -- test/smoke/realtime-notes.test.ts`
 - [ ] (TEST) DELETE events where `onRemoteDelete` returns true skip immediate cache removal and invoke the active-edit callback path.
-  - Verify: `cd apps/mobile && npm test -- --run apps/mobile/test/smoke/realtime-notes.test.ts`
+  - Verify: `cd apps/mobile && npm test -- test/smoke/realtime-notes.test.ts`
 - [ ] (CODE) `useRealtimeNotes` accepts an optional callbacks object with `onRemoteUpdate` and `onRemoteDelete`.
   - Verify: `rg "onRemoteUpdate|onRemoteDelete|RealtimeNoteCallbacks" apps/mobile/hooks/useRealtimeNotes.ts`
 - [ ] (TYPE) Existing `useRealtimeNotes(userId)` callers remain valid.
@@ -185,11 +185,11 @@ Extend `useRealtimeNotes` so active edit rows can opt out of immediate cache ove
 
 **Automated Checks:**
 - [ ] Mobile edit foundation tests pass.
-  - Verify: `cd apps/mobile && npm test -- --run apps/mobile/test/smoke/note-edit-validation.test.ts apps/mobile/test/smoke/use-update-note.test.ts apps/mobile/test/smoke/realtime-notes.test.ts`
+  - Verify: `cd apps/mobile && npm test -- test/smoke/note-edit-validation.test.ts test/smoke/use-update-note.test.ts test/smoke/realtime-notes.test.ts`
 - [ ] Mobile type checking passes.
   - Verify: `cd apps/mobile && npm run typecheck`
 - [ ] Existing Notes screen smoke test still passes.
-  - Verify: `cd apps/mobile && npm test -- --run apps/mobile/test/smoke/notes-screen.test.tsx`
+  - Verify: `cd apps/mobile && npm test -- test/smoke/notes-screen.test.tsx`
 
 **Regression Verification:**
 - [ ] Existing note creation still references `classify-note` only in create/transcription paths, not in update-note code.
@@ -227,15 +227,15 @@ Add `ActiveEditState` near the Notes screen/list layer and pass editing props th
 
 **Acceptance Criteria:**
 - [ ] (TEST) Starting one edit disables edit controls on other notes and prevents starting a second editor.
-  - Verify: `cd apps/mobile && npm test -- --run apps/mobile/test/smoke/notes-list-edit.test.tsx`
+  - Verify: `cd apps/mobile && npm test -- test/smoke/notes-list-edit.test.tsx`
 - [ ] (TEST) Category filters and pull-to-refresh are disabled or omitted while a draft is active, then restored after save or cancel.
-  - Verify: `cd apps/mobile && npm test -- --run apps/mobile/test/smoke/notes-list-edit.test.tsx`
+  - Verify: `cd apps/mobile && npm test -- test/smoke/notes-list-edit.test.tsx`
 - [ ] (TEST) Notes tab focus loss and sign-out clear active draft state without saving changes.
-  - Verify: `cd apps/mobile && npm test -- --run apps/mobile/test/smoke/notes-screen-edit-state.test.tsx`
+  - Verify: `cd apps/mobile && npm test -- test/smoke/notes-screen-edit-state.test.tsx`
 - [ ] (TEST) Realtime update/delete callbacks for the active note set `remoteState` to `updated` or `deleted` and keep the draft visible.
-  - Verify: `cd apps/mobile && npm test -- --run apps/mobile/test/smoke/notes-screen-edit-state.test.tsx`
+  - Verify: `cd apps/mobile && npm test -- test/smoke/notes-screen-edit-state.test.tsx`
 - [ ] (TEST) Cancel after a remote update refetches the server row, and Cancel after a remote delete refetches or removes the deleted card from cache.
-  - Verify: `cd apps/mobile && npm test -- --run apps/mobile/test/smoke/notes-screen-edit-state.test.tsx`
+  - Verify: `cd apps/mobile && npm test -- test/smoke/notes-screen-edit-state.test.tsx`
 - [ ] (TYPE) Notes screen/list/card prop wiring compiles.
   - Verify: `cd apps/mobile && npm run typecheck`
 
@@ -279,13 +279,13 @@ Extend `MobileNoteCard` with an inline edit state using a multiline text input, 
 
 **Acceptance Criteria:**
 - [ ] (TEST) Tapping Edit renders a multiline body input, category options from `CATEGORIES`, Save, and Cancel in the same card.
-  - Verify: `cd apps/mobile && npm test -- --run apps/mobile/test/smoke/mobile-note-card-edit.test.tsx`
+  - Verify: `cd apps/mobile && npm test -- test/smoke/mobile-note-card-edit.test.tsx`
 - [ ] (TEST) Saving changed body/category calls `onSaveEdit` with `id`, changed fields, and `expectedUpdatedAt`, then returns to read mode on success.
-  - Verify: `cd apps/mobile && npm test -- --run apps/mobile/test/smoke/mobile-note-card-edit.test.tsx`
+  - Verify: `cd apps/mobile && npm test -- test/smoke/mobile-note-card-edit.test.tsx`
 - [ ] (TEST) Cancel discards draft body/category changes and returns to the original read-mode content.
-  - Verify: `cd apps/mobile && npm test -- --run apps/mobile/test/smoke/mobile-note-card-edit.test.tsx`
+  - Verify: `cd apps/mobile && npm test -- test/smoke/mobile-note-card-edit.test.tsx`
 - [ ] (TEST) Voice and file source indicators plus attachment counts remain visible in read mode after edit saves.
-  - Verify: `cd apps/mobile && npm test -- --run apps/mobile/test/smoke/mobile-note-card-edit.test.tsx`
+  - Verify: `cd apps/mobile && npm test -- test/smoke/mobile-note-card-edit.test.tsx`
 - [ ] (CODE) Edit controls use centralized test IDs and import colors/radii/shadows from `apps/mobile/lib/theme.ts`.
   - Verify: `rg "testIds\\.notes\\.(editButton|editInput|saveButton|cancelButton|categoryOption)|from '../lib/theme'|from \"../lib/theme\"" apps/mobile/components/MobileNoteCard.tsx`
 
@@ -320,15 +320,15 @@ Complete the edge-state behavior inside the inline editor. Pending notes should 
 
 **Acceptance Criteria:**
 - [ ] (TEST) Editable notes with blank draft body show inline validation and keep Save disabled until valid.
-  - Verify: `cd apps/mobile && npm test -- --run apps/mobile/test/smoke/mobile-note-card-edit.test.tsx`
+  - Verify: `cd apps/mobile && npm test -- test/smoke/mobile-note-card-edit.test.tsx`
 - [ ] (TEST) Null or empty-content notes display body-unavailable state and allow category-only saves when the category changes.
-  - Verify: `cd apps/mobile && npm test -- --run apps/mobile/test/smoke/mobile-note-card-edit.test.tsx`
+  - Verify: `cd apps/mobile && npm test -- test/smoke/mobile-note-card-edit.test.tsx`
 - [ ] (TEST) Pending notes expose a disabled edit control with disabled accessibility state and do not enter edit mode when pressed.
-  - Verify: `cd apps/mobile && npm test -- --run apps/mobile/test/smoke/mobile-note-card-edit.test.tsx`
+  - Verify: `cd apps/mobile && npm test -- test/smoke/mobile-note-card-edit.test.tsx`
 - [ ] (TEST) Save failure keeps the draft visible, shows an inline error, and allows retry or cancel.
-  - Verify: `cd apps/mobile && npm test -- --run apps/mobile/test/smoke/mobile-note-card-edit.test.tsx`
+  - Verify: `cd apps/mobile && npm test -- test/smoke/mobile-note-card-edit.test.tsx`
 - [ ] (TEST) Remote updated/deleted states show inline messages, preserve the draft, disable Save, and require Cancel to reload or clear the card.
-  - Verify: `cd apps/mobile && npm test -- --run apps/mobile/test/smoke/mobile-note-card-edit.test.tsx`
+  - Verify: `cd apps/mobile && npm test -- test/smoke/mobile-note-card-edit.test.tsx`
 - [ ] (CODE) Edit, Save, Cancel, input, category option, disabled, validation, and conflict controls include accessibility labels/states.
   - Verify: `rg "accessibilityLabel|accessibilityState|accessibilityRole" apps/mobile/components/MobileNoteCard.tsx`
 
@@ -357,15 +357,15 @@ Complete the edge-state behavior inside the inline editor. Pending notes should 
 
 **Automated Checks:**
 - [ ] Mobile card/list/screen edit tests pass.
-  - Verify: `cd apps/mobile && npm test -- --run apps/mobile/test/smoke/mobile-note-card-edit.test.tsx apps/mobile/test/smoke/notes-list-edit.test.tsx apps/mobile/test/smoke/notes-screen-edit-state.test.tsx`
+  - Verify: `cd apps/mobile && npm test -- test/smoke/mobile-note-card-edit.test.tsx test/smoke/notes-list-edit.test.tsx test/smoke/notes-screen-edit-state.test.tsx`
 - [ ] Mobile type checking passes.
   - Verify: `cd apps/mobile && npm run typecheck`
 - [ ] Existing Notes screen smoke test still passes.
-  - Verify: `cd apps/mobile && npm test -- --run apps/mobile/test/smoke/notes-screen.test.tsx`
+  - Verify: `cd apps/mobile && npm test -- test/smoke/notes-screen.test.tsx`
 
 **Regression Verification:**
 - [ ] Capture screen smoke test still passes after shared note card/test setup changes.
-  - Verify: `cd apps/mobile && npm test -- --run apps/mobile/test/smoke/capture-screen.test.tsx`
+  - Verify: `cd apps/mobile && npm test -- test/smoke/capture-screen.test.tsx`
 - [ ] Mobile UI changes use theme tokens rather than hardcoded Warm Ink colors in edited components.
   - Verify: `rg "#FAF8F5|#4F46E5|#1C1917|#57534E|#A8A29E" apps/mobile/components/MobileNoteCard.tsx apps/mobile/components/NotesList.tsx apps/mobile/app/\\(app\\)/notes.tsx`
 
@@ -380,7 +380,7 @@ Complete the edge-state behavior inside the inline editor. Pending notes should 
 
 Human must complete before starting:
 - [ ] Confirm the mobile test runner can execute the full smoke suite.
-  - Verify: `cd apps/mobile && npm test -- --run apps/mobile/test/smoke`
+  - Verify: `cd apps/mobile && npm test -- test/smoke`
 - [ ] Confirm package scripts expose typecheck and lint commands or document the available substitute in this plan before execution.
   - Verify: `node -e "const p=require('./apps/mobile/package.json').scripts; console.log({test:p.test,typecheck:p.typecheck,lint:p.lint})"`
 
@@ -399,15 +399,15 @@ Broaden component/list tests so the accepted mobile behavior is difficult to reg
 
 **Acceptance Criteria:**
 - [ ] (TEST) Text, voice, and file notes with saved content can enter edit mode and save changed body text.
-  - Verify: `cd apps/mobile && npm test -- --run apps/mobile/test/smoke/mobile-note-card-edit.test.tsx`
+  - Verify: `cd apps/mobile && npm test -- test/smoke/mobile-note-card-edit.test.tsx`
 - [ ] (TEST) Category changes update the card state and the list/category filter behavior reflects the new category.
-  - Verify: `cd apps/mobile && npm test -- --run apps/mobile/test/smoke/notes-list-edit.test.tsx`
+  - Verify: `cd apps/mobile && npm test -- test/smoke/notes-list-edit.test.tsx`
 - [ ] (TEST) Failed notes with saved text are editable, while pending notes remain non-editable.
-  - Verify: `cd apps/mobile && npm test -- --run apps/mobile/test/smoke/mobile-note-card-edit.test.tsx`
+  - Verify: `cd apps/mobile && npm test -- test/smoke/mobile-note-card-edit.test.tsx`
 - [ ] (TEST) Voice/file source labels and file attachment count remain visible after the save path returns to read mode.
-  - Verify: `cd apps/mobile && npm test -- --run apps/mobile/test/smoke/mobile-note-card-edit.test.tsx`
+  - Verify: `cd apps/mobile && npm test -- test/smoke/mobile-note-card-edit.test.tsx`
 - [ ] (TEST) Save failure and empty-body validation preserve local draft text and selected category.
-  - Verify: `cd apps/mobile && npm test -- --run apps/mobile/test/smoke/mobile-note-card-edit.test.tsx`
+  - Verify: `cd apps/mobile && npm test -- test/smoke/mobile-note-card-edit.test.tsx`
 
 **Files to Create:**
 - None
@@ -440,13 +440,13 @@ Add tests around the highest-risk non-visual behavior: save should not classify,
 
 **Acceptance Criteria:**
 - [ ] (TEST) Saving an edit does not call `invokeLocalEdgeFunction`, does not reset `classification_status`, and does not change `classification_confidence`.
-  - Verify: `cd apps/mobile && npm test -- --run apps/mobile/test/smoke/use-update-note.test.ts apps/mobile/test/smoke/notes-screen-edit-state.test.tsx`
+  - Verify: `cd apps/mobile && npm test -- test/smoke/use-update-note.test.ts test/smoke/notes-screen-edit-state.test.tsx`
 - [ ] (TEST) Updating a middle note preserves the exact cached array order before and after save.
-  - Verify: `cd apps/mobile && npm test -- --run apps/mobile/test/smoke/use-update-note.test.ts apps/mobile/test/smoke/notes-list-edit.test.tsx`
+  - Verify: `cd apps/mobile && npm test -- test/smoke/use-update-note.test.ts test/smoke/notes-list-edit.test.tsx`
 - [ ] (TEST) Realtime update/delete conflict states disable Save, preserve the active draft, and require Cancel to reload or clear the card.
-  - Verify: `cd apps/mobile && npm test -- --run apps/mobile/test/smoke/realtime-notes.test.ts apps/mobile/test/smoke/notes-screen-edit-state.test.tsx`
+  - Verify: `cd apps/mobile && npm test -- test/smoke/realtime-notes.test.ts test/smoke/notes-screen-edit-state.test.tsx`
 - [ ] (TEST) Sign-out and Notes tab navigation discard unsaved draft state without running a save.
-  - Verify: `cd apps/mobile && npm test -- --run apps/mobile/test/smoke/notes-screen-edit-state.test.tsx`
+  - Verify: `cd apps/mobile && npm test -- test/smoke/notes-screen-edit-state.test.tsx`
 - [ ] (TYPE) All note edit test coverage compiles without loosening mobile note types.
   - Verify: `cd apps/mobile && npm run typecheck`
 
@@ -478,7 +478,7 @@ Add tests around the highest-risk non-visual behavior: save should not classify,
 
 **Automated Checks:**
 - [ ] Full mobile smoke suite passes.
-  - Verify: `cd apps/mobile && npm test -- --run apps/mobile/test/smoke`
+  - Verify: `cd apps/mobile && npm test -- test/smoke`
 - [ ] Mobile type checking passes.
   - Verify: `cd apps/mobile && npm run typecheck`
 - [ ] Root test command still passes if configured.
@@ -609,7 +609,7 @@ Run the full automated verification set and, when an emulator or device is avail
 
 **Acceptance Criteria:**
 - [ ] (TEST) Full mobile smoke suite passes with editable-notes tests included.
-  - Verify: `cd apps/mobile && npm test -- --run apps/mobile/test/smoke`
+  - Verify: `cd apps/mobile && npm test -- test/smoke`
 - [ ] (TYPE) Mobile type checking passes.
   - Verify: `cd apps/mobile && npm run typecheck`
 - [ ] (LINT) Mobile lint passes when the script is available, or the package script absence is documented in the evidence file.
@@ -645,7 +645,7 @@ Run the full automated verification set and, when an emulator or device is avail
 
 **Automated Checks:**
 - [ ] Full mobile smoke suite passes.
-  - Verify: `cd apps/mobile && npm test -- --run apps/mobile/test/smoke`
+  - Verify: `cd apps/mobile && npm test -- test/smoke`
 - [ ] Mobile type checking passes.
   - Verify: `cd apps/mobile && npm run typecheck`
 - [ ] Flow verification artifacts exist and reference setup, driver, assertions, evidence, and teardown.
@@ -653,7 +653,7 @@ Run the full automated verification set and, when an emulator or device is avail
 
 **Regression Verification:**
 - [ ] Existing capture and Notes screen smoke tests pass after the final flow harness changes.
-  - Verify: `cd apps/mobile && npm test -- --run apps/mobile/test/smoke/capture-screen.test.tsx apps/mobile/test/smoke/notes-screen.test.tsx`
+  - Verify: `cd apps/mobile && npm test -- test/smoke/capture-screen.test.tsx test/smoke/notes-screen.test.tsx`
 - [ ] The working tree has no unintended schema, category, route, or attachment-metadata changes for editable notes.
   - Verify: `git diff --name-only | rg "supabase/migrations|packages/shared/src/constants.ts|attachment|apps/mobile/app/.*/edit" || true`
 
