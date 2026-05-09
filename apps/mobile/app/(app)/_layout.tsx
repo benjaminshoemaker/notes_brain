@@ -119,6 +119,18 @@ export default function AppLayout() {
         name="lens-manage"
         options={{ href: null, title: "Manage Lenses" }}
       />
+      <Tabs.Screen
+        name="lens-create"
+        options={{ href: null, title: "New Lens" }}
+      />
+      <Tabs.Screen
+        name="lens-library"
+        options={{ href: null, title: "Lens Library" }}
+      />
+      <Tabs.Screen
+        name="lens-library-preview"
+        options={{ href: null, title: "Preview Lens" }}
+      />
     </Tabs>
   );
 }

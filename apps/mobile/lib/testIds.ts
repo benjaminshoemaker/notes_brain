@@ -44,6 +44,7 @@ export const testIds = {
   summary: {
     screen: "summary-screen",
     emptyState: "summary-empty-state",
+    createButton: "summary-create-lens-button",
     card: "summary-card",
   },
   lens: {
@@ -56,6 +57,21 @@ export const testIds = {
     manage: {
       screen: "lens-manage-screen",
       list: "lens-manage-list",
+    },
+    create: {
+      screen: "lens-create-screen",
+      customButton: "lens-create-custom-button",
+      libraryButton: "lens-create-library-button",
+    },
+    library: {
+      screen: "lens-library-screen",
+      list: "lens-library-list",
+      card: (templateId: string) => `lens-library-card-${templateId}`,
+    },
+    preview: {
+      screen: "lens-library-preview-screen",
+      installButton: "lens-library-preview-install-button",
+      promptDetails: "lens-library-preview-prompt-details",
     },
     resultCard: "lens-result-card",
   },

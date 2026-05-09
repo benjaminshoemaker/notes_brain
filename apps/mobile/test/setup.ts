@@ -20,9 +20,48 @@ function createComponent(name: string) {
 const FlatList = ({ data = [], renderItem, ...props }: MockComponentProps) => {
   const items = Array.isArray(data) ? data : [];
   const children = typeof renderItem === "function"
-    ? items.map((item, index) => renderItem({ item, index }))
+    ? items.map((item, index) =>
+      React.createElement(React.Fragment, { key: String(index) }, renderItem({ item, index }))
+    )
     : [];
   return React.createElement("FlatList", props, children);
+};
+
+const SectionList = ({ sections = [], renderItem, renderSectionHeader, ListEmptyComponent, ...props }: MockComponentProps) => {
+  const listSections = Array.isArray(sections) ? sections : [];
+  const children = listSections.flatMap((section) => {
+    const header = typeof renderSectionHeader === "function"
+      ? renderSectionHeader({ section })
+      : null;
+    const items = Array.isArray(section.data) && typeof renderItem === "function"
+      ? section.data.map((item: unknown, index: number) =>
+        React.createElement(
+          React.Fragment,
+          { key: `item-${String(index)}` },
+          renderItem({ item, section, index })
+        )
+      )
+      : [];
+    return [
+      header ? React.createElement(React.Fragment, { key: "header" }, header) : null,
+      ...items
+    ].filter(Boolean);
+  });
+
+  if (children.length === 0 && ListEmptyComponent) {
+    const EmptyComponent = ListEmptyComponent as React.ComponentType;
+    children.push(
+      React.createElement(
+        React.Fragment,
+        { key: "empty" },
+        typeof ListEmptyComponent === "function"
+          ? React.createElement(EmptyComponent)
+          : ListEmptyComponent
+      )
+    );
+  }
+
+  return React.createElement("SectionList", props, children);
 };
 
 vi.mock("react-native", () => ({
@@ -30,11 +69,13 @@ vi.mock("react-native", () => ({
   Text: createComponent("Text"),
   ScrollView: createComponent("ScrollView"),
   KeyboardAvoidingView: createComponent("KeyboardAvoidingView"),
+  Pressable: createComponent("Pressable"),
   TouchableOpacity: createComponent("TouchableOpacity"),
   TextInput: createComponent("TextInput"),
   ActivityIndicator: createComponent("ActivityIndicator"),
   Modal: createComponent("Modal"),
   FlatList,
+  SectionList,
   RefreshControl: createComponent("RefreshControl"),
   StyleSheet: {
     create: <T,>(styles: T) => styles
@@ -65,4 +106,8 @@ vi.mock("react-native", () => ({
       start: (callback?: () => void) => callback?.()
     })
   }
+}));
+
+vi.mock("@expo/vector-icons", () => ({
+  Ionicons: createComponent("Ionicons")
 }));
