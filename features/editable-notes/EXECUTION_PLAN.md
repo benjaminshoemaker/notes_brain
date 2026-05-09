@@ -184,17 +184,17 @@ Extend `useRealtimeNotes` so active edit rows can opt out of immediate cache ove
 ### Phase 1 Checkpoint
 
 **Automated Checks:**
-- [ ] Mobile edit foundation tests pass.
+- [x] Mobile edit foundation tests pass.
   - Verify: `cd apps/mobile && npm test -- test/smoke/note-edit-validation.test.ts test/smoke/use-update-note.test.ts test/smoke/realtime-notes.test.ts`
-- [ ] Mobile type checking passes.
+- [x] Mobile type checking passes.
   - Verify: `cd apps/mobile && npm run typecheck`
-- [ ] Existing Notes screen smoke test still passes.
+- [x] Existing Notes screen smoke test still passes.
   - Verify: `cd apps/mobile && npm test -- test/smoke/notes-screen.test.tsx`
 
 **Regression Verification:**
-- [ ] Existing note creation still references `classify-note` only in create/transcription paths, not in update-note code.
+- [x] Existing note creation still references `classify-note` only in create/transcription paths, not in update-note code.
   - Verify: `rg "classify-note" apps/mobile/hooks apps/mobile/app apps/mobile/components`
-- [ ] No database migration was added for editable notes.
+- [x] No database migration was added for editable notes.
   - Verify: `git diff --name-only -- supabase/migrations | wc -l | tr -d ' '`
 
 ---
