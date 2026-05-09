@@ -91,6 +91,7 @@ vi.mock("react-native", () => ({
       options.ios ?? options.default
   },
   Animated: {
+    View: createComponent("Animated.View"),
     Value: class MockAnimatedValue {
       constructor(_initialValue: number) {}
 

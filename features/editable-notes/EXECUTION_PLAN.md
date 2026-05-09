@@ -278,15 +278,15 @@ Extend `MobileNoteCard` with an inline edit state using a multiline text input, 
 **Requirement:** FEATURE_SPEC Acceptance Criteria 1, 2, 3, 4, 5, 6, 7; FEATURE_TECHNICAL_SPEC "UI Component Design"
 
 **Acceptance Criteria:**
-- [ ] (TEST) Tapping Edit renders a multiline body input, category options from `CATEGORIES`, Save, and Cancel in the same card.
+- [x] (TEST) Tapping Edit renders a multiline body input, category options from `CATEGORIES`, Save, and Cancel in the same card.
   - Verify: `cd apps/mobile && npm test -- test/smoke/mobile-note-card-edit.test.tsx`
-- [ ] (TEST) Saving changed body/category calls `onSaveEdit` with `id`, changed fields, and `expectedUpdatedAt`, then returns to read mode on success.
+- [x] (TEST) Saving changed body/category calls `onSaveEdit` with `id`, changed fields, and `expectedUpdatedAt`, then returns to read mode on success.
   - Verify: `cd apps/mobile && npm test -- test/smoke/mobile-note-card-edit.test.tsx`
-- [ ] (TEST) Cancel discards draft body/category changes and returns to the original read-mode content.
+- [x] (TEST) Cancel discards draft body/category changes and returns to the original read-mode content.
   - Verify: `cd apps/mobile && npm test -- test/smoke/mobile-note-card-edit.test.tsx`
-- [ ] (TEST) Voice and file source indicators plus attachment counts remain visible in read mode after edit saves.
+- [x] (TEST) Voice and file source indicators plus attachment counts remain visible in read mode after edit saves.
   - Verify: `cd apps/mobile && npm test -- test/smoke/mobile-note-card-edit.test.tsx`
-- [ ] (CODE) Edit controls use centralized test IDs and import colors/radii/shadows from `apps/mobile/lib/theme.ts`.
+- [x] (CODE) Edit controls use centralized test IDs and import colors/radii/shadows from `apps/mobile/lib/theme.ts`.
   - Verify: `rg "testIds\\.notes\\.(editButton|editInput|saveButton|cancelButton|categoryOption)|from '../lib/theme'|from \"../lib/theme\"" apps/mobile/components/MobileNoteCard.tsx`
 
 **Files to Create:**
