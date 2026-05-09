@@ -194,10 +194,13 @@ describe("useUpdateNote helpers", () => {
   });
 
   it("never sends classification fields or invokes classification", async () => {
-    const note = makeNote({});
+    const note = makeNote({
+      classification_status: "failed",
+      classification_confidence: 0.42,
+    });
     updateMaybeSingleMock.mockResolvedValue({ data: note, error: null });
 
-    await updateNoteForUser({
+    const result = await updateNoteForUser({
       id: note.id,
       content: "Updated",
       category: "projects",
@@ -211,6 +214,10 @@ describe("useUpdateNote helpers", () => {
     expect(JSON.stringify(updateMock.mock.calls[0][0])).not.toContain("classification_status");
     expect(JSON.stringify(updateMock.mock.calls[0][0])).not.toContain("classification_confidence");
     expect(invokeLocalEdgeFunctionMock).not.toHaveBeenCalled();
+    expect(result).toMatchObject({
+      classification_status: "failed",
+      classification_confidence: 0.42,
+    });
   });
 
   it("builds payloads only from provided content and category fields", () => {

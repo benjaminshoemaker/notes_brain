@@ -439,15 +439,15 @@ Add tests around the highest-risk non-visual behavior: save should not classify,
 **Requirement:** FEATURE_SPEC Acceptance Criteria 10, 11, 12, 13; FEATURE_TECHNICAL_SPEC "Cache Updates" and "Realtime Coordination"
 
 **Acceptance Criteria:**
-- [ ] (TEST) Saving an edit does not call `invokeLocalEdgeFunction`, does not reset `classification_status`, and does not change `classification_confidence`.
+- [x] (TEST) Saving an edit does not call `invokeLocalEdgeFunction`, does not reset `classification_status`, and does not change `classification_confidence`.
   - Verify: `cd apps/mobile && npm test -- test/smoke/use-update-note.test.ts test/smoke/notes-screen-edit-state.test.tsx`
-- [ ] (TEST) Updating a middle note preserves the exact cached array order before and after save.
+- [x] (TEST) Updating a middle note preserves the exact cached array order before and after save.
   - Verify: `cd apps/mobile && npm test -- test/smoke/use-update-note.test.ts test/smoke/notes-list-edit.test.tsx`
-- [ ] (TEST) Realtime update/delete conflict states disable Save, preserve the active draft, and require Cancel to reload or clear the card.
+- [x] (TEST) Realtime update/delete conflict states disable Save, preserve the active draft, and require Cancel to reload or clear the card.
   - Verify: `cd apps/mobile && npm test -- test/smoke/realtime-notes.test.ts test/smoke/notes-screen-edit-state.test.tsx`
-- [ ] (TEST) Sign-out and Notes tab navigation discard unsaved draft state without running a save.
+- [x] (TEST) Sign-out and Notes tab navigation discard unsaved draft state without running a save.
   - Verify: `cd apps/mobile && npm test -- test/smoke/notes-screen-edit-state.test.tsx`
-- [ ] (TYPE) All note edit test coverage compiles without loosening mobile note types.
+- [x] (TYPE) All note edit test coverage compiles without loosening mobile note types.
   - Verify: `cd apps/mobile && npm run typecheck`
 
 **Files to Create:**

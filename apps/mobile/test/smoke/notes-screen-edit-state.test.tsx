@@ -116,6 +116,7 @@ describe("NotesScreen edit state", () => {
 
     expect(notesListPropsRef.current!.activeEditState).toBeNull();
     expect(categoryFilterPropsRef.current!.disabled).toBe(false);
+    expect(updateNoteMutateAsyncMock).not.toHaveBeenCalled();
   });
 
   it("clears active draft state on sign out", async () => {
@@ -134,6 +135,7 @@ describe("NotesScreen edit state", () => {
     });
 
     expect(notesListPropsRef.current!.activeEditState).toBeNull();
+    expect(updateNoteMutateAsyncMock).not.toHaveBeenCalled();
   });
 
   it("marks active note as remotely updated and refetches on cancel", async () => {
