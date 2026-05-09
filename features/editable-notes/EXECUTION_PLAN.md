@@ -379,9 +379,9 @@ Complete the edge-state behavior inside the inline editor. Pending notes should 
 ### Pre-Phase Setup
 
 Human must complete before starting:
-- [ ] Confirm the mobile test runner can execute the full smoke suite.
+- [x] Confirm the mobile test runner can execute the full smoke suite.
   - Verify: `cd apps/mobile && npm test -- test/smoke`
-- [ ] Confirm package scripts expose typecheck and lint commands or document the available substitute in this plan before execution.
+- [x] Confirm package scripts expose typecheck and lint commands or document the available substitute in this plan before execution.
   - Verify: `node -e "const p=require('./apps/mobile/package.json').scripts; console.log({test:p.test,typecheck:p.typecheck,lint:p.lint})"`
 
 ### Step 3.1: Behavior Regression Tests
