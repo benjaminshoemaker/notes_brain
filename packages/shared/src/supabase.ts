@@ -5,6 +5,7 @@ import type {
   ClassificationStatus,
   DailySummaryContent,
   DevicePlatform,
+  LensTemplateSnapshot,
   LensScheduleType,
   NoteType
 } from "./types.js";
@@ -161,6 +162,10 @@ export type Database = {
           consecutive_failures: number;
           last_error: string | null;
           last_error_at: string | null;
+          source_template_id: string | null;
+          source_template_version: number | null;
+          installed_from_library_at: string | null;
+          template_snapshot: LensTemplateSnapshot | null;
           created_at: string;
           updated_at: string;
         };
@@ -177,6 +182,10 @@ export type Database = {
           is_active?: boolean;
           is_default?: boolean;
           next_run_at?: string | null;
+          source_template_id?: string | null;
+          source_template_version?: number | null;
+          installed_from_library_at?: string | null;
+          template_snapshot?: LensTemplateSnapshot | null;
           created_at?: string;
           updated_at?: string;
         };
@@ -189,6 +198,10 @@ export type Database = {
           lookback_hours?: number;
           categories?: string[] | null;
           is_active?: boolean;
+          source_template_id?: string | null;
+          source_template_version?: number | null;
+          installed_from_library_at?: string | null;
+          template_snapshot?: LensTemplateSnapshot | null;
           updated_at?: string;
         };
         Relationships: [];
@@ -240,4 +253,3 @@ export function createSupabaseClient(
 ): SupabaseClient<Database> {
   return createClient<Database>(supabaseUrl, supabaseAnonKey, options);
 }
-
