@@ -561,15 +561,15 @@ Create an agent-runnable flow document that maps the seeded data to mobile autom
 **Requirement:** FLOW_VERIFICATION_PLAN "Driver", "Assertions", "Evidence", and "Teardown/Rerun"
 
 **Acceptance Criteria:**
-- [ ] (CODE) The mobile flow runbook includes setup, seed, sign-in, Notes tab navigation, edit, save, cancel, validation, category-only save, pending-note, and teardown steps.
+- [x] (CODE) The mobile flow runbook includes setup, seed, sign-in, Notes tab navigation, edit, save, cancel, validation, category-only save, pending-note, and teardown steps.
   - Verify: `test -f tests/e2e/mobile/editable-notes-flow.md && rg "setup|seed|sign in|Notes|Edit|Save|Cancel|validation|category-only|pending|teardown" tests/e2e/mobile/editable-notes-flow.md`
-- [ ] (CODE) The runbook references the centralized edit test IDs and category option selectors.
+- [x] (CODE) The runbook references the centralized edit test IDs and category option selectors.
   - Verify: `rg "editButton|editInput|categoryOption|saveButton|cancelButton|editError|editConflict" tests/e2e/mobile/editable-notes-flow.md`
-- [ ] (CODE) The runbook includes evidence capture targets for edit mode, disabled controls, saved read mode, empty validation, and Supabase row output.
+- [x] (CODE) The runbook includes evidence capture targets for edit mode, disabled controls, saved read mode, empty validation, and Supabase row output.
   - Verify: `rg "screenshot|accessibility|disabled|saved read|empty|Supabase|classification_status|classification_confidence" tests/e2e/mobile/editable-notes-flow.md`
-- [ ] (CODE) The runbook includes Android local-backend setup through `adb reverse tcp:65421 tcp:65421`.
+- [x] (CODE) The runbook includes Android local-backend setup through `adb reverse tcp:65421 tcp:65421`.
   - Verify: `rg "adb reverse tcp:65421 tcp:65421" tests/e2e/mobile/editable-notes-flow.md`
-- [ ] (CODE) The runbook states reruns are idempotent after cleanup and points to `artifacts/` or `test-results/` for failed-run evidence.
+- [x] (CODE) The runbook states reruns are idempotent after cleanup and points to `artifacts/` or `test-results/` for failed-run evidence.
   - Verify: `rg "idempotent|cleanup|artifacts|test-results" tests/e2e/mobile/editable-notes-flow.md`
 
 **Files to Create:**
