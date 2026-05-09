@@ -8,7 +8,8 @@ const { pushMock } = vi.hoisted(() => ({
 
 vi.mock("expo-router", () => ({
   Stack: {
-    Screen: () => null
+    Screen: (props: { options?: { title?: string } }) =>
+      React.createElement("StackScreen", props)
   },
   useRouter: () => ({ push: pushMock })
 }));
@@ -46,6 +47,7 @@ describe("lens library screen", () => {
       await Promise.resolve();
     });
 
+    expect(tree.root.findByType("StackScreen").props.options.title).toBe("Browse Lens Library");
     expect(tree.root.findByProps({ children: "Weekly Project Pulse" })).toBeTruthy();
     expect(tree.root.findByProps({ children: "Installed" })).toBeTruthy();
 

@@ -681,11 +681,11 @@ Create the `lens-library-preview` route that shows template details, reads the t
 
 ### Pre-Phase Setup
 
-- [ ] (CODE) Mobile dev server MCP command is available.
+- [x] (CODE) Mobile dev server MCP command is available.
   - Verify: `npm run dev:mobile:mcp -- --help >/tmp/notesbrain-expo-help.txt 2>&1 || test -s /tmp/notesbrain-expo-help.txt`
-- [ ] (CODE) Mobile emulator instructions are present in root AGENTS.md.
+- [x] (CODE) Mobile emulator instructions are present in root AGENTS.md.
   - Verify: `grep -q "AI Agent Mobile Emulation" AGENTS.md`
-- [ ] (CODE) Flow verification plan exists and is applicable.
+- [x] (CODE) Flow verification plan exists and is applicable.
   - Verify: `grep -q "Status: Applicable" features/lens-library/FLOW_VERIFICATION_PLAN.md`
 
 ### Step 4.1: Automated Flow Coverage
@@ -702,15 +702,15 @@ Extend tests so the flow verification plan is covered by machine checks: creatio
 **Requirement:** FLOW_VERIFICATION_PLAN.md > Assertions; FEATURE_TECHNICAL_SPEC.md > Testing Plan
 
 **Acceptance Criteria:**
-- [ ] (TEST) Tests assert `+` and Summary empty-state CTA route to `/(app)/lens-create`.
+- [x] (TEST) Tests assert `+` and Summary empty-state CTA route to `/(app)/lens-create`.
   - Verify: `grep -q "/(app)/lens-create" apps/mobile/test/smoke/summary-screen.test.tsx && npm run test -w @notesbrain/mobile`
-- [ ] (TEST) Tests assert Browse Lens Library renders curated templates.
+- [x] (TEST) Tests assert Browse Lens Library renders curated templates.
   - Verify: `grep -q "Browse Lens Library" apps/mobile/test/smoke/lens-library-screen.test.tsx && npm run test -w @notesbrain/mobile`
-- [ ] (TEST) Tests assert preview install creates payload with copied prompt/schedule/filter fields.
+- [x] (TEST) Tests assert preview install creates payload with copied prompt/schedule/filter fields.
   - Verify: `grep -q "schedule_type" apps/mobile/test/smoke/lens-library-preview.test.tsx && grep -q "lookback_hours" apps/mobile/test/smoke/lens-library-preview.test.tsx && npm run test -w @notesbrain/mobile`
-- [ ] (TEST) Tests assert Morning Briefing is treated as installed when a user lens has `source_template_id = 'morning-briefing'`.
+- [x] (TEST) Tests assert Morning Briefing is treated as installed when a user lens has `source_template_id = 'morning-briefing'`.
   - Verify: `grep -q "morning-briefing" apps/mobile/test/smoke/lens-library-catalog.test.ts && npm run test -w @notesbrain/mobile`
-- [ ] (TEST) Root tests assert migration/source metadata alignment.
+- [x] (TEST) Root tests assert migration/source metadata alignment.
   - Verify: `npm run test:root`
 
 **Files to Create:**

@@ -29,7 +29,7 @@ export default function LensLibraryScreen() {
     <View testID={testIds.lens.library.screen} style={styles.container}>
       <Stack.Screen
         options={{
-          title: "Lens Library",
+          title: "Browse Lens Library",
           headerStyle: { backgroundColor: colors.background },
           headerTintColor: colors.text,
         }}
