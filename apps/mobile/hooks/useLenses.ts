@@ -1,11 +1,11 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import type { Lens } from "@notesbrain/shared";
+import type { Lens, LensTemplateSnapshot } from "@notesbrain/shared";
 
 import { ensureUserProfile } from "../lib/ensureUserProfile";
 import { supabase } from "../lib/supabaseClient";
 import { useAuth } from "./useAuth";
 
-type CreateLensInput = {
+type EditableLensInput = {
   name: string;
   prompt: string;
   schedule_type?: "daily" | "weekly";
@@ -15,9 +15,16 @@ type CreateLensInput = {
   categories?: string[] | null;
 };
 
+export type CreateLensInput = EditableLensInput & {
+  source_template_id?: string | null;
+  source_template_version?: number | null;
+  installed_from_library_at?: string | null;
+  template_snapshot?: LensTemplateSnapshot | null;
+};
+
 type UpdateLensInput = {
   id: string;
-} & Partial<CreateLensInput> & {
+} & Partial<EditableLensInput> & {
   is_active?: boolean;
 };
 
@@ -68,7 +75,11 @@ async function createLens(
       schedule_time: input.schedule_time,
       schedule_day: input.schedule_day,
       lookback_hours: input.lookback_hours,
-      categories: input.categories
+      categories: input.categories,
+      source_template_id: input.source_template_id,
+      source_template_version: input.source_template_version,
+      installed_from_library_at: input.installed_from_library_at,
+      template_snapshot: input.template_snapshot
     })
     .select("*")
     .single();
