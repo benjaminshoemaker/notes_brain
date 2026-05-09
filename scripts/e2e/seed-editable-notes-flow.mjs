@@ -209,7 +209,6 @@ async function cleanup(supabase, { deleteUser = false } = {}) {
     .from("notes")
     .delete()
     .eq("user_id", user.id)
-    .or(`id.in.(${noteIds.join(",")}),content.ilike.${PREFIX}%`)
     .select("id");
   if (notesError) throw notesError;
 

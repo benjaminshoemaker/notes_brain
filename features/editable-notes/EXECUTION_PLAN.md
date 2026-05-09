@@ -608,15 +608,15 @@ Run the full automated verification set and, when an emulator or device is avail
 **Requirement:** FLOW_VERIFICATION_PLAN "Assertions" and "Evidence"; FEATURE_SPEC all acceptance criteria
 
 **Acceptance Criteria:**
-- [ ] (TEST) Full mobile smoke suite passes with editable-notes tests included.
+- [x] (TEST) Full mobile smoke suite passes with editable-notes tests included.
   - Verify: `cd apps/mobile && npm test -- test/smoke`
-- [ ] (TYPE) Mobile type checking passes.
+- [x] (TYPE) Mobile type checking passes.
   - Verify: `cd apps/mobile && npm run typecheck`
-- [ ] (LINT) Mobile lint passes when the script is available, or the package script absence is documented in the evidence file.
+- [x] (LINT) Mobile lint passes when the script is available, or the package script absence is documented in the evidence file.
   - Verify: `node -e "const s=require('./apps/mobile/package.json').scripts; process.exit(s.lint?0:2)" && cd apps/mobile && npm run lint || test -f features/editable-notes/FLOW_VERIFICATION_EVIDENCE.md`
-- [ ] (CODE) Flow evidence file records test output, seed command, device/emulator availability, screenshots or accessibility snapshots, Supabase assertion output, and teardown result.
+- [x] (CODE) Flow evidence file records test output, seed command, device/emulator availability, screenshots or accessibility snapshots, Supabase assertion output, and teardown result.
   - Verify: `test -f features/editable-notes/FLOW_VERIFICATION_EVIDENCE.md && rg "npm test|seed|device|emulator|screenshot|accessibility|Supabase|teardown" features/editable-notes/FLOW_VERIFICATION_EVIDENCE.md`
-- [ ] (CODE) Evidence explicitly confirms no classification rerun, stable `created_at` ordering, and original source indicators after save.
+- [x] (CODE) Evidence explicitly confirms no classification rerun, stable `created_at` ordering, and original source indicators after save.
   - Verify: `rg "classification|created_at|source|voice|file" features/editable-notes/FLOW_VERIFICATION_EVIDENCE.md`
 
 **Files to Create:**
