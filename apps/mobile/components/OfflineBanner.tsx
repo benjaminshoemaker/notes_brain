@@ -1,17 +1,19 @@
 import { View, Text, StyleSheet } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { useOnlineStatus } from "../hooks/useOnlineStatus";
-import { colors } from "../lib/theme";
+import { colors, spacing } from "../lib/theme";
 
 export function OfflineBanner() {
   const isOnline = useOnlineStatus();
+  const insets = useSafeAreaInsets();
 
   if (isOnline) {
     return null;
   }
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { paddingTop: insets.top + spacing.sm }]}>
       <Text style={styles.text}>You're offline. We'll sync when you're back online.</Text>
     </View>
   );
@@ -20,8 +22,8 @@ export function OfflineBanner() {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.warningLight,
-    paddingVertical: 8,
-    paddingHorizontal: 12,
+    paddingBottom: spacing.sm,
+    paddingHorizontal: spacing.md,
   },
   text: {
     color: colors.warning,

@@ -20,3 +20,21 @@ api_url = "http://127.0.0.1"
 [inbucket]
 enabled = true
 port = 65424
+
+[functions.classify-note]
+verify_jwt = false
+
+[functions.transcribe-voice]
+verify_jwt = false
+
+[functions.generate-summary]
+verify_jwt = false
+
+[functions.send-push]
+verify_jwt = false
+
+[functions.execute-lens]
+verify_jwt = false
+
+[functions.dispatch-lenses]
+verify_jwt = false

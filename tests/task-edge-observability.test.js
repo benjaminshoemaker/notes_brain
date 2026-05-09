@@ -3,11 +3,14 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 
 const LOGGER_PATH = "supabase/functions/_shared/logger.ts";
+const FCM_HELPER_PATH = "supabase/functions/_shared/fcm.ts";
 const FUNCTION_FILES = [
   "supabase/functions/classify-note/index.ts",
   "supabase/functions/transcribe-voice/index.ts",
   "supabase/functions/generate-summary/index.ts",
-  "supabase/functions/send-push/index.ts"
+  "supabase/functions/send-push/index.ts",
+  "supabase/functions/execute-lens/index.ts",
+  "supabase/functions/dispatch-lenses/index.ts"
 ];
 
 async function readSource(path) {
@@ -28,3 +31,10 @@ for (const file of FUNCTION_FILES) {
     assert.match(source, /requestId/);
   });
 }
+
+test("should avoid logging FCM secrets and access tokens", async () => {
+  const source = await readSource(FCM_HELPER_PATH);
+  assert.doesNotMatch(source, /private_key preview/);
+  assert.doesNotMatch(source, /body:\s*responseText/);
+  assert.doesNotMatch(source, /token="\$\{tokenStart/);
+});

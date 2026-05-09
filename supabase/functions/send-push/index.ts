@@ -1,6 +1,6 @@
 import { createClient } from "jsr:@supabase/supabase-js@2";
 
-import { createServiceRoleClient } from "../_shared/supabase.ts";
+import { createServiceRoleClient, getServiceRoleKeyFromEnv } from "../_shared/supabase.ts";
 import { createFunctionLogger } from "../_shared/logger.ts";
 import { getAccessToken, sendFCMMessage } from "../_shared/fcm.ts";
 
@@ -38,8 +38,7 @@ type Device = {
 function getRuntimeConfig(): RuntimeConfig {
   return {
     supabaseUrl: Deno.env.get("SUPABASE_URL") ?? "",
-    serviceRoleKey:
-      Deno.env.get("SERVICE_ROLE_KEY") ?? Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "",
+    serviceRoleKey: getServiceRoleKeyFromEnv(),
     fcmProjectId: Deno.env.get("FCM_PROJECT_ID") ?? "",
     fcmServiceAccountKey: Deno.env.get("FCM_SERVICE_ACCOUNT_KEY") ?? ""
   };

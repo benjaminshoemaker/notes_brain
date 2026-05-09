@@ -86,8 +86,8 @@ export default function AppLayout() {
       <Tabs.Screen
         name="summary"
         options={{
-          title: "Summary",
-          tabBarLabel: "Summary",
+          title: "Lenses",
+          tabBarLabel: "Lenses",
           tabBarButtonTestID: testIds.app.tabSummary,
           tabBarIcon: ({ color, size, focused }) => (
             <Ionicons name={focused ? "sparkles" : "sparkles-outline"} size={size} color={color} />

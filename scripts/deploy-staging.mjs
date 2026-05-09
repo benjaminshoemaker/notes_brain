@@ -9,7 +9,9 @@ const EDGE_FUNCTIONS = [
   "classify-note",
   "transcribe-voice",
   "generate-summary",
-  "send-push"
+  "send-push",
+  "execute-lens",
+  "dispatch-lenses"
 ];
 
 function parseFlags(argv) {
@@ -48,7 +50,13 @@ function bootstrapEnv() {
 }
 
 function getMissingEnv() {
-  const required = ["SUPABASE_URL", "OPENAI_API_KEY", "FCM_PROJECT_ID", "FCM_SERVICE_ACCOUNT_KEY"];
+  const required = [
+    "SUPABASE_URL",
+    "OPENAI_API_KEY",
+    "FCM_PROJECT_ID",
+    "FCM_SERVICE_ACCOUNT_KEY",
+    "CRON_SECRET"
+  ];
   const missing = required.filter((key) => !process.env[key]);
   const hasServiceRole = Boolean(
     process.env.SERVICE_ROLE_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY

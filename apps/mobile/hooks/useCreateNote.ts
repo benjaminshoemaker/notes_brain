@@ -4,6 +4,7 @@ import { upsertNoteWithAttachments } from "@notesbrain/shared";
 
 import { supabase } from "../lib/supabaseClient";
 import { ensureUserProfile } from "../lib/ensureUserProfile";
+import { invokeLocalEdgeFunction } from "../lib/localEdgeFunctions";
 import { useAuth } from "./useAuth";
 
 type CreateNoteInput = {
@@ -114,6 +115,14 @@ export function useCreateNote() {
         // Realtime INSERT may have already added this note. Upsert prevents duplicates.
         return upsertNoteWithAttachments(withoutOptimistic, noteWithAttachments, "start");
       });
+
+      if (newNote.type === "text") {
+        void invokeLocalEdgeFunction("classify-note", { note_id: newNote.id })
+          .then(() => queryClient.invalidateQueries({ queryKey: ["notes"] }))
+          .catch((error) => {
+            console.error("Local classification trigger failed:", error);
+          });
+      }
     },
     onSettled: async () => {
       await queryClient.invalidateQueries({ queryKey: ["notes"] });

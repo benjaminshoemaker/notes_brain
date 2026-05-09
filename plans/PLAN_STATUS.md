@@ -1,24 +1,25 @@
 # Plan Status
 
-Current plan: `features/custom-lenses/`
-Current type: `feature`
-Current stage: `completed`
-Current status: `completed`
-Last updated: 2026-05-05
+Current workstreams: multiple
+Last updated: 2026-05-09
 Updated by: Codex
 
-Rule: Agents may implement only an `active` Current plan. Archived, rejected,
-abandoned, superseded, completed, and research-only plans are context only.
+Rule: This manifest records workstream status; it does not require one primary
+active plan. Agents may continue any non-archived workstream explicitly
+requested by the human. Archived, rejected, abandoned, superseded, completed,
+and research-only plans remain context only unless the human explicitly revives
+them.
 
 ## Current Scope
 
-- What was built: Custom lenses replacing the daily summary flow, with mobile UI, lens execution, migrated results, refresh, and push delivery verified.
-- Source docs: `features/custom-lenses/FEATURE_SPEC.md`, `features/custom-lenses/FEATURE_TECHNICAL_SPEC.md`, `features/custom-lenses/EXECUTION_PLAN.md`
-- Next command: None. This feature is complete unless the user explicitly reactivates it.
+- `features/lens-library/`: Lens Library execution plan is drafted; next command is `cd features/lens-library && /fresh-start`.
+- `features/editable-notes/`: Technical spec drafted; next command is `/feature-plan editable-notes`.
 
 ## History
 
 | Path | Type | Status | Superseded By | Updated | Notes |
 |------|------|--------|---------------|---------|-------|
+| `features/lens-library/` | feature | active |  | 2026-05-09 | Feature spec, technical spec, flow verification plan, and execution plan drafted |
+| `features/editable-notes/` | feature | active |  | 2026-05-09 | Technical spec and flow verification plan drafted; ready for feature plan |
 | `features/custom-lenses/` | feature | completed |  | 2026-05-05 | All execution-plan checkboxes complete; physical Android push verified |
 | `plans/greenfield/` | greenfield | completed |  | 2026-05-05 | Existing app baseline, not current feature work |

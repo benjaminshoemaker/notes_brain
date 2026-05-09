@@ -1,7 +1,7 @@
 import { createClient } from "jsr:@supabase/supabase-js@2";
 
 import { createFunctionLogger } from "../_shared/logger.ts";
-import { createServiceRoleClient } from "../_shared/supabase.ts";
+import { createServiceRoleClient, getServiceRoleKeyFromEnv } from "../_shared/supabase.ts";
 
 type RuntimeConfig = {
   supabaseUrl: string;
@@ -19,8 +19,7 @@ const REQUIRED_ENV_KEYS = ["SUPABASE_URL", "CRON_SECRET"];
 function getRuntimeConfig(): RuntimeConfig {
   return {
     supabaseUrl: Deno.env.get("SUPABASE_URL") ?? "",
-    serviceRoleKey:
-      Deno.env.get("SERVICE_ROLE_KEY") ?? Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "",
+    serviceRoleKey: getServiceRoleKeyFromEnv(),
     cronSecret: Deno.env.get("CRON_SECRET") ?? ""
   };
 }

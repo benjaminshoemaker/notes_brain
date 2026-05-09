@@ -10,6 +10,7 @@ import { queryClient } from "../lib/queryClient";
 import { supabase } from "../lib/supabaseClient";
 import { OfflineBanner } from "../components/OfflineBanner";
 import { ShareHandler } from "../components/ShareHandler";
+import { colors } from "../lib/theme";
 
 type ErrorBoundaryProps = {
   children: ReactNode;
@@ -82,7 +83,7 @@ export default function RootLayout() {
                   }}
                 />
                 <ShareHandler />
-                <StatusBar style="auto" />
+                <StatusBar style="dark" backgroundColor={colors.background} translucent={false} />
               </RootErrorBoundary>
             )}
           </QueryErrorResetBoundary>
@@ -98,28 +99,28 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     padding: 24,
-    backgroundColor: "#FAF8F5",
+    backgroundColor: colors.background,
   },
   errorTitle: {
     fontSize: 22,
     fontWeight: "700",
     marginBottom: 8,
-    color: "#1C1917",
+    color: colors.text,
   },
   errorText: {
     fontSize: 14,
-    color: "#57534E",
+    color: colors.textSecondary,
     marginBottom: 16,
     textAlign: "center",
   },
   retryButton: {
-    backgroundColor: "#4F46E5",
+    backgroundColor: colors.accent,
     paddingHorizontal: 20,
     paddingVertical: 10,
     borderRadius: 8,
   },
   retryText: {
-    color: "#ffffff",
+    color: colors.textInverse,
     fontWeight: "600",
   },
 });

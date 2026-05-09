@@ -2,7 +2,7 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2.91.0";
 
 import { callOpenAIWhisperTranscription } from "../_shared/openai.ts";
 import { retryWithBackoff } from "../_shared/retry.ts";
-import { createServiceRoleClient } from "../_shared/supabase.ts";
+import { createServiceRoleClient, getServiceRoleKeyFromEnv } from "../_shared/supabase.ts";
 import { createFunctionLogger } from "../_shared/logger.ts";
 import { createHandler } from "./handler.ts";
 
@@ -21,9 +21,7 @@ const REQUIRED_ENV_KEYS = [
 function getRuntimeConfig(): RuntimeConfig {
   return {
     supabaseUrl: Deno.env.get("SUPABASE_URL") ?? "",
-    // Use custom secret name because system-injected SUPABASE_SERVICE_ROLE_KEY can be out of sync.
-    serviceRoleKey:
-      Deno.env.get("SERVICE_ROLE_KEY") ?? Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "",
+    serviceRoleKey: getServiceRoleKeyFromEnv(),
     openaiApiKey: Deno.env.get("OPENAI_API_KEY") ?? "",
     whisperModel: Deno.env.get("OPENAI_WHISPER_MODEL") ?? "whisper-1"
   };

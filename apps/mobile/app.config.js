@@ -1,3 +1,5 @@
+const warmInkBackground = "#FAF8F5";
+
 export default {
   expo: {
     name: "Echo",
@@ -6,7 +8,7 @@ export default {
     orientation: "portrait",
     icon: "./assets/icon.png",
     scheme: "echo",
-    userInterfaceStyle: "automatic",
+    userInterfaceStyle: "light",
     newArchEnabled: true,
     splash: {
       image: "./assets/splash-icon.png",
@@ -28,6 +30,11 @@ export default {
         "android.permission.RECORD_AUDIO",
         "android.permission.MODIFY_AUDIO_SETTINGS"
       ]
+    },
+    androidStatusBar: {
+      barStyle: "dark-content",
+      backgroundColor: warmInkBackground,
+      translucent: false
     },
     web: {
       bundler: "metro",

@@ -8,7 +8,9 @@ const EDGE_FUNCTIONS = [
   "classify-note",
   "transcribe-voice",
   "generate-summary",
-  "send-push"
+  "send-push",
+  "execute-lens",
+  "dispatch-lenses"
 ];
 
 function loadEnvFile(filePath) {

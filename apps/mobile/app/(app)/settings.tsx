@@ -67,10 +67,10 @@ export default function SettingsScreen() {
           <View style={styles.iconCircle}>
             <Ionicons name="globe-outline" size={18} color={colors.accent} />
           </View>
-          <View>
+          <View style={styles.headerText}>
             <Text style={styles.label}>Timezone</Text>
             <Text style={styles.helperText}>
-              Daily summaries are delivered at 8:00 AM in this timezone.
+              Lenses are delivered in this timezone.
             </Text>
           </View>
         </View>
@@ -133,6 +133,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  headerText: {
+    flex: 1,
+    minWidth: 0,
+  },
   label: {
     fontSize: 16,
     fontWeight: "600",
@@ -142,6 +146,8 @@ const styles = StyleSheet.create({
     fontSize: 13,
     color: colors.textSecondary,
     marginTop: 2,
+    lineHeight: 18,
+    flexShrink: 1,
   },
   errorText: {
     fontSize: 14,

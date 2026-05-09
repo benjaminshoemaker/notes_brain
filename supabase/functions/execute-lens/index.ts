@@ -1,6 +1,6 @@
 import { createClient } from "jsr:@supabase/supabase-js@2";
 
-import { createServiceRoleClient } from "../_shared/supabase.ts";
+import { createServiceRoleClient, getServiceRoleKeyFromEnv } from "../_shared/supabase.ts";
 import { createFunctionLogger } from "../_shared/logger.ts";
 import { callOpenAIMarkdown } from "../_shared/openai.ts";
 import { retryWithBackoff } from "../_shared/retry.ts";
@@ -64,8 +64,7 @@ type Note = {
 function getRuntimeConfig(): RuntimeConfig {
   return {
     supabaseUrl: Deno.env.get("SUPABASE_URL") ?? "",
-    serviceRoleKey:
-      Deno.env.get("SERVICE_ROLE_KEY") ?? Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "",
+    serviceRoleKey: getServiceRoleKeyFromEnv(),
     openaiApiKey: Deno.env.get("OPENAI_API_KEY") ?? "",
     cronSecret: Deno.env.get("CRON_SECRET") ?? ""
   };
@@ -242,7 +241,17 @@ function buildFormattedNotes(notes: Note[]) {
 }
 
 function buildPushPreview(content: string) {
-  return content.replace(/\s+/g, " ").trim().slice(0, PUSH_PREVIEW_LENGTH);
+  return content
+    .replace(/```[\s\S]*?```/g, " ")
+    .replace(/`([^`]+)`/g, "$1")
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1")
+    .replace(/^#{1,6}\s+/gm, "")
+    .replace(/^\s*[-*+]\s+/gm, "")
+    .replace(/^\s*\d+[.)]\s+/gm, "")
+    .replace(/[*_~>#]/g, "")
+    .replace(/\s+/g, " ")
+    .trim()
+    .slice(0, PUSH_PREVIEW_LENGTH);
 }
 
 async function authenticateRequest(

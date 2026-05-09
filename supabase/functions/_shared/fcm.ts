@@ -59,12 +59,6 @@ async function createJWT(
     scope
   };
 
-  console.log("FCM createJWT header:", header);
-  console.log("FCM createJWT payload:", payload);
-  console.log(
-    `FCM createJWT exp check: now=${now} exp=${payload.exp} in_future=${payload.exp > now}`
-  );
-
   const encodedHeader = base64UrlEncode(JSON.stringify(header));
   const encodedPayload = base64UrlEncode(JSON.stringify(payload));
   const unsignedToken = `${encodedHeader}.${encodedPayload}`;
@@ -112,8 +106,6 @@ export async function getAccessToken(
   fetchFn: typeof fetch,
   serviceAccountJson: string
 ): Promise<string> {
-  console.log("FCM getAccessToken called");
-
   let serviceAccount: ServiceAccountKey;
   try {
     serviceAccount = JSON.parse(serviceAccountJson);
@@ -125,18 +117,6 @@ export async function getAccessToken(
     }
   } catch {
     throw new Error("Invalid service account JSON");
-  }
-
-  console.log(`FCM service account client_email: ${serviceAccount.client_email}`);
-
-  if (serviceAccount.private_key) {
-    const previewStart = serviceAccount.private_key.slice(0, 50);
-    const previewEnd = serviceAccount.private_key.slice(-50);
-    console.log(
-      `FCM private_key preview: start="${previewStart}" end="${previewEnd}" length=${serviceAccount.private_key.length}`
-    );
-  } else {
-    console.log("FCM private_key is missing after parsing");
   }
 
   const jwt = await createJWT(
@@ -156,10 +136,7 @@ export async function getAccessToken(
   });
 
   const responseText = await response.text().catch(() => "");
-  console.log("FCM token exchange response:", {
-    status: response.status,
-    body: responseText
-  });
+  console.log("FCM token exchange response", { status: response.status });
 
   if (!response.ok) {
     throw new Error(`Failed to get access token: ${response.status} ${responseText}`);
@@ -186,11 +163,7 @@ export async function sendFCMMessage({
   message
 }: FCMSendRequest): Promise<FCMSendResult> {
   const url = `https://fcm.googleapis.com/v1/projects/${projectId}/messages:send`;
-  const tokenStart = message.token.slice(0, 10);
-  const tokenEnd = message.token.slice(-10);
-  console.log(
-    `FCM sendFCMMessage called: projectId=${projectId} token="${tokenStart}...${tokenEnd}"`
-  );
+  console.log("FCM sendFCMMessage called", { projectId });
 
   const response = await fetchFn(url, {
     method: "POST",
@@ -202,10 +175,7 @@ export async function sendFCMMessage({
   });
 
   const responseText = await response.text().catch(() => "");
-  console.log("FCM sendFCMMessage response:", {
-    status: response.status,
-    body: responseText
-  });
+  console.log("FCM sendFCMMessage response", { status: response.status });
 
   if (!response.ok) {
     return {

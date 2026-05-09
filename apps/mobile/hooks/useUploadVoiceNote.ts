@@ -5,6 +5,7 @@ import { upsertNoteWithAttachments } from "@notesbrain/shared";
 
 import { supabase } from "../lib/supabaseClient";
 import { ensureUserProfile } from "../lib/ensureUserProfile";
+import { invokeLocalEdgeFunction } from "../lib/localEdgeFunctions";
 
 type UploadVoiceNoteInput = {
   uri: string;
@@ -126,6 +127,12 @@ export function useUploadVoiceNote() {
       queryClient.setQueryData<NoteWithAttachments[]>(["notes"], (old) => {
         return upsertNoteWithAttachments(old, newNote, "start");
       });
+
+      void invokeLocalEdgeFunction("transcribe-voice", { note_id: newNote.id })
+        .then(() => queryClient.invalidateQueries({ queryKey: ["notes"] }))
+        .catch((error) => {
+          console.error("Local voice transcription trigger failed:", error);
+        });
     },
   });
 }

@@ -1,6 +1,6 @@
 import { createClient } from "jsr:@supabase/supabase-js@2";
 
-import { createServiceRoleClient } from "../_shared/supabase.ts";
+import { createServiceRoleClient, getServiceRoleKeyFromEnv } from "../_shared/supabase.ts";
 import { createFunctionLogger } from "../_shared/logger.ts";
 import { callOpenAISummary, type DailySummaryContent } from "../_shared/openai.ts";
 
@@ -95,8 +95,7 @@ function getLocalDateString(localTime: Date): string {
 function getRuntimeConfig(): RuntimeConfig {
   return {
     supabaseUrl: Deno.env.get("SUPABASE_URL") ?? "",
-    serviceRoleKey:
-      Deno.env.get("SERVICE_ROLE_KEY") ?? Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "",
+    serviceRoleKey: getServiceRoleKeyFromEnv(),
     openaiApiKey: Deno.env.get("OPENAI_API_KEY") ?? ""
   };
 }

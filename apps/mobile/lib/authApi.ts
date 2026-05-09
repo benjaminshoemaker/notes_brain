@@ -1,5 +1,6 @@
 import { signIn, signInWithMagicLink, signOut, signUp } from "@notesbrain/shared";
 
+import { getAuthCallbackRedirectUrl } from "./authRedirect";
 import { supabase } from "./supabaseClient";
 
 export function signInWithPassword(email: string, password: string) {
@@ -11,13 +12,12 @@ export function signUpWithPassword(email: string, password: string) {
 }
 
 export function sendMagicLink(email: string) {
-  // For mobile, we use deep linking scheme
-  const emailRedirectTo = "echo://auth/callback";
+  const emailRedirectTo = getAuthCallbackRedirectUrl();
   return signInWithMagicLink(supabase, { email, emailRedirectTo });
 }
 
 export function sendPasswordResetEmail(email: string) {
-  const redirectTo = "echo://auth/callback";
+  const redirectTo = getAuthCallbackRedirectUrl();
   return supabase.auth.resetPasswordForEmail(email, { redirectTo });
 }
 
