@@ -753,7 +753,7 @@ Add a concise verification note for the agent-runnable mobile flow, then run the
   - Verify: `grep -q "screenshots" features/lens-library/VERIFICATION_NOTES.md && grep -q "source_template_id" features/lens-library/VERIFICATION_NOTES.md`
 - [x] (BROWSER:DOM) Emulator flow shows `Create your own` and `Browse Lens Library` after tapping Summary `+`.
   - Verify: platform=`ios|android`, route=`Summary tab`, selector=`text=Browse Lens Library`, expect=`visible`
-- [ ] (BROWSER:DOM) Emulator flow shows installed lens editable in the existing lens form after `Add to My Lenses`.
+- [x] (BROWSER:DOM) Emulator flow shows installed lens editable in the existing lens form after `Add to My Lenses`.
   - Verify: platform=`ios|android`, route=`Manage Lenses -> Edit installed lens`, selector=`lens-form-screen`, expect=`visible`
 
 **Files to Create:**
@@ -790,15 +790,15 @@ Run the feature-level verification commands, update completed checkboxes only wi
 **Requirement:** FEATURE_TECHNICAL_SPEC.md > Commands; FLOW_VERIFICATION_PLAN.md > Evidence
 
 **Acceptance Criteria:**
-- [ ] (TEST) Root tests pass.
+- [x] (TEST) Root tests pass.
   - Verify: `npm run test:root`
-- [ ] (TEST) Mobile tests pass.
+- [x] (TEST) Mobile tests pass.
   - Verify: `npm run test -w @notesbrain/mobile`
-- [ ] (TYPE) Shared and mobile typechecks pass.
+- [x] (TYPE) Shared and mobile typechecks pass.
   - Verify: `npm run typecheck -w @notesbrain/shared && npm run typecheck -w @notesbrain/mobile`
-- [ ] (LINT) Mobile lint passes.
+- [x] (LINT) Mobile lint passes.
   - Verify: `npm run lint -w @notesbrain/mobile`
-- [ ] (CODE) `EXECUTION_PLAN.md` completed checkboxes are updated only for criteria with captured command/browser evidence.
+- [x] (CODE) `EXECUTION_PLAN.md` completed checkboxes are updated only for criteria with captured command/browser evidence.
   - Verify: `grep -n "\\[x\\]" features/lens-library/EXECUTION_PLAN.md`
 
 **Files to Create:**
@@ -825,23 +825,23 @@ Run the feature-level verification commands, update completed checkboxes only wi
 ### Phase 4 Checkpoint
 
 **Automated Checks:**
-- [ ] (TEST) Root tests pass.
+- [x] (TEST) Root tests pass.
   - Verify: `npm run test:root`
-- [ ] (TEST) Mobile tests pass.
+- [x] (TEST) Mobile tests pass.
   - Verify: `npm run test -w @notesbrain/mobile`
-- [ ] (TYPE) Shared and mobile typechecks pass.
+- [x] (TYPE) Shared and mobile typechecks pass.
   - Verify: `npm run typecheck -w @notesbrain/shared && npm run typecheck -w @notesbrain/mobile`
-- [ ] (LINT) Mobile lint passes.
+- [x] (LINT) Mobile lint passes.
   - Verify: `npm run lint -w @notesbrain/mobile`
 
 **Regression Verification:**
-- [ ] (CODE) Existing custom lens execution path is not coupled to bundled templates.
+- [x] (CODE) Existing custom lens execution path is not coupled to bundled templates.
   - Verify: `! grep -R "lensLibrary" supabase/functions/execute-lens supabase/functions/dispatch-lenses`
-- [ ] (CODE) Existing lens edit, pause/resume, run now, and delete controls remain present.
+- [x] (CODE) Existing lens edit, pause/resume, run now, and delete controls remain present.
   - Verify: `grep -q "Run Now" 'apps/mobile/app/(app)/lens-manage.tsx' && grep -q "Delete" 'apps/mobile/app/(app)/lens-manage.tsx' && grep -q "Pause" 'apps/mobile/app/(app)/lens-manage.tsx'`
-- [ ] (CODE) Library install does not bypass existing max-10-lenses constraint.
+- [x] (CODE) Library install does not bypass existing max-10-lenses constraint.
   - Verify: `grep -q "Maximum of 10 lenses per user" supabase/migrations/00006_custom_lenses.sql && grep -q "create.mutateAsync" apps/mobile/hooks/useLensLibrary.ts`
 
 **Browser Verification:**
-- [ ] (CODE) Agent mobile flow evidence is captured for choice screen, library list, preview, installed lens management view, and edit form.
+- [x] (CODE) Agent mobile flow evidence is captured for choice screen, library list, preview, installed lens management view, and edit form.
   - Verify: `grep -q "choice screen" features/lens-library/VERIFICATION_NOTES.md && grep -q "installed lens" features/lens-library/VERIFICATION_NOTES.md`
