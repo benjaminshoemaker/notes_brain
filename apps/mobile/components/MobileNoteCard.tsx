@@ -11,6 +11,7 @@ import { colors, radii, shadows, spacing, getCategoryTint } from "../lib/theme";
 type MobileNoteCardProps = {
   note: NoteWithAttachments;
   isEditing?: boolean;
+  editBaselineUpdatedAt?: string | null;
   isEditDisabled?: boolean;
   remoteState?: "clean" | "updated" | "deleted";
   onStartEdit?: (note: NoteWithAttachments) => void;
@@ -45,6 +46,7 @@ function formatTimestamp(dateString: string): string {
 export function MobileNoteCard({
   note,
   isEditing = false,
+  editBaselineUpdatedAt = null,
   isEditDisabled = false,
   remoteState = "clean",
   onStartEdit,
@@ -126,7 +128,7 @@ export function MobileNoteCard({
 
     const input: UpdateNoteInput = {
       id: note.id,
-      expectedUpdatedAt: note.updated_at,
+      expectedUpdatedAt: editBaselineUpdatedAt ?? note.updated_at,
     };
 
     if (validation.bodyChanged) {

@@ -52,10 +52,12 @@ function CardHarness({
   initialNote,
   onSaveEdit,
   remoteState = "clean",
+  editBaselineUpdatedAt = null,
 }: {
   initialNote: NoteWithAttachments;
   onSaveEdit: (input: UpdateNoteInput) => Promise<void>;
   remoteState?: "clean" | "updated" | "deleted";
+  editBaselineUpdatedAt?: string | null;
 }) {
   const [note, setNote] = useState(initialNote);
   const [isEditing, setIsEditing] = useState(false);
@@ -74,6 +76,7 @@ function CardHarness({
     <MobileNoteCard
       note={note}
       isEditing={isEditing}
+      editBaselineUpdatedAt={editBaselineUpdatedAt}
       isEditDisabled={false}
       remoteState={remoteState}
       onStartEdit={() => setIsEditing(true)}
@@ -131,6 +134,38 @@ describe("MobileNoteCard edit state", () => {
     });
     expect(textContent(tree)).toContain("Updated body");
     expect(() => findByTestId(tree, testIds.notes.editInput(note.id))).toThrow();
+  });
+
+  it("uses the edit-start updated_at when the current note prop changes before save", async () => {
+    const note = makeNote({ updated_at: "2026-05-01T00:05:00.000Z" });
+    const editBaselineUpdatedAt = "2026-05-01T00:00:00.000Z";
+    const onSaveEdit = vi.fn().mockResolvedValue(undefined);
+    let tree!: ReactTestRenderer;
+
+    await act(async () => {
+      tree = create(
+        <CardHarness
+          initialNote={note}
+          editBaselineUpdatedAt={editBaselineUpdatedAt}
+          onSaveEdit={onSaveEdit}
+        />
+      );
+      await Promise.resolve();
+    });
+
+    await openEditor(tree, note.id);
+
+    await act(async () => {
+      findByTestId(tree, testIds.notes.editInput(note.id)).props.onChangeText("Updated body");
+      await Promise.resolve();
+    });
+    await pressSave(tree, note.id);
+
+    expect(onSaveEdit).toHaveBeenCalledWith({
+      id: note.id,
+      content: "Updated body",
+      expectedUpdatedAt: editBaselineUpdatedAt,
+    });
   });
 
   it("cancels draft changes and returns to original read-mode content", async () => {

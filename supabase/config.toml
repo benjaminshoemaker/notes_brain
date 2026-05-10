@@ -22,16 +22,16 @@ enabled = true
 port = 65424
 
 [functions.classify-note]
-verify_jwt = false
+verify_jwt = true
 
 [functions.transcribe-voice]
-verify_jwt = false
+verify_jwt = true
 
 [functions.generate-summary]
-verify_jwt = false
+verify_jwt = true
 
 [functions.send-push]
-verify_jwt = false
+verify_jwt = true
 
 [functions.execute-lens]
 verify_jwt = false

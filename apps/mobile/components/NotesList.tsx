@@ -70,6 +70,7 @@ export function NotesList({
         <MobileNoteCard
           note={item}
           isEditing={activeEditState?.noteId === item.id}
+          editBaselineUpdatedAt={activeEditState?.noteId === item.id ? activeEditState.baseUpdatedAt : null}
           isEditDisabled={activeEditState !== null && activeEditState.noteId !== item.id}
           remoteState={activeEditState?.noteId === item.id ? activeEditState.remoteState : "clean"}
           onStartEdit={onStartEdit}

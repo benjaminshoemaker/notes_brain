@@ -8,6 +8,7 @@ vi.mock("../../components/MobileNoteCard", () => ({
   MobileNoteCard: (props: {
     note: NoteWithAttachments;
     isEditing: boolean;
+    editBaselineUpdatedAt?: string | null;
     isEditDisabled: boolean;
     remoteState: string;
     onStartEdit?: (note: NoteWithAttachments) => void;
@@ -23,7 +24,7 @@ vi.mock("../../components/MobileNoteCard", () => ({
     React.createElement(
       "Text",
       null,
-      `${props.note.id}:${String(props.isEditing)}:${String(props.isEditDisabled)}:${props.remoteState}`
+      `${props.note.id}:${String(props.isEditing)}:${props.editBaselineUpdatedAt ?? "none"}:${String(props.isEditDisabled)}:${props.remoteState}`
     )
   )
 }));
@@ -86,8 +87,8 @@ describe("NotesList edit coordination", () => {
       await Promise.resolve();
     });
 
-    expect(textContent(tree)).toContain("note-1:true:false:clean");
-    expect(textContent(tree)).toContain("note-2:false:true:clean");
+    expect(textContent(tree)).toContain(`note-1:true:${notes[0].updated_at}:false:clean`);
+    expect(textContent(tree)).toContain("note-2:false:none:true:clean");
   });
 
   it("omits pull-to-refresh while editing and restores it afterward", async () => {
@@ -157,8 +158,8 @@ describe("NotesList edit coordination", () => {
       await Promise.resolve();
     });
 
-    expect(textContent(tree)).not.toContain("note-1:false:false:clean");
-    expect(textContent(tree)).toContain("note-2:false:false:clean");
+    expect(textContent(tree)).not.toContain("note-1:false:none:false:clean");
+    expect(textContent(tree)).toContain("note-2:false:none:false:clean");
 
     await act(async () => {
       tree.update(
@@ -177,7 +178,7 @@ describe("NotesList edit coordination", () => {
       await Promise.resolve();
     });
 
-    expect(textContent(tree)).toContain("note-1:false:false:clean");
-    expect(textContent(tree)).toContain("note-2:false:false:clean");
+    expect(textContent(tree)).toContain("note-1:false:none:false:clean");
+    expect(textContent(tree)).toContain("note-2:false:none:false:clean");
   });
 });

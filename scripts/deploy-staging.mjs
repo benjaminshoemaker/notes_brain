@@ -14,6 +14,8 @@ const EDGE_FUNCTIONS = [
   "dispatch-lenses"
 ];
 
+const CRON_CALLABLE_FUNCTIONS = new Set(["execute-lens", "dispatch-lenses"]);
+
 function parseFlags(argv) {
   return {
     dryRun: argv.includes("--dry-run"),
@@ -93,7 +95,11 @@ function ensureSupabaseCli({ dryRun }) {
 
 function deployFunctions({ dryRun }) {
   for (const fn of EDGE_FUNCTIONS) {
-    runCommand("supabase", ["functions", "deploy", fn], { dryRun });
+    const args = ["functions", "deploy", fn];
+    if (CRON_CALLABLE_FUNCTIONS.has(fn)) {
+      args.push("--no-verify-jwt");
+    }
+    runCommand("supabase", args, { dryRun });
   }
 }
 
