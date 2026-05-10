@@ -43,9 +43,9 @@ Phase 1: Data and Realtime Contracts
 ### Pre-Phase Setup
 
 Human must complete before starting:
-- [ ] Confirm mobile test dependencies install from the current workspace.
+- [x] Confirm mobile test dependencies install from the current workspace.
   - Verify: `cd apps/mobile && npm test -- test/smoke/notes-screen.test.tsx`
-- [ ] Confirm the shared category source is available.
+- [x] Confirm the shared category source is available.
   - Verify: `rg "export const CATEGORIES" packages/shared/src/constants.ts`
 
 ### Step 1.1: Edit Mutation Foundation
@@ -207,9 +207,9 @@ Extend `useRealtimeNotes` so active edit rows can opt out of immediate cache ove
 ### Pre-Phase Setup
 
 Human must complete before starting:
-- [ ] Confirm Warm Ink tokens remain the mobile UI source of truth.
+- [x] Confirm Warm Ink tokens remain the mobile UI source of truth.
   - Verify: `test -f apps/mobile/lib/theme.ts && rg "colors|radii|shadows" apps/mobile/lib/theme.ts`
-- [ ] Confirm Ionicons is available for mobile icon buttons.
+- [x] Confirm Ionicons is available for mobile icon buttons.
   - Verify: `rg "@expo/vector-icons" apps/mobile`
 
 ### Step 2.1: Screen and List Coordination
