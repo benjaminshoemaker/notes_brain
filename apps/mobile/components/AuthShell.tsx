@@ -1,6 +1,8 @@
 import type { ReactNode } from "react";
 import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, View } from "react-native";
 
+import { colors, radii, spacing, typography, touchTargets } from "../lib/theme";
+
 type AuthShellProps = {
   title: string;
   subtitle: string;
@@ -48,102 +50,102 @@ export function AuthShell({ title, subtitle, children, error, status, footer }: 
 export const authStyles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#ffffff",
+    backgroundColor: colors.background,
   },
   scrollContent: {
     flexGrow: 1,
     justifyContent: "center",
   },
   formContainer: {
-    padding: 24,
+    padding: spacing.xl,
   },
   title: {
-    fontSize: 28,
-    fontWeight: "bold",
-    color: "#1a1a1a",
-    marginBottom: 8,
+    ...typography.screenTitle,
+    color: colors.text,
+    marginBottom: spacing.sm,
   },
   subtitle: {
-    fontSize: 16,
-    color: "#666666",
-    marginBottom: 32,
+    ...typography.body,
+    color: colors.textSecondary,
+    marginBottom: spacing.xxl,
   },
   inputGroup: {
-    marginBottom: 16,
+    marginBottom: spacing.lg,
   },
   label: {
-    fontSize: 14,
+    ...typography.helper,
     fontWeight: "600",
-    color: "#333333",
-    marginBottom: 6,
+    color: colors.textSecondary,
+    marginBottom: spacing.xs,
   },
   input: {
     borderWidth: 1,
-    borderColor: "#dddddd",
-    borderRadius: 8,
-    paddingHorizontal: 14,
-    paddingVertical: 12,
+    borderColor: colors.border,
+    borderRadius: radii.md,
+    paddingHorizontal: spacing.md,
+    paddingVertical: spacing.md,
     fontSize: 16,
-    backgroundColor: "#fafafa",
+    color: colors.text,
+    backgroundColor: colors.surface,
   },
   button: {
-    borderRadius: 8,
-    paddingVertical: 14,
+    borderRadius: radii.md,
+    minHeight: touchTargets.min,
+    paddingVertical: spacing.md,
     alignItems: "center",
-    marginTop: 8,
+    justifyContent: "center",
+    marginTop: spacing.sm,
   },
   primaryButton: {
-    backgroundColor: "#0066cc",
+    backgroundColor: colors.accent,
   },
   secondaryButton: {
     backgroundColor: "transparent",
     borderWidth: 1,
-    borderColor: "#0066cc",
+    borderColor: colors.accent,
   },
   buttonDisabled: {
     opacity: 0.6,
   },
   buttonText: {
-    color: "#ffffff",
-    fontSize: 16,
-    fontWeight: "600",
+    ...typography.button,
+    color: colors.textInverse,
   },
   secondaryButtonText: {
-    color: "#0066cc",
-    fontSize: 16,
-    fontWeight: "600",
+    ...typography.button,
+    color: colors.accent,
   },
   errorContainer: {
-    backgroundColor: "#fff0f0",
-    padding: 12,
-    borderRadius: 8,
-    marginTop: 16,
+    backgroundColor: colors.errorLight,
+    padding: spacing.md,
+    borderRadius: radii.md,
+    marginTop: spacing.lg,
   },
   errorText: {
-    color: "#cc0000",
+    color: colors.error,
     fontSize: 14,
   },
   statusContainer: {
-    backgroundColor: "#f0fff0",
-    padding: 12,
-    borderRadius: 8,
-    marginTop: 16,
+    backgroundColor: colors.successLight,
+    padding: spacing.md,
+    borderRadius: radii.md,
+    marginTop: spacing.lg,
   },
   statusText: {
-    color: "#006600",
+    color: colors.success,
     fontSize: 14,
   },
   footer: {
     flexDirection: "row",
     justifyContent: "center",
-    marginTop: 24,
+    marginTop: spacing.xl,
   },
   footerText: {
-    color: "#666666",
+    color: colors.textSecondary,
     fontSize: 14,
   },
   linkText: {
-    color: "#0066cc",
+    color: colors.accent,
     fontSize: 14,
     fontWeight: "600",
   },

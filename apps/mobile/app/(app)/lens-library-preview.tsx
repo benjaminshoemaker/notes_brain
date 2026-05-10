@@ -134,6 +134,8 @@ export default function LensLibraryPreviewScreen() {
 
           <Pressable
             accessibilityRole="button"
+            accessibilityLabel={showPrompt ? "Hide prompt details" : "Show prompt details"}
+            accessibilityState={{ expanded: showPrompt }}
             onPress={() => setShowPrompt((current) => !current)}
             style={styles.promptToggle}
           >
@@ -152,6 +154,8 @@ export default function LensLibraryPreviewScreen() {
 
           <Pressable
             accessibilityRole="button"
+            accessibilityLabel={isInstalled ? "Lens already installed" : `Add ${template.name} to my lenses`}
+            accessibilityState={{ disabled: isInstalled || installMutation.isPending }}
             disabled={isInstalled || installMutation.isPending}
             testID={testIds.lens.preview.installButton}
             onPress={() => {

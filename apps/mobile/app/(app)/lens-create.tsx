@@ -24,6 +24,7 @@ export default function LensCreateScreen() {
       <View style={styles.content}>
         <Pressable
           accessibilityRole="button"
+          accessibilityLabel="Create a custom lens"
           testID={testIds.lens.create.customButton}
           onPress={() => {
             router.push(LENS_FORM_ROUTE);
@@ -42,6 +43,7 @@ export default function LensCreateScreen() {
 
         <Pressable
           accessibilityRole="button"
+          accessibilityLabel="Browse lens library"
           testID={testIds.lens.create.libraryButton}
           onPress={() => {
             router.push(LENS_LIBRARY_ROUTE);

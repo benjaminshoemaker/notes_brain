@@ -15,7 +15,7 @@ import { Ionicons } from "@expo/vector-icons";
 
 import { signInWithPassword, sendMagicLink, sendPasswordResetEmail } from "../../lib/authApi";
 import { testIds } from "../../lib/testIds";
-import { colors, radii } from "../../lib/theme";
+import { colors, radii, spacing, typography, touchTargets } from "../../lib/theme";
 
 export default function LoginScreen() {
   const router = useRouter();
@@ -201,7 +201,11 @@ export default function LoginScreen() {
           <View style={styles.footer}>
             <Text style={styles.footerText}>New here? </Text>
             <Link href="/(auth)/signup" asChild>
-              <TouchableOpacity>
+              <TouchableOpacity
+                accessibilityRole="button"
+                accessibilityLabel="Create an account"
+                style={styles.footerLink}
+              >
                 <Text style={styles.linkText}>Create an account</Text>
               </TouchableOpacity>
             </Link>
@@ -222,27 +226,26 @@ const styles = StyleSheet.create({
     paddingTop: 80,
   },
   formContainer: {
-    padding: 24,
+    padding: spacing.xl,
   },
   title: {
-    fontSize: 28,
-    fontWeight: "bold",
+    ...typography.screenTitle,
     color: colors.text,
-    marginBottom: 8,
+    marginBottom: spacing.sm,
   },
   subtitle: {
-    fontSize: 16,
+    ...typography.body,
     color: colors.textSecondary,
-    marginBottom: 32,
+    marginBottom: spacing.xxl,
   },
   inputGroup: {
-    marginBottom: 16,
+    marginBottom: spacing.lg,
   },
   label: {
-    fontSize: 13,
+    ...typography.helper,
     fontWeight: "600",
     color: colors.textSecondary,
-    marginBottom: 6,
+    marginBottom: spacing.xs,
   },
   inputWrapper: {
     flexDirection: "row",
@@ -253,19 +256,20 @@ const styles = StyleSheet.create({
     backgroundColor: colors.surface,
   },
   inputIcon: {
-    marginLeft: 12,
+    marginLeft: spacing.md,
   },
   input: {
     flex: 1,
-    paddingHorizontal: 10,
-    paddingVertical: 12,
+    paddingHorizontal: spacing.md,
+    paddingVertical: spacing.md,
     fontSize: 16,
     color: colors.text,
   },
   forgotPasswordButton: {
     alignSelf: "flex-end",
-    paddingVertical: 4,
-    marginBottom: 2,
+    minHeight: touchTargets.min,
+    justifyContent: "center",
+    paddingHorizontal: spacing.sm,
   },
   forgotPasswordText: {
     color: colors.accent,
@@ -274,9 +278,10 @@ const styles = StyleSheet.create({
   },
   button: {
     borderRadius: radii.md,
-    paddingVertical: 14,
+    minHeight: touchTargets.min,
+    paddingVertical: spacing.md,
     alignItems: "center",
-    marginTop: 8,
+    marginTop: spacing.sm,
     flexDirection: "row",
     justifyContent: "center",
     gap: 8,
@@ -293,20 +298,18 @@ const styles = StyleSheet.create({
     opacity: 0.6,
   },
   buttonText: {
+    ...typography.button,
     color: colors.textInverse,
-    fontSize: 16,
-    fontWeight: "600",
   },
   secondaryButtonText: {
+    ...typography.button,
     color: colors.accent,
-    fontSize: 16,
-    fontWeight: "600",
   },
   errorContainer: {
     backgroundColor: colors.errorLight,
-    padding: 12,
+    padding: spacing.md,
     borderRadius: radii.md,
-    marginTop: 16,
+    marginTop: spacing.lg,
   },
   errorText: {
     color: colors.error,
@@ -314,9 +317,9 @@ const styles = StyleSheet.create({
   },
   statusContainer: {
     backgroundColor: colors.successLight,
-    padding: 12,
+    padding: spacing.md,
     borderRadius: radii.md,
-    marginTop: 16,
+    marginTop: spacing.lg,
   },
   statusText: {
     color: colors.success,
@@ -325,7 +328,12 @@ const styles = StyleSheet.create({
   footer: {
     flexDirection: "row",
     justifyContent: "center",
-    marginTop: 24,
+    marginTop: spacing.xl,
+    alignItems: "center",
+  },
+  footerLink: {
+    minHeight: touchTargets.min,
+    justifyContent: "center",
   },
   footerText: {
     color: colors.textSecondary,

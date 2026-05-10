@@ -47,6 +47,7 @@ export default function LensLibraryScreen() {
           return (
             <Pressable
               accessibilityRole="button"
+              accessibilityLabel={`Preview ${item.template.name}`}
               testID={testIds.lens.library.card(item.template.template_id)}
               onPress={() => {
                 router.push(buildPreviewRoute(item.template.template_id));

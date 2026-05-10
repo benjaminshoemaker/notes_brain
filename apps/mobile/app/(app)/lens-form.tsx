@@ -140,6 +140,7 @@ export default function LensFormScreen() {
   const [lookbackHours, setLookbackHours] = useState(24);
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [showTimePicker, setShowTimePicker] = useState(false);
+  const [showAdvanced, setShowAdvanced] = useState(false);
   const [hydratedLensId, setHydratedLensId] = useState<string | null>(null);
 
   const lens = useMemo(
@@ -157,6 +158,7 @@ export default function LensFormScreen() {
         setScheduleDay(1);
         setLookbackHours(24);
         setSelectedCategories([]);
+        setShowAdvanced(false);
         setHydratedLensId(null);
       }
 
@@ -175,6 +177,10 @@ export default function LensFormScreen() {
     setScheduleDay(nextState.scheduleDay);
     setLookbackHours(nextState.lookbackHours);
     setSelectedCategories(nextState.selectedCategories);
+    setShowAdvanced(
+      nextState.selectedCategories.length > 0 ||
+      nextState.lookbackHours !== 24
+    );
     setHydratedLensId(lens.id);
   }, [hydratedLensId, isEditMode, lens]);
 
@@ -209,6 +215,7 @@ export default function LensFormScreen() {
     setScheduleDay(1);
     if (preset.name === "Weekly Health Review") {
       setSelectedCategories(["health"]);
+      setShowAdvanced(true);
     }
   }
 
@@ -288,7 +295,7 @@ export default function LensFormScreen() {
                   <Ionicons name="sparkles-outline" size={18} color={colors.accent} />
                 </View>
                 <View style={styles.sectionHeaderText}>
-                  <Text style={styles.sectionTitle}>Start From a Preset</Text>
+                  <Text style={styles.sectionTitle}>Start from a preset</Text>
                   <Text style={styles.sectionHelper}>
                     Pick a useful lens shape, then tune the details.
                   </Text>
@@ -320,9 +327,9 @@ export default function LensFormScreen() {
                 <Ionicons name="create-outline" size={18} color={colors.accent} />
               </View>
               <View style={styles.sectionHeaderText}>
-                <Text style={styles.sectionTitle}>Lens Details</Text>
+                <Text style={styles.sectionTitle}>Insight setup</Text>
                 <Text style={styles.sectionHelper}>
-                  Give this lens a clear name and a prompt with enough detail to guide the summary.
+                  Name the recurring insight and describe what Echo should look for.
                 </Text>
               </View>
             </View>
@@ -342,7 +349,7 @@ export default function LensFormScreen() {
             </View>
 
             <View style={styles.fieldGroup}>
-              <Text style={styles.fieldLabel}>Prompt</Text>
+              <Text style={styles.fieldLabel}>Outcome</Text>
               <TextInput
                 testID={lensFormTestIds.promptInput}
                 style={[styles.input, styles.promptInput]}
@@ -357,7 +364,7 @@ export default function LensFormScreen() {
               />
               <View style={styles.promptMetaRow}>
                 <Text style={[styles.helperText, !promptIsValid && styles.errorText]}>
-                  Prompt must be between 20 and 2000 characters.
+                  Outcome must be between 20 and 2000 characters.
                 </Text>
                 <Text style={[styles.counterText, !promptIsValid && styles.errorText]}>
                   {promptLength}/2000
@@ -482,67 +489,85 @@ export default function LensFormScreen() {
           </View>
 
           <View style={styles.section}>
-            <View style={styles.sectionHeader}>
-              <View style={styles.iconCircle}>
-                <Ionicons name="funnel-outline" size={18} color={colors.accent} />
+            <Pressable
+              accessibilityRole="button"
+              accessibilityLabel={showAdvanced ? "Hide advanced lens settings" : "Show advanced lens settings"}
+              accessibilityState={{ expanded: showAdvanced }}
+              onPress={() => setShowAdvanced((current) => !current)}
+              style={styles.advancedToggle}
+            >
+              <View style={styles.sectionHeader}>
+                <View style={styles.iconCircle}>
+                  <Ionicons name="options-outline" size={18} color={colors.accent} />
+                </View>
+                <View style={styles.sectionHeaderText}>
+                  <Text style={styles.sectionTitle}>Advanced settings</Text>
+                  <Text style={styles.sectionHelper}>
+                    Narrow the source notes or change how far back Echo looks.
+                  </Text>
+                </View>
               </View>
-              <View style={styles.sectionHeaderText}>
-                <Text style={styles.sectionTitle}>Filters</Text>
-                <Text style={styles.sectionHelper}>
-                  Narrow the notes this lens should analyze, or leave categories empty for everything.
-                </Text>
-              </View>
-            </View>
+              <Ionicons
+                name={showAdvanced ? "chevron-up" : "chevron-down"}
+                size={20}
+                color={colors.textMuted}
+              />
+            </Pressable>
 
-            <View style={styles.fieldGroup}>
-              <Text style={styles.fieldLabel}>Categories</Text>
-              <View style={styles.pillWrap}>
-                {CATEGORIES.map((category) => {
-                  const selected = selectedCategories.includes(category);
-                  return (
-                    <Pressable
-                      key={category}
-                      accessibilityRole="button"
-                      accessibilityState={{ selected }}
-                      onPress={() => {
-                        toggleCategory(category);
+            {showAdvanced ? (
+              <>
+                <View style={styles.fieldGroup}>
+                  <Text style={styles.fieldLabel}>Categories</Text>
+                  <View style={styles.pillWrap}>
+                    {CATEGORIES.map((category) => {
+                      const selected = selectedCategories.includes(category);
+                      return (
+                        <Pressable
+                          key={category}
+                          accessibilityRole="button"
+                          accessibilityLabel={`Include ${formatCategoryLabel(category)} notes`}
+                          accessibilityState={{ selected }}
+                          onPress={() => {
+                            toggleCategory(category);
+                          }}
+                          style={[styles.pill, selected && styles.pillSelected]}
+                        >
+                          <Text style={[styles.pillText, selected && styles.pillTextSelected]}>
+                            {formatCategoryLabel(category)}
+                          </Text>
+                        </Pressable>
+                      );
+                    })}
+                  </View>
+                  <Text style={styles.helperText}>
+                    No categories selected means all categories.
+                  </Text>
+                </View>
+
+                <View style={styles.fieldGroup}>
+                  <Text style={styles.fieldLabel}>Lookback window</Text>
+                  <View style={styles.pickerContainer}>
+                    <Picker
+                      enabled={!isSaving}
+                      selectedValue={lookbackHours}
+                      onValueChange={(value) => {
+                        setLookbackHours(Number(value));
                       }}
-                      style={[styles.pill, selected && styles.pillSelected]}
+                      dropdownIconColor={colors.textSecondary}
+                      style={styles.picker}
                     >
-                      <Text style={[styles.pillText, selected && styles.pillTextSelected]}>
-                        {formatCategoryLabel(category)}
-                      </Text>
-                    </Pressable>
-                  );
-                })}
-              </View>
-              <Text style={styles.helperText}>
-                No categories selected means all categories.
-              </Text>
-            </View>
-
-            <View style={styles.fieldGroup}>
-              <Text style={styles.fieldLabel}>Lookback Window</Text>
-              <View style={styles.pickerContainer}>
-                <Picker
-                  enabled={!isSaving}
-                  selectedValue={lookbackHours}
-                  onValueChange={(value) => {
-                    setLookbackHours(Number(value));
-                  }}
-                  dropdownIconColor={colors.textSecondary}
-                  style={styles.picker}
-                >
-                  {LOOKBACK_OPTIONS.map((option) => (
-                    <Picker.Item
-                      key={option.value}
-                      label={option.label}
-                      value={option.value}
-                    />
-                  ))}
-                </Picker>
-              </View>
-            </View>
+                      {LOOKBACK_OPTIONS.map((option) => (
+                        <Picker.Item
+                          key={option.value}
+                          label={option.label}
+                          value={option.value}
+                        />
+                      ))}
+                    </Picker>
+                  </View>
+                </View>
+              </>
+            ) : null}
           </View>
 
           <TouchableOpacity
@@ -730,6 +755,13 @@ const styles = StyleSheet.create({
   timeDisplayText: {
     fontSize: 16,
     color: colors.text,
+  },
+  advancedToggle: {
+    minHeight: 56,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    gap: spacing.md,
   },
   pickerContainer: {
     borderWidth: 1,

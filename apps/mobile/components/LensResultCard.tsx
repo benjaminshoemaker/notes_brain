@@ -4,23 +4,12 @@ import { Ionicons } from "@expo/vector-icons";
 import Markdown, { MarkdownIt, type RenderRules } from "react-native-markdown-display";
 import type { LensResultWithLens } from "@notesbrain/shared";
 
-import { colors, radii, shadows, spacing } from "../lib/theme";
+import { colors, lensAccentColors, radii, shadows, spacing } from "../lib/theme";
 
 type LensResultCardProps = {
   result: LensResultWithLens;
   testID?: string;
 };
-
-const LENS_COLORS = [
-  "#4F46E5",
-  "#16A34A",
-  "#D97706",
-  "#8B5CF6",
-  "#EC4899",
-  "#06B6D4",
-  "#F97316",
-  "#6366F1",
-];
 
 const WEEKDAY_LABELS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 const COLLAPSED_CONTENT_HEIGHT = 132;
@@ -51,7 +40,7 @@ function getLensColor(name: string): string {
     hash = ((hash << 5) - hash + name.charCodeAt(index)) | 0;
   }
 
-  return LENS_COLORS[Math.abs(hash) % LENS_COLORS.length];
+  return lensAccentColors[Math.abs(hash) % lensAccentColors.length];
 }
 
 function formatTime(value: string): string {

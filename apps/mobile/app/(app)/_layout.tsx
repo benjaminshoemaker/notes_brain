@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { Tabs, useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 
@@ -18,6 +18,12 @@ export default function AppLayout() {
 
   // Register push token when user is authenticated
   const { error: pushError } = usePushToken(user?.id);
+
+  const handleNotificationTap = useCallback((data: NotificationData) => {
+    if (data?.type === "daily_summary" || data?.type === "lens_result") {
+      router.push("/(app)/summary");
+    }
+  }, [router]);
 
   useEffect(() => {
     if (pushError) {
@@ -42,13 +48,7 @@ export default function AppLayout() {
     return () => {
       subscription.remove();
     };
-  }, []);
-
-  function handleNotificationTap(data: NotificationData) {
-    if (data?.type === "daily_summary" || data?.type === "lens_result") {
-      router.push("/(app)/summary");
-    }
-  }
+  }, [handleNotificationTap]);
 
   return (
     <Tabs
@@ -86,8 +86,8 @@ export default function AppLayout() {
       <Tabs.Screen
         name="summary"
         options={{
-          title: "Lenses",
-          tabBarLabel: "Lenses",
+          title: "Insights",
+          tabBarLabel: "Insights",
           tabBarButtonTestID: testIds.app.tabSummary,
           tabBarIcon: ({ color, size, focused }) => (
             <Ionicons name={focused ? "sparkles" : "sparkles-outline"} size={size} color={color} />

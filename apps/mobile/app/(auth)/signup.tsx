@@ -15,7 +15,7 @@ import { Ionicons } from "@expo/vector-icons";
 
 import { signUpWithPassword } from "../../lib/authApi";
 import { testIds } from "../../lib/testIds";
-import { colors, radii } from "../../lib/theme";
+import { colors, radii, spacing, typography, touchTargets } from "../../lib/theme";
 
 export default function SignupScreen() {
   const router = useRouter();
@@ -130,6 +130,9 @@ export default function SignupScreen() {
 
           <TouchableOpacity
             testID={testIds.auth.signupSubmitButton}
+            accessibilityRole="button"
+            accessibilityLabel="Create account"
+            accessibilityState={{ disabled: isSubmitting }}
             style={[styles.button, styles.primaryButton, isSubmitting && styles.buttonDisabled]}
             onPress={handleSignUp}
             disabled={isSubmitting}
@@ -150,7 +153,11 @@ export default function SignupScreen() {
           <View style={styles.footer}>
             <Text style={styles.footerText}>Already have an account? </Text>
             <Link href="/(auth)/login" asChild>
-              <TouchableOpacity>
+              <TouchableOpacity
+                accessibilityRole="button"
+                accessibilityLabel="Sign in"
+                style={styles.footerLink}
+              >
                 <Text style={styles.linkText}>Sign in</Text>
               </TouchableOpacity>
             </Link>
@@ -171,27 +178,26 @@ const styles = StyleSheet.create({
     paddingTop: 80,
   },
   formContainer: {
-    padding: 24,
+    padding: spacing.xl,
   },
   title: {
-    fontSize: 28,
-    fontWeight: "bold",
+    ...typography.screenTitle,
     color: colors.text,
-    marginBottom: 8,
+    marginBottom: spacing.sm,
   },
   subtitle: {
-    fontSize: 16,
+    ...typography.body,
     color: colors.textSecondary,
-    marginBottom: 32,
+    marginBottom: spacing.xxl,
   },
   inputGroup: {
-    marginBottom: 16,
+    marginBottom: spacing.lg,
   },
   label: {
-    fontSize: 13,
+    ...typography.helper,
     fontWeight: "600",
     color: colors.textSecondary,
-    marginBottom: 6,
+    marginBottom: spacing.xs,
   },
   inputWrapper: {
     flexDirection: "row",
@@ -202,20 +208,22 @@ const styles = StyleSheet.create({
     backgroundColor: colors.surfaceRaised,
   },
   inputIcon: {
-    marginLeft: 12,
+    marginLeft: spacing.md,
   },
   input: {
     flex: 1,
-    paddingHorizontal: 10,
-    paddingVertical: 12,
+    paddingHorizontal: spacing.md,
+    paddingVertical: spacing.md,
     fontSize: 16,
     color: colors.text,
   },
   button: {
     borderRadius: radii.md,
-    paddingVertical: 14,
+    minHeight: touchTargets.min,
+    paddingVertical: spacing.md,
     alignItems: "center",
-    marginTop: 8,
+    justifyContent: "center",
+    marginTop: spacing.sm,
   },
   primaryButton: {
     backgroundColor: colors.accent,
@@ -224,15 +232,14 @@ const styles = StyleSheet.create({
     opacity: 0.6,
   },
   buttonText: {
+    ...typography.button,
     color: colors.textInverse,
-    fontSize: 16,
-    fontWeight: "600",
   },
   errorContainer: {
     backgroundColor: colors.errorLight,
-    padding: 12,
+    padding: spacing.md,
     borderRadius: radii.md,
-    marginTop: 16,
+    marginTop: spacing.lg,
   },
   errorText: {
     color: colors.error,
@@ -241,7 +248,12 @@ const styles = StyleSheet.create({
   footer: {
     flexDirection: "row",
     justifyContent: "center",
-    marginTop: 24,
+    marginTop: spacing.xl,
+    alignItems: "center",
+  },
+  footerLink: {
+    minHeight: touchTargets.min,
+    justifyContent: "center",
   },
   footerText: {
     color: colors.textSecondary,

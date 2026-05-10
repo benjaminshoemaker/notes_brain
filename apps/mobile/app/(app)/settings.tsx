@@ -9,7 +9,7 @@ import { useUserSettings } from "../../hooks/useUserSettings";
 import { getDeviceTimezone, getTimezoneOptions } from "../../lib/timezones";
 import { signOutUser } from "../../lib/authApi";
 import { testIds } from "../../lib/testIds";
-import { colors, radii, shadows } from "../../lib/theme";
+import { colors, radii, shadows, spacing, typography, touchTargets } from "../../lib/theme";
 
 export default function SettingsScreen() {
   const router = useRouter();
@@ -39,7 +39,7 @@ export default function SettingsScreen() {
     if (!error && hasShownError) {
       setHasShownError(false);
     }
-  }, [error, hasShownError]);
+  }, [error, hasShownError, refetch]);
 
   async function handleTimezoneChange(nextTimezone: string) {
     if (nextTimezone === currentTimezone) return;
@@ -70,7 +70,7 @@ export default function SettingsScreen() {
           <View style={styles.headerText}>
             <Text style={styles.label}>Timezone</Text>
             <Text style={styles.helperText}>
-              Lenses are delivered in this timezone.
+              Insights are delivered in this timezone.
             </Text>
           </View>
         </View>
@@ -111,19 +111,19 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.background,
     padding: 16,
-    gap: 16,
+    gap: spacing.lg,
   },
   section: {
     backgroundColor: colors.surface,
     borderRadius: radii.lg,
-    padding: 16,
+    padding: spacing.lg,
     ...shadows.sm,
   },
   sectionHeader: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 12,
-    marginBottom: 12,
+    gap: spacing.md,
+    marginBottom: spacing.md,
   },
   iconCircle: {
     width: 36,
@@ -138,15 +138,13 @@ const styles = StyleSheet.create({
     minWidth: 0,
   },
   label: {
-    fontSize: 16,
-    fontWeight: "600",
+    ...typography.sectionTitle,
     color: colors.text,
   },
   helperText: {
-    fontSize: 13,
+    ...typography.helper,
     color: colors.textSecondary,
-    marginTop: 2,
-    lineHeight: 18,
+    marginTop: spacing.xs / 2,
     flexShrink: 1,
   },
   errorText: {
@@ -156,10 +154,11 @@ const styles = StyleSheet.create({
   signOutSection: {
     backgroundColor: colors.surface,
     borderRadius: radii.lg,
-    padding: 16,
+    minHeight: touchTargets.min,
+    padding: spacing.lg,
     flexDirection: "row",
     alignItems: "center",
-    gap: 12,
+    gap: spacing.md,
     ...shadows.sm,
   },
   signOutText: {

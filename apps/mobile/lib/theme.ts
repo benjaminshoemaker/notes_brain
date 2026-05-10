@@ -48,6 +48,17 @@ export const categoryTints: Record<string, CategoryTint> = {
   pending: { bg: "#F5F5F4", text: "#57534E" },
 };
 
+export const lensAccentColors = [
+  colors.accent,
+  "#16A34A",
+  "#D97706",
+  "#8B5CF6",
+  "#EC4899",
+  "#06B6D4",
+  "#F97316",
+  "#6366F1",
+] as const;
+
 export function getCategoryTint(category: string): CategoryTint {
   return categoryTints[category] ?? categoryTints.uncategorized;
 }
@@ -59,6 +70,41 @@ export const spacing = {
   lg: 16,
   xl: 24,
   xxl: 32,
+} as const;
+
+export const typography = {
+  screenTitle: {
+    fontSize: 28,
+    lineHeight: 34,
+    fontWeight: "700",
+  },
+  sectionTitle: {
+    fontSize: 16,
+    lineHeight: 22,
+    fontWeight: "600",
+  },
+  body: {
+    fontSize: 15,
+    lineHeight: 22,
+  },
+  helper: {
+    fontSize: 13,
+    lineHeight: 18,
+  },
+  button: {
+    fontSize: 16,
+    lineHeight: 22,
+    fontWeight: "600",
+  },
+  badge: {
+    fontSize: 12,
+    lineHeight: 16,
+    fontWeight: "600",
+  },
+} as const;
+
+export const touchTargets = {
+  min: 48,
 } as const;
 
 export const radii = {

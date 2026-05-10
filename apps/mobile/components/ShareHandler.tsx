@@ -1,6 +1,7 @@
 import { View, Text, StyleSheet, Modal, ActivityIndicator, TouchableOpacity } from "react-native";
 
 import { useShareIntent } from "../hooks/useShareIntent";
+import { colors, radii, shadows, spacing, typography, touchTargets } from "../lib/theme";
 
 export function ShareHandler() {
   const { state, hasShareIntent, shareIntent, processShareIntent, resetShareIntent } =
@@ -20,7 +21,7 @@ export function ShareHandler() {
         <View style={styles.modal}>
           {state.isProcessing ? (
             <>
-              <ActivityIndicator size="large" color="#0066cc" />
+              <ActivityIndicator size="large" color={colors.accent} />
               <Text style={styles.processingText}>Processing shared content...</Text>
             </>
           ) : (
@@ -43,11 +44,21 @@ export function ShareHandler() {
               {state.error && <Text style={styles.errorText}>{state.error}</Text>}
 
               <View style={styles.actions}>
-                <TouchableOpacity style={styles.cancelButton} onPress={resetShareIntent}>
+                <TouchableOpacity
+                  accessibilityRole="button"
+                  accessibilityLabel="Cancel shared content"
+                  style={styles.cancelButton}
+                  onPress={resetShareIntent}
+                >
                   <Text style={styles.cancelButtonText}>Cancel</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={styles.saveButton} onPress={processShareIntent}>
+                <TouchableOpacity
+                  accessibilityRole="button"
+                  accessibilityLabel="Save shared content"
+                  style={styles.saveButton}
+                  onPress={processShareIntent}
+                >
                   <Text style={styles.saveButtonText}>Save</Text>
                 </TouchableOpacity>
               </View>
@@ -62,84 +73,86 @@ export function ShareHandler() {
 const styles = StyleSheet.create({
   overlay: {
     flex: 1,
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    backgroundColor: "rgba(28, 25, 23, 0.36)",
     justifyContent: "center",
     alignItems: "center",
-    padding: 20,
+    padding: spacing.xl,
   },
   modal: {
-    backgroundColor: "#ffffff",
-    borderRadius: 16,
-    padding: 24,
+    backgroundColor: colors.surface,
+    borderRadius: radii.lg,
+    padding: spacing.xl,
     width: "100%",
     maxWidth: 320,
     alignItems: "center",
+    ...shadows.md,
   },
   title: {
-    fontSize: 18,
-    fontWeight: "600",
-    color: "#1a1a1a",
-    marginBottom: 16,
+    ...typography.sectionTitle,
+    color: colors.text,
+    marginBottom: spacing.lg,
   },
   processingText: {
-    marginTop: 16,
-    fontSize: 14,
-    color: "#666666",
+    marginTop: spacing.lg,
+    ...typography.helper,
+    color: colors.textSecondary,
   },
   fileList: {
     width: "100%",
-    marginBottom: 16,
+    marginBottom: spacing.lg,
   },
   fileItem: {
-    backgroundColor: "#f5f5f5",
-    borderRadius: 8,
-    padding: 12,
-    marginBottom: 8,
+    backgroundColor: colors.surfaceRaised,
+    borderRadius: radii.md,
+    padding: spacing.md,
+    marginBottom: spacing.sm,
   },
   fileName: {
     fontSize: 14,
     fontWeight: "500",
-    color: "#1a1a1a",
+    color: colors.text,
   },
   fileType: {
-    fontSize: 12,
-    color: "#666666",
-    marginTop: 4,
+    ...typography.badge,
+    color: colors.textSecondary,
+    marginTop: spacing.xs,
   },
   errorText: {
-    color: "#ef4444",
+    color: colors.error,
     fontSize: 14,
-    marginBottom: 16,
+    marginBottom: spacing.lg,
     textAlign: "center",
   },
   actions: {
     flexDirection: "row",
-    gap: 12,
+    gap: spacing.md,
     width: "100%",
   },
   cancelButton: {
     flex: 1,
-    paddingVertical: 12,
-    borderRadius: 8,
+    minHeight: touchTargets.min,
+    paddingVertical: spacing.md,
+    borderRadius: radii.md,
     borderWidth: 1,
-    borderColor: "#cccccc",
+    borderColor: colors.border,
     alignItems: "center",
+    justifyContent: "center",
   },
   cancelButtonText: {
-    fontSize: 16,
-    fontWeight: "600",
-    color: "#666666",
+    ...typography.button,
+    color: colors.textSecondary,
   },
   saveButton: {
     flex: 1,
-    paddingVertical: 12,
-    borderRadius: 8,
-    backgroundColor: "#0066cc",
+    minHeight: touchTargets.min,
+    paddingVertical: spacing.md,
+    borderRadius: radii.md,
+    backgroundColor: colors.accent,
     alignItems: "center",
+    justifyContent: "center",
   },
   saveButtonText: {
-    fontSize: 16,
-    fontWeight: "600",
-    color: "#ffffff",
+    ...typography.button,
+    color: colors.textInverse,
   },
 });
