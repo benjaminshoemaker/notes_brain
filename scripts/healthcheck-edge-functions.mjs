@@ -98,12 +98,14 @@ async function checkFunctionHealth(baseUrl, headers, fnName) {
   const status = payload?.status === "ok" ? "ok" : "error";
   const missingEnv = Array.isArray(payload?.missing_env) ? payload.missing_env : [];
   const ready = payload?.ready === true;
+  const retired = payload?.retired === true;
 
   return {
     fnName,
     httpStatus: response.status,
     status,
     ready,
+    retired,
     missingEnv,
     payload
   };
@@ -115,8 +117,9 @@ function printResult(result) {
     ? ` missing_env=${result.missingEnv.join(",")}`
     : "";
   const readyText = ` ready=${result.ready ? "true" : "false"}`;
+  const retiredText = result.retired ? " retired=true" : "";
   console.log(
-    `${marker} ${result.fnName} http=${result.httpStatus} status=${result.status}${readyText}${suffix}`
+    `${marker} ${result.fnName} http=${result.httpStatus} status=${result.status}${readyText}${retiredText}${suffix}`
   );
 }
 
@@ -137,13 +140,14 @@ async function main() {
       const message = error instanceof Error ? error.message : String(error);
       console.log(`FAIL ${fnName} error=${message}`);
       results.push({
-        fnName,
-        httpStatus: 0,
-        status: "error",
-        ready: false,
-        missingEnv: [],
-        payload: null
-      });
+      fnName,
+      httpStatus: 0,
+      status: "error",
+      ready: false,
+      retired: false,
+      missingEnv: [],
+      payload: null
+    });
     }
   }
 
@@ -151,7 +155,7 @@ async function main() {
     (result) =>
       result.status !== "ok" ||
       result.httpStatus >= 400 ||
-      result.ready === false ||
+      (result.ready === false && result.retired !== true) ||
       result.missingEnv.length > 0
   );
 

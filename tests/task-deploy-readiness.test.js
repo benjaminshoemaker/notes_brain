@@ -50,6 +50,7 @@ test("should include an edge healthcheck script file", async () => {
   assert.match(source, /"send-push"/);
   assert.match(source, /"execute-lens"/);
   assert.match(source, /"dispatch-lenses"/);
+  assert.match(source, /retired/);
 });
 
 test("should include local scheduled lens runtime scripts", async () => {
