@@ -48,8 +48,8 @@ const notificationNativeModuleNames = [
 ];
 
 export type NotificationData = {
-  summary_id?: string;
-  lens_result_id?: string;
+  result_id?: string;
+  result_table?: "lens_results";
   type?: "daily_summary" | "lens_result";
 };
 

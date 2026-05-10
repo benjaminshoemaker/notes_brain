@@ -35,9 +35,11 @@ test("should persist timezone updates when settings hook updates users table", a
   assert.match(source, /timezone/);
 });
 
-test("should use user timezone for daily summary scheduling", async () => {
+test("should retire daily summary scheduling in favor of lens dispatch", async () => {
   const source = await readFileText(SUMMARY_FUNCTION_PATH);
-  assert.match(source, /getUserLocalTime\(now, user\.timezone\)/);
+  assert.match(source, /retired:\s*true/);
+  assert.match(source, /dispatch-lenses/);
+  assert.match(source, /status:\s*410/);
 });
 
 test("should show timezone in web settings when settings page exists", async () => {

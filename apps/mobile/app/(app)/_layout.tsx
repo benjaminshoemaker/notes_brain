@@ -20,7 +20,7 @@ export default function AppLayout() {
   const { error: pushError } = usePushToken(user?.id);
 
   const handleNotificationTap = useCallback((data: NotificationData) => {
-    if (data?.type === "daily_summary" || data?.type === "lens_result") {
+    if (data?.type === "lens_result") {
       router.push("/(app)/summary");
     }
   }, [router]);

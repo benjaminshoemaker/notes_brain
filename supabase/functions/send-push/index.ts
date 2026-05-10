@@ -17,13 +17,12 @@ const REQUIRED_ENV_KEYS = [
   "FCM_SERVICE_ACCOUNT_KEY"
 ];
 
-const ALLOWED_TABLES = ["daily_summaries", "lens_results"];
+const ALLOWED_TABLES = ["lens_results"];
 
 type RequestBody = {
   user_id: string;
-  result_id?: string;
-  result_table?: string; // "daily_summaries" | "lens_results", defaults to "daily_summaries"
-  summary_id?: string; // deprecated, kept for backward compat
+  result_id: string;
+  result_table: string;
   title: string;
   body: string;
   data?: Record<string, string>;
@@ -69,7 +68,7 @@ function healthResponse(config: RuntimeConfig) {
 }
 
 // INTERNAL-ONLY: This function is called exclusively by other Edge Functions
-// (e.g. execute-lens, generate-summary) using the service role key. It must
+// (e.g. execute-lens) using the service role key. It must
 // NOT be exposed to client-side calls. The caller is trusted, so user_id and
 // result_id are accepted without additional ownership verification.
 Deno.serve(async (req) => {
@@ -113,9 +112,7 @@ Deno.serve(async (req) => {
     );
   }
 
-  const { user_id, title, body: messageBody, data } = body;
-  const resultTable = body.result_table ?? "daily_summaries";
-  const resultId = body.result_id ?? body.summary_id;
+  const { user_id, result_id: resultId, result_table: resultTable, title, body: messageBody, data } = body;
 
   if (!resultId) {
     return new Response(
@@ -126,7 +123,7 @@ Deno.serve(async (req) => {
 
   if (!ALLOWED_TABLES.includes(resultTable)) {
     return new Response(
-      JSON.stringify({ error: "Invalid result_table" }),
+      JSON.stringify({ error: "Invalid result_table. Use 'lens_results'." }),
       { status: 400, headers: { "Content-Type": "application/json" } }
     );
   }

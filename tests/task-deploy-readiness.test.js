@@ -71,11 +71,12 @@ test("should expose health endpoints for classify and transcribe functions", asy
   assert.match(transcribeSource, /"status":\s*"ok"|status:\s*"ok"/);
 });
 
-test("should expose health endpoints for summary and send-push functions", async () => {
+test("should expose health endpoints for retired summary and send-push functions", async () => {
   const summarySource = await readFileText(SUMMARY_INDEX_PATH);
   const sendPushSource = await readFileText(SEND_PUSH_INDEX_PATH);
   assert.match(summarySource, /req\.method\s*===\s*"GET"/);
   assert.match(summarySource, /"status":\s*"ok"|status:\s*"ok"/);
+  assert.match(summarySource, /retired:\s*true/);
   assert.match(sendPushSource, /req\.method\s*===\s*"GET"/);
   assert.match(sendPushSource, /"status":\s*"ok"|status:\s*"ok"/);
 });

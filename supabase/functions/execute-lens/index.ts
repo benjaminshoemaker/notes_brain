@@ -21,7 +21,6 @@ const REQUIRED_ENV_KEYS = [
 const OPENAI_MODEL = "gpt-4o-mini";
 const MAX_NOTES = 100;
 const PUSH_PREVIEW_LENGTH = 100;
-const DEFAULT_TIMEZONE = "America/New_York";
 const SYSTEM_PROMPT =
   "You are a personal note analyst. Respond in plain markdown (headers, bullets, bold). Do not include HTML tags, images, or links. Keep responses concise and actionable.";
 
@@ -47,12 +46,9 @@ type LensRow = {
   categories: string[] | null;
   is_active: boolean;
   consecutive_failures: number;
-  users: { timezone: string } | Array<{ timezone: string }> | null;
 };
 
-type Lens = Omit<LensRow, "users"> & {
-  timezone: string;
-};
+type Lens = LensRow;
 
 type Note = {
   id: string;
@@ -92,138 +88,6 @@ function healthResponse(config: RuntimeConfig) {
       headers: { "content-type": "application/json" }
     }
   );
-}
-
-function getUserLocalTime(utcDate: Date, timezone: string): Date {
-  try {
-    const formatter = new Intl.DateTimeFormat("en-US", {
-      timeZone: timezone,
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit",
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit",
-      hour12: false
-    });
-
-    const parts = formatter.formatToParts(utcDate);
-    const getPart = (type: string) => parts.find((part) => part.type === type)?.value ?? "0";
-
-    return new Date(
-      parseInt(getPart("year"), 10),
-      parseInt(getPart("month"), 10) - 1,
-      parseInt(getPart("day"), 10),
-      parseInt(getPart("hour"), 10),
-      parseInt(getPart("minute"), 10),
-      parseInt(getPart("second"), 10)
-    );
-  } catch {
-    return utcDate;
-  }
-}
-
-function extractTimezone(users: LensRow["users"]) {
-  if (Array.isArray(users)) {
-    return users[0]?.timezone ?? DEFAULT_TIMEZONE;
-  }
-  return users?.timezone ?? DEFAULT_TIMEZONE;
-}
-
-function parseScheduleTime(scheduleTime: string) {
-  const [hoursPart = "0", minutesPart = "0", secondsPart = "0"] = scheduleTime.split(":");
-  const secondsValue = secondsPart.split(".")[0] ?? "0";
-
-  return {
-    hours: parseInt(hoursPart, 10),
-    minutes: parseInt(minutesPart, 10),
-    seconds: parseInt(secondsValue, 10)
-  };
-}
-
-function parseOffsetMinutes(offsetName: string) {
-  if (offsetName === "GMT" || offsetName === "UTC") {
-    return 0;
-  }
-
-  const match = offsetName.match(/(?:GMT|UTC)([+-])(\d{1,2})(?::?(\d{2}))?$/i);
-  if (!match) {
-    throw new Error(`Unsupported time zone offset format: ${offsetName}`);
-  }
-
-  const sign = match[1] === "-" ? -1 : 1;
-  const hours = parseInt(match[2] ?? "0", 10);
-  const minutes = parseInt(match[3] ?? "0", 10);
-
-  return sign * (hours * 60 + minutes);
-}
-
-function getTimeZoneOffsetMinutes(date: Date, timezone: string) {
-  const formatter = new Intl.DateTimeFormat("en-US", {
-    timeZone: timezone,
-    timeZoneName: "shortOffset",
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-    hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit",
-    hour12: false
-  });
-
-  const offsetName = formatter.formatToParts(date).find((part) => part.type === "timeZoneName")?.value ?? "GMT";
-  return parseOffsetMinutes(offsetName);
-}
-
-function localDateInTimeZoneToUtc(localDate: Date, timezone: string) {
-  const utcGuess = new Date(Date.UTC(
-    localDate.getFullYear(),
-    localDate.getMonth(),
-    localDate.getDate(),
-    localDate.getHours(),
-    localDate.getMinutes(),
-    localDate.getSeconds()
-  ));
-
-  let offsetMinutes = getTimeZoneOffsetMinutes(utcGuess, timezone);
-  let candidate = new Date(utcGuess.getTime() - offsetMinutes * 60_000);
-  const adjustedOffsetMinutes = getTimeZoneOffsetMinutes(candidate, timezone);
-
-  if (adjustedOffsetMinutes !== offsetMinutes) {
-    offsetMinutes = adjustedOffsetMinutes;
-    candidate = new Date(utcGuess.getTime() - offsetMinutes * 60_000);
-  }
-
-  return candidate;
-}
-
-function computeNextRunAt(now: Date, lens: Lens) {
-  if (!lens.is_active) {
-    return null;
-  }
-
-  const localNow = getUserLocalTime(now, lens.timezone);
-  const { hours, minutes, seconds } = parseScheduleTime(lens.schedule_time);
-  const candidate = new Date(
-    localNow.getFullYear(),
-    localNow.getMonth(),
-    localNow.getDate(),
-    hours,
-    minutes,
-    seconds
-  );
-
-  if (candidate.getTime() <= localNow.getTime()) {
-    candidate.setDate(candidate.getDate() + 1);
-  }
-
-  if (lens.schedule_type === "weekly" && lens.schedule_day !== null) {
-    while (candidate.getDay() !== lens.schedule_day) {
-      candidate.setDate(candidate.getDate() + 1);
-    }
-  }
-
-  return localDateInTimeZoneToUtc(candidate, lens.timezone).toISOString();
 }
 
 function sanitizeMarkdown(markdown: string) {
@@ -309,7 +173,7 @@ async function fetchLens(
 ): Promise<Lens | null> {
   const { data, error } = await supabase
     .from("lenses")
-    .select("id, user_id, name, prompt, schedule_type, schedule_time, schedule_day, lookback_hours, categories, is_active, consecutive_failures, users!inner(timezone)")
+    .select("id, user_id, name, prompt, schedule_type, schedule_time, schedule_day, lookback_hours, categories, is_active, consecutive_failures")
     .eq("id", lensId)
     .maybeSingle();
 
@@ -321,21 +185,7 @@ async function fetchLens(
     return null;
   }
 
-  const row = data as LensRow;
-  return {
-    id: row.id,
-    user_id: row.user_id,
-    name: row.name,
-    prompt: row.prompt,
-    schedule_type: row.schedule_type,
-    schedule_time: row.schedule_time,
-    schedule_day: row.schedule_day,
-    lookback_hours: row.lookback_hours,
-    categories: row.categories,
-    is_active: row.is_active,
-    consecutive_failures: row.consecutive_failures,
-    timezone: extractTimezone(row.users)
-  };
+  return data as LensRow;
 }
 
 async function fetchMatchingNotes(
@@ -376,16 +226,10 @@ async function updateLensSuccessState(
   lens: Lens,
   now: Date
 ) {
-  const { error } = await supabase
-    .from("lenses")
-    .update({
-      next_run_at: computeNextRunAt(now, lens),
-      last_run_at: now.toISOString(),
-      consecutive_failures: 0,
-      last_error: null,
-      last_error_at: null
-    })
-    .eq("id", lens.id);
+  const { error } = await supabase.rpc("mark_lens_execution_success", {
+    p_lens_id: lens.id,
+    p_executed_at: now.toISOString()
+  });
 
   if (error) {
     throw error;

@@ -1,3 +1,7 @@
+import { readFileSync } from "node:fs";
+import { dirname, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
+
 import { describe, expect, it } from "vitest";
 import type { Lens } from "@notesbrain/shared";
 
@@ -130,5 +134,21 @@ describe("lens library catalog", () => {
       installState: "Installed",
       installedLens: currentLens
     });
+  });
+
+  it("keeps the SQL default Morning Briefing aligned with the bundled template", () => {
+    const migration = readFileSync(
+      resolve(dirname(fileURLToPath(import.meta.url)), "../../../../supabase/migrations/00008_lens_library.sql"),
+      "utf8"
+    );
+    const template = getLensTemplateById("morning-briefing");
+
+    expect(template).not.toBeNull();
+    expect(migration).toContain(`'${template!.name}'`);
+    expect(migration).toContain(`'${template!.schedule_type}'`);
+    expect(migration).toContain(`'${template!.schedule_time}'`);
+    expect(migration).toContain(`${template!.lookback_hours}`);
+    expect(migration).toContain(`'${template!.template_id}'`);
+    expect(migration).toContain(`${template!.version}`);
   });
 });
