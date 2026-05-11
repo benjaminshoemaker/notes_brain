@@ -6,6 +6,7 @@ import { LoadingSpinner } from "./LoadingSpinner";
 import { MobileNoteCard } from "./MobileNoteCard";
 import type { ActiveEditState } from "../app/(app)/notes";
 import type { UpdateNoteInput } from "../hooks/useUpdateNote";
+import type { DeleteNoteInput } from "../hooks/useDeleteNote";
 import { testIds } from "../lib/testIds";
 import { colors } from "../lib/theme";
 
@@ -19,6 +20,7 @@ type NotesListProps = {
   onStartEdit?: (note: NoteWithAttachments) => void;
   onCancelEdit?: (noteId: string) => void;
   onSaveEdit?: (input: UpdateNoteInput) => Promise<void>;
+  onDeleteEdit?: (input: DeleteNoteInput) => Promise<void>;
 };
 
 export function NotesList({
@@ -31,6 +33,7 @@ export function NotesList({
   onStartEdit,
   onCancelEdit,
   onSaveEdit,
+  onDeleteEdit,
 }: NotesListProps) {
   const filteredNotes =
     selectedCategory === "all"
@@ -76,6 +79,7 @@ export function NotesList({
           onStartEdit={onStartEdit}
           onCancelEdit={onCancelEdit}
           onSaveEdit={onSaveEdit}
+          onDeleteEdit={onDeleteEdit}
         />
       )}
       contentContainerStyle={styles.listContent}

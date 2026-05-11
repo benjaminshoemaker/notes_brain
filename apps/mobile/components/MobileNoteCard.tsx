@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Animated, Pressable, TextInput } from "react-na
 import { Ionicons } from "@expo/vector-icons";
 import { CATEGORIES, type Category, type NoteWithAttachments } from "@notesbrain/shared";
 import type { UpdateNoteInput } from "../hooks/useUpdateNote";
+import type { DeleteNoteInput } from "../hooks/useDeleteNote";
 
 import { testIds } from "../lib/testIds";
 import { validateNoteEditDraft } from "../lib/noteEditValidation";
@@ -17,6 +18,7 @@ type MobileNoteCardProps = {
   onStartEdit?: (note: NoteWithAttachments) => void;
   onCancelEdit?: (noteId: string) => void;
   onSaveEdit?: (input: UpdateNoteInput) => Promise<void>;
+  onDeleteEdit?: (input: DeleteNoteInput) => Promise<void>;
 };
 
 const PREVIEW_LENGTH = 150;
@@ -52,6 +54,7 @@ export function MobileNoteCard({
   onStartEdit,
   onCancelEdit,
   onSaveEdit,
+  onDeleteEdit,
 }: MobileNoteCardProps) {
   const preview = formatPreview(note.content);
   const attachmentCount = note.attachments?.length ?? 0;
@@ -60,7 +63,10 @@ export function MobileNoteCard({
   const [draftContent, setDraftContent] = useState(note.content ?? "");
   const [draftCategory, setDraftCategory] = useState<Category>(note.category);
   const [saveError, setSaveError] = useState<string | null>(null);
+  const [deleteError, setDeleteError] = useState<string | null>(null);
   const [isSaving, setIsSaving] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [isConfirmingDelete, setIsConfirmingDelete] = useState(false);
   const wasEditingRef = useRef(false);
 
   useEffect(() => {
@@ -89,7 +95,10 @@ export function MobileNoteCard({
       setDraftContent(note.content ?? "");
       setDraftCategory(note.category);
       setSaveError(null);
+      setDeleteError(null);
       setIsSaving(false);
+      setIsDeleting(false);
+      setIsConfirmingDelete(false);
     }
     wasEditingRef.current = isEditing;
   }, [isEditing, note.category, note.content]);
@@ -118,7 +127,8 @@ export function MobileNoteCard({
   const validationMessage = validation.error === "empty_body"
     ? "Note body cannot be empty."
     : null;
-  const saveDisabled = isSaving || remoteState !== "clean" || !validation.canSave;
+  const saveDisabled = isSaving || isDeleting || remoteState !== "clean" || !validation.canSave;
+  const deleteDisabled = isSaving || isDeleting || remoteState !== "clean" || !onDeleteEdit;
 
   async function handleSave() {
     if (!onSaveEdit || saveDisabled) return;
@@ -145,6 +155,25 @@ export function MobileNoteCard({
       setSaveError("Couldn't save changes. Check your connection and try again.");
     } finally {
       setIsSaving(false);
+    }
+  }
+
+  async function handleDelete() {
+    if (!onDeleteEdit || deleteDisabled) return;
+
+    setDeleteError(null);
+    setIsDeleting(true);
+
+    try {
+      await onDeleteEdit({
+        id: note.id,
+        expectedUpdatedAt: editBaselineUpdatedAt ?? note.updated_at,
+      });
+    } catch {
+      setDeleteError("Couldn't delete note. Check your connection and try again.");
+      setIsConfirmingDelete(false);
+    } finally {
+      setIsDeleting(false);
     }
   }
 
@@ -254,6 +283,15 @@ export function MobileNoteCard({
               {saveError}
             </Text>
           )}
+          {deleteError && (
+            <Text
+              testID={testIds.notes.editError(note.id)}
+              accessibilityRole="alert"
+              style={styles.errorText}
+            >
+              {deleteError}
+            </Text>
+          )}
           {remoteMessage && (
             <Text
               testID={testIds.notes.editConflict(note.id)}
@@ -266,26 +304,84 @@ export function MobileNoteCard({
 
           <View style={styles.editActions}>
             <Pressable
-              testID={testIds.notes.cancelButton(note.id)}
+              testID={testIds.notes.deleteButton(note.id)}
               accessibilityRole="button"
-              accessibilityLabel="Cancel note edit"
-              onPress={() => onCancelEdit?.(note.id)}
-              style={[styles.actionButton, styles.secondaryButton]}
+              accessibilityLabel="Delete note"
+              accessibilityState={{ disabled: deleteDisabled }}
+              disabled={deleteDisabled}
+              onPress={deleteDisabled ? undefined : () => {
+                setSaveError(null);
+                setDeleteError(null);
+                setIsConfirmingDelete(true);
+              }}
+              style={[styles.actionButton, styles.deleteButton, deleteDisabled && styles.actionButtonDisabled]}
             >
-              <Text style={styles.secondaryButtonText}>Cancel</Text>
+              <Ionicons name="trash-outline" size={16} color={colors.error} />
+              <Text style={styles.deleteButtonText}>Delete</Text>
             </Pressable>
-            <Pressable
-              testID={testIds.notes.saveButton(note.id)}
-              accessibilityRole="button"
-              accessibilityLabel="Save note edit"
-              accessibilityState={{ disabled: saveDisabled }}
-              disabled={saveDisabled}
-              onPress={saveDisabled ? undefined : handleSave}
-              style={[styles.actionButton, styles.primaryButton, saveDisabled && styles.actionButtonDisabled]}
-            >
-              <Text style={styles.primaryButtonText}>{isSaving ? "Saving..." : "Save"}</Text>
-            </Pressable>
+
+            <View style={styles.rightEditActions}>
+              <Pressable
+                testID={testIds.notes.cancelButton(note.id)}
+                accessibilityRole="button"
+                accessibilityLabel="Cancel note edit"
+                onPress={() => onCancelEdit?.(note.id)}
+                style={[styles.actionButton, styles.secondaryButton]}
+              >
+                <Text style={styles.secondaryButtonText}>Cancel</Text>
+              </Pressable>
+              <Pressable
+                testID={testIds.notes.saveButton(note.id)}
+                accessibilityRole="button"
+                accessibilityLabel="Save note edit"
+                accessibilityState={{ disabled: saveDisabled }}
+                disabled={saveDisabled}
+                onPress={saveDisabled ? undefined : handleSave}
+                style={[styles.actionButton, styles.primaryButton, saveDisabled && styles.actionButtonDisabled]}
+              >
+                <Text style={styles.primaryButtonText}>{isSaving ? "Saving..." : "Save"}</Text>
+              </Pressable>
+            </View>
           </View>
+
+          {isConfirmingDelete && (
+            <View
+              testID={testIds.notes.deleteConfirm(note.id)}
+              accessibilityRole="alert"
+              style={styles.deleteConfirm}
+            >
+              <View style={styles.deleteConfirmIcon}>
+                <Ionicons name="trash-outline" size={18} color={colors.error} />
+              </View>
+              <View style={styles.deleteConfirmTextWrap}>
+                <Text style={styles.deleteConfirmTitle}>Delete this note?</Text>
+                <Text style={styles.deleteConfirmText}>This cannot be undone.</Text>
+              </View>
+              <View style={styles.deleteConfirmActions}>
+                <Pressable
+                  testID={testIds.notes.deleteConfirmCancelButton(note.id)}
+                  accessibilityRole="button"
+                  accessibilityLabel="Cancel delete note"
+                  disabled={isDeleting}
+                  onPress={() => setIsConfirmingDelete(false)}
+                  style={[styles.confirmActionButton, styles.secondaryButton, isDeleting && styles.actionButtonDisabled]}
+                >
+                  <Text style={styles.secondaryButtonText}>Cancel</Text>
+                </Pressable>
+                <Pressable
+                  testID={testIds.notes.deleteConfirmButton(note.id)}
+                  accessibilityRole="button"
+                  accessibilityLabel="Confirm delete note"
+                  accessibilityState={{ disabled: deleteDisabled }}
+                  disabled={deleteDisabled}
+                  onPress={deleteDisabled ? undefined : handleDelete}
+                  style={[styles.confirmActionButton, styles.confirmDeleteButton, deleteDisabled && styles.actionButtonDisabled]}
+                >
+                  <Text style={styles.confirmDeleteButtonText}>{isDeleting ? "Deleting..." : "Delete"}</Text>
+                </Pressable>
+              </View>
+            </View>
+          )}
         </View>
       ) : preview ? (
         <Text style={styles.content} numberOfLines={3}>
@@ -423,8 +519,15 @@ const styles = StyleSheet.create({
   },
   editActions: {
     flexDirection: "row",
-    justifyContent: "flex-end",
+    flexWrap: "wrap",
+    alignItems: "center",
+    justifyContent: "space-between",
     gap: spacing.sm,
+  },
+  rightEditActions: {
+    flexDirection: "row",
+    gap: spacing.sm,
+    marginLeft: "auto",
   },
   actionButton: {
     minHeight: 44,
@@ -453,12 +556,75 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: "700",
   },
+  deleteButton: {
+    minWidth: 96,
+    backgroundColor: colors.errorLight,
+    flexDirection: "row",
+    gap: spacing.xs,
+  },
+  deleteButtonText: {
+    color: colors.error,
+    fontSize: 14,
+    fontWeight: "700",
+  },
   errorText: {
     color: colors.error,
     backgroundColor: colors.errorLight,
     borderRadius: radii.md,
     padding: spacing.md,
     fontSize: 13,
+  },
+  deleteConfirm: {
+    borderRadius: radii.lg,
+    backgroundColor: colors.surfaceRaised,
+    padding: spacing.md,
+    flexDirection: "row",
+    flexWrap: "wrap",
+    alignItems: "center",
+    gap: spacing.sm,
+  },
+  deleteConfirmIcon: {
+    width: 36,
+    height: 36,
+    borderRadius: radii.pill,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: colors.errorLight,
+  },
+  deleteConfirmTextWrap: {
+    flex: 1,
+    minWidth: 130,
+  },
+  deleteConfirmTitle: {
+    fontSize: 14,
+    fontWeight: "700",
+    color: colors.text,
+  },
+  deleteConfirmText: {
+    fontSize: 13,
+    lineHeight: 18,
+    color: colors.textSecondary,
+  },
+  deleteConfirmActions: {
+    flexDirection: "row",
+    gap: spacing.sm,
+    marginLeft: "auto",
+  },
+  confirmActionButton: {
+    minHeight: 40,
+    minWidth: 74,
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: radii.md,
+    paddingHorizontal: spacing.md,
+  },
+  confirmDeleteButton: {
+    backgroundColor: colors.errorLight,
+  },
+  confirmDeleteButtonText: {
+    color: colors.error,
+    fontSize: 13,
+    fontWeight: "700",
   },
   warningText: {
     color: colors.warning,

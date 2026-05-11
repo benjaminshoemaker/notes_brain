@@ -9,6 +9,7 @@ import { MobileCategoryFilter } from "../../components/MobileCategoryFilter";
 import { useNotes } from "../../hooks/useNotes";
 import { useRealtimeNotes } from "../../hooks/useRealtimeNotes";
 import { useUpdateNote, type UpdateNoteInput } from "../../hooks/useUpdateNote";
+import { useDeleteNote, type DeleteNoteInput } from "../../hooks/useDeleteNote";
 import { useAuth } from "../../hooks/useAuth";
 import { testIds } from "../../lib/testIds";
 import { colors } from "../../lib/theme";
@@ -23,6 +24,7 @@ export default function NotesScreen() {
   const { user } = useAuth();
   const { data: notes = [], isLoading, isRefetching, refetch, error } = useNotes();
   const updateNote = useUpdateNote();
+  const deleteNote = useDeleteNote();
   const [selectedCategory, setSelectedCategory] = useState<Category | "all">("all");
   const [hasShownError, setHasShownError] = useState(false);
   const [activeEdit, setActiveEdit] = useState<ActiveEditState>(null);
@@ -110,6 +112,11 @@ export default function NotesScreen() {
     setActiveEdit(null);
   }
 
+  async function handleDeleteEdit(input: DeleteNoteInput) {
+    await deleteNote.mutateAsync(input);
+    setActiveEdit(null);
+  }
+
   return (
     <View testID={testIds.notes.screen} style={styles.container}>
       <MobileCategoryFilter
@@ -128,6 +135,7 @@ export default function NotesScreen() {
         onStartEdit={handleStartEdit}
         onCancelEdit={handleCancelEdit}
         onSaveEdit={handleSaveEdit}
+        onDeleteEdit={handleDeleteEdit}
       />
     </View>
   );

@@ -4,12 +4,14 @@ import type { ReactTestRenderer } from "react-test-renderer";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { NoteWithAttachments } from "@notesbrain/shared";
 import type { UpdateNoteInput } from "../../hooks/useUpdateNote";
+import type { DeleteNoteInput } from "../../hooks/useDeleteNote";
 
 const {
   useAuthMock,
   useNotesMock,
   useRealtimeNotesMock,
   updateNoteMutateAsyncMock,
+  deleteNoteMutateAsyncMock,
   focusCleanupRef,
   notesListPropsRef,
   categoryFilterPropsRef,
@@ -18,6 +20,7 @@ const {
   useNotesMock: vi.fn(),
   useRealtimeNotesMock: vi.fn(),
   updateNoteMutateAsyncMock: vi.fn(),
+  deleteNoteMutateAsyncMock: vi.fn(),
   focusCleanupRef: { current: undefined as undefined | (() => void) },
   notesListPropsRef: { current: undefined as undefined | Record<string, unknown> },
   categoryFilterPropsRef: { current: undefined as undefined | Record<string, unknown> },
@@ -44,6 +47,12 @@ vi.mock("../../hooks/useRealtimeNotes", () => ({
 vi.mock("../../hooks/useUpdateNote", () => ({
   useUpdateNote: () => ({
     mutateAsync: updateNoteMutateAsyncMock,
+  }),
+}));
+
+vi.mock("../../hooks/useDeleteNote", () => ({
+  useDeleteNote: () => ({
+    mutateAsync: deleteNoteMutateAsyncMock,
   }),
 }));
 
@@ -97,6 +106,7 @@ describe("NotesScreen edit state", () => {
       error: null,
     });
     updateNoteMutateAsyncMock.mockResolvedValue(note);
+    deleteNoteMutateAsyncMock.mockResolvedValue(note.id);
   });
 
   it("clears active draft state on Notes tab focus loss", async () => {
@@ -208,6 +218,22 @@ describe("NotesScreen edit state", () => {
     });
 
     expect(updateNoteMutateAsyncMock).toHaveBeenCalledWith(input);
+    expect(notesListPropsRef.current!.activeEditState).toBeNull();
+  });
+
+  it("deletes through the delete hook and exits edit mode", async () => {
+    await renderScreen();
+    const input: DeleteNoteInput = {
+      id: note.id,
+      expectedUpdatedAt: note.updated_at,
+    };
+
+    await act(async () => {
+      (notesListPropsRef.current!.onStartEdit as (selected: NoteWithAttachments) => void)(note);
+      await (notesListPropsRef.current!.onDeleteEdit as (deleteInput: DeleteNoteInput) => Promise<void>)(input);
+    });
+
+    expect(deleteNoteMutateAsyncMock).toHaveBeenCalledWith(input);
     expect(notesListPropsRef.current!.activeEditState).toBeNull();
   });
 });

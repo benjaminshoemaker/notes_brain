@@ -7,6 +7,7 @@ import type { NoteWithAttachments } from "@notesbrain/shared";
 import { MobileNoteCard } from "../../components/MobileNoteCard";
 import { testIds } from "../../lib/testIds";
 import type { UpdateNoteInput } from "../../hooks/useUpdateNote";
+import type { DeleteNoteInput } from "../../hooks/useDeleteNote";
 
 function makeNote(overrides: Partial<NoteWithAttachments>): NoteWithAttachments {
   return {
@@ -51,11 +52,13 @@ async function pressSave(tree: ReactTestRenderer, noteId: string) {
 function CardHarness({
   initialNote,
   onSaveEdit,
+  onDeleteEdit = vi.fn().mockResolvedValue(undefined),
   remoteState = "clean",
   editBaselineUpdatedAt = null,
 }: {
   initialNote: NoteWithAttachments;
   onSaveEdit: (input: UpdateNoteInput) => Promise<void>;
+  onDeleteEdit?: (input: DeleteNoteInput) => Promise<void>;
   remoteState?: "clean" | "updated" | "deleted";
   editBaselineUpdatedAt?: string | null;
 }) {
@@ -72,6 +75,11 @@ function CardHarness({
     setIsEditing(false);
   }
 
+  async function handleDelete(input: DeleteNoteInput) {
+    await onDeleteEdit(input);
+    setIsEditing(false);
+  }
+
   return (
     <MobileNoteCard
       note={note}
@@ -82,6 +90,7 @@ function CardHarness({
       onStartEdit={() => setIsEditing(true)}
       onCancelEdit={() => setIsEditing(false)}
       onSaveEdit={handleSave}
+      onDeleteEdit={handleDelete}
     />
   );
 }
@@ -103,8 +112,103 @@ describe("MobileNoteCard edit state", () => {
 
     expect(findByTestId(tree, testIds.notes.editInput(note.id))).toBeTruthy();
     expect(findByTestId(tree, testIds.notes.categoryOption(note.id, "projects"))).toBeTruthy();
+    expect(findByTestId(tree, testIds.notes.deleteButton(note.id))).toBeTruthy();
     expect(findByTestId(tree, testIds.notes.saveButton(note.id))).toBeTruthy();
     expect(findByTestId(tree, testIds.notes.cancelButton(note.id))).toBeTruthy();
+  });
+
+  it("shows delete confirmation from the footer action and can cancel it", async () => {
+    const note = makeNote({});
+    let tree!: ReactTestRenderer;
+
+    await act(async () => {
+      tree = create(<CardHarness initialNote={note} onSaveEdit={vi.fn()} />);
+      await Promise.resolve();
+    });
+
+    await openEditor(tree, note.id);
+
+    await act(async () => {
+      findByTestId(tree, testIds.notes.deleteButton(note.id)).props.onPress();
+      await Promise.resolve();
+    });
+
+    expect(findByTestId(tree, testIds.notes.deleteConfirm(note.id))).toBeTruthy();
+    expect(textContent(tree)).toContain("Delete this note?");
+
+    await act(async () => {
+      findByTestId(tree, testIds.notes.deleteConfirmCancelButton(note.id)).props.onPress();
+      await Promise.resolve();
+    });
+
+    expect(() => findByTestId(tree, testIds.notes.deleteConfirm(note.id))).toThrow();
+  });
+
+  it("deletes with expectedUpdatedAt then exits edit mode", async () => {
+    const note = makeNote({});
+    const onDeleteEdit = vi.fn().mockResolvedValue(undefined);
+    let tree!: ReactTestRenderer;
+
+    await act(async () => {
+      tree = create(
+        <CardHarness
+          initialNote={note}
+          onSaveEdit={vi.fn()}
+          onDeleteEdit={onDeleteEdit}
+        />
+      );
+      await Promise.resolve();
+    });
+
+    await openEditor(tree, note.id);
+
+    await act(async () => {
+      findByTestId(tree, testIds.notes.deleteButton(note.id)).props.onPress();
+      await Promise.resolve();
+    });
+    await act(async () => {
+      await findByTestId(tree, testIds.notes.deleteConfirmButton(note.id)).props.onPress();
+    });
+
+    expect(onDeleteEdit).toHaveBeenCalledWith({
+      id: note.id,
+      expectedUpdatedAt: note.updated_at,
+    });
+    expect(() => findByTestId(tree, testIds.notes.editInput(note.id))).toThrow();
+  });
+
+  it("uses the edit-start updated_at when deleting after the current note prop changes", async () => {
+    const note = makeNote({ updated_at: "2026-05-01T00:05:00.000Z" });
+    const editBaselineUpdatedAt = "2026-05-01T00:00:00.000Z";
+    const onDeleteEdit = vi.fn().mockResolvedValue(undefined);
+    let tree!: ReactTestRenderer;
+
+    await act(async () => {
+      tree = create(
+        <CardHarness
+          initialNote={note}
+          editBaselineUpdatedAt={editBaselineUpdatedAt}
+          onSaveEdit={vi.fn()}
+          onDeleteEdit={onDeleteEdit}
+        />
+      );
+      await Promise.resolve();
+    });
+
+    await openEditor(tree, note.id);
+
+    await act(async () => {
+      findByTestId(tree, testIds.notes.deleteButton(note.id)).props.onPress();
+      await Promise.resolve();
+    });
+    await act(async () => {
+      await findByTestId(tree, testIds.notes.deleteConfirmButton(note.id)).props.onPress();
+    });
+
+    expect(onDeleteEdit).toHaveBeenCalledWith({
+      id: note.id,
+      expectedUpdatedAt: editBaselineUpdatedAt,
+    });
   });
 
   it("saves changed body and category with expectedUpdatedAt then returns to read mode", async () => {
@@ -403,6 +507,7 @@ describe("MobileNoteCard edit state", () => {
 
     expect(findByTestId(tree, testIds.notes.editInput(note.id)).props.value).toBe("Local draft");
     expect(findByTestId(tree, testIds.notes.saveButton(note.id)).props.disabled).toBe(true);
+    expect(findByTestId(tree, testIds.notes.deleteButton(note.id)).props.disabled).toBe(true);
     expect(textContent(tree)).toContain("This note changed elsewhere");
 
     await act(async () => {

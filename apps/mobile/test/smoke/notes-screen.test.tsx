@@ -28,6 +28,12 @@ vi.mock("../../hooks/useUpdateNote", () => ({
   })
 }));
 
+vi.mock("../../hooks/useDeleteNote", () => ({
+  useDeleteNote: () => ({
+    mutateAsync: vi.fn()
+  })
+}));
+
 vi.mock("expo-router", () => ({
   useFocusEffect: () => {}
 }));
