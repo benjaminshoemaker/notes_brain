@@ -8,6 +8,8 @@ Project-wide workflow guidance for AI agents working in this project.
 - Archived execution guidance in `plans/archive/` is historical context.
 - Feature execution guidance lives in `features/<name>/AGENTS.md`.
 - Use `plans/PLAN_STATUS.md` as a workstream manifest when present.
+- If `plans/PLAN_STATUS.md` and explicit user direction conflict, follow the
+  explicit user direction and report the mismatch.
 - When in a scoped directory, read this file first, then local `AGENTS.md` or
   `CLAUDE.md`.
 
@@ -27,16 +29,27 @@ Core local commands:
 - Do not duplicate files to work around issues.
 - Do not guess when access/content is missing; surface blockers explicitly.
 - Read full error output before fixing.
+- Default to TDD for behavior changes: add or update a failing automated test
+  first, implement the minimum fix, then refactor with tests green.
 - Follow existing code patterns in the codebase.
-- Track out-of-scope findings in `TODOS.md` instead of silently dropping them.
+- Track bugs in `BUGS.md`, imminent small work in `NEXT_STEPS.md`, and
+  indefinite ideas in `DEFERRED.md` instead of silently dropping them.
+- Use `/capture-work` to add one lightweight item, `/triage` to rank and
+  organize active bugs and next steps, and `/work-status` to summarize all
+  possible work across features, bugs, next steps, deferred items, and archive
+  history.
 
 ## Verification-First Escalation
 
 - Verify objective claims yourself before asking the human.
-- If blocked, first look for an MCP server, CLI, API, SDK, fixture, emulator
-  automation, or browser automation path.
-- Use safe tools immediately; if new setup is needed, propose exact setup and
-  expected verification gain.
+- Before manual escalation, attempt verification in this order:
+  1. repo-native verification scripts/tests
+  2. local CLI tools
+  3. direct API or SDK calls
+  4. MCP tools
+  5. browser automation or Computer Use
+- If a required tool, credential, or service is missing, propose exact setup
+  and expected verification gain.
 - Before escalating, record commands attempted, local-context checks, and
   recovery paths tried.
 - Ask for manual human verification only after self-verification options are
@@ -55,6 +68,8 @@ Rules:
 - Reconcile file instructions with user intent and higher-priority rules.
 - Prefer deterministic enforcement (tests, scripts, checks) for mandatory
   guarantees.
+- Required verification must be runnable via repository commands and CI checks;
+  do not rely on a single agent-specific harness.
 
 ## Project-Specific Notes
 
@@ -92,4 +107,4 @@ When finishing a task, report:
 - what changed
 - files touched
 - verification status
-- blockers or follow-up TODOs
+- blockers or follow-up work
