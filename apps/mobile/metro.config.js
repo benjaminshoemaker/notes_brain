@@ -25,6 +25,11 @@ config.resolver.nodeModulesPaths = [
   path.resolve(monorepoRoot, "node_modules"),
 ];
 
+config.resolver.extraNodeModules = {
+  react: path.resolve(projectRoot, "node_modules/react"),
+  "react-native": path.resolve(projectRoot, "node_modules/react-native"),
+};
+
 // Force Metro to resolve modules only from the folders above.
 // This prevents the workspace root from leaking incompatible versions of
 // React / React Native into the mobile bundle.

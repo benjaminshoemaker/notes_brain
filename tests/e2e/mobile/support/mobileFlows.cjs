@@ -17,7 +17,7 @@ async function waitForLoginScreen() {
     await dismissSystemCloseAppDialogIfPresent();
 
     try {
-      await waitFor(element(by.id("login-email-input")))
+      await waitFor(element(by.id("login-email-button")))
         .toBeVisible()
         .withTimeout(6000);
       return;
@@ -36,6 +36,10 @@ async function loginWithPassword() {
 
   await waitForLoginScreen();
 
+  await element(by.id("login-email-button")).tap();
+  await waitFor(element(by.id("login-email-input")))
+    .toBeVisible()
+    .withTimeout(6000);
   await element(by.id("login-email-input")).replaceText(testEmail);
   await element(by.id("login-password-input")).replaceText(testPassword);
   await element(by.id("login-submit-button")).tap();
@@ -50,6 +54,10 @@ async function requestPasswordReset() {
 
   await waitForLoginScreen();
 
+  await element(by.id("login-email-button")).tap();
+  await waitFor(element(by.id("login-email-input")))
+    .toBeVisible()
+    .withTimeout(6000);
   await element(by.id("login-email-input")).replaceText(testEmail);
   await element(by.id("login-forgot-password-button")).tap();
 

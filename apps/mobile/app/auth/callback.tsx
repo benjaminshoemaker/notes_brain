@@ -154,7 +154,12 @@ export default function AuthCallbackScreen() {
       <Stack.Screen
         options={{
           headerShown: true,
-          title: mode === "reset-password" ? "Reset Password" : "Signing In",
+          title:
+            mode === "reset-password"
+              ? "Reset Password"
+              : mode === "error"
+                ? "Check Link"
+                : "Opening Echo",
           headerStyle: { backgroundColor: colors.background },
           headerTintColor: colors.text,
         }}
@@ -184,7 +189,7 @@ export default function AuthCallbackScreen() {
           {mode === "error" ? (
             <View style={styles.centered}>
               <Ionicons name="alert-circle-outline" size={32} color={colors.error} />
-              <Text style={styles.title}>Link expired</Text>
+              <Text style={styles.title}>We could not open that link</Text>
               {error ? (
                 <Text testID={testIds.auth.authCallbackErrorMessage} style={styles.errorText}>
                   {error}

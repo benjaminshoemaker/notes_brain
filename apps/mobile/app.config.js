@@ -70,6 +70,12 @@ export default {
         }
       ],
       [
+        "expo-web-browser",
+        {
+          experimentalLauncherActivity: false
+        }
+      ],
+      [
         "expo-audio",
         {
           microphonePermission: "Allow Echo to record voice notes"

@@ -1,42 +1,20 @@
 import { useState } from "react";
-import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  StyleSheet,
-  KeyboardAvoidingView,
-  Platform,
-  ScrollView,
-  ActivityIndicator,
-} from "react-native";
+import { ActivityIndicator, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { Stack, Link, useRouter } from "expo-router";
-import { Ionicons } from "@expo/vector-icons";
 
-import { signInWithPassword, sendMagicLink, sendPasswordResetEmail } from "../../lib/authApi";
+import { signInWithGoogle } from "../../lib/authApi";
+import { colors, radii, shadows, spacing, typography, touchTargets } from "../../lib/theme";
 import { testIds } from "../../lib/testIds";
-import { colors, radii, spacing, typography, touchTargets } from "../../lib/theme";
 
 export default function LoginScreen() {
   const router = useRouter();
-
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
-  const [status, setStatus] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  async function handleSignIn() {
+  async function handleGoogleSignIn() {
     setError(null);
-    setStatus(null);
-
-    if (!email.trim() || !password) {
-      setError("Email and password are required.");
-      return;
-    }
-
     setIsSubmitting(true);
-    const result = await signInWithPassword(email.trim(), password);
+    const result = await signInWithGoogle();
     setIsSubmitting(false);
 
     if (result.error) {
@@ -47,172 +25,67 @@ export default function LoginScreen() {
     router.replace("/(app)");
   }
 
-  async function handleMagicLink() {
-    setError(null);
-    setStatus(null);
-
-    const trimmedEmail = email.trim();
-    if (!trimmedEmail) {
-      setError("Email is required for magic link sign-in.");
-      return;
-    }
-
-    setIsSubmitting(true);
-    const result = await sendMagicLink(trimmedEmail);
-    setIsSubmitting(false);
-
-    if (result.error) {
-      setError(result.error.message);
-      return;
-    }
-
-    setStatus("Magic link sent! Check your email.");
-  }
-
-  async function handlePasswordReset() {
-    setError(null);
-    setStatus(null);
-
-    const trimmedEmail = email.trim();
-    if (!trimmedEmail) {
-      setError("Enter your email to receive password reset instructions.");
-      return;
-    }
-
-    setIsSubmitting(true);
-    const result = await sendPasswordResetEmail(trimmedEmail);
-    setIsSubmitting(false);
-
-    if (result.error) {
-      setError(result.error.message);
-      return;
-    }
-
-    setStatus("Password reset email sent. Check your inbox.");
-  }
-
   return (
-    <KeyboardAvoidingView
-      style={styles.container}
-      behavior="padding"
-      keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 24}
-    >
+    <View style={styles.container}>
       <Stack.Screen options={{ title: "Sign In", headerStyle: { backgroundColor: colors.background }, headerTintColor: colors.text }} />
-      <ScrollView
-        contentContainerStyle={styles.scrollContent}
-        keyboardShouldPersistTaps="handled"
-      >
-        <View style={styles.formContainer}>
-          <Text style={styles.title}>Sign In</Text>
-          <Text style={styles.subtitle}>Welcome back to Echo</Text>
+      <View style={styles.content}>
+        <View style={styles.mark}>
+          <Text style={styles.markText}>E</Text>
+        </View>
 
-          <View style={styles.inputGroup}>
-            <Text style={styles.label}>Email</Text>
-            <View style={styles.inputWrapper}>
-              <Ionicons name="mail-outline" size={18} color={colors.textMuted} style={styles.inputIcon} />
-              <TextInput
-                testID={testIds.auth.loginEmailInput}
-                style={styles.input}
-                value={email}
-                onChangeText={setEmail}
-                placeholder="you@example.com"
-                placeholderTextColor={colors.textMuted}
-                keyboardType="email-address"
-                autoCapitalize="none"
-                autoComplete="email"
-                autoCorrect={false}
-                editable={!isSubmitting}
-              />
-            </View>
-          </View>
+        <Text style={styles.title}>Welcome to Echo</Text>
+        <Text style={styles.subtitle}>A private place to capture notes, links, and thoughts.</Text>
 
-          <View style={styles.inputGroup}>
-            <Text style={styles.label}>Password</Text>
-            <View style={styles.inputWrapper}>
-              <Ionicons name="lock-closed-outline" size={18} color={colors.textMuted} style={styles.inputIcon} />
-              <TextInput
-                testID={testIds.auth.loginPasswordInput}
-                style={styles.input}
-                value={password}
-                onChangeText={setPassword}
-                placeholder="Your password"
-                placeholderTextColor={colors.textMuted}
-                secureTextEntry
-                autoComplete="password"
-                editable={!isSubmitting}
-              />
-            </View>
-          </View>
-
+        <View style={styles.actions}>
           <TouchableOpacity
-            testID={testIds.auth.loginForgotPasswordButton}
+            testID={testIds.auth.loginGoogleButton}
             accessibilityRole="button"
-            accessibilityLabel="Reset password"
-            style={styles.forgotPasswordButton}
-            onPress={handlePasswordReset}
-            disabled={isSubmitting}
-          >
-            <Text style={styles.forgotPasswordText}>Forgot password?</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            testID={testIds.auth.loginSubmitButton}
-            accessibilityRole="button"
-            accessibilityLabel="Sign in"
-            style={[styles.button, styles.primaryButton, isSubmitting && styles.buttonDisabled]}
-            onPress={handleSignIn}
+            accessibilityLabel="Continue with Google"
+            accessibilityState={{ disabled: isSubmitting }}
+            style={[styles.button, styles.googleButton, isSubmitting && styles.buttonDisabled]}
+            onPress={handleGoogleSignIn}
             disabled={isSubmitting}
           >
             {isSubmitting ? (
-              <ActivityIndicator color={colors.textInverse} />
+              <ActivityIndicator color={colors.text} />
             ) : (
-              <Text style={styles.buttonText}>Sign In</Text>
+              <>
+                <Text style={styles.googleGlyph}>G</Text>
+                <Text style={styles.googleButtonText}>Continue with Google</Text>
+              </>
             )}
           </TouchableOpacity>
 
           <TouchableOpacity
-            testID={testIds.auth.loginMagicLinkButton}
+            testID={testIds.auth.loginEmailButton}
             accessibilityRole="button"
-            accessibilityLabel="Sign in with magic link"
-            style={[styles.button, styles.secondaryButton, isSubmitting && styles.buttonDisabled]}
-            onPress={handleMagicLink}
+            accessibilityLabel="Continue with email"
+            style={[styles.button, styles.emailButton]}
+            onPress={() => router.push("/(auth)/email")}
             disabled={isSubmitting}
           >
-            <Ionicons name="sparkles-outline" size={16} color={colors.accent} />
-            <Text style={styles.secondaryButtonText}>Sign in with magic link</Text>
+            <Text style={styles.emailButtonText}>Continue with email</Text>
           </TouchableOpacity>
-
-          {error && (
-            <View style={styles.errorContainer}>
-              <Text testID={testIds.auth.loginErrorMessage} style={styles.errorText}>
-                {error}
-              </Text>
-            </View>
-          )}
-
-          {status && (
-            <View style={styles.statusContainer}>
-              <Text testID={testIds.auth.loginStatusMessage} style={styles.statusText}>
-                {status}
-              </Text>
-            </View>
-          )}
-
-          <View style={styles.footer}>
-            <Text style={styles.footerText}>New here? </Text>
-            <Link href="/(auth)/signup" asChild>
-              <TouchableOpacity
-                accessibilityRole="button"
-                accessibilityLabel="Create an account"
-                style={styles.footerLink}
-              >
-                <Text style={styles.linkText}>Create an account</Text>
-              </TouchableOpacity>
-            </Link>
-          </View>
         </View>
-      </ScrollView>
-    </KeyboardAvoidingView>
+
+        {error ? (
+          <View style={styles.errorContainer}>
+            <Text testID={testIds.auth.loginErrorMessage} style={styles.errorText}>
+              {error}
+            </Text>
+          </View>
+        ) : null}
+
+        <View style={styles.footer}>
+          <Text style={styles.footerText}>New here? </Text>
+          <Link href="/(auth)/signup" asChild>
+            <TouchableOpacity accessibilityRole="button" accessibilityLabel="Create an account">
+              <Text style={styles.linkText}>Create an account</Text>
+            </TouchableOpacity>
+          </Link>
+        </View>
+      </View>
+    </View>
   );
 }
 
@@ -221,12 +94,25 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.background,
   },
-  scrollContent: {
-    flexGrow: 1,
-    paddingTop: 80,
-  },
-  formContainer: {
+  content: {
+    flex: 1,
+    justifyContent: "center",
     padding: spacing.xl,
+  },
+  mark: {
+    width: 56,
+    height: 56,
+    borderRadius: radii.lg,
+    backgroundColor: colors.accentLight,
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: spacing.xl,
+    ...shadows.sm,
+  },
+  markText: {
+    color: colors.accent,
+    fontSize: 24,
+    fontWeight: "700",
   },
   title: {
     ...typography.screenTitle,
@@ -238,70 +124,41 @@ const styles = StyleSheet.create({
     color: colors.textSecondary,
     marginBottom: spacing.xxl,
   },
-  inputGroup: {
-    marginBottom: spacing.lg,
-  },
-  label: {
-    ...typography.helper,
-    fontWeight: "600",
-    color: colors.textSecondary,
-    marginBottom: spacing.xs,
-  },
-  inputWrapper: {
-    flexDirection: "row",
-    alignItems: "center",
-    borderWidth: 1,
-    borderColor: colors.border,
-    borderRadius: radii.md,
-    backgroundColor: colors.surface,
-  },
-  inputIcon: {
-    marginLeft: spacing.md,
-  },
-  input: {
-    flex: 1,
-    paddingHorizontal: spacing.md,
-    paddingVertical: spacing.md,
-    fontSize: 16,
-    color: colors.text,
-  },
-  forgotPasswordButton: {
-    alignSelf: "flex-end",
-    minHeight: touchTargets.min,
-    justifyContent: "center",
-    paddingHorizontal: spacing.sm,
-  },
-  forgotPasswordText: {
-    color: colors.accent,
-    fontSize: 14,
-    fontWeight: "600",
+  actions: {
+    gap: spacing.md,
   },
   button: {
-    borderRadius: radii.md,
     minHeight: touchTargets.min,
-    paddingVertical: spacing.md,
+    borderRadius: radii.md,
     alignItems: "center",
-    marginTop: spacing.sm,
-    flexDirection: "row",
     justifyContent: "center",
-    gap: 8,
+    flexDirection: "row",
+    gap: spacing.sm,
+    paddingVertical: spacing.md,
+    paddingHorizontal: spacing.lg,
   },
-  primaryButton: {
-    backgroundColor: colors.accent,
-  },
-  secondaryButton: {
-    backgroundColor: "transparent",
+  googleButton: {
+    backgroundColor: colors.surface,
     borderWidth: 1,
-    borderColor: colors.accent,
+    borderColor: colors.border,
+    ...shadows.sm,
+  },
+  emailButton: {
+    backgroundColor: colors.accentLight,
   },
   buttonDisabled: {
     opacity: 0.6,
   },
-  buttonText: {
-    ...typography.button,
-    color: colors.textInverse,
+  googleGlyph: {
+    color: colors.text,
+    fontSize: 17,
+    fontWeight: "700",
   },
-  secondaryButtonText: {
+  googleButtonText: {
+    ...typography.button,
+    color: colors.text,
+  },
+  emailButtonText: {
     ...typography.button,
     color: colors.accent,
   },
@@ -315,25 +172,10 @@ const styles = StyleSheet.create({
     color: colors.error,
     fontSize: 14,
   },
-  statusContainer: {
-    backgroundColor: colors.successLight,
-    padding: spacing.md,
-    borderRadius: radii.md,
-    marginTop: spacing.lg,
-  },
-  statusText: {
-    color: colors.success,
-    fontSize: 14,
-  },
   footer: {
     flexDirection: "row",
     justifyContent: "center",
     marginTop: spacing.xl,
-    alignItems: "center",
-  },
-  footerLink: {
-    minHeight: touchTargets.min,
-    justifyContent: "center",
   },
   footerText: {
     color: colors.textSecondary,

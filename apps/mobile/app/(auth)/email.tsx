@@ -1,52 +1,40 @@
 import { useState } from "react";
 import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  StyleSheet,
+  ActivityIndicator,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
-  ActivityIndicator,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from "react-native";
-import { Stack, Link, useRouter } from "expo-router";
-import { Ionicons } from "@expo/vector-icons";
+import { Link, Stack, useRouter } from "expo-router";
 
-import { signUpWithPassword } from "../../lib/authApi";
+import { sendPasswordResetEmail, signInWithPassword } from "../../lib/authApi";
 import { testIds } from "../../lib/testIds";
 import { colors, radii, spacing, typography, touchTargets } from "../../lib/theme";
 
-export default function SignupScreen() {
+export default function EmailSignInScreen() {
   const router = useRouter();
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
+  const [status, setStatus] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  async function handleSignUp() {
+  async function handleSignIn() {
     setError(null);
+    setStatus(null);
 
-    const trimmedEmail = email.trim();
-    if (!trimmedEmail || !password) {
+    if (!email.trim() || !password) {
       setError("Email and password are required.");
       return;
     }
 
-    if (password !== confirmPassword) {
-      setError("Passwords do not match.");
-      return;
-    }
-
-    if (password.length < 6) {
-      setError("Password must be at least 6 characters.");
-      return;
-    }
-
     setIsSubmitting(true);
-    const result = await signUpWithPassword(trimmedEmail, password);
+    const result = await signInWithPassword(email.trim(), password);
     setIsSubmitting(false);
 
     if (result.error) {
@@ -54,30 +42,48 @@ export default function SignupScreen() {
       return;
     }
 
-    // After successful signup, navigate to the app
     router.replace("/(app)");
+  }
+
+  async function handlePasswordReset() {
+    setError(null);
+    setStatus(null);
+
+    const trimmedEmail = email.trim();
+    if (!trimmedEmail) {
+      setError("Enter your email to receive password reset instructions.");
+      return;
+    }
+
+    setIsSubmitting(true);
+    const result = await sendPasswordResetEmail(trimmedEmail);
+    setIsSubmitting(false);
+
+    if (result.error) {
+      setError(result.error.message);
+      return;
+    }
+
+    setStatus("Password reset email sent. Check your inbox.");
   }
 
   return (
     <KeyboardAvoidingView
       style={styles.container}
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      behavior="padding"
+      keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 24}
     >
-      <Stack.Screen options={{ title: "Create Account", headerStyle: { backgroundColor: colors.background }, headerTintColor: colors.text }} />
-      <ScrollView
-        contentContainerStyle={styles.scrollContent}
-        keyboardShouldPersistTaps="handled"
-      >
+      <Stack.Screen options={{ title: "Email Sign In", headerStyle: { backgroundColor: colors.background }, headerTintColor: colors.text }} />
+      <ScrollView contentContainerStyle={styles.scrollContent} keyboardShouldPersistTaps="handled">
         <View style={styles.formContainer}>
-          <Text style={styles.title}>Create Account</Text>
-          <Text style={styles.subtitle}>Start capturing your thoughts</Text>
+          <Text style={styles.title}>Sign in with email</Text>
+          <Text style={styles.subtitle}>Use the email and password attached to your Echo account.</Text>
 
           <View style={styles.inputGroup}>
             <Text style={styles.label}>Email</Text>
             <View style={styles.inputWrapper}>
-              <Ionicons name="mail-outline" size={18} color={colors.textMuted} style={styles.inputIcon} />
               <TextInput
-                testID={testIds.auth.signupEmailInput}
+                testID={testIds.auth.loginEmailInput}
                 style={styles.input}
                 value={email}
                 onChangeText={setEmail}
@@ -95,70 +101,67 @@ export default function SignupScreen() {
           <View style={styles.inputGroup}>
             <Text style={styles.label}>Password</Text>
             <View style={styles.inputWrapper}>
-              <Ionicons name="lock-closed-outline" size={18} color={colors.textMuted} style={styles.inputIcon} />
               <TextInput
-                testID={testIds.auth.signupPasswordInput}
+                testID={testIds.auth.loginPasswordInput}
                 style={styles.input}
                 value={password}
                 onChangeText={setPassword}
-                placeholder="At least 6 characters"
+                placeholder="Your password"
                 placeholderTextColor={colors.textMuted}
                 secureTextEntry
-                autoComplete="new-password"
-                editable={!isSubmitting}
-              />
-            </View>
-          </View>
-
-          <View style={styles.inputGroup}>
-            <Text style={styles.label}>Confirm Password</Text>
-            <View style={styles.inputWrapper}>
-              <Ionicons name="lock-closed-outline" size={18} color={colors.textMuted} style={styles.inputIcon} />
-              <TextInput
-                testID={testIds.auth.signupConfirmPasswordInput}
-                style={styles.input}
-                value={confirmPassword}
-                onChangeText={setConfirmPassword}
-                placeholder="Confirm your password"
-                placeholderTextColor={colors.textMuted}
-                secureTextEntry
-                autoComplete="new-password"
+                autoComplete="password"
                 editable={!isSubmitting}
               />
             </View>
           </View>
 
           <TouchableOpacity
-            testID={testIds.auth.signupSubmitButton}
+            testID={testIds.auth.loginForgotPasswordButton}
             accessibilityRole="button"
-            accessibilityLabel="Create account"
-            accessibilityState={{ disabled: isSubmitting }}
+            accessibilityLabel="Reset password"
+            style={styles.forgotPasswordButton}
+            onPress={handlePasswordReset}
+            disabled={isSubmitting}
+          >
+            <Text style={styles.forgotPasswordText}>Forgot password?</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            testID={testIds.auth.loginSubmitButton}
+            accessibilityRole="button"
+            accessibilityLabel="Sign in"
             style={[styles.button, styles.primaryButton, isSubmitting && styles.buttonDisabled]}
-            onPress={handleSignUp}
+            onPress={handleSignIn}
             disabled={isSubmitting}
           >
             {isSubmitting ? (
               <ActivityIndicator color={colors.textInverse} />
             ) : (
-              <Text style={styles.buttonText}>Create Account</Text>
+              <Text style={styles.buttonText}>Sign In</Text>
             )}
           </TouchableOpacity>
 
-          {error && (
+          {error ? (
             <View style={styles.errorContainer}>
-              <Text style={styles.errorText}>{error}</Text>
+              <Text testID={testIds.auth.loginErrorMessage} style={styles.errorText}>
+                {error}
+              </Text>
             </View>
-          )}
+          ) : null}
+
+          {status ? (
+            <View style={styles.statusContainer}>
+              <Text testID={testIds.auth.loginStatusMessage} style={styles.statusText}>
+                {status}
+              </Text>
+            </View>
+          ) : null}
 
           <View style={styles.footer}>
-            <Text style={styles.footerText}>Already have an account? </Text>
-            <Link href="/(auth)/email" asChild>
-              <TouchableOpacity
-                accessibilityRole="button"
-                accessibilityLabel="Sign in"
-                style={styles.footerLink}
-              >
-                <Text style={styles.linkText}>Sign in</Text>
+            <Text style={styles.footerText}>New here? </Text>
+            <Link href="/(auth)/signup" asChild>
+              <TouchableOpacity accessibilityRole="button" accessibilityLabel="Create an account">
+                <Text style={styles.linkText}>Create an account</Text>
               </TouchableOpacity>
             </Link>
           </View>
@@ -205,10 +208,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: colors.border,
     borderRadius: radii.md,
-    backgroundColor: colors.surfaceRaised,
-  },
-  inputIcon: {
-    marginLeft: spacing.md,
+    backgroundColor: colors.surface,
   },
   input: {
     flex: 1,
@@ -216,6 +216,16 @@ const styles = StyleSheet.create({
     paddingVertical: spacing.md,
     fontSize: 16,
     color: colors.text,
+  },
+  forgotPasswordButton: {
+    alignSelf: "flex-end",
+    minHeight: touchTargets.min,
+    justifyContent: "center",
+    marginBottom: spacing.md,
+  },
+  forgotPasswordText: {
+    ...typography.button,
+    color: colors.accent,
   },
   button: {
     borderRadius: radii.md,
@@ -245,15 +255,20 @@ const styles = StyleSheet.create({
     color: colors.error,
     fontSize: 14,
   },
+  statusContainer: {
+    backgroundColor: colors.successLight,
+    padding: spacing.md,
+    borderRadius: radii.md,
+    marginTop: spacing.lg,
+  },
+  statusText: {
+    color: colors.success,
+    fontSize: 14,
+  },
   footer: {
     flexDirection: "row",
     justifyContent: "center",
     marginTop: spacing.xl,
-    alignItems: "center",
-  },
-  footerLink: {
-    minHeight: touchTargets.min,
-    justifyContent: "center",
   },
   footerText: {
     color: colors.textSecondary,

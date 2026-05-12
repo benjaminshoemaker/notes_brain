@@ -7,6 +7,8 @@ export const testIds = {
     signOutButton: "app-signout-button",
   },
   auth: {
+    loginGoogleButton: "login-google-button",
+    loginEmailButton: "login-email-button",
     loginEmailInput: "login-email-input",
     loginPasswordInput: "login-password-input",
     loginSubmitButton: "login-submit-button",
