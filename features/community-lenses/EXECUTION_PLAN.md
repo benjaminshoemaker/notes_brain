@@ -105,17 +105,17 @@ Implement SECURITY DEFINER RPCs and triggers in the community migration. The ser
 **Requirement:** AC-1, AC-2, AC-4, AC-5, AC-6, AC-10, AC-11, AC-12, AC-13, AC-14, AC-15, AC-16, AC-17, AC-18, AC-19, AC-20, AC-21
 
 **Acceptance Criteria:**
-- [ ] (CODE) Migration defines `publish_lens_template`, `unpublish_lens_template`, `install_lens_template`, and `report_lens_template` as SECURITY DEFINER functions.
+- [x] (CODE) Migration defines `publish_lens_template`, `unpublish_lens_template`, `install_lens_template`, and `report_lens_template` as SECURITY DEFINER functions.
   - Verify: `(cd ../.. && rg "CREATE OR REPLACE FUNCTION (publish_lens_template|unpublish_lens_template|install_lens_template|report_lens_template)|SECURITY DEFINER" supabase/migrations/00010_community_lenses.sql)`
-- [ ] (CODE) Publish rejects installed copies, invalid display names, hidden/delisted templates, missing descriptions, non-owned source lenses, and more than 10 newly public templates per user in a trailing 24-hour window.
+- [x] (CODE) Publish rejects installed copies, invalid display names, hidden/delisted templates, missing descriptions, non-owned source lenses, and more than 10 newly public templates per user in a trailing 24-hour window.
   - Verify: `(cd ../.. && node --test tests/task-community-lenses-rpcs.test.js)`
-- [ ] (CODE) Install copies into `lenses` inside a transaction-local community install guard, records `source_template_id`, `source_template_version`, `installed_from_library_at`, `template_snapshot`, increments `install_count`, rejects author self-installs, and rejects duplicate current installs.
+- [x] (CODE) Install copies into `lenses` inside a transaction-local community install guard, records `source_template_id`, `source_template_version`, `installed_from_library_at`, `template_snapshot`, increments `install_count`, rejects author self-installs, and rejects duplicate current installs.
   - Verify: `(cd ../.. && node --test tests/task-community-lenses-rpcs.test.js)`
-- [ ] (CODE) Trigger blocks direct `lenses.source_template_id` writes for UUID community template ids outside `install_lens_template` while preserving curated text template ids.
+- [x] (CODE) Trigger blocks direct `lenses.source_template_id` writes for UUID community template ids outside `install_lens_template` while preserving curated text template ids.
   - Verify: `(cd ../.. && node --test tests/task-community-lenses-rpcs.test.js)`
-- [ ] (CODE) Source lens edits create `lens_template_versions` snapshots for versioned fields and skip hidden/delisted templates.
+- [x] (CODE) Source lens edits create `lens_template_versions` snapshots for versioned fields and skip hidden/delisted templates.
   - Verify: `(cd ../.. && node --test tests/task-community-lenses-rpcs.test.js)`
-- [ ] (CODE) `report_lens_template` enforces one active report per reporter/template and returns the existing active report without overwriting reason or note.
+- [x] (CODE) `report_lens_template` enforces one active report per reporter/template and returns the existing active report without overwriting reason or note.
   - Verify: `(cd ../.. && node --test tests/task-community-lenses-rpcs.test.js)`
 
 **Files to Create:**
