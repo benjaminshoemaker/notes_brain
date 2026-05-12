@@ -21,6 +21,22 @@ api_url = "http://127.0.0.1"
 enabled = true
 port = 65424
 
+[auth]
+site_url = "https://notes-brain-web.vercel.app"
+additional_redirect_urls = [
+  "https://notes-brain-web.vercel.app",
+  "https://notes-brain-web.vercel.app/*",
+  "echo://auth/callback"
+]
+
+[auth.mfa.totp]
+enroll_enabled = true
+verify_enabled = true
+
+[auth.email]
+max_frequency = "1m0s"
+otp_length = 8
+
 [functions.classify-note]
 verify_jwt = true
 

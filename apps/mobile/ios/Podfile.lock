@@ -4,7 +4,7 @@ PODS:
   - EXConstants (18.0.13):
     - ExpoModulesCore
   - EXJSONUtils (0.15.0)
-  - EXManifests (1.0.10):
+  - EXManifests (1.0.11):
     - ExpoModulesCore
   - EXNotifications (0.32.16):
     - ExpoModulesCore
@@ -33,15 +33,15 @@ PODS:
     - ReactCommon/turbomodule/core
     - ReactNativeDependencies
     - Yoga
-  - expo-dev-client (6.0.20):
+  - expo-dev-client (6.0.21):
     - EXManifests
     - expo-dev-launcher
     - expo-dev-menu
     - expo-dev-menu-interface
     - EXUpdatesInterface
-  - expo-dev-launcher (6.0.20):
+  - expo-dev-launcher (6.0.21):
     - EXManifests
-    - expo-dev-launcher/Main (= 6.0.20)
+    - expo-dev-launcher/Main (= 6.0.21)
     - expo-dev-menu
     - expo-dev-menu-interface
     - ExpoModulesCore
@@ -70,7 +70,7 @@ PODS:
     - ReactCommon/turbomodule/core
     - ReactNativeDependencies
     - Yoga
-  - expo-dev-launcher/Main (6.0.20):
+  - expo-dev-launcher/Main (6.0.21):
     - EXManifests
     - expo-dev-launcher/Unsafe
     - expo-dev-menu
@@ -101,7 +101,7 @@ PODS:
     - ReactCommon/turbomodule/core
     - ReactNativeDependencies
     - Yoga
-  - expo-dev-launcher/Unsafe (6.0.20):
+  - expo-dev-launcher/Unsafe (6.0.21):
     - EXManifests
     - expo-dev-menu
     - expo-dev-menu-interface
@@ -131,9 +131,9 @@ PODS:
     - ReactCommon/turbomodule/core
     - ReactNativeDependencies
     - Yoga
-  - expo-dev-menu (7.0.18):
-    - expo-dev-menu/Main (= 7.0.18)
-    - expo-dev-menu/ReactNativeCompatibles (= 7.0.18)
+  - expo-dev-menu (7.0.19):
+    - expo-dev-menu/Main (= 7.0.19)
+    - expo-dev-menu/ReactNativeCompatibles (= 7.0.19)
     - hermes-engine
     - RCTRequired
     - RCTTypeSafety
@@ -156,7 +156,7 @@ PODS:
     - ReactNativeDependencies
     - Yoga
   - expo-dev-menu-interface (2.0.0)
-  - expo-dev-menu/Main (7.0.18):
+  - expo-dev-menu/Main (7.0.19):
     - EXManifests
     - expo-dev-menu-interface
     - ExpoModulesCore
@@ -182,7 +182,7 @@ PODS:
     - ReactCommon/turbomodule/core
     - ReactNativeDependencies
     - Yoga
-  - expo-dev-menu/ReactNativeCompatibles (7.0.18):
+  - expo-dev-menu/ReactNativeCompatibles (7.0.19):
     - hermes-engine
     - RCTRequired
     - RCTTypeSafety
@@ -251,6 +251,8 @@ PODS:
   - ExpoShareIntentModule (5.1.1):
     - ExpoModulesCore
   - ExpoSplashScreen (31.0.13):
+    - ExpoModulesCore
+  - ExpoWebBrowser (15.0.11):
     - ExpoModulesCore
   - EXUpdatesInterface (2.0.0):
     - ExpoModulesCore
@@ -2095,6 +2097,7 @@ DEPENDENCIES:
   - ExpoSecureStore (from `../../../node_modules/expo-secure-store/ios`)
   - ExpoShareIntentModule (from `../../../node_modules/expo-share-intent/ios`)
   - ExpoSplashScreen (from `../../../node_modules/expo-splash-screen/ios`)
+  - ExpoWebBrowser (from `../node_modules/expo-web-browser/ios`)
   - EXUpdatesInterface (from `../../../node_modules/expo-updates-interface/ios`)
   - FBLazyVector (from `../node_modules/react-native/Libraries/FBLazyVector`)
   - hermes-engine (from `../node_modules/react-native/sdks/hermes-engine/hermes-engine.podspec`)
@@ -2217,6 +2220,8 @@ EXTERNAL SOURCES:
     :path: "../../../node_modules/expo-share-intent/ios"
   ExpoSplashScreen:
     :path: "../../../node_modules/expo-splash-screen/ios"
+  ExpoWebBrowser:
+    :path: "../node_modules/expo-web-browser/ios"
   EXUpdatesInterface:
     :path: "../../../node_modules/expo-updates-interface/ios"
   FBLazyVector:
@@ -2369,12 +2374,12 @@ SPEC CHECKSUMS:
   EXApplication: 1e98d4b1dccdf30627f92917f4b2c5a53c330e5f
   EXConstants: fce59a631a06c4151602843667f7cfe35f81e271
   EXJSONUtils: 1d3e4590438c3ee593684186007028a14b3686cd
-  EXManifests: a8d97683e5c7a3b026ffbd58559c64dc655b747b
+  EXManifests: 378c7742de02a8605093b1c82b5774d8f9875cec
   EXNotifications: 9eec98712cc814ceff916d876cb53859003b0597
   Expo: 4e503a041c59c4e34c8be262a135848ad5cd3710
-  expo-dev-client: 425ee077d6754a98cfe3a2e2410d29b440b24c9d
-  expo-dev-launcher: 7f3b2fea65ca732ab4f53a1c70cde37d68659521
-  expo-dev-menu: e576f74ee262ead8f76400129e38718ca705fcd0
+  expo-dev-client: b8adef5e6847b5335a3b95a1fd2edc731d4331ee
+  expo-dev-launcher: 62424c01202c528a0421e5736c7cba2aa95312b6
+  expo-dev-menu: ffb77acaa6a91d260780ab72a7d236ece882c787
   expo-dev-menu-interface: 600df12ea01efecdd822daaf13cc0ac091775533
   ExpoAsset: f867e55ceb428aab99e1e8c082b5aee7c159ea18
   ExpoAudio: e4cfe3a2f3317b8487460685385a9867a07fb4fb
@@ -2389,6 +2394,7 @@ SPEC CHECKSUMS:
   ExpoSecureStore: d32f751874a2ceb5aaeebeb3578e165c1ba2b24a
   ExpoShareIntentModule: 928ff229dd5e577561944786f0de08be339f640b
   ExpoSplashScreen: bc3cffefca2716e5f22350ca109badd7e50ec14d
+  ExpoWebBrowser: 970dd4c64c29c955c3af664c8058ba768a4c9187
   EXUpdatesInterface: 5adf50cb41e079c861da6d9b4b954c3db9a50734
   FBLazyVector: e95a291ad2dadb88e42b06e0c5fb8262de53ec12
   hermes-engine: 9f4dfe93326146a1c99eb535b1cb0b857a3cd172
