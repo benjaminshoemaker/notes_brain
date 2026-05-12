@@ -210,9 +210,9 @@ Add shared TypeScript types for community template current state, public browse 
 
 ### Pre-Phase Setup
 
-- [ ] Read the Warm Ink design tokens before touching mobile UI files.
+- [x] Read the Warm Ink design tokens before touching mobile UI files.
   - Verify: `(cd ../.. && test -f apps/mobile/lib/theme.ts && rg "colors|radii|shadows" apps/mobile/lib/theme.ts)`
-- [ ] Confirm mobile tests run in the workspace.
+- [x] Confirm mobile tests run in the workspace.
   - Verify: `(cd ../.. && npm run test -w @notesbrain/mobile)`
 
 ### Step 2.1: Template Helpers and Hooks
@@ -228,13 +228,13 @@ Extend `apps/mobile/lib/lensLibrary.ts` so curated and community templates share
 **Requirement:** AC-7, AC-9, AC-10, AC-11, AC-20, AC-21
 
 **Acceptance Criteria:**
-- [ ] (CODE) `communityTemplateToLensTemplate` converts public community rows into the existing UI-facing template shape without exposing internal ids.
+- [x] (CODE) `communityTemplateToLensTemplate` converts public community rows into the existing UI-facing template shape without exposing internal ids.
   - Verify: `(cd ../.. && rg "communityTemplateToLensTemplate" apps/mobile/lib/lensLibrary.ts apps/mobile/test/smoke/lens-library-community-helpers.test.ts)`
-- [ ] (TEST) Helper tests cover community snapshot fields, install state from `source_template_id`, installed-version matching, and curated template regressions.
-  - Verify: `(cd ../.. && npm run test -w @notesbrain/mobile -- apps/mobile/test/smoke/lens-library-community-helpers.test.ts apps/mobile/test/smoke/lens-library-catalog.test.ts)`
-- [ ] (CODE) Community snapshots include prompt, schedule fields, lookback, categories, category, author display name, template id, and version.
-  - Verify: `(cd ../.. && npm run test -w @notesbrain/mobile -- apps/mobile/test/smoke/lens-library-community-helpers.test.ts)`
-- [ ] (TYPE) Mobile typecheck passes after helper changes.
+- [x] (TEST) Helper tests cover community snapshot fields, install state from `source_template_id`, installed-version matching, and curated template regressions.
+  - Verify: `(cd ../.. && npm run test -w @notesbrain/mobile -- test/smoke/lens-library-community-helpers.test.ts test/smoke/lens-library-catalog.test.ts)`
+- [x] (CODE) Community snapshots include prompt, schedule fields, lookback, categories, category, author display name, template id, and version.
+  - Verify: `(cd ../.. && npm run test -w @notesbrain/mobile -- test/smoke/lens-library-community-helpers.test.ts)`
+- [x] (TYPE) Mobile typecheck passes after helper changes.
   - Verify: `(cd ../.. && npm run typecheck -w @notesbrain/mobile)`
 
 **Files to Create:**
@@ -271,9 +271,9 @@ Create a dedicated React Query hook for community templates and mutations while 
 - [ ] (CODE) Hook exposes publish, unpublish, install, and report mutations through Supabase RPC calls, not direct table writes.
   - Verify: `(cd ../.. && rg "rpc\\('(publish_lens_template|unpublish_lens_template|install_lens_template|report_lens_template)'" apps/mobile/hooks/useCommunityLenses.ts)`
 - [ ] (TEST) Hook tests cover search, category filtering, install-state derivation, mutation invalidation, duplicate report result handling, and unavailable template errors.
-  - Verify: `(cd ../.. && npm run test -w @notesbrain/mobile -- apps/mobile/test/smoke/use-community-lenses.test.ts)`
+  - Verify: `(cd ../.. && npm run test -w @notesbrain/mobile -- test/smoke/use-community-lenses.test.ts)`
 - [ ] (TEST) Existing curated hook and screen smoke tests still pass.
-  - Verify: `(cd ../.. && npm run test -w @notesbrain/mobile -- apps/mobile/test/smoke/lens-library-screen.test.tsx apps/mobile/test/smoke/lens-library-preview.test.tsx)`
+  - Verify: `(cd ../.. && npm run test -w @notesbrain/mobile -- test/smoke/lens-library-screen.test.tsx test/smoke/lens-library-preview.test.tsx)`
 - [ ] (TYPE) Mobile typecheck passes after hook changes.
   - Verify: `(cd ../.. && npm run typecheck -w @notesbrain/mobile)`
 
@@ -302,15 +302,15 @@ Create a dedicated React Query hook for community templates and mutations while 
 
 **Automated Checks:**
 - [ ] Community helper and hook tests pass.
-  - Verify: `(cd ../.. && npm run test -w @notesbrain/mobile -- apps/mobile/test/smoke/lens-library-community-helpers.test.ts apps/mobile/test/smoke/use-community-lenses.test.ts)`
+  - Verify: `(cd ../.. && npm run test -w @notesbrain/mobile -- test/smoke/lens-library-community-helpers.test.ts test/smoke/use-community-lenses.test.ts)`
 - [ ] Curated library smoke tests still pass.
-  - Verify: `(cd ../.. && npm run test -w @notesbrain/mobile -- apps/mobile/test/smoke/lens-library-screen.test.tsx apps/mobile/test/smoke/lens-library-preview.test.tsx apps/mobile/test/smoke/lens-library-catalog.test.ts)`
+  - Verify: `(cd ../.. && npm run test -w @notesbrain/mobile -- test/smoke/lens-library-screen.test.tsx test/smoke/lens-library-preview.test.tsx test/smoke/lens-library-catalog.test.ts)`
 - [ ] Mobile typecheck passes.
   - Verify: `(cd ../.. && npm run typecheck -w @notesbrain/mobile)`
 
 **Regression Verification:**
 - [ ] Existing curated install input creation remains unchanged for bundled templates.
-  - Verify: `(cd ../.. && npm run test -w @notesbrain/mobile -- apps/mobile/test/smoke/lens-library-catalog.test.ts)`
+  - Verify: `(cd ../.. && npm run test -w @notesbrain/mobile -- test/smoke/lens-library-catalog.test.ts)`
 
 ---
 

@@ -1,4 +1,4 @@
-import type { Lens, LensTemplate, LensTemplateSnapshot } from "@notesbrain/shared";
+import type { CommunityLensTemplatePublic, Lens, LensTemplate, LensTemplateSnapshot } from "@notesbrain/shared";
 
 import type { CreateLensInput } from "../hooks/useLenses";
 
@@ -192,6 +192,27 @@ export function getLensTemplateById(templateId: string): LensTemplate | null {
   return curatedLensTemplates.find((template) => template.template_id === templateId) ?? null;
 }
 
+export function communityTemplateToLensTemplate(row: CommunityLensTemplatePublic): LensTemplate {
+  return {
+    template_id: row.id,
+    version: row.version,
+    name: row.name,
+    description: row.description,
+    focus: row.description,
+    prompt: row.prompt,
+    schedule_type: row.schedule_type,
+    schedule_time: row.schedule_time,
+    schedule_day: row.schedule_day,
+    lookback_hours: row.lookback_hours,
+    categories: row.categories,
+    category: row.category,
+    author_type: "community",
+    author_name: row.author_display_name,
+    updated_at: row.updated_at,
+    changelog: [`Community version ${row.version}`]
+  };
+}
+
 export function createTemplateSnapshot(template: LensTemplate): LensTemplateSnapshot {
   return {
     template_id: template.template_id,
@@ -200,7 +221,13 @@ export function createTemplateSnapshot(template: LensTemplate): LensTemplateSnap
     description: template.description,
     category: template.category,
     author_type: template.author_type,
-    author_name: template.author_name
+    author_name: template.author_name,
+    prompt: template.prompt,
+    schedule_type: template.schedule_type,
+    schedule_time: template.schedule_time,
+    schedule_day: template.schedule_day,
+    lookback_hours: template.lookback_hours,
+    categories: template.categories
   };
 }
 
