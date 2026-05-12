@@ -132,6 +132,10 @@ export default function AppLayout() {
         name="lens-library-preview"
         options={{ href: null, title: "Preview Lens" }}
       />
+      <Tabs.Screen
+        name="community-lens-publish"
+        options={{ href: null, title: "Publish Lens" }}
+      />
     </Tabs>
   );
 }

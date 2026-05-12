@@ -321,9 +321,9 @@ Create a dedicated React Query hook for community templates and mutations while 
 
 ### Pre-Phase Setup
 
-- [ ] Confirm mobile routes can import theme tokens and test ids.
+- [x] Confirm mobile routes can import theme tokens and test ids.
   - Verify: `(cd ../.. && rg "export const testIds|colors|radii|shadows" apps/mobile/lib/testIds.ts apps/mobile/lib/theme.ts)`
-- [ ] Confirm lens management smoke test baseline exists.
+- [x] Confirm lens management smoke test baseline exists.
   - Verify: `(cd ../.. && test -f apps/mobile/test/smoke/lens-create-screen.test.tsx && test -f apps/mobile/app/'(app)'/lens-manage.tsx)`
 
 ### Step 3.1: Author Controls and Review
@@ -339,15 +339,15 @@ Add `community-lens-publish.tsx` as the required review screen before making a l
 **Requirement:** AC-1, AC-2, AC-3, AC-5, AC-6, AC-18, AC-20, AC-21, AC-22, AC-23
 
 **Acceptance Criteria:**
-- [ ] (CODE) New route renders lens name, description input, prompt, cadence, lookback, category filters, author display name, and prompt-public warning text.
+- [x] (CODE) New route renders lens name, description input, prompt, cadence, lookback, category filters, author display name, and prompt-public warning text.
   - Verify: `(cd ../.. && rg "community-lens-publish|author display|prompt|notes, generated results|publish_lens_template" apps/mobile/app/'(app)'/community-lens-publish.tsx)`
-- [ ] (TEST) Publish review tests cover valid publish, blank/short/email/reserved display-name rejection, missing description rejection, and mutation error messaging.
-  - Verify: `(cd ../.. && npm run test -w @notesbrain/mobile -- apps/mobile/test/smoke/community-lens-publish-screen.test.tsx)`
-- [ ] (TEST) Accessibility tests cover labels for display name, description, confirmation, cancel, and visible privacy warning text.
-  - Verify: `(cd ../.. && npm run test -w @notesbrain/mobile -- apps/mobile/test/smoke/community-lens-publish-screen.test.tsx)`
-- [ ] (CODE) Test IDs exist for publish review controls and confirmation state.
+- [x] (TEST) Publish review tests cover valid publish, blank/short/email/reserved display-name rejection, missing description rejection, and mutation error messaging.
+  - Verify: `(cd ../.. && npm run test -w @notesbrain/mobile -- test/smoke/community-lens-publish-screen.test.tsx)`
+- [x] (TEST) Accessibility tests cover labels for display name, description, confirmation, cancel, and visible privacy warning text.
+  - Verify: `(cd ../.. && npm run test -w @notesbrain/mobile -- test/smoke/community-lens-publish-screen.test.tsx)`
+- [x] (CODE) Test IDs exist for publish review controls and confirmation state.
   - Verify: `(cd ../.. && rg "communityLensPublish" apps/mobile/lib/testIds.ts)`
-- [ ] (TYPE) Mobile typecheck passes after route changes.
+- [x] (TYPE) Mobile typecheck passes after route changes.
   - Verify: `(cd ../.. && npm run typecheck -w @notesbrain/mobile)`
 
 **Files to Create:**
@@ -383,15 +383,15 @@ Update lens management so only user-owned lenses with `source_template_id IS NUL
 
 **Acceptance Criteria:**
 - [ ] (CODE) Eligible personal lenses navigate to publish review; installed copies with any `source_template_id` do not render a publish control.
-  - Verify: `(cd ../.. && npm run test -w @notesbrain/mobile -- apps/mobile/test/smoke/lens-manage-community.test.tsx)`
+  - Verify: `(cd ../.. && npm run test -w @notesbrain/mobile -- test/smoke/lens-manage-community.test.tsx)`
 - [ ] (CODE) Public and unpublished authored lenses show text-visible status, while hidden/delisted templates render as not public and expose no republish control.
-  - Verify: `(cd ../.. && npm run test -w @notesbrain/mobile -- apps/mobile/test/smoke/lens-manage-community.test.tsx)`
+  - Verify: `(cd ../.. && npm run test -w @notesbrain/mobile -- test/smoke/lens-manage-community.test.tsx)`
 - [ ] (CODE) Unpublish calls `unpublish_lens_template` and leaves existing delete/edit/pause/run controls intact.
   - Verify: `(cd ../.. && rg "unpublish_lens_template|source_template_id|community" apps/mobile/app/'(app)'/lens-manage.tsx)`
 - [ ] (TEST) Lens management tests cover publish eligibility, installed-copy blocking, public status display, hidden/delisted blocking, unpublish confirmation, and existing action regressions.
-  - Verify: `(cd ../.. && npm run test -w @notesbrain/mobile -- apps/mobile/test/smoke/lens-manage-community.test.tsx apps/mobile/test/smoke/lens-create-screen.test.tsx)`
+  - Verify: `(cd ../.. && npm run test -w @notesbrain/mobile -- test/smoke/lens-manage-community.test.tsx test/smoke/lens-create-screen.test.tsx)`
 - [ ] (TEST) Accessibility checks cover publish/unpublish labels, status text, disabled state, and minimum touch-target style for main controls.
-  - Verify: `(cd ../.. && npm run test -w @notesbrain/mobile -- apps/mobile/test/smoke/lens-manage-community.test.tsx)`
+  - Verify: `(cd ../.. && npm run test -w @notesbrain/mobile -- test/smoke/lens-manage-community.test.tsx)`
 
 **Files to Create:**
 - `apps/mobile/test/smoke/lens-manage-community.test.tsx` - lens-management community behavior and accessibility tests.
@@ -418,15 +418,15 @@ Update lens management so only user-owned lenses with `source_template_id IS NUL
 
 **Automated Checks:**
 - [ ] Publish review screen tests pass.
-  - Verify: `(cd ../.. && npm run test -w @notesbrain/mobile -- apps/mobile/test/smoke/community-lens-publish-screen.test.tsx)`
+  - Verify: `(cd ../.. && npm run test -w @notesbrain/mobile -- test/smoke/community-lens-publish-screen.test.tsx)`
 - [ ] Lens management community tests pass.
-  - Verify: `(cd ../.. && npm run test -w @notesbrain/mobile -- apps/mobile/test/smoke/lens-manage-community.test.tsx)`
+  - Verify: `(cd ../.. && npm run test -w @notesbrain/mobile -- test/smoke/lens-manage-community.test.tsx)`
 - [ ] Mobile typecheck passes.
   - Verify: `(cd ../.. && npm run typecheck -w @notesbrain/mobile)`
 
 **Regression Verification:**
 - [ ] Existing lens create/manage behavior remains covered by current smoke tests.
-  - Verify: `(cd ../.. && npm run test -w @notesbrain/mobile -- apps/mobile/test/smoke/lens-create-screen.test.tsx)`
+  - Verify: `(cd ../.. && npm run test -w @notesbrain/mobile -- test/smoke/lens-create-screen.test.tsx)`
 
 ---
 

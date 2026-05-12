@@ -86,6 +86,16 @@ export const testIds = {
       installButton: "lens-library-preview-install-button",
       promptDetails: "lens-library-preview-prompt-details",
     },
+    communityLensPublish: {
+      screen: "community-lens-publish-screen",
+      authorDisplayNameInput: "community-lens-publish-author-display-name",
+      descriptionInput: "community-lens-publish-description",
+      categoryOption: (category: string) => `community-lens-publish-category-${category}`,
+      confirmButton: "community-lens-publish-confirm",
+      cancelButton: "community-lens-publish-cancel",
+      privacyWarning: "community-lens-publish-privacy-warning",
+      errorMessage: "community-lens-publish-error",
+    },
     resultCard: "lens-result-card",
   },
   settings: {
