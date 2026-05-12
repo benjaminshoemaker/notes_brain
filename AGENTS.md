@@ -5,7 +5,7 @@ Project-wide workflow guidance for AI agents working in this project.
 ## Instruction Hierarchy
 
 - This file is the durable, project-wide baseline.
-- Initial greenfield execution guidance lives in `plans/greenfield/AGENTS.md`.
+- Archived initial greenfield execution guidance lives in `plans/archive/greenfield/AGENTS.md`.
 - Feature execution guidance lives in `features/<name>/AGENTS.md`.
 - When working in a scoped directory, read this file first, then the local `AGENTS.md` or `CLAUDE.md` in that directory.
 
@@ -39,6 +39,17 @@ Create one branch per phase. Commit after each task. PR at phase checkpoint.
 - Do not guess — if you can't access something, say so
 - Read error output fully before attempting fixes
 - Follow existing code patterns in the codebase
+
+## Verification-First Escalation
+
+- Verify objective claims yourself before asking the human.
+- If verification is blocked by missing tooling, first look for an MCP server,
+  CLI, API, SDK, test fixture, emulator automation, or browser automation path
+  that can verify it.
+- Use an existing safe tool immediately. If a new tool, credentials, or external
+  service is needed, propose the exact setup and why it enables verification.
+- Ask the human to verify manually only after self-verification and tool-enabling
+  options are exhausted or explicitly rejected.
 
 ---
 

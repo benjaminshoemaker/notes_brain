@@ -12,3 +12,8 @@ supabase/.branches
 
 # Verification credentials (never commit)
 .claude/verification/auth-state.json
+
+# Local mobile build outputs
+artifacts/mobile-builds/*.apk
+artifacts/mobile-builds/*.aab
+artifacts/mobile-builds/*.ipa

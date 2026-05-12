@@ -23,6 +23,24 @@
             "auto_fixed": 1,
             "fix_skipped": 0,
             "fix_reverted": false
+          },
+          "flow_verification": {
+            "applicable": true,
+            "plan_path": "FLOW_VERIFICATION_PLAN.md",
+            "harness_built": false,
+            "harness_command": "npm run dev:mobile:mcp",
+            "last_run_status": "not_run",
+            "last_run_at": null,
+            "channels": [
+              "mobile_mcp",
+              "ios_simulator",
+              "supabase",
+              "smoke_tests"
+            ],
+            "evidence": {
+              "summary": "Flow verification plan applies, but this phase checkpoint did not yet build or run the final mobile flow harness.",
+              "artifact_path": null
+            }
           }
         },
         "tasks": [
@@ -69,6 +87,24 @@
             "auto_fixed": 1,
             "fix_skipped": 0,
             "fix_reverted": false
+          },
+          "flow_verification": {
+            "applicable": true,
+            "plan_path": "FLOW_VERIFICATION_PLAN.md",
+            "harness_built": false,
+            "harness_command": "npm run dev:mobile:mcp",
+            "last_run_status": "not_run",
+            "last_run_at": null,
+            "channels": [
+              "mobile_mcp",
+              "ios_simulator",
+              "supabase",
+              "smoke_tests"
+            ],
+            "evidence": {
+              "summary": "Flow verification plan applies, but this phase checkpoint did not yet build or run the final mobile flow harness.",
+              "artifact_path": null
+            }
           }
         },
         "tasks": [
@@ -107,7 +143,25 @@
           "tests_passed": true,
           "type_check_passed": true,
           "lint_passed": true,
-          "manual_verified": true
+          "manual_verified": true,
+          "flow_verification": {
+            "applicable": true,
+            "plan_path": "FLOW_VERIFICATION_PLAN.md",
+            "harness_built": false,
+            "harness_command": "npm run dev:mobile:mcp",
+            "last_run_status": "not_run",
+            "last_run_at": null,
+            "channels": [
+              "mobile_mcp",
+              "ios_simulator",
+              "supabase",
+              "smoke_tests"
+            ],
+            "evidence": {
+              "summary": "Flow verification plan applies, but this phase checkpoint did not yet build or run the final mobile flow harness.",
+              "artifact_path": null
+            }
+          }
         },
         "tasks": [
           {
@@ -146,7 +200,25 @@
           "tests_passed": true,
           "type_check_passed": true,
           "lint_passed": true,
-          "manual_verified": true
+          "manual_verified": true,
+          "flow_verification": {
+            "applicable": true,
+            "plan_path": "FLOW_VERIFICATION_PLAN.md",
+            "harness_built": true,
+            "harness_command": "npm run dev:mobile:mcp",
+            "last_run_status": "passed",
+            "last_run_at": "2026-05-10T05:51:00Z",
+            "channels": [
+              "mobile_mcp",
+              "ios_simulator",
+              "supabase",
+              "smoke_tests"
+            ],
+            "evidence": {
+              "summary": "Final mobile Lens Library flow evidence captured with simulator screenshots, Supabase evidence, smoke tests, typecheck, and lint.",
+              "artifact_path": "VERIFICATION_NOTES.md"
+            }
+          }
         },
         "tasks": [
           {

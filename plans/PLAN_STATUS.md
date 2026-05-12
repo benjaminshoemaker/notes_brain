@@ -1,8 +1,8 @@
 # Plan Status
 
-Current workstreams: multiple
-Last updated: 2026-05-10
-Updated by: Codex
+Current workstreams: active
+Last updated: 2026-05-11
+Updated by: /feature-plan
 
 Rule: This manifest records workstream status; it does not require one primary
 active plan. Agents may continue any non-archived workstream explicitly
@@ -12,14 +12,16 @@ them.
 
 ## Current Scope
 
-- `features/lens-library/`: Completed and checkpointed. The Add to My Lenses failure was traced to stale local Supabase migrations, fixed with `supabase migration up`, and reverified through iOS emulator plus local database evidence.
-- `features/editable-notes/`: Completed and checkpointed. Implementation, smoke/type/lint verification, mobile evidence, Supabase assertions, and teardown are recorded in `features/editable-notes/FLOW_VERIFICATION_EVIDENCE.md`.
+- `features/action-receipts/`: Targeted discovery drafted. Ready for feature specification when selected.
+- `features/community-lenses/`: Execution plan drafted. Next command: `cd features/community-lenses && /fresh-start`.
 
 ## History
 
 | Path | Type | Status | Superseded By | Updated | Notes |
 |------|------|--------|---------------|---------|-------|
-| `features/lens-library/` | feature | completed |  | 2026-05-10 | All execution-plan checkboxes complete; local migration fix, iOS install flow, database evidence, smoke tests, typecheck, and lint recorded |
-| `features/editable-notes/` | feature | completed |  | 2026-05-09 | All execution-plan checkboxes complete; mobile flow screenshots/accessibility evidence, Supabase assertions, smoke tests, typecheck, and lint recorded |
-| `features/custom-lenses/` | feature | completed |  | 2026-05-05 | All execution-plan checkboxes complete; physical Android push verified |
-| `plans/greenfield/` | greenfield | completed |  | 2026-05-05 | Existing app baseline, not current feature work |
+| `features/action-receipts/` | feature | discovery |  | 2026-05-10 | Targeted discovery notes drafted; start with feature specification when ready |
+| `features/community-lenses/` | feature | active |  | 2026-05-11 | Execution plan drafted; next command: `cd features/community-lenses && /fresh-start` |
+| `features/archive/lens-library/` | feature | completed |  | 2026-05-10 | Archived completed workstream; all execution-plan checkboxes complete; local migration fix, iOS install flow, database evidence, smoke tests, typecheck, and lint recorded |
+| `features/archive/editable-notes/` | feature | completed |  | 2026-05-09 | Archived completed workstream; all execution-plan checkboxes complete; mobile flow screenshots/accessibility evidence, Supabase assertions, smoke tests, typecheck, and lint recorded |
+| `features/archive/custom-lenses/` | feature | completed |  | 2026-05-05 | Archived completed workstream; all execution-plan checkboxes complete; physical Android push verified |
+| `plans/archive/greenfield/` | greenfield | completed |  | 2026-05-05 | Archived existing app baseline, not current feature work |

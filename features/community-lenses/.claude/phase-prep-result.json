@@ -1,0 +1,7 @@
+{
+  "phase": 1,
+  "status": "READY_WITH_NOTES",
+  "auto_advanced": false,
+  "reason": "Pre-flight checks passed, but phase-start should not begin on the existing mixed dirty worktree without explicit direction.",
+  "timestamp": "2026-05-12T05:41:23Z"
+}

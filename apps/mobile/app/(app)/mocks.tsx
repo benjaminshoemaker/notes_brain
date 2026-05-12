@@ -6,11 +6,13 @@ import { Stack } from "expo-router";
 import WarmInkPreview from "../../components/mocks/Option1_WarmInk";
 import CoolSlatePreview from "../../components/mocks/Option2_CoolSlate";
 import SoftDawnPreview from "../../components/mocks/Option3_SoftDawn";
+import EditNoteDeleteOptions from "../../components/mocks/EditNoteDeleteOptions";
 
 const OPTIONS = [
   { key: "warm", label: "Warm Ink", bg: "#FAF8F5", accent: "#4F46E5" },
   { key: "cool", label: "Cool Slate", bg: "#0F172A", accent: "#3B82F6" },
   { key: "soft", label: "Soft Dawn", bg: "#F1F5F9", accent: "#0D9488" },
+  { key: "delete", label: "Delete Flow", bg: "#FAF8F5", accent: "#B91C1C" },
 ] as const;
 
 export default function MocksScreen() {
@@ -44,6 +46,7 @@ export default function MocksScreen() {
       {selected === "warm" && <WarmInkPreview />}
       {selected === "cool" && <CoolSlatePreview />}
       {selected === "soft" && <SoftDawnPreview />}
+      {selected === "delete" && <EditNoteDeleteOptions />}
     </SafeAreaView>
   );
 }
@@ -53,6 +56,7 @@ const styles = StyleSheet.create({
   switcher: {
     flexDirection: "row",
     justifyContent: "center",
+    flexWrap: "wrap",
     gap: 8,
     paddingVertical: 8,
     paddingHorizontal: 16,

@@ -22,7 +22,20 @@
           "lint_passed": true,
           "security_passed": true,
           "coverage_percent": null,
-          "manual_verified": true
+          "manual_verified": true,
+          "flow_verification": {
+            "applicable": false,
+            "plan_path": null,
+            "harness_built": false,
+            "harness_command": null,
+            "last_run_status": "skipped",
+            "last_run_at": null,
+            "channels": [],
+            "evidence": {
+              "summary": "No dedicated flow verification plan found for this phase-state checkpoint.",
+              "artifact_path": null
+            }
+          }
         },
         "tasks": {
           "1.1.A": {
@@ -61,7 +74,20 @@
           "lint_passed": true,
           "security_passed": true,
           "coverage_percent": null,
-          "manual_verified": true
+          "manual_verified": true,
+          "flow_verification": {
+            "applicable": false,
+            "plan_path": null,
+            "harness_built": false,
+            "harness_command": null,
+            "last_run_status": "skipped",
+            "last_run_at": null,
+            "channels": [],
+            "evidence": {
+              "summary": "No dedicated flow verification plan found for this phase-state checkpoint.",
+              "artifact_path": null
+            }
+          }
         },
         "tasks": {
           "2.1.A": {
@@ -113,7 +139,20 @@
           "security_passed": true,
           "coverage_percent": null,
           "manual_verified": true,
-          "notes": "Voice transcription deferred to Phase 4 (requires mobile app)"
+          "notes": "Voice transcription deferred to Phase 4 (requires mobile app)",
+          "flow_verification": {
+            "applicable": false,
+            "plan_path": null,
+            "harness_built": false,
+            "harness_command": null,
+            "last_run_status": "skipped",
+            "last_run_at": null,
+            "channels": [],
+            "evidence": {
+              "summary": "No dedicated flow verification plan found for this phase-state checkpoint.",
+              "artifact_path": null
+            }
+          }
         },
         "tasks": {
           "3.1.A": {
@@ -170,6 +209,21 @@
             "status": "COMPLETE",
             "completed_at": "2026-01-23T19:00:00Z"
           }
+        },
+        "checkpoint": {
+          "flow_verification": {
+            "applicable": false,
+            "plan_path": null,
+            "harness_built": false,
+            "harness_command": null,
+            "last_run_status": "skipped",
+            "last_run_at": null,
+            "channels": [],
+            "evidence": {
+              "summary": "No dedicated flow verification plan found for this phase-state checkpoint.",
+              "artifact_path": null
+            }
+          }
         }
       },
       {
@@ -187,7 +241,20 @@
           "security_passed": true,
           "coverage_percent": null,
           "manual_verified": true,
-          "notes": "All items verified. Push notifications working with FCM HTTP v1 API."
+          "notes": "All items verified. Push notifications working with FCM HTTP v1 API.",
+          "flow_verification": {
+            "applicable": false,
+            "plan_path": null,
+            "harness_built": false,
+            "harness_command": null,
+            "last_run_status": "skipped",
+            "last_run_at": null,
+            "channels": [],
+            "evidence": {
+              "summary": "No dedicated flow verification plan found for this phase-state checkpoint.",
+              "artifact_path": null
+            }
+          }
         },
         "tasks": {
           "5.1.A": {
@@ -236,7 +303,22 @@
             "completed_at": "2026-01-26T05:30:00Z"
           }
         },
-        "started_at": "2026-01-26T05:03:13Z"
+        "started_at": "2026-01-26T05:03:13Z",
+        "checkpoint": {
+          "flow_verification": {
+            "applicable": false,
+            "plan_path": null,
+            "harness_built": false,
+            "harness_command": null,
+            "last_run_status": "skipped",
+            "last_run_at": null,
+            "channels": [],
+            "evidence": {
+              "summary": "No dedicated flow verification plan found for this phase-state checkpoint.",
+              "artifact_path": null
+            }
+          }
+        }
       }
     ]
   },
