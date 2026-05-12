@@ -27,6 +27,14 @@ vi.mock("../../hooks/useLensLibrary", () => ({
   })
 }));
 
+vi.mock("../../hooks/useCommunityLenses", () => ({
+  useCommunityLenses: () => ({
+    templates: [],
+    install: { isPending: false, mutateAsync: vi.fn() },
+    report: { isPending: false, mutateAsync: vi.fn() },
+  }),
+}));
+
 import LensLibraryPreviewScreen from "../../app/(app)/lens-library-preview";
 import { createLensInputFromTemplate, curatedLensTemplates } from "../../lib/lensLibrary";
 import { testIds } from "../../lib/testIds";

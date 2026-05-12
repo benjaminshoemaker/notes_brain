@@ -497,15 +497,15 @@ Update the preview screen so community templates show all public template detail
 **Requirement:** AC-9, AC-10, AC-11, AC-12, AC-15, AC-16, AC-17, AC-18, AC-20, AC-21, AC-22, AC-23
 
 **Acceptance Criteria:**
-- [ ] (CODE) Preview supports a community source parameter and loads community templates from public data, not raw `lens_templates`.
+- [x] (CODE) Preview supports a community source parameter and loads community templates from public data, not raw `lens_templates`.
   - Verify: `(cd ../.. && rg "source|community|community_lens_templates_public|install_lens_template" apps/mobile/app/'(app)'/lens-library-preview.tsx)`
-- [ ] (TEST) Preview tests cover public metadata, prompt display, schedule/lookback/category display, install confirmation, duplicate installed state, and hidden/delisted unavailable state.
+- [x] (TEST) Preview tests cover public metadata, prompt display, schedule/lookback/category display, install confirmation, duplicate installed state, and hidden/delisted unavailable state.
   - Verify: `(cd ../.. && npm run test -w @notesbrain/mobile -- test/smoke/lens-library-community-preview.test.tsx)`
-- [ ] (TEST) Report tests cover reason picker values, optional note limit, confirmation, duplicate active report response, and author-hidden reporter identity copy.
+- [x] (TEST) Report tests cover reason picker values, optional note limit, confirmation, duplicate active report response, and author-hidden reporter identity copy.
   - Verify: `(cd ../.. && npm run test -w @notesbrain/mobile -- test/smoke/lens-library-community-preview.test.tsx)`
-- [ ] (TEST) Accessibility tests cover install, report, reason, note, confirmation, and unavailable-state labels.
+- [x] (TEST) Accessibility tests cover install, report, reason, note, confirmation, and unavailable-state labels.
   - Verify: `(cd ../.. && npm run test -w @notesbrain/mobile -- test/smoke/lens-library-community-preview.test.tsx)`
-- [ ] (TEST) Existing curated preview smoke test still passes.
+- [x] (TEST) Existing curated preview smoke test still passes.
   - Verify: `(cd ../.. && npm run test -w @notesbrain/mobile -- test/smoke/lens-library-preview.test.tsx)`
 
 **Files to Create:**
@@ -532,15 +532,15 @@ Update the preview screen so community templates show all public template detail
 ### Phase 4 Checkpoint
 
 **Automated Checks:**
-- [ ] Community browse and preview screen tests pass.
+- [x] Community browse and preview screen tests pass.
   - Verify: `(cd ../.. && npm run test -w @notesbrain/mobile -- test/smoke/lens-library-community-screen.test.tsx test/smoke/lens-library-community-preview.test.tsx)`
-- [ ] Curated Lens Library regression tests pass.
+- [x] Curated Lens Library regression tests pass.
   - Verify: `(cd ../.. && npm run test -w @notesbrain/mobile -- test/smoke/lens-library-screen.test.tsx test/smoke/lens-library-preview.test.tsx test/smoke/lens-library-catalog.test.ts)`
-- [ ] Mobile typecheck and lint pass.
+- [x] Mobile typecheck and lint pass.
   - Verify: `(cd ../.. && npm run typecheck -w @notesbrain/mobile && npm run lint -w @notesbrain/mobile)`
 
 **Regression Verification:**
-- [ ] Community UI does not expose `author_user_id`, `source_lens_id`, report rows, installer identities, notes, generated results, or run history.
+- [x] Community UI does not expose `author_user_id`, `source_lens_id`, report rows, installer identities, notes, generated results, or run history.
   - Verify: `(cd ../.. && npm run test -w @notesbrain/mobile -- test/smoke/lens-library-community-screen.test.tsx test/smoke/lens-library-community-preview.test.tsx)`
 
 ---
