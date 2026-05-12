@@ -11,14 +11,24 @@
       {
         "number": 1,
         "name": "Schema and Shared Contracts",
-        "status": "COMPLETE",
+        "status": "CHECKPOINTED",
         "tasks_total": 3,
         "tasks_complete": 3,
         "completed_at": "2026-05-12T06:01:08Z",
         "checkpoint": {
+          "tests_passed": true,
+          "type_check_passed": true,
+          "lint_passed": true,
+          "build_passed": true,
+          "manual_verified": true,
+          "checkpointed_at": "2026-05-12T06:12:22Z",
           "automated_checks": {
             "status": "PASS",
             "commands": [
+              "npm run test",
+              "npm run typecheck",
+              "npm run lint",
+              "npm run build",
               "node --test tests/task-community-lenses-schema.test.js tests/task-community-lenses-rpcs.test.js",
               "node --test tests/task-community-lenses-types.test.js",
               "npm run test:root",
@@ -29,9 +39,19 @@
           },
           "flow_verification": {
             "applicable": true,
+            "plan_path": "FLOW_VERIFICATION_PLAN.md",
             "harness_built": false,
             "last_run_status": "not_run",
-            "harness_command": "npm run test:e2e:backend, then npm run dev:mobile:mcp with Expo automation or mobile E2E"
+            "last_run_at": null,
+            "harness_command": "npm run test:e2e:backend, then npm run dev:mobile:mcp with Expo automation or mobile E2E",
+            "channels": [
+              "database",
+              "mobile"
+            ],
+            "evidence": {
+              "summary": "Phase 1 only built schema and shared contracts; end-to-end flow harness is planned for Phase 5.",
+              "artifact_path": "features/community-lenses/.claude/verification/phase-1.md"
+            }
           }
         },
         "started_at": "2026-05-12T06:01:08Z",

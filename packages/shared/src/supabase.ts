@@ -291,7 +291,9 @@ export type Database = {
           user_id: string;
           created_at?: string;
         };
-        Update: {};
+        Update: {
+          id?: never;
+        };
         Relationships: [];
       };
       lens_template_reports: {

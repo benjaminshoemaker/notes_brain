@@ -87,7 +87,7 @@ export async function updateNoteForUser(input: UpdateNoteInput, userId: string):
   }
 
   if (data) {
-    return data as NoteWithAttachments;
+    return data as unknown as NoteWithAttachments;
   }
 
   const { data: existing, error: lookupError } = await supabase
