@@ -88,7 +88,7 @@
       {
         "number": 2,
         "name": "Mobile Data Layer",
-        "status": "COMPLETE",
+        "status": "CHECKPOINTED",
         "tasks_total": 2,
         "tasks_complete": 2,
         "started_at": "2026-05-12T06:12:22Z",
@@ -114,9 +114,19 @@
           }
         },
         "checkpoint": {
+          "tests_passed": true,
+          "type_check_passed": true,
+          "lint_passed": true,
+          "build_passed": true,
+          "manual_verified": true,
+          "checkpointed_at": "2026-05-12T06:23:45Z",
           "automated_checks": {
             "status": "PASS",
             "commands": [
+              "npm run test",
+              "npm run typecheck",
+              "npm run lint",
+              "npm run build",
               "npm run test -w @notesbrain/mobile -- test/smoke/lens-library-community-helpers.test.ts test/smoke/use-community-lenses.test.ts",
               "npm run test -w @notesbrain/mobile -- test/smoke/lens-library-screen.test.tsx test/smoke/lens-library-preview.test.tsx test/smoke/lens-library-catalog.test.ts",
               "npm run typecheck -w @notesbrain/mobile"
@@ -135,7 +145,7 @@
             ],
             "evidence": {
               "summary": "Phase 2 added mobile data-layer helpers and hook tests; end-to-end flow harness is planned for Phase 5.",
-              "artifact_path": null
+              "artifact_path": "features/community-lenses/.claude/verification/phase-2.md"
             }
           }
         }
