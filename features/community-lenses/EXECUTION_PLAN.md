@@ -150,15 +150,15 @@ Add shared TypeScript types for community template current state, public browse 
 **Requirement:** AC-7, AC-9, AC-10, AC-11, AC-18, AC-20, AC-21
 
 **Acceptance Criteria:**
-- [ ] (CODE) Shared exports include community template status, report reason, public template, authored template, version, install, report, and RPC contract types.
+- [x] (CODE) Shared exports include community template status, report reason, public template, authored template, version, install, report, and RPC contract types.
   - Verify: `(cd ../.. && rg "CommunityLensTemplate|CommunityLensTemplatePublic|LensTemplateStatus|LensTemplateReportReason|PublishLensTemplate|ReportLensTemplate" packages/shared/src/types.ts packages/shared/src/index.ts)`
-- [ ] (CODE) `LensTemplateSnapshot` can represent community installs with prompt, schedule, lookback, category, author display name, and version fields without breaking curated templates.
+- [x] (CODE) `LensTemplateSnapshot` can represent community installs with prompt, schedule, lookback, category, author display name, and version fields without breaking curated templates.
   - Verify: `(cd ../.. && node --test tests/task-community-lenses-types.test.js)`
-- [ ] (CODE) `packages/shared/src/supabase.ts` includes new tables, view, enums, and RPC signatures aligned with the migration.
+- [x] (CODE) `packages/shared/src/supabase.ts` includes new tables, view, enums, and RPC signatures aligned with the migration.
   - Verify: `(cd ../.. && node --test tests/task-community-lenses-types.test.js)`
-- [ ] (TYPE) Shared package typecheck passes.
+- [x] (TYPE) Shared package typecheck passes.
   - Verify: `(cd ../.. && npm run typecheck -w @notesbrain/shared)`
-- [ ] (TEST) Root tests pass after shared contract changes.
+- [x] (TEST) Root tests pass after shared contract changes.
   - Verify: `(cd ../.. && npm run test:root)`
 
 **Files to Create:**
@@ -186,19 +186,19 @@ Add shared TypeScript types for community template current state, public browse 
 ### Phase 1 Checkpoint
 
 **Automated Checks:**
-- [ ] Community migration static checks pass.
+- [x] Community migration static checks pass.
   - Verify: `(cd ../.. && node --test tests/task-community-lenses-schema.test.js tests/task-community-lenses-rpcs.test.js)`
-- [ ] Shared contract checks pass.
+- [x] Shared contract checks pass.
   - Verify: `(cd ../.. && node --test tests/task-community-lenses-types.test.js)`
-- [ ] Existing root tests pass.
+- [x] Existing root tests pass.
   - Verify: `(cd ../.. && npm run test:root)`
-- [ ] Type checking passes for shared contracts.
+- [x] Type checking passes for shared contracts.
   - Verify: `(cd ../.. && npm run typecheck -w @notesbrain/shared)`
 
 **Regression Verification:**
-- [ ] Curated lens-library metadata tests still pass.
+- [x] Curated lens-library metadata tests still pass.
   - Verify: `(cd ../.. && node --test tests/task-lens-library-metadata.test.js)`
-- [ ] Existing lens scheduling authority checks still pass.
+- [x] Existing lens scheduling authority checks still pass.
   - Verify: `(cd ../.. && node --test tests/task-lens-scheduling-authority.test.js)`
 
 ---

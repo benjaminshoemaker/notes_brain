@@ -69,6 +69,12 @@ export interface LensTemplateSnapshot {
   category: string;
   author_type: LensTemplateAuthorType;
   author_name: string;
+  prompt?: string;
+  schedule_type?: LensScheduleType;
+  schedule_time?: string;
+  schedule_day?: number | null;
+  lookback_hours?: number;
+  categories?: string[] | null;
 }
 
 export interface LensTemplate {
@@ -114,6 +120,100 @@ export interface Lens {
   template_snapshot: LensTemplateSnapshot | null;
   created_at: string;
   updated_at: string;
+}
+
+export type LensTemplateStatus = "public" | "unpublished" | "hidden" | "delisted";
+
+export type LensTemplateReportReason =
+  | "spam"
+  | "unsafe_prompt"
+  | "misleading"
+  | "private_information"
+  | "impersonation"
+  | "other";
+
+export interface CommunityLensTemplatePublic {
+  id: string;
+  name: string;
+  description: string;
+  prompt: string;
+  schedule_type: LensScheduleType;
+  schedule_time: string;
+  schedule_day: number | null;
+  lookback_hours: number;
+  categories: string[] | null;
+  category: Category;
+  version: number;
+  author_display_name: string;
+  install_count: number;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface CommunityLensTemplate extends CommunityLensTemplatePublic {
+  source_lens_id: string;
+  author_user_id: string;
+  status: LensTemplateStatus;
+}
+
+export interface LensTemplateVersion {
+  id: string;
+  template_id: string;
+  version: number;
+  snapshot: LensTemplateSnapshot;
+  created_at: string;
+}
+
+export interface LensTemplateInstall {
+  id: string;
+  template_id: string;
+  template_version: number;
+  installed_lens_id: string;
+  user_id: string;
+  created_at: string;
+}
+
+export interface LensTemplateReport {
+  id: string;
+  template_id: string;
+  reporter_user_id: string;
+  reason: LensTemplateReportReason;
+  note: string | null;
+  resolved_at: string | null;
+  created_at: string;
+}
+
+export interface PublishLensTemplate {
+  Args: {
+    p_lens_id: string;
+    p_author_display_name: string;
+    p_description: string;
+    p_category?: Category;
+  };
+  Returns: CommunityLensTemplate;
+}
+
+export interface UnpublishLensTemplate {
+  Args: {
+    p_lens_id: string;
+  };
+  Returns: CommunityLensTemplate;
+}
+
+export interface InstallLensTemplate {
+  Args: {
+    p_template_id: string;
+  };
+  Returns: Lens;
+}
+
+export interface ReportLensTemplate {
+  Args: {
+    p_template_id: string;
+    p_reason: LensTemplateReportReason;
+    p_note?: string | null;
+  };
+  Returns: LensTemplateReport;
 }
 
 export interface LensResult {

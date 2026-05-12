@@ -11,9 +11,29 @@
       {
         "number": 1,
         "name": "Schema and Shared Contracts",
-        "status": "IN_PROGRESS",
+        "status": "COMPLETE",
         "tasks_total": 3,
-        "tasks_complete": 1,
+        "tasks_complete": 3,
+        "completed_at": "2026-05-12T06:01:08Z",
+        "checkpoint": {
+          "automated_checks": {
+            "status": "PASS",
+            "commands": [
+              "node --test tests/task-community-lenses-schema.test.js tests/task-community-lenses-rpcs.test.js",
+              "node --test tests/task-community-lenses-types.test.js",
+              "npm run test:root",
+              "npm run typecheck -w @notesbrain/shared",
+              "node --test tests/task-lens-library-metadata.test.js",
+              "node --test tests/task-lens-scheduling-authority.test.js"
+            ]
+          },
+          "flow_verification": {
+            "applicable": true,
+            "harness_built": false,
+            "last_run_status": "not_run",
+            "harness_command": "npm run test:e2e:backend, then npm run dev:mobile:mcp with Expo automation or mobile E2E"
+          }
+        },
         "started_at": "2026-05-12T06:01:08Z",
         "tasks": {
           "1.1.A": {
@@ -35,7 +55,8 @@
             }
           },
           "1.2.A": {
-            "status": "IN_PROGRESS",
+            "status": "COMPLETE",
+            "completed_at": "2026-05-12T06:01:08Z",
             "failures": {
               "consecutive": 0,
               "verification_attempts": {},

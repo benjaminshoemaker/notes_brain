@@ -3,11 +3,19 @@ import { createClient, type SupabaseClient, type SupabaseClientOptions } from "@
 import type {
   Category,
   ClassificationStatus,
+  CommunityLensTemplate,
+  CommunityLensTemplatePublic,
   DailySummaryContent,
   DevicePlatform,
+  InstallLensTemplate,
   LensTemplateSnapshot,
+  LensTemplateReportReason,
+  LensTemplateStatus,
   LensScheduleType,
-  NoteType
+  NoteType,
+  PublishLensTemplate,
+  ReportLensTemplate,
+  UnpublishLensTemplate
 } from "./types.js";
 
 export type Database = {
@@ -206,6 +214,110 @@ export type Database = {
         };
         Relationships: [];
       };
+      lens_templates: {
+        Row: CommunityLensTemplate & Record<string, unknown>;
+        Insert: {
+          id?: string;
+          source_lens_id: string;
+          author_user_id: string;
+          author_display_name: string;
+          name: string;
+          description: string;
+          prompt: string;
+          schedule_type: LensScheduleType;
+          schedule_time: string;
+          schedule_day?: number | null;
+          lookback_hours: number;
+          categories?: string[] | null;
+          category?: Category;
+          version?: number;
+          status?: LensTemplateStatus;
+          install_count?: number;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          author_display_name?: string;
+          name?: string;
+          description?: string;
+          prompt?: string;
+          schedule_type?: LensScheduleType;
+          schedule_time?: string;
+          schedule_day?: number | null;
+          lookback_hours?: number;
+          categories?: string[] | null;
+          category?: Category;
+          version?: number;
+          status?: LensTemplateStatus;
+          install_count?: number;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
+      lens_template_versions: {
+        Row: {
+          id: string;
+          template_id: string;
+          version: number;
+          snapshot: LensTemplateSnapshot;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          template_id: string;
+          version: number;
+          snapshot: LensTemplateSnapshot;
+          created_at?: string;
+        };
+        Update: {
+          snapshot?: LensTemplateSnapshot;
+        };
+        Relationships: [];
+      };
+      lens_template_installs: {
+        Row: {
+          id: string;
+          template_id: string;
+          template_version: number;
+          installed_lens_id: string;
+          user_id: string;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          template_id: string;
+          template_version: number;
+          installed_lens_id: string;
+          user_id: string;
+          created_at?: string;
+        };
+        Update: {};
+        Relationships: [];
+      };
+      lens_template_reports: {
+        Row: {
+          id: string;
+          template_id: string;
+          reporter_user_id: string;
+          reason: LensTemplateReportReason;
+          note: string | null;
+          resolved_at: string | null;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          template_id: string;
+          reporter_user_id: string;
+          reason: LensTemplateReportReason;
+          note?: string | null;
+          resolved_at?: string | null;
+          created_at?: string;
+        };
+        Update: {
+          resolved_at?: string | null;
+        };
+        Relationships: [];
+      };
       lens_results: {
         Row: {
           id: string;
@@ -233,14 +345,38 @@ export type Database = {
         Relationships: [];
       };
     };
-    Views: Record<string, never>;
-    Functions: Record<string, never>;
+    Views: {
+      community_lens_templates_public: {
+        Row: CommunityLensTemplatePublic & Record<string, unknown>;
+        Relationships: [];
+      };
+    };
+    Functions: {
+      publish_lens_template: {
+        Args: PublishLensTemplate["Args"];
+        Returns: PublishLensTemplate["Returns"];
+      };
+      unpublish_lens_template: {
+        Args: UnpublishLensTemplate["Args"];
+        Returns: UnpublishLensTemplate["Returns"];
+      };
+      install_lens_template: {
+        Args: InstallLensTemplate["Args"];
+        Returns: InstallLensTemplate["Returns"];
+      };
+      report_lens_template: {
+        Args: ReportLensTemplate["Args"];
+        Returns: ReportLensTemplate["Returns"];
+      };
+    };
     Enums: {
       note_category: Category;
       note_type: NoteType;
       classification_status: ClassificationStatus;
       device_platform: DevicePlatform;
       lens_schedule_type: LensScheduleType;
+      lens_template_status: LensTemplateStatus;
+      lens_template_report_reason: LensTemplateReportReason;
     };
     CompositeTypes: Record<string, never>;
   };
