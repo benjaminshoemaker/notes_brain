@@ -32,6 +32,19 @@ vi.mock("../../hooks/useLensLibrary", () => ({
   })
 }));
 
+vi.mock("../../hooks/useCommunityLenses", () => ({
+  useCommunityLenses: () => ({
+    templates: [],
+    search: "",
+    setSearch: vi.fn(),
+    category: null,
+    setCategory: vi.fn(),
+    isLoading: false,
+    error: null,
+    refetch: vi.fn(),
+  }),
+}));
+
 import LensLibraryScreen from "../../app/(app)/lens-library";
 import { testIds } from "../../lib/testIds";
 

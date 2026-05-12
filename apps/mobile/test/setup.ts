@@ -17,13 +17,29 @@ function createComponent(name: string) {
   return Component;
 }
 
-const FlatList = ({ data = [], renderItem, ...props }: MockComponentProps) => {
+const FlatList = ({ data = [], renderItem, ListEmptyComponent, ...props }: MockComponentProps) => {
   const items = Array.isArray(data) ? data : [];
   const children = typeof renderItem === "function"
     ? items.map((item, index) =>
       React.createElement(React.Fragment, { key: String(index) }, renderItem({ item, index }))
     )
     : [];
+
+  if (children.length === 0 && ListEmptyComponent) {
+    const EmptyComponent = ListEmptyComponent as React.ComponentType;
+    const emptyContent = typeof ListEmptyComponent === "function"
+      ? React.createElement(EmptyComponent)
+      : ListEmptyComponent as React.ReactNode;
+
+    children.push(
+      React.createElement(
+        React.Fragment,
+        { key: "empty" },
+        emptyContent
+      )
+    );
+  }
+
   return React.createElement("FlatList", props, children);
 };
 

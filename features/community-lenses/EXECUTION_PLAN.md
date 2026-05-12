@@ -437,9 +437,9 @@ Update lens management so only user-owned lenses with `source_template_id IS NUL
 
 ### Pre-Phase Setup
 
-- [ ] Confirm current Lens Library screen and preview tests exist.
+- [x] Confirm current Lens Library screen and preview tests exist.
   - Verify: `(cd ../.. && test -f apps/mobile/test/smoke/lens-library-screen.test.tsx && test -f apps/mobile/test/smoke/lens-library-preview.test.tsx)`
-- [ ] Confirm community hook from Phase 2 is available.
+- [x] Confirm community hook from Phase 2 is available.
   - Verify: `(cd ../.. && test -f apps/mobile/hooks/useCommunityLenses.ts)`
 
 ### Step 4.1: Browse and Preview
@@ -455,16 +455,16 @@ Update the Lens Library screen to include a Curated/Community segmented control.
 **Requirement:** AC-7, AC-8, AC-9, AC-16, AC-18, AC-20, AC-21, AC-22
 
 **Acceptance Criteria:**
-- [ ] (CODE) Lens Library screen renders Curated and Community modes and fetches community data through `useCommunityLenses`.
+- [x] (CODE) Lens Library screen renders Curated and Community modes and fetches community data through `useCommunityLenses`.
   - Verify: `(cd ../.. && rg "Community|Curated|useCommunityLenses" apps/mobile/app/'(app)'/lens-library.tsx)`
-- [ ] (TEST) Community list tests cover public template metadata, author display name, install count, installed state, search by text, category filter, empty state, and error state.
-  - Verify: `(cd ../.. && npm run test -w @notesbrain/mobile -- apps/mobile/test/smoke/lens-library-community-screen.test.tsx)`
-- [ ] (TEST) Tests assert MVP copy avoids leaderboard/trending/top-creator wording.
-  - Verify: `(cd ../.. && npm run test -w @notesbrain/mobile -- apps/mobile/test/smoke/lens-library-community-screen.test.tsx)`
-- [ ] (TEST) Accessibility tests cover segmented control labels, search label, category filter selected state, and card navigation labels.
-  - Verify: `(cd ../.. && npm run test -w @notesbrain/mobile -- apps/mobile/test/smoke/lens-library-community-screen.test.tsx)`
-- [ ] (TEST) Existing curated Lens Library screen smoke test still passes.
-  - Verify: `(cd ../.. && npm run test -w @notesbrain/mobile -- apps/mobile/test/smoke/lens-library-screen.test.tsx)`
+- [x] (TEST) Community list tests cover public template metadata, author display name, install count, installed state, search by text, category filter, empty state, and error state.
+  - Verify: `(cd ../.. && npm run test -w @notesbrain/mobile -- test/smoke/lens-library-community-screen.test.tsx)`
+- [x] (TEST) Tests assert MVP copy avoids leaderboard/trending/top-creator wording.
+  - Verify: `(cd ../.. && npm run test -w @notesbrain/mobile -- test/smoke/lens-library-community-screen.test.tsx)`
+- [x] (TEST) Accessibility tests cover segmented control labels, search label, category filter selected state, and card navigation labels.
+  - Verify: `(cd ../.. && npm run test -w @notesbrain/mobile -- test/smoke/lens-library-community-screen.test.tsx)`
+- [x] (TEST) Existing curated Lens Library screen smoke test still passes.
+  - Verify: `(cd ../.. && npm run test -w @notesbrain/mobile -- test/smoke/lens-library-screen.test.tsx)`
 
 **Files to Create:**
 - `apps/mobile/test/smoke/lens-library-community-screen.test.tsx` - Community tab list, search/filter, copy, and accessibility coverage.
@@ -500,13 +500,13 @@ Update the preview screen so community templates show all public template detail
 - [ ] (CODE) Preview supports a community source parameter and loads community templates from public data, not raw `lens_templates`.
   - Verify: `(cd ../.. && rg "source|community|community_lens_templates_public|install_lens_template" apps/mobile/app/'(app)'/lens-library-preview.tsx)`
 - [ ] (TEST) Preview tests cover public metadata, prompt display, schedule/lookback/category display, install confirmation, duplicate installed state, and hidden/delisted unavailable state.
-  - Verify: `(cd ../.. && npm run test -w @notesbrain/mobile -- apps/mobile/test/smoke/lens-library-community-preview.test.tsx)`
+  - Verify: `(cd ../.. && npm run test -w @notesbrain/mobile -- test/smoke/lens-library-community-preview.test.tsx)`
 - [ ] (TEST) Report tests cover reason picker values, optional note limit, confirmation, duplicate active report response, and author-hidden reporter identity copy.
-  - Verify: `(cd ../.. && npm run test -w @notesbrain/mobile -- apps/mobile/test/smoke/lens-library-community-preview.test.tsx)`
+  - Verify: `(cd ../.. && npm run test -w @notesbrain/mobile -- test/smoke/lens-library-community-preview.test.tsx)`
 - [ ] (TEST) Accessibility tests cover install, report, reason, note, confirmation, and unavailable-state labels.
-  - Verify: `(cd ../.. && npm run test -w @notesbrain/mobile -- apps/mobile/test/smoke/lens-library-community-preview.test.tsx)`
+  - Verify: `(cd ../.. && npm run test -w @notesbrain/mobile -- test/smoke/lens-library-community-preview.test.tsx)`
 - [ ] (TEST) Existing curated preview smoke test still passes.
-  - Verify: `(cd ../.. && npm run test -w @notesbrain/mobile -- apps/mobile/test/smoke/lens-library-preview.test.tsx)`
+  - Verify: `(cd ../.. && npm run test -w @notesbrain/mobile -- test/smoke/lens-library-preview.test.tsx)`
 
 **Files to Create:**
 - `apps/mobile/test/smoke/lens-library-community-preview.test.tsx` - community preview, install, report, unavailable, and accessibility coverage.
@@ -533,15 +533,15 @@ Update the preview screen so community templates show all public template detail
 
 **Automated Checks:**
 - [ ] Community browse and preview screen tests pass.
-  - Verify: `(cd ../.. && npm run test -w @notesbrain/mobile -- apps/mobile/test/smoke/lens-library-community-screen.test.tsx apps/mobile/test/smoke/lens-library-community-preview.test.tsx)`
+  - Verify: `(cd ../.. && npm run test -w @notesbrain/mobile -- test/smoke/lens-library-community-screen.test.tsx test/smoke/lens-library-community-preview.test.tsx)`
 - [ ] Curated Lens Library regression tests pass.
-  - Verify: `(cd ../.. && npm run test -w @notesbrain/mobile -- apps/mobile/test/smoke/lens-library-screen.test.tsx apps/mobile/test/smoke/lens-library-preview.test.tsx apps/mobile/test/smoke/lens-library-catalog.test.ts)`
+  - Verify: `(cd ../.. && npm run test -w @notesbrain/mobile -- test/smoke/lens-library-screen.test.tsx test/smoke/lens-library-preview.test.tsx test/smoke/lens-library-catalog.test.ts)`
 - [ ] Mobile typecheck and lint pass.
   - Verify: `(cd ../.. && npm run typecheck -w @notesbrain/mobile && npm run lint -w @notesbrain/mobile)`
 
 **Regression Verification:**
 - [ ] Community UI does not expose `author_user_id`, `source_lens_id`, report rows, installer identities, notes, generated results, or run history.
-  - Verify: `(cd ../.. && npm run test -w @notesbrain/mobile -- apps/mobile/test/smoke/lens-library-community-screen.test.tsx apps/mobile/test/smoke/lens-library-community-preview.test.tsx)`
+  - Verify: `(cd ../.. && npm run test -w @notesbrain/mobile -- test/smoke/lens-library-community-screen.test.tsx test/smoke/lens-library-community-preview.test.tsx)`
 
 ---
 
