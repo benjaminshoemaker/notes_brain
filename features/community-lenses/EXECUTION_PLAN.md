@@ -266,15 +266,15 @@ Create a dedicated React Query hook for community templates and mutations while 
 **Requirement:** AC-1, AC-5, AC-7, AC-8, AC-9, AC-10, AC-14, AC-16, AC-18
 
 **Acceptance Criteria:**
-- [ ] (CODE) `useCommunityLenses` queries `community_lens_templates_public` with most-installed sorting and an explicit 100-row limit.
+- [x] (CODE) `useCommunityLenses` queries `community_lens_templates_public` with most-installed sorting and an explicit 100-row limit.
   - Verify: `(cd ../.. && rg "community_lens_templates_public|install_count|limit\\(100\\)" apps/mobile/hooks/useCommunityLenses.ts)`
-- [ ] (CODE) Hook exposes publish, unpublish, install, and report mutations through Supabase RPC calls, not direct table writes.
+- [x] (CODE) Hook exposes publish, unpublish, install, and report mutations through Supabase RPC calls, not direct table writes.
   - Verify: `(cd ../.. && rg "rpc\\('(publish_lens_template|unpublish_lens_template|install_lens_template|report_lens_template)'" apps/mobile/hooks/useCommunityLenses.ts)`
-- [ ] (TEST) Hook tests cover search, category filtering, install-state derivation, mutation invalidation, duplicate report result handling, and unavailable template errors.
+- [x] (TEST) Hook tests cover search, category filtering, install-state derivation, mutation invalidation, duplicate report result handling, and unavailable template errors.
   - Verify: `(cd ../.. && npm run test -w @notesbrain/mobile -- test/smoke/use-community-lenses.test.ts)`
-- [ ] (TEST) Existing curated hook and screen smoke tests still pass.
+- [x] (TEST) Existing curated hook and screen smoke tests still pass.
   - Verify: `(cd ../.. && npm run test -w @notesbrain/mobile -- test/smoke/lens-library-screen.test.tsx test/smoke/lens-library-preview.test.tsx)`
-- [ ] (TYPE) Mobile typecheck passes after hook changes.
+- [x] (TYPE) Mobile typecheck passes after hook changes.
   - Verify: `(cd ../.. && npm run typecheck -w @notesbrain/mobile)`
 
 **Files to Create:**
@@ -301,15 +301,15 @@ Create a dedicated React Query hook for community templates and mutations while 
 ### Phase 2 Checkpoint
 
 **Automated Checks:**
-- [ ] Community helper and hook tests pass.
+- [x] Community helper and hook tests pass.
   - Verify: `(cd ../.. && npm run test -w @notesbrain/mobile -- test/smoke/lens-library-community-helpers.test.ts test/smoke/use-community-lenses.test.ts)`
-- [ ] Curated library smoke tests still pass.
+- [x] Curated library smoke tests still pass.
   - Verify: `(cd ../.. && npm run test -w @notesbrain/mobile -- test/smoke/lens-library-screen.test.tsx test/smoke/lens-library-preview.test.tsx test/smoke/lens-library-catalog.test.ts)`
-- [ ] Mobile typecheck passes.
+- [x] Mobile typecheck passes.
   - Verify: `(cd ../.. && npm run typecheck -w @notesbrain/mobile)`
 
 **Regression Verification:**
-- [ ] Existing curated install input creation remains unchanged for bundled templates.
+- [x] Existing curated install input creation remains unchanged for bundled templates.
   - Verify: `(cd ../.. && npm run test -w @notesbrain/mobile -- test/smoke/lens-library-catalog.test.ts)`
 
 ---

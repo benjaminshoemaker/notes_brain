@@ -88,10 +88,11 @@
       {
         "number": 2,
         "name": "Mobile Data Layer",
-        "status": "IN_PROGRESS",
+        "status": "COMPLETE",
         "tasks_total": 2,
-        "tasks_complete": 0,
+        "tasks_complete": 2,
         "started_at": "2026-05-12T06:12:22Z",
+        "completed_at": "2026-05-12T06:12:22Z",
         "tasks": {
           "2.1.A": {
             "status": "COMPLETE",
@@ -103,11 +104,38 @@
             }
           },
           "2.1.B": {
-            "status": "IN_PROGRESS",
+            "status": "COMPLETE",
+            "completed_at": "2026-05-12T06:12:22Z",
             "failures": {
               "consecutive": 0,
               "verification_attempts": {},
               "last_errors": []
+            }
+          }
+        },
+        "checkpoint": {
+          "automated_checks": {
+            "status": "PASS",
+            "commands": [
+              "npm run test -w @notesbrain/mobile -- test/smoke/lens-library-community-helpers.test.ts test/smoke/use-community-lenses.test.ts",
+              "npm run test -w @notesbrain/mobile -- test/smoke/lens-library-screen.test.tsx test/smoke/lens-library-preview.test.tsx test/smoke/lens-library-catalog.test.ts",
+              "npm run typecheck -w @notesbrain/mobile"
+            ]
+          },
+          "flow_verification": {
+            "applicable": true,
+            "plan_path": "FLOW_VERIFICATION_PLAN.md",
+            "harness_built": false,
+            "last_run_status": "not_run",
+            "last_run_at": null,
+            "harness_command": "npm run test:e2e:backend, then npm run dev:mobile:mcp with Expo automation or mobile E2E",
+            "channels": [
+              "database",
+              "mobile"
+            ],
+            "evidence": {
+              "summary": "Phase 2 added mobile data-layer helpers and hook tests; end-to-end flow harness is planned for Phase 5.",
+              "artifact_path": null
             }
           }
         }
