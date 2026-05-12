@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "project_name": "community-lenses",
-  "last_updated": "2026-05-12T06:30:15Z",
+  "last_updated": "2026-05-12T07:10:37Z",
   "generated_by": "go",
   "main": {
     "current_phase": 3,
@@ -153,10 +153,11 @@
       {
         "number": 3,
         "name": "Publish Management",
-        "status": "IN_PROGRESS",
+        "status": "CHECKPOINTED",
         "tasks_total": 2,
-        "tasks_complete": 1,
+        "tasks_complete": 2,
         "started_at": "2026-05-12T06:30:15Z",
+        "completed_at": "2026-05-12T07:10:37Z",
         "tasks": {
           "3.1.A": {
             "status": "COMPLETE",
@@ -168,11 +169,43 @@
             }
           },
           "3.1.B": {
-            "status": "NOT_STARTED",
+            "status": "COMPLETE",
+            "completed_at": "2026-05-12T07:10:37Z",
             "failures": {
               "consecutive": 0,
               "verification_attempts": {},
               "last_errors": []
+            }
+          }
+        },
+        "checkpoint": {
+          "tests_passed": true,
+          "type_check_passed": true,
+          "manual_verified": true,
+          "checkpointed_at": "2026-05-12T07:10:37Z",
+          "automated_checks": {
+            "status": "PASS",
+            "commands": [
+              "npm run test -w @notesbrain/mobile -- test/smoke/community-lens-publish-screen.test.tsx",
+              "npm run test -w @notesbrain/mobile -- test/smoke/lens-manage-community.test.tsx",
+              "npm run test -w @notesbrain/mobile -- test/smoke/lens-create-screen.test.tsx",
+              "npm run typecheck -w @notesbrain/mobile"
+            ]
+          },
+          "flow_verification": {
+            "applicable": true,
+            "plan_path": "FLOW_VERIFICATION_PLAN.md",
+            "harness_built": false,
+            "last_run_status": "not_run",
+            "last_run_at": null,
+            "harness_command": "npm run test:e2e:backend, then npm run dev:mobile:mcp with Expo automation or mobile E2E",
+            "channels": [
+              "database",
+              "mobile"
+            ],
+            "evidence": {
+              "summary": "Phase 3 added publish-management controls and route validation with mobile smoke coverage.",
+              "artifact_path": "features/community-lenses/.claude/verification/phase-3.md"
             }
           }
         }

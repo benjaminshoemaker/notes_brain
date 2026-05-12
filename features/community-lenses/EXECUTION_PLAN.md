@@ -382,15 +382,15 @@ Update lens management so only user-owned lenses with `source_template_id IS NUL
 **Requirement:** AC-1, AC-2, AC-4, AC-5, AC-13, AC-14, AC-15, AC-17, AC-18, AC-19, AC-22
 
 **Acceptance Criteria:**
-- [ ] (CODE) Eligible personal lenses navigate to publish review; installed copies with any `source_template_id` do not render a publish control.
+- [x] (CODE) Eligible personal lenses navigate to publish review; installed copies with any `source_template_id` do not render a publish control.
   - Verify: `(cd ../.. && npm run test -w @notesbrain/mobile -- test/smoke/lens-manage-community.test.tsx)`
-- [ ] (CODE) Public and unpublished authored lenses show text-visible status, while hidden/delisted templates render as not public and expose no republish control.
+- [x] (CODE) Public and unpublished authored lenses show text-visible status, while hidden/delisted templates render as not public and expose no republish control.
   - Verify: `(cd ../.. && npm run test -w @notesbrain/mobile -- test/smoke/lens-manage-community.test.tsx)`
-- [ ] (CODE) Unpublish calls `unpublish_lens_template` and leaves existing delete/edit/pause/run controls intact.
+- [x] (CODE) Unpublish calls `unpublish_lens_template` and leaves existing delete/edit/pause/run controls intact.
   - Verify: `(cd ../.. && rg "unpublish_lens_template|source_template_id|community" apps/mobile/app/'(app)'/lens-manage.tsx)`
-- [ ] (TEST) Lens management tests cover publish eligibility, installed-copy blocking, public status display, hidden/delisted blocking, unpublish confirmation, and existing action regressions.
+- [x] (TEST) Lens management tests cover publish eligibility, installed-copy blocking, public status display, hidden/delisted blocking, unpublish confirmation, and existing action regressions.
   - Verify: `(cd ../.. && npm run test -w @notesbrain/mobile -- test/smoke/lens-manage-community.test.tsx test/smoke/lens-create-screen.test.tsx)`
-- [ ] (TEST) Accessibility checks cover publish/unpublish labels, status text, disabled state, and minimum touch-target style for main controls.
+- [x] (TEST) Accessibility checks cover publish/unpublish labels, status text, disabled state, and minimum touch-target style for main controls.
   - Verify: `(cd ../.. && npm run test -w @notesbrain/mobile -- test/smoke/lens-manage-community.test.tsx)`
 
 **Files to Create:**
@@ -417,15 +417,15 @@ Update lens management so only user-owned lenses with `source_template_id IS NUL
 ### Phase 3 Checkpoint
 
 **Automated Checks:**
-- [ ] Publish review screen tests pass.
+- [x] Publish review screen tests pass.
   - Verify: `(cd ../.. && npm run test -w @notesbrain/mobile -- test/smoke/community-lens-publish-screen.test.tsx)`
-- [ ] Lens management community tests pass.
+- [x] Lens management community tests pass.
   - Verify: `(cd ../.. && npm run test -w @notesbrain/mobile -- test/smoke/lens-manage-community.test.tsx)`
-- [ ] Mobile typecheck passes.
+- [x] Mobile typecheck passes.
   - Verify: `(cd ../.. && npm run typecheck -w @notesbrain/mobile)`
 
 **Regression Verification:**
-- [ ] Existing lens create/manage behavior remains covered by current smoke tests.
+- [x] Existing lens create/manage behavior remains covered by current smoke tests.
   - Verify: `(cd ../.. && npm run test -w @notesbrain/mobile -- test/smoke/lens-create-screen.test.tsx)`
 
 ---

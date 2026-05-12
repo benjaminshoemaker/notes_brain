@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import {
   ActivityIndicator,
   Alert,
@@ -10,9 +10,10 @@ import {
 } from "react-native";
 import { Stack, type Href, useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
-import type { Lens } from "@notesbrain/shared";
+import type { CommunityLensTemplate, Lens } from "@notesbrain/shared";
 
 import { LoadingSpinner } from "../../components/LoadingSpinner";
+import { useCommunityLenses } from "../../hooks/useCommunityLenses";
 import { useLenses } from "../../hooks/useLenses";
 import { useRunLensNow } from "../../hooks/useRunLensNow";
 import { testIds } from "../../lib/testIds";
@@ -23,9 +24,18 @@ const WEEKDAY_LABELS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 type PendingAction =
   | {
       lensId: string;
-      action: "delete" | "run" | "toggle";
+      action: "delete" | "run" | "toggle" | "unpublish";
     }
   | null;
+
+type CommunityLensState = {
+  label: string | null;
+  description: string | null;
+  tone: "neutral" | "success" | "warning" | "error";
+  canPublish: boolean;
+  canUnpublish: boolean;
+  publishLabel: string;
+};
 
 function getLensColor(name: string): string {
   let hash = 0;
@@ -141,12 +151,108 @@ function getErrorMessage(error: unknown, fallback: string): string {
   return error instanceof Error ? error.message : fallback;
 }
 
+function getCommunityLensState(
+  lens: Lens,
+  authoredTemplate: CommunityLensTemplate | undefined
+): CommunityLensState {
+  if (lens.source_template_id) {
+    return {
+      label: "From Library",
+      description: "Installed copies cannot be published to the community.",
+      tone: "neutral",
+      canPublish: false,
+      canUnpublish: false,
+      publishLabel: "Publish",
+    };
+  }
+
+  if (!authoredTemplate) {
+    return {
+      label: null,
+      description: null,
+      tone: "neutral",
+      canPublish: true,
+      canUnpublish: false,
+      publishLabel: "Publish",
+    };
+  }
+
+  if (authoredTemplate.status === "public") {
+    return {
+      label: "Community: Public",
+      description: "Visible in the community lens library.",
+      tone: "success",
+      canPublish: false,
+      canUnpublish: true,
+      publishLabel: "Publish",
+    };
+  }
+
+  if (authoredTemplate.status === "unpublished") {
+    return {
+      label: "Community: Unpublished",
+      description: "Not visible in the community library.",
+      tone: "warning",
+      canPublish: true,
+      canUnpublish: false,
+      publishLabel: "Publish Again",
+    };
+  }
+
+  return {
+    label: "Community: Not public",
+    description: "This lens cannot be republished from the app.",
+    tone: "error",
+    canPublish: false,
+    canUnpublish: false,
+    publishLabel: "Publish",
+  };
+}
+
+function getCommunityStatusStyle(tone: CommunityLensState["tone"]) {
+  if (tone === "success") {
+    return {
+      backgroundColor: colors.successLight,
+      color: colors.success,
+    };
+  }
+
+  if (tone === "warning") {
+    return {
+      backgroundColor: colors.warningLight,
+      color: colors.warning,
+    };
+  }
+
+  if (tone === "error") {
+    return {
+      backgroundColor: colors.errorLight,
+      color: colors.error,
+    };
+  }
+
+  return {
+    backgroundColor: colors.surfaceRaised,
+    color: colors.textSecondary,
+  };
+}
+
 export default function LensManageScreen() {
   const router = useRouter();
   const { data: lenses = [], isLoading, error, refetch, remove, toggleActive } = useLenses();
   const runNow = useRunLensNow();
+  const { authoredTemplates, unpublish } = useCommunityLenses();
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [pendingAction, setPendingAction] = useState<PendingAction>(null);
+  const authoredTemplateByLensId = useMemo(() => {
+    const templates = new Map<string, CommunityLensTemplate>();
+
+    authoredTemplates.forEach((template) => {
+      templates.set(template.source_lens_id, template);
+    });
+
+    return templates;
+  }, [authoredTemplates]);
 
   const hasInitialError = Boolean(error) && lenses.length === 0;
   const hasAnyPendingAction = pendingAction !== null;
@@ -209,6 +315,22 @@ export default function LensManageScreen() {
     }
   }
 
+  async function handleUnpublish(lens: Lens) {
+    setPendingAction({ lensId: lens.id, action: "unpublish" });
+
+    try {
+      // The mutation wraps the unpublish_lens_template RPC.
+      await unpublish.mutateAsync(lens.id);
+    } catch (unpublishError) {
+      Alert.alert(
+        "Couldn't unpublish lens",
+        getErrorMessage(unpublishError, "Please try again.")
+      );
+    } finally {
+      setPendingAction(null);
+    }
+  }
+
   function confirmDelete(lens: Lens) {
     Alert.alert(
       "Delete Lens?",
@@ -220,6 +342,23 @@ export default function LensManageScreen() {
           style: "destructive",
           onPress: () => {
             void handleDelete(lens);
+          },
+        },
+      ]
+    );
+  }
+
+  function confirmUnpublish(lens: Lens) {
+    Alert.alert(
+      "Unpublish Lens?",
+      "This removes the public listing but keeps your lens and existing installs.",
+      [
+        { text: "Cancel", style: "cancel" },
+        {
+          text: "Unpublish",
+          style: "destructive",
+          onPress: () => {
+            void handleUnpublish(lens);
           },
         },
       ]
@@ -239,6 +378,13 @@ export default function LensManageScreen() {
       pathname: "/(app)/lens-form",
       params: { lensId },
     } as Href;
+  }
+
+  function buildCommunityPublishRoute(lensId: string): Href {
+    return {
+      pathname: "/(app)/community-lens-publish",
+      params: { lensId },
+    } as unknown as Href;
   }
 
   return (
@@ -287,9 +433,14 @@ export default function LensManageScreen() {
             const isRowPending = pendingAction?.lensId === item.id;
             const statusBadge = getStatusBadge(item);
             const lensColor = getLensColor(item.name);
+            const communityState = getCommunityLensState(
+              item,
+              authoredTemplateByLensId.get(item.id)
+            );
+            const communityStatusStyle = getCommunityStatusStyle(communityState.tone);
 
             return (
-              <View style={styles.card}>
+              <View testID={testIds.lens.manage.card(item.id)} style={styles.card}>
                 <View style={styles.headerRow}>
                   <View style={styles.nameWrap}>
                     <View style={[styles.lensDot, { backgroundColor: lensColor }]} />
@@ -332,7 +483,83 @@ export default function LensManageScreen() {
                   </View>
                 </View>
 
+                {communityState.label ? (
+                  <View
+                    testID={testIds.lens.manage.communityStatus(item.id)}
+                    style={styles.communityRow}
+                  >
+                    <View
+                      style={[
+                        styles.communityBadge,
+                        { backgroundColor: communityStatusStyle.backgroundColor },
+                      ]}
+                    >
+                      <Text
+                        style={[
+                          styles.communityBadgeText,
+                          { color: communityStatusStyle.color },
+                        ]}
+                      >
+                        {communityState.label}
+                      </Text>
+                    </View>
+                    {communityState.description ? (
+                      <Text style={styles.communityDescription}>
+                        {communityState.description}
+                      </Text>
+                    ) : null}
+                  </View>
+                ) : null}
+
                 <View style={styles.actionRow}>
+                  {communityState.canPublish ? (
+                    <Pressable
+                      testID={testIds.lens.manage.publishButton(item.id)}
+                      accessibilityRole="button"
+                      accessibilityLabel={`${communityState.publishLabel} ${item.name} to community`}
+                      disabled={hasAnyPendingAction}
+                      onPress={() => {
+                        router.push(buildCommunityPublishRoute(item.id));
+                      }}
+                      style={[
+                        styles.actionButton,
+                        styles.accentActionButton,
+                        hasAnyPendingAction && styles.disabledButton,
+                      ]}
+                    >
+                      <Ionicons name="globe-outline" size={16} color={colors.accent} />
+                      <Text style={[styles.actionText, styles.accentActionText]}>
+                        {communityState.publishLabel}
+                      </Text>
+                    </Pressable>
+                  ) : null}
+
+                  {communityState.canUnpublish ? (
+                    <Pressable
+                      testID={testIds.lens.manage.unpublishButton(item.id)}
+                      accessibilityRole="button"
+                      accessibilityLabel={`Unpublish ${item.name} from community`}
+                      disabled={hasAnyPendingAction}
+                      onPress={() => {
+                        confirmUnpublish(item);
+                      }}
+                      style={[
+                        styles.actionButton,
+                        styles.warningActionButton,
+                        hasAnyPendingAction && styles.disabledButton,
+                      ]}
+                    >
+                      {isRowPending && pendingAction?.action === "unpublish" ? (
+                        <ActivityIndicator color={colors.warning} size="small" />
+                      ) : (
+                        <Ionicons name="cloud-offline-outline" size={16} color={colors.warning} />
+                      )}
+                      <Text style={[styles.actionText, styles.warningActionText]}>
+                        Unpublish
+                      </Text>
+                    </Pressable>
+                  ) : null}
+
                   <Pressable
                     accessibilityRole="button"
                     accessibilityLabel={`Edit ${item.name}`}
@@ -613,6 +840,24 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: "600",
   },
+  communityRow: {
+    gap: spacing.xs,
+  },
+  communityBadge: {
+    alignSelf: "flex-start",
+    borderRadius: radii.pill,
+    paddingHorizontal: spacing.sm,
+    paddingVertical: spacing.xs,
+  },
+  communityBadgeText: {
+    fontSize: 12,
+    fontWeight: "600",
+  },
+  communityDescription: {
+    fontSize: 13,
+    lineHeight: 18,
+    color: colors.textSecondary,
+  },
   actionRow: {
     flexDirection: "row",
     flexWrap: "wrap",
@@ -655,6 +900,9 @@ const styles = StyleSheet.create({
   },
   accentActionText: {
     color: colors.accent,
+  },
+  warningActionText: {
+    color: colors.warning,
   },
   deleteActionText: {
     color: colors.error,

@@ -70,6 +70,10 @@ export const testIds = {
     manage: {
       screen: "lens-manage-screen",
       list: "lens-manage-list",
+      card: (lensId: string) => `lens-manage-card-${lensId}`,
+      communityStatus: (lensId: string) => `lens-manage-community-status-${lensId}`,
+      publishButton: (lensId: string) => `lens-manage-publish-${lensId}`,
+      unpublishButton: (lensId: string) => `lens-manage-unpublish-${lensId}`,
     },
     create: {
       screen: "lens-create-screen",
