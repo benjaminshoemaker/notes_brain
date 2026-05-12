@@ -159,7 +159,9 @@ export default function LensLibraryPreviewScreen() {
             <Text style={styles.title}>{template.name}</Text>
             <Text style={styles.description}>{template.description}</Text>
             {source === "community" && communityItem ? (
-              <Text style={styles.authorText}>by {communityItem.row.author_display_name}</Text>
+              <Text testID={testIds.lens.preview.communityAuthorText} style={styles.authorText}>
+                by {communityItem.row.author_display_name}
+              </Text>
             ) : null}
             {isInstalled ? (
               <View style={[styles.badge, styles.installedBadge]}>
@@ -183,16 +185,23 @@ export default function LensLibraryPreviewScreen() {
           <View style={styles.metaGrid}>
             <View style={styles.metaCard}>
               <Text style={styles.metaLabel}>Cadence</Text>
-              <Text style={styles.metaValue}>{template.schedule_type}</Text>
+              <Text testID={testIds.lens.preview.scheduleValue} style={styles.metaValue}>
+                {template.schedule_type}
+              </Text>
             </View>
             <View style={styles.metaCard}>
               <Text style={styles.metaLabel}>Lookback</Text>
-              <Text style={styles.metaValue}>{formatLookback(template.lookback_hours)}</Text>
+              <Text testID={testIds.lens.preview.lookbackValue} style={styles.metaValue}>
+                {formatLookback(template.lookback_hours)}
+              </Text>
             </View>
             <View style={styles.metaCard}>
               <Text style={styles.metaLabel}>Category</Text>
               <View style={[styles.badge, { backgroundColor: categoryTint.bg }]}>
-                <Text style={[styles.badgeText, { color: categoryTint.text }]}>
+                <Text
+                  testID={testIds.lens.preview.categoryValue}
+                  style={[styles.badgeText, { color: categoryTint.text }]}
+                >
                   {template.category}
                 </Text>
               </View>

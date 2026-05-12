@@ -59,6 +59,7 @@ export default function SummaryScreen() {
       headerRight: () => (
         <View style={styles.headerActions}>
           <Pressable
+            testID={testIds.summary.headerCreateButton}
             accessibilityLabel="Create lens"
             accessibilityRole="button"
             hitSlop={8}
@@ -70,6 +71,7 @@ export default function SummaryScreen() {
             <Ionicons name="add-circle-outline" size={22} color={colors.text} />
           </Pressable>
           <Pressable
+            testID={testIds.summary.headerManageButton}
             accessibilityLabel="Manage lenses"
             accessibilityRole="button"
             hitSlop={8}

@@ -30,6 +30,15 @@ Current auth coverage includes:
 - Password reset request from login (`Forgot password?`)
 - Primary tab navigation
 
+Community-lenses flow coverage:
+
+- Run deterministic seed data:
+  - `node scripts/e2e/seed-community-lenses-flow.mjs --seed`
+- Run only the community flow spec:
+  - `npm run test:e2e:mobile -- tests/e2e/mobile/specs/community-lenses.e2e.js`
+- Artifacts are written per run under:
+  - `artifacts/community-lenses/end-to-end/run-*/mobile/`
+
 You can pass extra Detox args:
 
 ```bash

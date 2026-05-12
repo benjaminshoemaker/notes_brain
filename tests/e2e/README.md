@@ -58,14 +58,38 @@ To run full stack including mobile:
 npm run test:e2e:full
 ```
 
+## Community Lenses Flow
+
+Run the deterministic community-lenses flow with seeded author and installer users:
+
+```bash
+node scripts/e2e/seed-community-lenses-flow.mjs --seed
+node --test tests/e2e/backend/community-lenses.e2e.test.mjs
+npm run test:e2e:mobile -- tests/e2e/mobile/specs/community-lenses.e2e.js
+```
+
+Artifacts are retained per run under:
+
+- `artifacts/community-lenses/end-to-end/run-*/backend/`
+- `artifacts/community-lenses/end-to-end/run-*/mobile/`
+
 ## Local Supabase Tip
 
-If you use a local Supabase stack, export values from `supabase status` before running E2E.
-For recent CLI output, map:
+Use the helper script to snapshot local Supabase keys once, then reuse them:
 
-- `API_URL` -> `E2E_SUPABASE_URL`
-- `ANON_KEY` -> `E2E_SUPABASE_ANON_KEY`
-- `SECRET_KEY` -> `E2E_SUPABASE_SECRET_KEY`
+```bash
+bash scripts/e2e/local-supabase-e2e-env.sh --write-file
+```
+
+This updates `E2E_SUPABASE_*` keys in root `.env.local` (without overwriting
+other keys). E2E runners automatically load `.env.local` when those values are
+not already exported.
+
+If you want shell exports for the current terminal session:
+
+```bash
+eval "$(bash scripts/e2e/local-supabase-e2e-env.sh --print-exports)"
+```
 
 For Android emulator runs, the mobile runner automatically maps `localhost` / `127.0.0.1`
 to `10.0.2.2` for `EXPO_PUBLIC_SUPABASE_URL`.

@@ -567,7 +567,8 @@ BEGIN
 
   RETURN NEW;
 END;
-$$ LANGUAGE plpgsql;
+$$ LANGUAGE plpgsql SECURITY DEFINER
+SET search_path = public, extensions;
 
 CREATE TRIGGER lenses_community_install_guard
   BEFORE INSERT OR UPDATE OF source_template_id ON lenses

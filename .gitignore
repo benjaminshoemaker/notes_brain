@@ -17,3 +17,6 @@ supabase/.branches
 artifacts/mobile-builds/*.apk
 artifacts/mobile-builds/*.aab
 artifacts/mobile-builds/*.ipa
+artifacts/android.emu.detox.*/
+artifacts/community-lenses/end-to-end/**
+!artifacts/community-lenses/end-to-end/.gitkeep

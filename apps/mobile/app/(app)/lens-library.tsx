@@ -120,7 +120,12 @@ export default function LensLibraryScreen() {
           <View style={styles.titleWrap}>
             <Text style={styles.name}>{item.template.name}</Text>
             <Text style={styles.description}>{item.template.description}</Text>
-            <Text style={styles.authorText}>by {item.row.author_display_name}</Text>
+            <Text
+              testID={testIds.lens.library.communityAuthor(item.template.template_id)}
+              style={styles.authorText}
+            >
+              by {item.row.author_display_name}
+            </Text>
           </View>
           <Ionicons name="chevron-forward" size={20} color={colors.textMuted} />
         </View>
@@ -132,7 +137,12 @@ export default function LensLibraryScreen() {
             </Text>
           </View>
           <Text style={styles.cadence}>{formatCadence(item)}</Text>
-          <Text style={styles.installCount}>{formatInstallCount(item.row.install_count)}</Text>
+          <Text
+            testID={testIds.lens.library.communityInstallCount(item.template.template_id)}
+            style={styles.installCount}
+          >
+            {formatInstallCount(item.row.install_count)}
+          </Text>
           {isInstalled ? (
             <View style={[styles.badge, styles.installedBadge]}>
               <Text style={[styles.badgeText, styles.installedBadgeText]}>Installed</Text>

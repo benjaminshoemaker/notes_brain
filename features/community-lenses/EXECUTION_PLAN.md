@@ -552,11 +552,11 @@ Update the preview screen so community templates show all public template detail
 
 ### Pre-Phase Setup
 
-- [ ] Export E2E Supabase environment variables for backend and mobile flow tests.
-  - Verify: `(cd ../.. && test -n "$E2E_SUPABASE_URL" && test -n "$E2E_SUPABASE_ANON_KEY" && { test -n "$E2E_SUPABASE_SECRET_KEY" || test -n "$E2E_SUPABASE_SERVICE_ROLE_KEY"; })`
-- [ ] Confirm local Supabase has the community migration available.
+- [x] Export E2E Supabase environment variables for backend and mobile flow tests.
+  - Verify: `(cd ../.. && eval "$(bash scripts/e2e/local-supabase-e2e-env.sh --print-exports)" && test -n "$E2E_SUPABASE_URL" && test -n "$E2E_SUPABASE_ANON_KEY" && { test -n "$E2E_SUPABASE_SECRET_KEY" || test -n "$E2E_SUPABASE_SERVICE_ROLE_KEY"; })`
+- [x] Confirm local Supabase has the community migration available.
   - Verify: `(cd ../.. && test -f supabase/migrations/00010_community_lenses.sql)`
-- [ ] Confirm mobile E2E runner exists.
+- [x] Confirm mobile E2E runner exists.
   - Verify: `(cd ../.. && test -f scripts/e2e/run-mobile-detox.mjs && test -f tests/e2e/mobile/detox.config.cjs)`
 
 ### Step 5.1: Backend E2E
@@ -572,17 +572,17 @@ Add a backend E2E test that runs against Supabase with author and installer user
 **Requirement:** AC-1 through AC-23
 
 **Acceptance Criteria:**
-- [ ] (TEST) Backend E2E publishes an author-owned lens, rejects installed-copy publishing, validates display-name/description rules, and enforces the 10 newly public templates per trailing 24-hour publish limit.
+- [x] (TEST) Backend E2E publishes an author-owned lens, rejects installed-copy publishing, validates display-name/description rules, and enforces the 10 newly public templates per trailing 24-hour publish limit.
   - Verify: `(cd ../.. && node --test tests/e2e/backend/community-lenses.e2e.test.mjs)`
-- [ ] (TEST) Backend E2E verifies a different signed-in user can read the template through `community_lens_templates_public` without internal ids.
+- [x] (TEST) Backend E2E verifies a different signed-in user can read the template through `community_lens_templates_public` without internal ids.
   - Verify: `(cd ../.. && node --test tests/e2e/backend/community-lenses.e2e.test.mjs)`
-- [ ] (TEST) Backend E2E verifies install creates a copied installer-owned `lenses` row with provenance and snapshot metadata, increments `install_count`, rejects author self-installs, rejects duplicate current installs, and does not expose author notes/results/run history.
+- [x] (TEST) Backend E2E verifies install creates a copied installer-owned `lenses` row with provenance and snapshot metadata, increments `install_count`, rejects author self-installs, rejects duplicate current installs, and does not expose author notes/results/run history.
   - Verify: `(cd ../.. && node --test tests/e2e/backend/community-lenses.e2e.test.mjs)`
-- [ ] (TEST) Backend E2E verifies source edits create new versions and existing installed copies remain unchanged.
+- [x] (TEST) Backend E2E verifies source edits create new versions and existing installed copies remain unchanged.
   - Verify: `(cd ../.. && node --test tests/e2e/backend/community-lenses.e2e.test.mjs)`
-- [ ] (TEST) Backend E2E verifies hidden/delisted templates disappear from public browse, cannot be installed, cannot be republished by the author path, and direct `lenses` provenance spoofing is rejected.
+- [x] (TEST) Backend E2E verifies hidden/delisted templates disappear from public browse, cannot be installed, cannot be republished by the author path, and direct `lenses` provenance spoofing is rejected.
   - Verify: `(cd ../.. && node --test tests/e2e/backend/community-lenses.e2e.test.mjs)`
-- [ ] (TEST) Backend E2E verifies reports store required fields and duplicate active reports return the existing report without changing reason or note.
+- [x] (TEST) Backend E2E verifies reports store required fields and duplicate active reports return the existing report without changing reason or note.
   - Verify: `(cd ../.. && node --test tests/e2e/backend/community-lenses.e2e.test.mjs)`
 
 **Files to Create:**
@@ -619,15 +619,15 @@ Add a rerunnable seed script and mobile E2E flow for the author-to-installer jou
 **Requirement:** AC-1 through AC-23
 
 **Acceptance Criteria:**
-- [ ] (CODE) Seed script cleans reports, installs, templates, lens results, lenses, and users scoped to the run/test users, then seeds an author-owned lens and an installed-copy lens.
+- [x] (CODE) Seed script cleans reports, installs, templates, lens results, lenses, and users scoped to the run/test users, then seeds an author-owned lens and an installed-copy lens.
   - Verify: `(cd ../.. && rg "seed-community-lenses-flow|lens_template_reports|lens_template_installs|lens_templates|lens_results|lenses" scripts/e2e/seed-community-lenses-flow.mjs)`
-- [ ] (TEST) Mobile E2E author path verifies installed-copy publish blocking, publish review fields, prompt-public warning, valid display-name/description entry, confirm publish, and Public status in lens management.
+- [x] (TEST) Mobile E2E author path verifies installed-copy publish blocking, publish review fields, prompt-public warning, valid display-name/description entry, confirm publish, and Public status in lens management.
   - Verify: `(cd ../.. && npm run test:e2e:mobile -- tests/e2e/mobile/specs/community-lenses.e2e.js)`
-- [ ] (TEST) Mobile E2E installer path verifies Community tab, search/filter, preview metadata, prompt/schedule/lookback/category/install count, Add to My Lenses, and copied lens in Manage Lenses.
+- [x] (TEST) Mobile E2E installer path verifies Community tab, search/filter, preview metadata, prompt/schedule/lookback/category/install count, Add to My Lenses, and copied lens in Manage Lenses.
   - Verify: `(cd ../.. && npm run test:e2e:mobile -- tests/e2e/mobile/specs/community-lenses.e2e.js)`
-- [ ] (TEST) Mobile E2E post-install path verifies unpublish/delist removes the template from Community and the installer-owned copied lens remains present.
+- [x] (TEST) Mobile E2E post-install path verifies unpublish/delist removes the template from Community and the installer-owned copied lens remains present.
   - Verify: `(cd ../.. && npm run test:e2e:mobile -- tests/e2e/mobile/specs/community-lenses.e2e.js)`
-- [ ] (CODE) Mobile E2E uses stable `testID` selectors from `apps/mobile/lib/testIds.ts`, not brittle visible-text-only selectors.
+- [x] (CODE) Mobile E2E uses stable `testID` selectors from `apps/mobile/lib/testIds.ts`, not brittle visible-text-only selectors.
   - Verify: `(cd ../.. && rg "communityLens|by.id|testIds" tests/e2e/mobile/specs/community-lenses.e2e.js tests/e2e/mobile/support/mobileFlows.cjs apps/mobile/lib/testIds.ts)`
 
 **Files to Create:**
@@ -663,13 +663,13 @@ Persist evidence for the feature claim under `artifacts/community-lenses/end-to-
 **Requirement:** AC-7, AC-9, AC-10, AC-11, AC-12, AC-15, AC-17, AC-18, AC-20, AC-21
 
 **Acceptance Criteria:**
-- [ ] (CODE) Artifact directory creation and retention are wired into the mobile flow or seed/evidence script.
+- [x] (CODE) Artifact directory creation and retention are wired into the mobile flow or seed/evidence script.
   - Verify: `(cd ../.. && rg "artifacts/community-lenses/end-to-end" scripts/e2e tests/e2e/mobile/specs/community-lenses.e2e.js)`
-- [ ] (TEST) Evidence run writes backend output and JSON snapshots for `lens_templates`, `lens_template_versions`, `lens_template_installs`, `lens_template_reports`, and installer copied `lenses` row.
+- [x] (TEST) Evidence run writes backend output and JSON snapshots for `lens_templates`, `lens_template_versions`, `lens_template_installs`, `lens_template_reports`, and installer copied `lenses` row.
   - Verify: `(cd ../.. && node --test tests/e2e/backend/community-lenses.e2e.test.mjs && find artifacts/community-lenses/end-to-end -type f | rg "backend|lens_templates|lens_template_versions|lens_template_installs|lens_template_reports|installer_lens")`
-- [ ] (TEST) Mobile evidence includes snapshots or screenshots for publish review, Community listing, community preview, installed copy, and post-unpublish/delist Community state.
+- [x] (TEST) Mobile evidence includes snapshots or screenshots for publish review, Community listing, community preview, installed copy, and post-unpublish/delist Community state.
   - Verify: `(cd ../.. && npm run test:e2e:mobile -- tests/e2e/mobile/specs/community-lenses.e2e.js && find artifacts/community-lenses/end-to-end -type f | rg "publish-review|community-listing|community-preview|installed-copy|post-unpublish")`
-- [ ] (CODE) Failed runs preserve artifacts rather than broad-truncating the artifact directory.
+- [x] (CODE) Failed runs preserve artifacts rather than broad-truncating the artifact directory.
   - Verify: `(cd ../.. && rg "runId|failed|artifacts/community-lenses/end-to-end" scripts/e2e/seed-community-lenses-flow.mjs tests/e2e/mobile/specs/community-lenses.e2e.js)`
 
 **Files to Create:**
@@ -706,17 +706,17 @@ Run the full verification suite that is practical for this branch and record the
 **Requirement:** AC-1 through AC-23
 
 **Acceptance Criteria:**
-- [ ] (TEST) Root and mobile tests pass.
+- [x] (TEST) Root and mobile tests pass.
   - Verify: `(cd ../.. && npm run test)`
-- [ ] (TYPE) Typecheck passes across workspaces.
+- [x] (TYPE) Typecheck passes across workspaces.
   - Verify: `(cd ../.. && npm run typecheck)`
-- [ ] (LINT) Lint passes across workspaces.
+- [x] (LINT) Lint passes across workspaces.
   - Verify: `(cd ../.. && npm run lint)`
-- [ ] (BUILD) Build passes across workspaces.
+- [x] (BUILD) Build passes across workspaces.
   - Verify: `(cd ../.. && npm run build)`
-- [ ] (TEST) Backend community E2E passes.
+- [x] (TEST) Backend community E2E passes.
   - Verify: `(cd ../.. && node --test tests/e2e/backend/community-lenses.e2e.test.mjs)`
-- [ ] (TEST) Mobile community E2E passes or records an objective emulator/device blocker with the last command output and preserved artifacts.
+- [x] (TEST) Mobile community E2E passes or records an objective emulator/device blocker with the last command output and preserved artifacts.
   - Verify: `(cd ../.. && npm run test:e2e:mobile -- tests/e2e/mobile/specs/community-lenses.e2e.js)`
 
 **Files to Create:**
@@ -740,26 +740,40 @@ Run the full verification suite that is practical for this branch and record the
 - Criteria IDs: None
 - Notes: Final verification uses repository test, E2E, and artifact commands.
 
+**Execution Evidence (2026-05-12):**
+- `npm run test`
+- `npm run typecheck`
+- `npm run lint`
+- `npm run build`
+- `node --test tests/e2e/backend/community-lenses.e2e.test.mjs`
+- `npm run test:e2e:mobile -- tests/e2e/mobile/specs/community-lenses.e2e.js`
+- `npm run test:e2e:backend`
+- `npm run test -w @notesbrain/mobile -- test/smoke/lens-library-screen.test.tsx test/smoke/lens-library-preview.test.tsx test/smoke/lens-library-catalog.test.ts`
+- `npm run test -w @notesbrain/mobile -- test/smoke/lens-create-screen.test.tsx`
+- Artifacts:
+  - `artifacts/community-lenses/end-to-end/run-2026-05-12T19-13-23-672Z-d13u49/mobile/`
+  - `artifacts/community-lenses/end-to-end/run-2026-05-12T19-16-15-365Z-60a24y/backend/`
+
 ### Phase 5 Checkpoint
 
 **Automated Checks:**
-- [ ] Full test suite passes.
+- [x] Full test suite passes.
   - Verify: `(cd ../.. && npm run test)`
-- [ ] Full typecheck passes.
+- [x] Full typecheck passes.
   - Verify: `(cd ../.. && npm run typecheck)`
-- [ ] Full lint passes.
+- [x] Full lint passes.
   - Verify: `(cd ../.. && npm run lint)`
-- [ ] Full build passes.
+- [x] Full build passes.
   - Verify: `(cd ../.. && npm run build)`
-- [ ] Community backend E2E passes.
+- [x] Community backend E2E passes.
   - Verify: `(cd ../.. && node --test tests/e2e/backend/community-lenses.e2e.test.mjs)`
-- [ ] Community mobile E2E passes.
+- [x] Community mobile E2E passes.
   - Verify: `(cd ../.. && npm run test:e2e:mobile -- tests/e2e/mobile/specs/community-lenses.e2e.js)`
 
 **Regression Verification:**
-- [ ] Existing curated Lens Library install flow remains functional.
+- [x] Existing curated Lens Library install flow remains functional.
   - Verify: `(cd ../.. && npm run test -w @notesbrain/mobile -- apps/mobile/test/smoke/lens-library-screen.test.tsx apps/mobile/test/smoke/lens-library-preview.test.tsx apps/mobile/test/smoke/lens-library-catalog.test.ts)`
-- [ ] Existing custom lens create/manage flow remains functional.
+- [x] Existing custom lens create/manage flow remains functional.
   - Verify: `(cd ../.. && npm run test -w @notesbrain/mobile -- apps/mobile/test/smoke/lens-create-screen.test.tsx)`
-- [ ] Existing backend E2E tests still pass.
+- [x] Existing backend E2E tests still pass.
   - Verify: `(cd ../.. && npm run test:e2e:backend)`

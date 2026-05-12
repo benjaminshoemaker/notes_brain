@@ -213,6 +213,7 @@ export default function CommunityLensPublishScreen() {
         </View>
       ) : (
         <ScrollView
+          testID={testIds.lens.communityLensPublish.scroll}
           contentContainerStyle={styles.content}
           keyboardShouldPersistTaps="handled"
           showsVerticalScrollIndicator={false}
