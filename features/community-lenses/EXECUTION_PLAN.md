@@ -45,9 +45,9 @@ Phase 1: Schema and Shared Contracts
 
 ### Pre-Phase Setup
 
-- [ ] Confirm repository dependencies are installed.
+- [x] Confirm repository dependencies are installed.
   - Verify: `(cd ../.. && test -d node_modules && npm --version)`
-- [ ] Confirm execution skills are available from the project checkout.
+- [x] Confirm execution skills are available from the project checkout.
   - Verify: `(cd ../.. && { test -f .claude/skills/fresh-start/SKILL.md || test -f ~/.claude/skills/fresh-start/SKILL.md || test -f ~/.codex/skills/fresh-start/SKILL.md; })`
 
 ### Step 1.1: Community Schema
@@ -63,15 +63,15 @@ Create `supabase/migrations/00010_community_lenses.sql` with community template 
 **Requirement:** AC-1, AC-2, AC-7, AC-9, AC-12, AC-16, AC-17, AC-18, AC-20, AC-21
 
 **Acceptance Criteria:**
-- [ ] (CODE) Migration defines `lens_template_status`, `lens_template_report_reason`, `lens_templates`, `lens_template_versions`, `lens_template_installs`, and `lens_template_reports`.
+- [x] (CODE) Migration defines `lens_template_status`, `lens_template_report_reason`, `lens_templates`, `lens_template_versions`, `lens_template_installs`, and `lens_template_reports`.
   - Verify: `(cd ../.. && rg "CREATE TYPE lens_template_status|CREATE TABLE lens_templates|CREATE TABLE lens_template_versions|CREATE TABLE lens_template_installs|CREATE TABLE lens_template_reports" supabase/migrations/00010_community_lenses.sql)`
-- [ ] (CODE) `community_lens_templates_public` exposes public browse fields and excludes `author_user_id`, `source_lens_id`, reports, installs, and operator-only status values.
+- [x] (CODE) `community_lens_templates_public` exposes public browse fields and excludes `author_user_id`, `source_lens_id`, reports, installs, and operator-only status values.
   - Verify: `(cd ../.. && node --test tests/task-community-lenses-schema.test.js)`
-- [ ] (CODE) Display-name, prompt, description, schedule, lookback, status, report-note, and one-active-report constraints are present.
+- [x] (CODE) Display-name, prompt, description, schedule, lookback, status, report-note, and one-active-report constraints are present.
   - Verify: `(cd ../.. && node --test tests/task-community-lenses-schema.test.js)`
-- [ ] (CODE) RLS is enabled for all new tables and authenticated users can only read public view rows plus their own authored/install/report rows.
+- [x] (CODE) RLS is enabled for all new tables and authenticated users can only read public view rows plus their own authored/install/report rows.
   - Verify: `(cd ../.. && node --test tests/task-community-lenses-schema.test.js)`
-- [ ] (TEST) Existing lens-library migration/static checks still pass with the new migration present.
+- [x] (TEST) Existing lens-library migration/static checks still pass with the new migration present.
   - Verify: `(cd ../.. && npm run test:root)`
 
 **Files to Create:**
